@@ -1,6 +1,6 @@
 FROM adoptopenjdk:11-jdk-hotspot
 
-ARG JAR_FILE=build/libs/*.jar
+ARG JAR_FILE=newfine_backend/build/libs/*.jar
 
 COPY ${JAR_FILE} app.jar
 
