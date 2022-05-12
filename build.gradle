@@ -34,7 +34,7 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
-
+//springboot 2.5버전이상 부터는 jar 파일 2개 생겨서 이를 방지
 jar {
     enabled = false
 }
