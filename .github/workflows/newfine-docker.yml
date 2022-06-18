@@ -6,7 +6,7 @@ on:
 
 jobs:
   deploy:
-    name: Deploy Dev
+    name: Deploy newfine-backend
     runs-on: ubuntu-latest
 
     steps:
@@ -43,6 +43,7 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: newfine_backend
           IMAGE_TAG: latest
+
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
@@ -68,7 +69,7 @@ jobs:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           application_name: newfine_backend
-          environment_name: Newfinebackend-Docker
+          environment_name: NewfinebackendDocker
           version_label: newfine_backend-docker-${{steps.current-time.outputs.formattedTime}}
           region: ap-northeast-2
           deployment_package: deploy/deploy.zip
