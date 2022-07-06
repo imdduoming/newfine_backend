@@ -12,11 +12,11 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @Entity
-public class Study {
+public class Study extends BaseTimeEntity {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
-    @Column(name = "course_id")
+    @Column(name = "study_id")
     private Long ssId;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST})

@@ -28,13 +28,12 @@ public class Teacher {
     @Column(nullable = false)
     private String tPhoneNumber;
 
-    @JoinColumn(name = "course_id")
-    @OneToMany
+    @OneToMany(mappedBy="teacher")
     private List<Course> courses;
 
-    @JsonIgnore
-    @OneToMany(mappedBy="teacher", cascade = { CascadeType.PERSIST,CascadeType.REMOVE})
-    private List<THomework> tHomeworks;
+//    @JsonIgnore
+//    @OneToMany(mappedBy="teacher", cascade = { CascadeType.PERSIST})
+//    private List<THomework> tHomeworks;
 
 
 

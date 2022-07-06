@@ -1,5 +1,6 @@
 package com.example.nf.newfine_backend;
 
+import com.example.nf.newfine_backend.attendance.Attendance;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,38 +21,35 @@ public class Student {
     private Long sId;
 
     @Column(nullable = false)
-    private String sPassword;
+    private String spassword;
 
     @Column(nullable = false)
-    private String sNickname;
+    private String snickname;
 
     @Column(nullable = false)
-    private String sName;
+    private String sname;
 
     @Column(nullable = false)
-    private int sTotalScore;
+    private int stotalscore;
 
     @Column(nullable = false)
-    private int sGrade;
+    private int sgrade;
 
     @Column(nullable = false)
-    private boolean sPushAlarm;
+    private boolean spushAlarm;
 
     @Column(nullable = false)
-    private String sPhoneNumber;
+    private String sphoneNumber;
 
-    @JoinColumn(name = "course_id")
-    @OneToMany
-    private List<Course> courses;
 
-    @JsonIgnore
-    @OneToMany(mappedBy="student", cascade = { CascadeType.PERSIST,CascadeType.REMOVE})
-    private List<SHomework> sHomeworks;
+    @OneToMany(mappedBy="student", cascade = { CascadeType.PERSIST})
+    private List<Attendance> attendances;
+
+//    @JsonIgnore
+//    @OneToMany(mappedBy="student", cascade = {CascadeType.REMOVE})
+//    private List<SHomework> sHomeworks;
 
     @Column(nullable = false)
     private int totalStudyTime;
-
-
-
 
 }

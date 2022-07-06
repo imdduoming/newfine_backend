@@ -1,10 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8"/>
+    <title>Cocoon</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
+<script>
+    function add_attendance() {
+        // 1. 작성한 메모를 불러옵니다.
+        let user_name = $('#user_name').val();
+        let phone_number=$('#user_phonenumber').val();
+
+        // 4. 전달할 data JSON으로 만듭니다.
+        let data = {'username': user_name, 'phone': phone_number};
+
+        // 5. POST /api/memos 에 data를 전달합니다.
+        $.ajax({
+            type: "POST",
+            url: "/add/attendances",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (response) {
+                alert('메시지가 성공적으로 작성되었습니다.');
+                window.location.reload();
+            }
+        });
+    }
+</script>
 <body>
-<h1>index page 제발 .. </h1>
+
+<section>
+    <h1>회원가입 페이지</h1>
+</section>
+
+<section>
+    <form name="login" action="index.html" method="post">
+
+        이름<br>  <input type="text" name="user_name" value="" id="user_name"> <br>
+
+        휴대폰번호<br><input type="text" name="user_phonenumber" placeholder="-를 빼고 입력허세요"><br><br>
+
+        <br><br><br>
+        <input type="submit" name="" value="제출" onclick="add_attendance()">
+
+    </form>
+</section>
+
+
 </body>
 </html>
