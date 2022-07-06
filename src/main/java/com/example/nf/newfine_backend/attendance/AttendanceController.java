@@ -11,7 +11,7 @@ import java.util.List;
 public class AttendanceController {
     private static AttendanceService attendanceService;
     private static StudentRepostiory studentRepostiory;
-    @CrossOrigin
+    @CrossOrigin(origins = "*")
     @PostMapping("/add/attendance")
     public Attendance addAttendance(@RequestBody AttendanceDto attendanceDto) {
         // attendance
