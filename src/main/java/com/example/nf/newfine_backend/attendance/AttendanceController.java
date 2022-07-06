@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@CrossOrigin(origins = "NewfinebackendDocker.ap-northeast-2.elasticbeanstalk.com")
+@CrossOrigin(origins = "*")
 public class AttendanceController {
     private static AttendanceService attendanceService;
     private static StudentRepostiory studentRepostiory;
