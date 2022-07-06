@@ -21,6 +21,7 @@ public class Attendance extends BaseTimeEntity {
 
     @Column(nullable = false)
     private String student_name;
+
     @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST})
     private Student student;
 
