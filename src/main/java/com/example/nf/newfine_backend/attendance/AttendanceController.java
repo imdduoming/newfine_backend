@@ -12,7 +12,7 @@ public class AttendanceController {
     private static AttendanceService attendanceService;
     private static StudentRepostiory studentRepostiory;
     @CrossOrigin(origins = "*")
-    @PostMapping("/add/attendance")
+    @RequestMapping (value = "/add/attendance" ,method = RequestMethod.POST)
     public Attendance addAttendance(@RequestBody AttendanceDto attendanceDto) {
         // attendance
         // 출석 정보를 만들기 위해서 필요한 것
