@@ -14,12 +14,7 @@ public class AttendanceController {
     @CrossOrigin(origins = "*")
     @RequestMapping (value = "/add/attendance" ,method = RequestMethod.POST)
     public Attendance addAttendance(@RequestBody AttendanceDto attendanceDto) {
-        // attendance
-        // 출석 정보를 만들기 위해서 필요한 것
-
-        // 저장하는 것은 Dto가 아니라 Attendance 이니, Attendance 에 담아야 합니다.
-        // 잠시 뒤 새로운 생성자를 만듭니다.
-        return attendanceService.addAttendance(attendanceDto);
+    return attendanceService.addAttendance(attendanceDto);
 
     }
     @GetMapping("/get/all/attendances")
