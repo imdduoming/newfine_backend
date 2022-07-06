@@ -3,14 +3,15 @@ package com.example.nf.newfine_backend.attendance;
 import com.example.nf.newfine_backend.Student;
 import com.example.nf.newfine_backend.StudentRepostiory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class AttendanceController {
     private static AttendanceService attendanceService;
     private static StudentRepostiory studentRepostiory;
+    @CrossOrigin
     @PostMapping("/add/attendance")
     public Attendance addAttendance(@RequestBody AttendanceDto attendanceDto) {
         // attendance
@@ -20,7 +21,10 @@ public class AttendanceController {
         // 잠시 뒤 새로운 생성자를 만듭니다.
         return attendanceService.addAttendance(attendanceDto);
 
-
+    }
+    @GetMapping("/get/all/attendances")
+    public List<Attendance> getAllAttendances(){
+        return attendanceService.getAllAttendances();
     }
 
 

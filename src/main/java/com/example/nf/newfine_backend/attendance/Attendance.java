@@ -19,15 +19,23 @@ public class Attendance extends BaseTimeEntity {
     @Column(name = "attendance_id")
     private Long ssId;
 
+    @Column(nullable = false)
+    private String student_name;
     @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST})
     private Student student;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST})
     private Course course;
 
+//    @Builder
+//    public Attendance(Student student) {
+//        this.student=student;
+//
+//
+//    }
     @Builder
-    public Attendance(Student student) {
-        this.student=student;
+    public Attendance(AttendanceDto attendanceDto) {
+        this.student_name=attendanceDto.getStudentName();
 
 
     }

@@ -11,5 +11,5 @@ import java.util.Date;
 public class AttendanceDto {
 
     private String studentName;
-    private String phoneNumber;
+//    private String phoneNumber;
 }
