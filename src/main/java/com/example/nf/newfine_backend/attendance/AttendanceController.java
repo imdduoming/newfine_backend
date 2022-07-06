@@ -8,10 +8,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
+@CrossOrigin(origins = "NewfinebackendDocker.ap-northeast-2.elasticbeanstalk.com")
 public class AttendanceController {
     private static AttendanceService attendanceService;
     private static StudentRepostiory studentRepostiory;
-    @CrossOrigin(origins = "*")
+
     @RequestMapping (value = "/add/attendance" ,method = RequestMethod.POST)
     public Attendance addAttendance(@RequestBody AttendanceDto attendanceDto) {
     return attendanceService.addAttendance(attendanceDto);
