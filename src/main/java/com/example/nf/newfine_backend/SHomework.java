@@ -28,6 +28,8 @@
 //    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST})
 //    private THomework tHomework;
 //
+//
+//
 //    // 파일 속성 추가해주세용
 ////    @Column(nullable = false)
 ////    private ;
