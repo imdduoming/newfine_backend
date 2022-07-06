@@ -11,7 +11,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://newfinebackenddocker.ap-northeast-2.elasticbeanstalk.com/")
+                .allowedOrigins("https://eb.newfine.tk")
                 .allowedMethods("POST", "PUT", "GET", "DELETE")
                 .exposedHeaders(HttpHeaders.LOCATION);
     }
