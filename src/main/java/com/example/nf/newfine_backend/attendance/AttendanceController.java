@@ -9,8 +9,7 @@ import org.springframework.web.servlet.tags.Param;
 
 import java.util.List;
 
-@Controller
-@CrossOrigin(origins = "*")
+@RestController
 @RequiredArgsConstructor
 public class AttendanceController {
     private final AttendanceService attendanceService;
