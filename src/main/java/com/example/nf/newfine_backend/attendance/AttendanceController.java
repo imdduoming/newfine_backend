@@ -15,7 +15,7 @@ public class AttendanceController {
     private final AttendanceService attendanceService;
     private final StudentRepostiory studentRepostiory;
 
-    @RequestMapping (value = "add/attendance" ,method = RequestMethod.POST)
+    @PostMapping (value = "add/attendance" )
     public Attendance addAttendance(@RequestBody AttendanceDto attendanceDto) {
 
         return attendanceService.addAttendance(attendanceDto);
