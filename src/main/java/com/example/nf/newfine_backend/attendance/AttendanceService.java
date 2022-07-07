@@ -20,6 +20,7 @@ public class AttendanceService {
         System.out.println(attendanceDto.getStudentName());
         Attendance attendance= new Attendance(attendanceDto);
         attendanceRepository.save(attendance);
+        System.out.println(attendance);
         return attendance;
     }
     public List<Attendance> getAllAttendances() {

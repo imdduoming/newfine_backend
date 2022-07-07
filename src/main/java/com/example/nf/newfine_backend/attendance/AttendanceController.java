@@ -17,6 +17,7 @@ public class AttendanceController {
 
     @RequestMapping (value = "add/attendance" ,method = RequestMethod.POST)
     public Attendance addAttendance(@RequestBody AttendanceDto attendanceDto) {
+
         return attendanceService.addAttendance(attendanceDto);
 
     }
