@@ -15,13 +15,13 @@ public class AttendanceController {
     private final AttendanceService attendanceService;
     private final StudentRepostiory studentRepostiory;
 
-    @PostMapping (value = "/add/attendance" )
+    @PostMapping (value = "add/attendance" )
     public Attendance addAttendance(@RequestParam@RequestBody AttendanceDto attendanceDto) {
 
         return attendanceService.addAttendance(attendanceDto);
 
     }
-    @GetMapping("/get/all/attendances")
+    @GetMapping("get/all/attendances")
     public List<Attendance> getAllAttendances(){
         return attendanceService.getAllAttendances();
     }
