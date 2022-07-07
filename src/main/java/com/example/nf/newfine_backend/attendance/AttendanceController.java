@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "https://eb.newfine.tk") // 컨트롤러에서 설정
 public class AttendanceController {
     private final AttendanceService attendanceService;
     private final StudentRepostiory studentRepostiory;
