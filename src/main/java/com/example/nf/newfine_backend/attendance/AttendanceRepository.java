@@ -6,6 +6,6 @@ import org.yaml.snakeyaml.events.Event;
 import java.util.List;
 
 public interface AttendanceRepository extends JpaRepository <Attendance,Long> {
-    List<Attendance> findByStudent_phone(String phone_number);
+    List<Attendance> findByStudentPhone(String phone_number);
 }
 

@@ -28,7 +28,7 @@ public class AttendanceService {
     }
 
     public List<Attendance> getMyAttendances(String phone_number) {
-        return attendanceRepository.findByStudent_phone(phone_number);
+        return attendanceRepository.findByStudentPhone(phone_number);
     }
 
 

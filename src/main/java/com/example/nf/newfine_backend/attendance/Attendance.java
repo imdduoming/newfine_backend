@@ -20,7 +20,7 @@ public class Attendance extends BaseTimeEntity {
     private Long ssId;
 
     @Column(nullable = false)
-    private String student_phone;
+    private String studentPhone;
 
 
 
@@ -38,7 +38,7 @@ public class Attendance extends BaseTimeEntity {
 //    }
     @Builder
     public Attendance(AttendanceDto attendanceDto) {
-        this.student_phone=attendanceDto.getStudentPhoneNumber();
+        this.studentPhone=attendanceDto.getStudentPhoneNumber();
 
 
     }
