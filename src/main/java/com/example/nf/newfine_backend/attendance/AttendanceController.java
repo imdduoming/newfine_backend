@@ -26,8 +26,9 @@ public class AttendanceController {
         return attendanceService.getAllAttendances();
     }
 
-    @GetMapping("/get/attendances/{phone_number}")
+    @GetMapping("/get/attendance/{phone_number}")
     public List<Attendance> getMyAttendances(@PathVariable String phone_number){
+
         return attendanceService.getMyAttendances(phone_number);
     }
 
