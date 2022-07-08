@@ -20,7 +20,9 @@ public class Attendance extends BaseTimeEntity {
     private Long ssId;
 
     @Column(nullable = false)
-    private String student_name;
+    private String student_phone;
+
+
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST})
     private Student student;
@@ -36,7 +38,7 @@ public class Attendance extends BaseTimeEntity {
 //    }
     @Builder
     public Attendance(AttendanceDto attendanceDto) {
-        this.student_name=attendanceDto.getStudentName();
+        this.student_phone=attendanceDto.getStudentPhoneNumber();
 
 
     }

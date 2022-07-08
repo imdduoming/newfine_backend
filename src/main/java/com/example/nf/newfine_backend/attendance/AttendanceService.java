@@ -17,7 +17,7 @@ public class AttendanceService {
 
     public Attendance addAttendance(AttendanceDto attendanceDto) {
 //        Student student= studentRepository.findBySphoneNumber(attendanceDto.getPhoneNumber());
-        System.out.println(attendanceDto.getStudentName());
+        System.out.println(attendanceDto.getStudentPhoneNumber());
         Attendance attendance= new Attendance(attendanceDto);
         attendanceRepository.save(attendance);
         System.out.println(attendance);
@@ -26,6 +26,11 @@ public class AttendanceService {
     public List<Attendance> getAllAttendances() {
         return attendanceRepository.findAll();
     }
+
+    public List<Attendance> getMyAttendances(String phone_number) {
+        return attendanceRepository.findByStudent_phone(phone_number);
+    }
+
 
 
 

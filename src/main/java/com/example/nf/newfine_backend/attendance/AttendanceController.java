@@ -18,13 +18,17 @@ public class AttendanceController {
 
     @PostMapping  (value = "/add/attendance" )
     public Attendance addAttendance(@RequestBody AttendanceDto attendanceDto) {
-
         return attendanceService.addAttendance(attendanceDto);
 
     }
     @GetMapping("/get/all/attendances")
     public List<Attendance> getAllAttendances(){
         return attendanceService.getAllAttendances();
+    }
+
+    @GetMapping("/get/attendances/{phone_number}")
+    public List<Attendance> getMyAttendances(@PathVariable String phone_number){
+        return attendanceService.getMyAttendances(phone_number);
     }
 
 

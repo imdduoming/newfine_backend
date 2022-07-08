@@ -10,6 +10,6 @@ import java.util.Date;
 @NoArgsConstructor
 public class AttendanceDto {
 
-    private String studentName;
-//    private String phoneNumber;
+    private String studentPhoneNumber;
+
 }
