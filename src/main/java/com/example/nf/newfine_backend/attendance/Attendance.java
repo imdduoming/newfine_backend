@@ -22,13 +22,13 @@ public class Attendance extends BaseTimeEntity {
     @Column(nullable = false)
     private String studentPhone;
 
-
-
-    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST})
-    private Student student;
-
-    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST})
-    private Course course;
+//
+//
+//    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST})
+//    private Student student;
+//
+//    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST})
+//    private Course course;
 
 //    @Builder
 //    public Attendance(Student student) {

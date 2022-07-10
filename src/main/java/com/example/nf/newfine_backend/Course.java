@@ -24,15 +24,15 @@ public class Course {
     @Column(nullable = false)
     private String cName;
 
-    @OneToMany(mappedBy="course", cascade = { CascadeType.PERSIST})
-    private List<Attendance> attendances;
+//    @OneToMany(mappedBy="course", cascade = { CascadeType.PERSIST})
+////    private List<Attendance> attendances;
 
 //    @OneToMany(mappedBy="course", cascade = {CascadeType.REMOVE})
 //    private List<THomework> tHomeworks;
 //
-    @ManyToOne
-    @JoinColumn(name="teacher_id")
-    private Teacher teacher;
+//    @ManyToOne
+//    @JoinColumn(name="teacher_id")
+//    private Teacher teacher;
 
 
 
