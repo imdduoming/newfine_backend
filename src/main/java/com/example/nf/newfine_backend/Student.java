@@ -41,9 +41,9 @@ public class Student {
     @Column(nullable = false)
     private String sphoneNumber;
 
-
-    @OneToMany(mappedBy="student", cascade = { CascadeType.PERSIST})
-    private List<Attendance> attendances;
+//
+//    @OneToMany(mappedBy="student", cascade = { CascadeType.PERSIST})
+//    private List<Attendance> attendances;
 
 //    @JsonIgnore
 //    @OneToMany(mappedBy="student", cascade = {CascadeType.REMOVE})
