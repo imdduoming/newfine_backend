@@ -18,6 +18,7 @@ public class AttendanceController {
 
     @PostMapping  (value = "/make/attendance" )
     public Attendance makeAttendance(@RequestBody AttendanceDto attendanceDto) {
+        System.out.println(attendanceDto.getCourse_id());
         Optional<Course> course = courseRepository.findById(attendanceDto.getCourse_id());
         Course course2 = course.get();
         System.out.println(course2);
