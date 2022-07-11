@@ -20,6 +20,7 @@ public class AttendanceController {
     public Attendance makeAttendance(@RequestBody AttendanceDto attendanceDto) {
         Optional<Course> course = courseRepository.findById(attendanceDto.getCourse_id());
         Course course2 = course.get();
+        System.out.println(course2);
         return attendanceService.makeAttendance(course2);
 
     }

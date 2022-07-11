@@ -16,7 +16,7 @@ public class Attendance extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     @Column(name = "attendance_id")
-    private String attendanceId;
+    private Long attendanceId;
 
     @Column(nullable = false)
     private String url;

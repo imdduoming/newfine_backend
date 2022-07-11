@@ -20,8 +20,11 @@ public class AttendanceService {
     public Attendance makeAttendance(Course course) {
 //        Student student= studentRepository.findBySphoneNumber(attendanceDto.getPhoneNumber());
         Attendance attendance= new Attendance(course);
-        String attendance_id=attendance.getAttendanceId();
-        String attendance_url="https://eb.newfine.tk/add/attendance/"+attendance_id;
+        Long attendance_id=attendance.getAttendanceId();
+        String a_id=Long.toString(attendance_id);
+        System.out.println(a_id);
+        String attendance_url="https://eb.newfine.tk/add/attendance/"+a_id;
+        System.out.println(attendance_url);
         attendance.setUrl(attendance_url);
         attendanceRepository.save(attendance);
         System.out.println(attendance);
