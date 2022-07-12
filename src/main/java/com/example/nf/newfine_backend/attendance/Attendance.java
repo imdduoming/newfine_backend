@@ -18,7 +18,7 @@ public class Attendance extends BaseTimeEntity {
     @Column(name = "attendance_id")
     private Long attendanceId;
 
-    @Column(nullable = false)
+    @Column
     private String url;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST})
