@@ -2,6 +2,7 @@ package com.example.nf.newfine_backend.attendance;
 
 import com.example.nf.newfine_backend.BaseTimeEntity;
 import com.example.nf.newfine_backend.Course;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,6 +23,7 @@ public class Attendance extends BaseTimeEntity {
     private String url;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST})
+    @JsonManagedReference
     private Course course;
 
 //    @Builder

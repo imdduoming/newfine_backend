@@ -30,7 +30,7 @@ public class AttendanceService {
         attendance2.setUrl(attendance_url);
         attendanceRepository.save(attendance2);
         System.out.println(attendance2);
-        return attendance;
+        return attendance2;
     }
 
     public StudentAttendance addAttendance(StudentAttendanceDto studentAttendanceDto) {

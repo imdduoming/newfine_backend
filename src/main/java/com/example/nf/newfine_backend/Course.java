@@ -2,6 +2,7 @@ package com.example.nf.newfine_backend;
 
 
 import com.example.nf.newfine_backend.attendance.Attendance;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,7 @@ public class Course {
     @Column(nullable = false)
     private String cName;
 
+    @JsonBackReference //순환참조 방지
     @OneToMany(mappedBy="course", cascade = { CascadeType.PERSIST})
     private List<Attendance> attendances;
 
