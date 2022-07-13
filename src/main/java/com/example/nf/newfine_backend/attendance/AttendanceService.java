@@ -1,13 +1,12 @@
 package com.example.nf.newfine_backend.attendance;
 
-import com.example.nf.newfine_backend.Course;
+import com.example.nf.newfine_backend.course.Course;
 import com.example.nf.newfine_backend.StudentRepostiory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service

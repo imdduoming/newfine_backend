@@ -1,8 +1,7 @@
 package com.example.nf.newfine_backend.attendance;
 
-import com.example.nf.newfine_backend.Course;
-import com.example.nf.newfine_backend.CourseRepository;
-import com.example.nf.newfine_backend.StudentRepostiory;
+import com.example.nf.newfine_backend.course.Course;
+import com.example.nf.newfine_backend.course.CourseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

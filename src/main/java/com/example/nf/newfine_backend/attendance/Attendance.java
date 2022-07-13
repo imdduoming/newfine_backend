@@ -1,12 +1,11 @@
 package com.example.nf.newfine_backend.attendance;
 
 import com.example.nf.newfine_backend.BaseTimeEntity;
-import com.example.nf.newfine_backend.Course;
+import com.example.nf.newfine_backend.course.Course;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Optional;
 
 @Setter
 @Getter

@@ -1,4 +1,4 @@
-package com.example.nf.newfine_backend;
+package com.example.nf.newfine_backend.course;
 
 
 import com.example.nf.newfine_backend.attendance.Attendance;
