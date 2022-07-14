@@ -18,8 +18,8 @@ public class StudentAttendance extends BaseTimeEntity {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
-    @Column(name = "studentattendance_id")
-    private Long ssId;
+    @Column(name = "sattendance_id")
+    private Long sAttendanceId;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST})
     private Attendance attendance;
