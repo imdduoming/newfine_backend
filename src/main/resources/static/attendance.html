@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 <script>
     var idx;
     $(document).ready(function () {
         idx = window.location.search.split("=")[1]
         add_attendance(idx);
-    })
+    });
     function add_attendance(idx){
         let data = {"attendance_id":idx.toString()}
         $.ajax({
