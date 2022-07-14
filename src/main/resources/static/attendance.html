@@ -5,13 +5,13 @@
     <title>Title</title>
 </head>
 <script>
-    String idx;
+    var idx;
     $(document).ready(function () {
         idx = window.location.search.split("=")[1]
         add_attendance(idx);
     })
-    function add_attendance(){
-        let data = {"attendance_id":idx}
+    function add_attendance(idx){
+        let data = {"attendance_id":idx.toString()}
         $.ajax({
             type: "POST",
             url: `${domainURL}/add/attendance`,
@@ -24,6 +24,6 @@
     }
     </script>
 <body>
-<h1></h1>
+<h1>출석 되었습니다!</h1>
 </body>
 </html>
