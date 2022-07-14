@@ -24,7 +24,7 @@ public class AttendanceService {
         Long attendance_id=attendance.getAttendanceId();
         String a_id=Long.toString(attendance_id);
         Attendance attendance2=attendanceRepository.findById(attendance_id).get();
-        String attendance_url="https://eb.newfine.tk/add/attendance/"+a_id;
+        String attendance_url="https://eb.newfine.tk/attendance.html?idx="+a_id;
         attendance2.setUrl(attendance_url);
         attendanceRepository.save(attendance2);
         return attendance2;

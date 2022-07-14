@@ -8,6 +8,6 @@ import lombok.*;
 @NoArgsConstructor
 public class StudentAttendanceDto {
 
-    private String studentPhoneNumber;
+    private String attendance_id;
 
 }

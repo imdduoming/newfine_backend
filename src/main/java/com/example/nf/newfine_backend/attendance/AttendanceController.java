@@ -18,15 +18,16 @@ public class AttendanceController {
     @PostMapping  (value = "/make/attendance" )
     public Attendance makeAttendance(@RequestBody AttendanceDto attendanceDto) {
         System.out.println(attendanceDto.getCourse_id());
-        Optional<Course> course = courseRepository.findById(attendanceDto.getCourse_id());
-        Course course2 = course.get();
+    Optional<Course> course = courseRepository.findById(attendanceDto.getCourse_id());
+    Course course2 = course.get();
         System.out.println(course2);
         return attendanceService.makeAttendance(course2);
 
-    }
+}
 
-    @PostMapping  (value = "/add/attendance/{attendance_id}" )
-    public void addAttendance(@PathVariable Long attendance_id) {
+    @PostMapping  (value = "/add/attendance" )
+    public void addAttendance(@RequestBody StudentAttendanceDto studentAttendanceDto) {
+        Long attendance_id=Long.parseLong(studentAttendanceDto.getAttendance_id());
         attendanceService.addAttendance(attendance_id);
         // 출석하고 앱 화면으로 돌리기
 
