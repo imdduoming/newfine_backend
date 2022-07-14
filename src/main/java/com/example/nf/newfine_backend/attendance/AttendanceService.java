@@ -31,6 +31,7 @@ public class AttendanceService {
     }
 
     public void addAttendance(Long attedance_id) {
+
         System.out.println(attedance_id);
         Long student_id=Long.valueOf(1);
         Attendance attendance=attendanceRepository.findById(attedance_id).get();
