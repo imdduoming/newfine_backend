@@ -21,9 +21,6 @@ public class StudentAttendance extends BaseTimeEntity {
     @Column(name = "studentattendance_id")
     private Long ssId;
 
-    @Column(nullable = false)
-    private String studentPhone;
-
     @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST})
     private Attendance attendance;
 
