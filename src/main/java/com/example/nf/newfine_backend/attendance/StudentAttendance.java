@@ -2,6 +2,7 @@ package com.example.nf.newfine_backend.attendance;
 
 
 import com.example.nf.newfine_backend.BaseTimeEntity;
+import com.example.nf.newfine_backend.Student;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,10 +24,11 @@ public class StudentAttendance extends BaseTimeEntity {
     @Column(nullable = false)
     private String studentPhone;
 
-//
-//
-//    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST})
-//    private Student student;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST})
+    private Attendance attendance;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST})
+    private Student student;
 //
 //    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST})
 //    private Course course;
@@ -38,8 +40,9 @@ public class StudentAttendance extends BaseTimeEntity {
 //
 //    }
     @Builder
-    public StudentAttendance(StudentAttendanceDto studentAttendanceDto) {
-        this.studentPhone= studentAttendanceDto.getStudentPhoneNumber();
+    public StudentAttendance(Student student,Attendance attendance) {
+        this.student=student;
+        this.attendance=attendance;
 
 
     }

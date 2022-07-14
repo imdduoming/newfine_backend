@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Setter
 @Getter
@@ -25,6 +26,9 @@ public class Attendance extends BaseTimeEntity {
     @JsonManagedReference
     private Course course;
 
+    @OneToMany(mappedBy="attendance", cascade = { CascadeType.PERSIST})
+    private List<StudentAttendance> studentAttendances;
+
 //    @Builder
 //    public Attendance(Student student) {
 //        this.student=student;
@@ -36,6 +40,8 @@ public class Attendance extends BaseTimeEntity {
         this.course=course;
 
     }
+
+
 
 
 

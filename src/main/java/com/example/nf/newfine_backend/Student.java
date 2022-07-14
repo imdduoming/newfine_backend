@@ -1,6 +1,7 @@
 package com.example.nf.newfine_backend;
 
 import com.example.nf.newfine_backend.attendance.Attendance;
+import com.example.nf.newfine_backend.attendance.StudentAttendance;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -41,9 +42,9 @@ public class Student {
     @Column(nullable = false)
     private String sphoneNumber;
 
-//
-//    @OneToMany(mappedBy="student", cascade = { CascadeType.PERSIST})
-//    private List<Attendance> attendances;
+
+    @OneToMany(mappedBy="student", cascade = { CascadeType.PERSIST})
+    private List<StudentAttendance> studentAttendances;
 
 //    @JsonIgnore
 //    @OneToMany(mappedBy="student", cascade = {CascadeType.REMOVE})

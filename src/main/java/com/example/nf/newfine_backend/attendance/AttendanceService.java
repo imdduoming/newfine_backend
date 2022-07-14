@@ -1,5 +1,6 @@
 package com.example.nf.newfine_backend.attendance;
 
+import com.example.nf.newfine_backend.Student;
 import com.example.nf.newfine_backend.course.Course;
 import com.example.nf.newfine_backend.StudentRepostiory;
 import lombok.RequiredArgsConstructor;
@@ -20,25 +21,23 @@ public class AttendanceService {
 //        Student student= studentRepository.findBySphoneNumber(attendanceDto.getPhoneNumber());
         Attendance attendance= new Attendance(course);
         attendanceRepository.save(attendance);
-        System.out.println(attendance.getAttendanceId());
         Long attendance_id=attendance.getAttendanceId();
         String a_id=Long.toString(attendance_id);
         Attendance attendance2=attendanceRepository.findById(attendance_id).get();
         String attendance_url="https://eb.newfine.tk/add/attendance/"+a_id;
-        System.out.println(attendance_url);
         attendance2.setUrl(attendance_url);
         attendanceRepository.save(attendance2);
-        System.out.println(attendance2);
         return attendance2;
     }
 
-    public StudentAttendance addAttendance(StudentAttendanceDto studentAttendanceDto) {
-//        Student student= studentRepository.findBySphoneNumber(attendanceDto.getPhoneNumber());
-        System.out.println(studentAttendanceDto.getStudentPhoneNumber());
-        StudentAttendance studentAttendance= new StudentAttendance(studentAttendanceDto);
+    public void addAttendance(Long attedance_id) {
+        System.out.println(attedance_id);
+        Long student_id=Long.valueOf(1);
+        Attendance attendance=attendanceRepository.findById(attedance_id).get();
+        Student student= studentRepository.findById(student_id).get();
+        StudentAttendance studentAttendance= new StudentAttendance(student,attendance);
         studentattendanceRepository.save(studentAttendance);
         System.out.println(studentAttendance);
-        return studentAttendance;
     }
 
 

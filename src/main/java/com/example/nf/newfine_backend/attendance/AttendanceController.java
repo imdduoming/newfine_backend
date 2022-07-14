@@ -25,9 +25,10 @@ public class AttendanceController {
 
     }
 
-    @PostMapping  (value = "/add/attendance" )
-    public StudentAttendance addAttendance(@RequestBody StudentAttendanceDto studentAttendanceDto) {
-        return attendanceService.addAttendance(studentAttendanceDto);
+    @PostMapping  (value = "/add/attendance/{attendance_id}" )
+    public void addAttendance(@PathVariable Long attendance_id) {
+        attendanceService.addAttendance(attendance_id);
+        // 출석하고 앱 화면으로 돌리기
 
     }
     @GetMapping("/get/all/attendances")
