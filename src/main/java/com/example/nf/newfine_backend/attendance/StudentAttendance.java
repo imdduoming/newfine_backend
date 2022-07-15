@@ -16,6 +16,7 @@ import javax.persistence.*;
 @Entity
 public class StudentAttendance extends BaseTimeEntity {
 
+
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     @Column(name = "sattendance_id")
