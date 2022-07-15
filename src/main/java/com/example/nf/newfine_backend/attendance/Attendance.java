@@ -1,12 +1,12 @@
 package com.example.nf.newfine_backend.attendance;
 
 import com.example.nf.newfine_backend.BaseTimeEntity;
-import com.example.nf.newfine_backend.Course;
-import com.example.nf.newfine_backend.Student;
+import com.example.nf.newfine_backend.course.Course;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.util.List;
 
 @Setter
 @Getter
@@ -17,20 +17,31 @@ public class Attendance extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     @Column(name = "attendance_id")
-    private Long ssId;
+    private Long attendanceId;
+
+    @Column
+    private String url;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST})
-    private Student student;
-
-    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST})
+    @JsonManagedReference
     private Course course;
 
-    @Builder
-    public Attendance(Student student) {
-        this.student=student;
+    @OneToMany(mappedBy="attendance", cascade = { CascadeType.PERSIST})
+    private List<StudentAttendance> studentAttendances;
 
+//    @Builder
+//    public Attendance(Student student) {
+//        this.student=student;
+//
+//
+//    }
+    @Builder
+    public Attendance(Course course) {
+        this.course=course;
 
     }
+
+
 
 
 

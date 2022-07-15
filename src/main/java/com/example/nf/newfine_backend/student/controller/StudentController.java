@@ -1,0 +1,48 @@
+package com.example.nf.newfine_backend.student.controller;
+
+import com.example.nf.newfine_backend.student.dto.StudentResponseDto;
+import com.example.nf.newfine_backend.student.service.StudentService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequiredArgsConstructor
+@CrossOrigin(origins = "*", allowedHeaders = "*")
+@RequestMapping("/member")
+public class StudentController {
+    private final StudentService studentService;
+
+    @GetMapping("/me")
+    public ResponseEntity<StudentResponseDto> getMyMemberInfo() {
+        return ResponseEntity.ok(studentService.getMyInfo());
+    }
+
+    @GetMapping("/{phoneNumber}")
+    public ResponseEntity<StudentResponseDto> getMemberInfo(@PathVariable String phoneNumber) {
+        return ResponseEntity.ok(studentService.getMemberInfo(phoneNumber));
+    }
+
+//    /////// ㅁㄱ
+//    @PostMapping("/myInfo")
+//    public ResponseEntity<MemberResponseDto> getMyInfo(@RequestHeader("token") String token){
+//        token.replace("Bearer ", "");
+//        return ResponseEntity.ok(authService.findMemberByToken(token));
+//    }
+//
+//
+//    @PostMapping("/nickname")
+//    public String setNickname(@RequestBody NickRequestDto nickRequestDto){
+//        Optional<Member> member = memberRepository.findByPhoneNumber(nickRequestDto.getPhoneNumber());
+////        authService.parseClaims1(token);
+//
+//
+//        return nickRequestDto.getNickname();
+//    }
+
+    //    @PostMapping("/myInfo")
+//    public ResponseEntity<MemberResponseDto> getMyInfo(@RequestHeader("authorization") String token){
+//        token.replace("Bearer ", "");
+//        return ResponseEntity.ok(authService.findMemberByToken(token));
+//    }
+}

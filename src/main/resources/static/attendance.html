@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script>
+    var idx;
+    let domainURL= 'https://eb.newfine.tk';
+    $(document).ready(function () {
+        idx = window.location.search.split("=")[1]
+        add_attendance(idx);
+    });
+    function add_attendance(idx){
+        let data = {"attendance_id":idx.toString()}
+        $.ajax({
+            type: "POST",
+            url: `${domainURL}/add/attendance`,
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (response) {
+                console.log(response)
+            }
+        });
+    }
+    </script>
+<body>
+<h1>출석 되었습니다!</h1>
+</body>
+</html>

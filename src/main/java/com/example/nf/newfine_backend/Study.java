@@ -1,5 +1,6 @@
 package com.example.nf.newfine_backend;
 
+import com.example.nf.newfine_backend.student.domain.Student;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,8 +20,8 @@ public class Study extends BaseTimeEntity {
     @Column(name = "study_id")
     private Long ssId;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST})
-    private Student student;
+//    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST})
+//    private Student student;
 
     @Column(nullable = false)
     private Date entranceTime;

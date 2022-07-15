@@ -1,27 +1,47 @@
 package com.example.nf.newfine_backend.attendance;
 
-import com.example.nf.newfine_backend.Student;
-import com.example.nf.newfine_backend.StudentRepostiory;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import com.example.nf.newfine_backend.course.Course;
+import com.example.nf.newfine_backend.course.CourseRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequiredArgsConstructor
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class AttendanceController {
-    private static AttendanceService attendanceService;
-    private static StudentRepostiory studentRepostiory;
-    @PostMapping("/add/attendance")
-    public Attendance addAttendance(@RequestBody AttendanceDto attendanceDto) {
-        // attendance
-        // 출석 정보를 만들기 위해서 필요한 것
+    private final AttendanceService attendanceService;
+    private final CourseRepository courseRepository;
 
-        // 저장하는 것은 Dto가 아니라 Attendance 이니, Attendance 에 담아야 합니다.
-        // 잠시 뒤 새로운 생성자를 만듭니다.
-        return attendanceService.addAttendance(attendanceDto);
+    @PostMapping  (value = "/make/attendance" )
+    public Attendance makeAttendance(@RequestBody AttendanceDto attendanceDto) {
+        System.out.println(attendanceDto.getCourse_id());
+    Optional<Course> course = courseRepository.findById(attendanceDto.getCourse_id());
+    Course course2 = course.get();
+        System.out.println(course2);
+        return attendanceService.makeAttendance(course2);
 
+}
+
+    @PostMapping  (value = "/add/attendance" )
+    public void addAttendance(@RequestBody StudentAttendanceDto studentAttendanceDto) {
+        Long attendance_id=Long.parseLong(studentAttendanceDto.getAttendance_id());
+        attendanceService.addAttendance(attendance_id);
+        // 출석하고 앱 화면으로 돌리기
 
     }
+    @GetMapping("/get/all/attendances")
+    public List<Attendance> getAllAttendances(){
+        return attendanceService.getAllAttendances();
+    }
+
+//    @GetMapping("/get/attendance/{phone_number}")
+//    public List<Attendance> getMyAttendances(@PathVariable String phone_number){
+//
+//        return attendanceService.getMyAttendances(phone_number);
+//    }
 
 
 }
