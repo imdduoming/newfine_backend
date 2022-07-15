@@ -11,7 +11,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 
 @Configuration
-public class S3Config {
+public class HWS3Config {
     @Value("${cloud.aws.credentials.access-key}")
     private String accessKey;
 
@@ -23,7 +23,7 @@ public class S3Config {
 
 
     @Bean
-    public AmazonS3 amazonS3Client() {
+    public AmazonS3 amazonHWS3Client() {
         AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
         return AmazonS3ClientBuilder.standard()
                 .withRegion(region)
