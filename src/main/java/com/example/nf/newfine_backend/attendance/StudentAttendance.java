@@ -2,7 +2,7 @@ package com.example.nf.newfine_backend.attendance;
 
 
 import com.example.nf.newfine_backend.BaseTimeEntity;
-import com.example.nf.newfine_backend.Student;
+import com.example.nf.newfine_backend.student.domain.Student;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +16,7 @@ import javax.persistence.*;
 @Entity
 public class StudentAttendance extends BaseTimeEntity {
 
+
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     @Column(name = "sattendance_id")
@@ -24,7 +25,7 @@ public class StudentAttendance extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST})
     private Attendance attendance;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST})
+    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE})
     private Student student;
 
     @Builder

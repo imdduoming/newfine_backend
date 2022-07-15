@@ -1,8 +1,8 @@
 package com.example.nf.newfine_backend.attendance;
 
-import com.example.nf.newfine_backend.Student;
+import com.example.nf.newfine_backend.student.domain.Student;
 import com.example.nf.newfine_backend.course.Course;
-import com.example.nf.newfine_backend.StudentRepostiory;
+import com.example.nf.newfine_backend.student.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ import java.util.List;
 @Slf4j
 public class AttendanceService {
     private final AttendanceRepository attendanceRepository;
-    private final StudentRepostiory studentRepository;
+    private final StudentRepository studentRepository;
     private final StudentAttendanceRepository studentattendanceRepository;
 
     public Attendance makeAttendance(Course course) {
