@@ -24,7 +24,7 @@ public class StudentAttendance extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST})
     private Attendance attendance;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST})
+    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE})
     private Student student;
 
     @Builder
