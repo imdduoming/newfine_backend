@@ -2,7 +2,7 @@ package com.example.nf.newfine_backend.attendance;
 
 
 import com.example.nf.newfine_backend.BaseTimeEntity;
-import com.example.nf.newfine_backend.Student;
+import com.example.nf.newfine_backend.student.domain.Student;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
