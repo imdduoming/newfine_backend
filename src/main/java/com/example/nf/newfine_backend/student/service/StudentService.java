@@ -1,5 +1,6 @@
 package com.example.nf.newfine_backend.student.service;
 
+import com.example.nf.newfine_backend.student.domain.Student;
 import com.example.nf.newfine_backend.student.dto.StudentResponseDto;
 import com.example.nf.newfine_backend.student.exception.CustomException;
 import com.example.nf.newfine_backend.student.repository.StudentRepository;
@@ -35,4 +36,16 @@ public class StudentService {
                 .orElseThrow(() -> new CustomException(UNAUTHORIZED_MEMBER));
 //                .orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다."));
     }
+
+    // 현재 SecurityContext 에 있는 유저 정보 가져오기
+    // SecurityContext는 전역 , Student 로 반환받기
+    @Transactional(readOnly = true)
+    public Student getUser() {
+        // api 요청이 들어오면 필터에서 access token 복호화하여 유저 정보를 꺼낸 뒤  Security Context에 저장
+        return studentRepository.findById(SecurityUtil.getCurrentMemberId())
+                .orElseThrow(() -> new CustomException(UNAUTHORIZED_MEMBER));
+//                .orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다."));
+    }
+
+
 }

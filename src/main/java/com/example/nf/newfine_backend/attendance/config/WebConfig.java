@@ -1,4 +1,4 @@
-package com.example.nf.newfine_backend.config;
+package com.example.nf.newfine_backend.attendance.config;
 
 import org.springframework.context.annotation.Configuration;
 //import org.springframework.http.HttpHeaders;
