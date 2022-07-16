@@ -1,5 +1,9 @@
-package com.example.nf.newfine_backend.attendance;
+package com.example.nf.newfine_backend.attendance.controller;
 
+import com.example.nf.newfine_backend.attendance.dto.AttendanceDto;
+import com.example.nf.newfine_backend.attendance.service.AttendanceService;
+import com.example.nf.newfine_backend.attendance.dto.StudentAttendanceDto;
+import com.example.nf.newfine_backend.attendance.domain.Attendance;
 import com.example.nf.newfine_backend.course.Course;
 import com.example.nf.newfine_backend.course.CourseRepository;
 import lombok.RequiredArgsConstructor;

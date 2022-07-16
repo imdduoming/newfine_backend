@@ -1,6 +1,6 @@
 package com.example.nf.newfine_backend.student.domain;
 
-import com.example.nf.newfine_backend.attendance.StudentAttendance;
+import com.example.nf.newfine_backend.attendance.domain.StudentAttendance;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;

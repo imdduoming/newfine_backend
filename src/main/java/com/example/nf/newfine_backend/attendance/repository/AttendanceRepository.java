@@ -1,9 +1,7 @@
-package com.example.nf.newfine_backend.attendance;
+package com.example.nf.newfine_backend.attendance.repository;
 
+import com.example.nf.newfine_backend.attendance.domain.Attendance;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.yaml.snakeyaml.events.Event;
-
-import java.util.List;
 
 public interface AttendanceRepository extends JpaRepository <Attendance,Long> {
 

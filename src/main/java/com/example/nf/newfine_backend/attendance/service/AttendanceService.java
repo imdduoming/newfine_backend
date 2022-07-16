@@ -1,5 +1,9 @@
-package com.example.nf.newfine_backend.attendance;
+package com.example.nf.newfine_backend.attendance.service;
 
+import com.example.nf.newfine_backend.attendance.repository.AttendanceRepository;
+import com.example.nf.newfine_backend.attendance.repository.StudentAttendanceRepository;
+import com.example.nf.newfine_backend.attendance.domain.Attendance;
+import com.example.nf.newfine_backend.attendance.domain.StudentAttendance;
 import com.example.nf.newfine_backend.student.domain.Student;
 import com.example.nf.newfine_backend.course.Course;
 import com.example.nf.newfine_backend.student.repository.StudentRepository;

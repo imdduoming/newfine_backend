@@ -1,7 +1,8 @@
-package com.example.nf.newfine_backend.attendance;
+package com.example.nf.newfine_backend.attendance.domain;
 
 
 import com.example.nf.newfine_backend.BaseTimeEntity;
+import com.example.nf.newfine_backend.attendance.domain.Attendance;
 import com.example.nf.newfine_backend.student.domain.Student;
 import lombok.Builder;
 import lombok.Getter;

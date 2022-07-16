@@ -1,4 +1,4 @@
-package com.example.nf.newfine_backend.attendance;
+package com.example.nf.newfine_backend.attendance.domain;
 
 import com.example.nf.newfine_backend.BaseTimeEntity;
 import com.example.nf.newfine_backend.course.Course;
