@@ -1,6 +1,5 @@
 package com.example.nf.newfine_backend.course;
 
-import com.example.nf.newfine_backend.attendance.Attendance;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

@@ -1,8 +1,13 @@
-package com.example.nf.newfine_backend.attendance;
+package com.example.nf.newfine_backend.attendance.service;
 
+import com.example.nf.newfine_backend.attendance.repository.AttendanceRepository;
+import com.example.nf.newfine_backend.attendance.repository.StudentAttendanceRepository;
+import com.example.nf.newfine_backend.attendance.domain.Attendance;
+import com.example.nf.newfine_backend.attendance.domain.StudentAttendance;
 import com.example.nf.newfine_backend.student.domain.Student;
 import com.example.nf.newfine_backend.course.Course;
 import com.example.nf.newfine_backend.student.repository.StudentRepository;
+import com.example.nf.newfine_backend.student.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -16,9 +21,9 @@ public class AttendanceService {
     private final AttendanceRepository attendanceRepository;
     private final StudentRepository studentRepository;
     private final StudentAttendanceRepository studentattendanceRepository;
+    private final StudentService studentService;
 
     public Attendance makeAttendance(Course course) {
-//        Student student= studentRepository.findBySphoneNumber(attendanceDto.getPhoneNumber());
         Attendance attendance= new Attendance(course);
         attendanceRepository.save(attendance);
         Long attendance_id=attendance.getAttendanceId();
@@ -30,15 +35,24 @@ public class AttendanceService {
         return attendance2;
     }
 
-    public void addAttendance(Long attedance_id) {
+    public int addAttendance(Long attedance_id) {
+//        Student student= studentService.getUser();
+        // 중복 출석 방지
 
         System.out.println(attedance_id);
         Long student_id=Long.valueOf(1);
         Attendance attendance=attendanceRepository.findById(attedance_id).get();
         Student student= studentRepository.findById(student_id).get();
-        StudentAttendance studentAttendance= new StudentAttendance(student,attendance);
-        studentattendanceRepository.save(studentAttendance);
-        System.out.println(studentAttendance);
+        if (studentattendanceRepository.findByStudentAndAttendance(student,attendance).isPresent()) {
+            // 이미 같은 출석에 대해 같은 학생이 출석했다면
+            return 0;
+        }
+        else {
+            StudentAttendance studentAttendance = new StudentAttendance(student, attendance);
+            studentattendanceRepository.save(studentAttendance);
+            System.out.println(studentAttendance);
+            return 1;
+        }
     }
 
 

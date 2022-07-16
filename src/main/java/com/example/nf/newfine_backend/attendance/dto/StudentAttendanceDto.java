@@ -1,4 +1,4 @@
-package com.example.nf.newfine_backend.attendance;
+package com.example.nf.newfine_backend.attendance.dto;
 
 import lombok.*;
 

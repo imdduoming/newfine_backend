@@ -1,6 +1,5 @@
 package com.example.nf.newfine_backend.course;
 
-import com.example.nf.newfine_backend.attendance.Attendance;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;

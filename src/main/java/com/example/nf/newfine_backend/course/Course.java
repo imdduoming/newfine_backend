@@ -1,9 +1,8 @@
 package com.example.nf.newfine_backend.course;
 
 
-import com.example.nf.newfine_backend.attendance.Attendance;
+import com.example.nf.newfine_backend.attendance.domain.Attendance;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
