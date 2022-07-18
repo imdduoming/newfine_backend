@@ -41,6 +41,10 @@ public class Course {
     @OneToMany(mappedBy="course", cascade = { CascadeType.PERSIST})
     private List<Attendance> attendances;
 
+    @JsonBackReference //순환참조 방지
+    @OneToMany(mappedBy="course", cascade = { CascadeType.PERSIST})
+    private List<Listener> listeners;
+
 
 
 //    @OneToMany(mappedBy="course", cascade = {CascadeType.REMOVE})

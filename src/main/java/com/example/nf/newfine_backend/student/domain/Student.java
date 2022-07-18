@@ -1,6 +1,8 @@
 package com.example.nf.newfine_backend.student.domain;
 
 import com.example.nf.newfine_backend.attendance.domain.StudentAttendance;
+import com.example.nf.newfine_backend.course.Listener;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -47,6 +49,9 @@ public class Student extends Timestamped {
     @OneToMany(mappedBy="student", cascade = { CascadeType.PERSIST})
     private List<StudentAttendance> studentAttendancces;
 
+    @JsonBackReference //순환참조 방지
+    @OneToMany(mappedBy="student", cascade = { CascadeType.PERSIST})
+    private List<Listener> listeners;
 
     @Column
     private LocalDateTime signupDate;
