@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,6 +47,13 @@ public class AttendanceController {
     public List<Attendance> getAllAttendances(){
         return attendanceService.getAllAttendances();
     }
+
+    // 수업시간마다 출석부 가져오는 api , 출석 정보는 attendance 의 Student Attendance 로 가져오면 된다 .
+    @GetMapping("/get/attendance/{idx}")
+    public Attendance getAttendance(@PathVariable Long idx){
+        return attendanceService.getAttendance(idx);
+    }
+
 
 //    @GetMapping("/get/attendance/{phone_number}")
 //    public List<Attendance> getMyAttendances(@PathVariable String phone_number){
