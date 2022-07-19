@@ -20,11 +20,11 @@ public class Listener {
     private Long Id;
 
     @JsonManagedReference
-    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE})
+    @ManyToOne( cascade = { CascadeType.REMOVE})
     private Course course;
 
     @JsonManagedReference
-    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.REMOVE})
     private Student student;
 
 
