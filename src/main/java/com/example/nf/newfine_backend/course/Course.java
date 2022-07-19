@@ -1,6 +1,7 @@
 package com.example.nf.newfine_backend.course;
 
 
+import com.example.nf.newfine_backend.Teacher;
 import com.example.nf.newfine_backend.attendance.domain.Attendance;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
@@ -46,13 +47,12 @@ public class Course {
     private List<Listener> listeners;
 
 
-
 //    @OneToMany(mappedBy="course", cascade = {CascadeType.REMOVE})
 //    private List<THomework> tHomeworks;
 //
-//    @ManyToOne
-//    @JoinColumn(name="teacher_id")
-//    private Teacher teacher;
+    @ManyToOne
+    @JoinColumn(name="teacher_id")
+    private Teacher teacher;
 
 
 

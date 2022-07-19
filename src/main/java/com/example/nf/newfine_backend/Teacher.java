@@ -1,5 +1,6 @@
 package com.example.nf.newfine_backend;
 
+import com.example.nf.newfine_backend.course.Course;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,8 +29,8 @@ public class Teacher {
     @Column(nullable = false)
     private String tPhoneNumber;
 
-//    @OneToMany(mappedBy="teacher")
-//    private List<Course> courses;
+    @OneToMany(mappedBy="teacher")
+    private List<Course> courses;
 
 //    @JsonIgnore
 //    @OneToMany(mappedBy="teacher", cascade = { CascadeType.PERSIST})
