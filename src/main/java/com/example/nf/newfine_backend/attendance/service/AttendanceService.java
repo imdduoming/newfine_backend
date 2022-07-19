@@ -11,6 +11,7 @@ import com.example.nf.newfine_backend.student.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -60,6 +61,10 @@ public class AttendanceService {
         return attendanceRepository.findAll();
     }
 
+    public Attendance getAttendance(Long idx){
+        Attendance attendance=attendanceRepository.findById(idx).get();
+        return attendance;
+    }
 //    public List<Attendance> getMyAttendances(String phone_number) {
 //        return attendanceRepository.findByStudentPhone(phone_number);
 //    }

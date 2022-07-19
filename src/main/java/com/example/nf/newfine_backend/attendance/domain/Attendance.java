@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Setter
@@ -28,6 +29,15 @@ public class Attendance extends BaseTimeEntity {
 
     @OneToMany(mappedBy="attendance", cascade = { CascadeType.PERSIST})
     private List<StudentAttendance> studentAttendances;
+//
+//    @Column
+//    @Temporal(TemporalType.TIMESTAMP) // 날짜와 시간, 데이터베이스 timestamp 타입과 매핑 (2020-12-18 23:36:33)
+//    private Date startTime;
+//
+//    @Column
+//    @Temporal(TemporalType.TIMESTAMP) // 날짜와 시간, 데이터베이스 timestamp 타입과 매핑 (2020-12-18 23:36:33)
+//    private Date endTime;
+
 
 //    @Builder
 //    public Attendance(Student student) {
@@ -35,7 +45,7 @@ public class Attendance extends BaseTimeEntity {
 //
 //
 //    }
-    @Builder
+
     public Attendance(Course course) {
         this.course=course;
 

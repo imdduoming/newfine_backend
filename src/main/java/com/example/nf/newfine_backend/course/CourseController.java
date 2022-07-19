@@ -19,11 +19,12 @@ public class CourseController {
     }
 
     // 수업의 학생들 불러오기
-    @GetMapping("/get/students/{idx}")
+    @GetMapping("/get/listeners/{idx}")
     public List<Listener> getListeners(@PathVariable Long idx){
         return courseService.getListners(idx);
-
     }
+
+
 
 
 
