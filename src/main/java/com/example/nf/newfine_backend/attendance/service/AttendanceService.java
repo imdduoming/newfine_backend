@@ -63,10 +63,16 @@ public class AttendanceService {
         return attendanceRepository.findAll();
     }
 
-    public List<Attendance> getAttendance(Long idx){
+    public List<Attendance> getAttendances(Long idx){
         Course course=courseRepository.findById(idx).get();
         List<Attendance> attendanceList=attendanceRepository.findAttendancesByCourse(course);
         return attendanceList;
+    }
+
+    public List<StudentAttendance> getStudentAttendance(Long idx){
+        Attendance attendance=attendanceRepository.findById(idx).get();
+        List<StudentAttendance> studentAttendances=studentattendanceRepository.findStudentAttendancesByAttendance(attendance);
+        return studentAttendances;
     }
 //    public List<Attendance> getMyAttendances(String phone_number) {
 //        return attendanceRepository.findByStudentPhone(phone_number);

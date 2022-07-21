@@ -5,9 +5,13 @@ import com.example.nf.newfine_backend.attendance.domain.StudentAttendance;
 import com.example.nf.newfine_backend.student.domain.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface StudentAttendanceRepository extends JpaRepository<StudentAttendance,Long> {
     Optional<StudentAttendance> findByStudentAndAttendance(Student student,Attendance attendance);
+
+
+    List<StudentAttendance> findStudentAttendancesByAttendance(Attendance attendance);
 }
 
