@@ -47,6 +47,7 @@ public class Student extends Timestamped {
     private Authority authority;
 
     @OneToMany(mappedBy="student", cascade = { CascadeType.PERSIST})
+    @JsonBackReference //순환참조 방지
     private List<StudentAttendance> studentAttendancces;
 
     @JsonBackReference //순환참조 방지

@@ -4,6 +4,7 @@ package com.example.nf.newfine_backend.attendance.domain;
 import com.example.nf.newfine_backend.BaseTimeEntity;
 import com.example.nf.newfine_backend.attendance.domain.Attendance;
 import com.example.nf.newfine_backend.student.domain.Student;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,9 +25,11 @@ public class StudentAttendance extends BaseTimeEntity {
     private Long sAttendanceId;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST})
+    @JsonManagedReference
     private Attendance attendance;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE})
+    @JsonManagedReference
     private Student student;
 
     @Builder
