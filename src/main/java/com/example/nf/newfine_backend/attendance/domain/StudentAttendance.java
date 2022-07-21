@@ -24,11 +24,11 @@ public class StudentAttendance extends BaseTimeEntity {
     @Column(name = "sattendance_id")
     private Long sAttendanceId;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST})
     @JsonManagedReference
     private Attendance attendance;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.REMOVE})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.REMOVE})
     @JsonManagedReference
     private Student student;
 
