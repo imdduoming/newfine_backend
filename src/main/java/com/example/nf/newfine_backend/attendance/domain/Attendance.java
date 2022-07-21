@@ -23,7 +23,7 @@ public class Attendance extends BaseTimeEntity {
     @Column
     private String url;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST})
     @JsonManagedReference
     private Course course;
 
