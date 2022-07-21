@@ -1,4 +1,5 @@
 let domainURL= 'https://eb.newfine.tk';
+let domainURL=''
 // function add_attendance() {
 //
 //     let user_phone = $('#user_phonenumber').val();
