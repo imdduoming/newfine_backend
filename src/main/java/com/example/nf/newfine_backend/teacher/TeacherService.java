@@ -1,7 +1,10 @@
-package com.example.nf.newfine_backend.course;
+package com.example.nf.newfine_backend.teacher;
 
-import com.example.nf.newfine_backend.attendance.domain.StudentAttendance;
 import com.example.nf.newfine_backend.attendance.repository.StudentAttendanceRepository;
+import com.example.nf.newfine_backend.course.Course;
+import com.example.nf.newfine_backend.course.CourseRepository;
+import com.example.nf.newfine_backend.course.Listener;
+import com.example.nf.newfine_backend.course.ListenerRepository;
 import com.example.nf.newfine_backend.student.domain.Student;
 import com.example.nf.newfine_backend.student.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,24 +16,21 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 @Slf4j
-public class CourseService {
+public class TeacherService {
     private final CourseRepository courseRepository;
     private final StudentAttendanceRepository studentAttendanceRepository;
     private final StudentRepository studentRepository;
+    private final TeacherRepostiory teacherRepostiory;
     private final ListenerRepository listenerRepository;
     public List<Course> getAllCourses() {
         return courseRepository.findAll();
     }
 
-    public List<Listener> getListeners(Long id){
-        Course course=courseRepository.findById(id).get();
-        return listenerRepository.findListenersByCourse(course);
-    }
-
-    public List<Listener> getStudentCourses(Long id){
-        Student student=studentRepository.findById(id).get();
-        List<Listener> listeners =listenerRepository.findListenersByStudent(student);
-        return listeners;
+    public List<Course> getTeacherCourses(){
+        Long teacher_id=Long.valueOf(1);
+        Teacher teacher=teacherRepostiory.findById(teacher_id).get();
+        List<Course> courseList=courseRepository.findCoursesByTeacher(teacher);
+        return courseList;
     }
 
 

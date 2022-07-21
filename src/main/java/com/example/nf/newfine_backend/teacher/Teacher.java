@@ -1,4 +1,4 @@
-package com.example.nf.newfine_backend;
+package com.example.nf.newfine_backend.teacher;
 
 import com.example.nf.newfine_backend.course.Course;
 import com.fasterxml.jackson.annotation.JsonBackReference;
