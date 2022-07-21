@@ -4,6 +4,7 @@ import com.example.nf.newfine_backend.attendance.repository.AttendanceRepository
 import com.example.nf.newfine_backend.attendance.repository.StudentAttendanceRepository;
 import com.example.nf.newfine_backend.attendance.domain.Attendance;
 import com.example.nf.newfine_backend.attendance.domain.StudentAttendance;
+import com.example.nf.newfine_backend.course.CourseRepository;
 import com.example.nf.newfine_backend.student.domain.Student;
 import com.example.nf.newfine_backend.course.Course;
 import com.example.nf.newfine_backend.student.repository.StudentRepository;
@@ -23,6 +24,7 @@ public class AttendanceService {
     private final StudentRepository studentRepository;
     private final StudentAttendanceRepository studentattendanceRepository;
     private final StudentService studentService;
+    private final CourseRepository courseRepository;
 
     public Attendance makeAttendance(Course course) {
         Attendance attendance= new Attendance(course);
@@ -61,9 +63,10 @@ public class AttendanceService {
         return attendanceRepository.findAll();
     }
 
-    public Attendance getAttendance(Long idx){
-        Attendance attendance=attendanceRepository.findById(idx).get();
-        return attendance;
+    public List<Attendance> getAttendance(Long idx){
+        Course course=courseRepository.findById(idx).get();
+        List<Attendance> attendanceList=attendanceRepository.findAttendancesByCourse(course);
+        return attendanceList;
     }
 //    public List<Attendance> getMyAttendances(String phone_number) {
 //        return attendanceRepository.findByStudentPhone(phone_number);
