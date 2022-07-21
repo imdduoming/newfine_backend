@@ -43,13 +43,13 @@ public class AttendanceController {
         // 출석하고 앱 화면으로 돌리기
     }
 
-    @GetMapping("/get/all/attendances")
+    @GetMapping("/attendances/all")
     public List<Attendance> getAllAttendances(){
         return attendanceService.getAllAttendances();
     }
 
     // 수업시간마다 출석부 가져오는 api , 출석 정보는 attendance 의 Student Attendance 로 가져오면 된다 .
-    @GetMapping("/get/attendance/{idx}")
+    @GetMapping("/attendances/{idx}")
     public Attendance getAttendance(@PathVariable Long idx){
         return attendanceService.getAttendance(idx);
     }
