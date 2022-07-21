@@ -1,7 +1,7 @@
 package com.example.nf.newfine_backend.course;
 
 
-import com.example.nf.newfine_backend.Teacher;
+import com.example.nf.newfine_backend.teacher.Teacher;
 import com.example.nf.newfine_backend.attendance.domain.Attendance;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
