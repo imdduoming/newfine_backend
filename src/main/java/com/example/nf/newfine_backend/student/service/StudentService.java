@@ -1,11 +1,15 @@
 package com.example.nf.newfine_backend.student.service;
 
 import com.example.nf.newfine_backend.student.domain.Student;
+import com.example.nf.newfine_backend.student.dto.NickRequestDto;
 import com.example.nf.newfine_backend.student.dto.StudentResponseDto;
 import com.example.nf.newfine_backend.student.exception.CustomException;
+import com.example.nf.newfine_backend.student.exception.DuplicatedNicknameException;
+import com.example.nf.newfine_backend.student.exception.PhoneNumberNotFoundException;
 import com.example.nf.newfine_backend.student.repository.StudentRepository;
 import com.example.nf.newfine_backend.student.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +20,7 @@ import static com.example.nf.newfine_backend.student.exception.ErrorCode.UNAUTHO
 @RequiredArgsConstructor
 public class StudentService {
 
+    private final RedisTemplate redisTemplate;
     private final StudentRepository studentRepository;
 
     @Transactional(readOnly = true)
@@ -27,7 +32,7 @@ public class StudentService {
     }
 
     // 현재 SecurityContext 에 있는 유저 정보 가져오기
-    // SecurityContext는 전역
+    // SecurityContext 는 전역
     @Transactional(readOnly = true)
     public StudentResponseDto getMyInfo() {
         // api 요청이 들어오면 필터에서 access token 복호화하여 유저 정보를 꺼낸 뒤  Security Context에 저장
@@ -36,6 +41,35 @@ public class StudentService {
                 .orElseThrow(() -> new CustomException(UNAUTHORIZED_MEMBER));
 //                .orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다."));
     }
+
+    public StudentResponseDto setNickname(NickRequestDto nickRequestDto){
+        if (studentRepository.existsByNickname((nickRequestDto.getNickname()))) {
+            throw new DuplicatedNicknameException("이미 사용 중인 닉네임입니다.");
+        }
+
+        Student student = studentRepository.findByPhoneNumber(nickRequestDto.getPhoneNumber()).orElseThrow(PhoneNumberNotFoundException::new);
+        student.setNickname(nickRequestDto.getNickname());
+
+        Student student1=studentRepository.save(student);
+
+        System.out.println(student1.getNickname()+'\n'+ student1.getPoint());
+        // Redis SortedSet 에 RedisKey, Score(SortedSet 내의 Key), Value 추가
+        redisTemplate.opsForZSet().add("ranking", student1.getNickname(), student1.getPoint());
+
+//        return StudentResponseDto.of(studentRepository.save(student));
+        return StudentResponseDto.of(student1);
+    }
+
+    // **********만들기
+//    public StudentResponseDto updateNickname()
+
+//    public StudentResponseDto setPhotoURL(String photoURL){
+//        Student student = studentRepository.findByPhoneNumber(nickRequestDto.getPhoneNumber()).orElseThrow(PhoneNumberNotFoundException::new);
+//        student.setPhotoURL(photoURL);
+//
+//        return StudentResponseDto.of(studentRepository.save(student));
+//    }
+
 
     // 현재 SecurityContext 에 있는 유저 정보 가져오기
     // SecurityContext는 전역 , Student 로 반환받기
@@ -47,5 +81,5 @@ public class StudentService {
 //                .orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다."));
     }
 
-
 }
+

@@ -1,9 +1,12 @@
 package com.example.nf.newfine_backend.student.service;
 
+import com.example.nf.newfine_backend.student.dto.response.ListResult;
 import com.example.nf.newfine_backend.student.dto.response.Result;
 import com.example.nf.newfine_backend.student.dto.response.SingleResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +28,22 @@ public class ResponseService {
         result.setSuccess(true);
         result.setCode(0);
         result.setMessage("success");
+    }
+
+    public <T> ListResult<T> getListResult(List<T> list) {
+        ListResult<T> result = new ListResult<>();
+        result.setData(list);
+        result.setHasNext(false);
+        setSuccessResult(result);
+        return result;
+    }
+
+    public <T> ListResult<T> getListResult(List<T> list, boolean hasNext) {
+        ListResult<T> result = new ListResult<>();
+        result.setData(list);
+        result.setHasNext(hasNext);
+        setSuccessResult(result);
+        return result;
     }
 
 }
