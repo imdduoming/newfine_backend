@@ -30,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {  // Spring Se
     @Override
     public void configure(WebSecurity web) {
         web.ignoring()
-                .antMatchers("/h2-console/**", "/favicon.ico");
+                .antMatchers("/h2-console/**", "/favicon.ico","/js/**");
     }
 
     @Override
@@ -58,7 +58,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {  // Spring Se
                 // 로그인, 회원가입 API 는 토큰이 없는 상태에서 요청이 들어오기 때문에 permitAll 설정
                 .and()
                 .authorizeRequests()
+                .antMatchers("/teacher/**").permitAll()
+                .antMatchers("/student/**").permitAll()
+                .antMatchers("/listeners/**").permitAll()
+                .antMatchers("/attendances/**").permitAll()
+                .antMatchers("/all/**").permitAll()
                 .antMatchers("/auth/**").permitAll()
+                .antMatchers("/make/attendance").permitAll()
+                .antMatchers("/add/attendance").permitAll()
+                .antMatchers("/get/all/courses").permitAll()
                 .anyRequest().authenticated()   // 나머지 API 는 전부 인증 필요
 
                 // JwtFilter 를 addFilterBefore 로 등록했던 JwtSecurityConfig 클래스를 적용
