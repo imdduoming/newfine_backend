@@ -19,7 +19,6 @@ import java.util.Date;
 @Entity
 public class StudentAttendance {
 
-
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     @Column(name = "sattendance_id")
