@@ -48,6 +48,15 @@ public class Student extends Timestamped {
     @Enumerated(EnumType.STRING)
     private Authority authority;
 
+    @OneToMany(mappedBy="student", cascade = { CascadeType.PERSIST})
+    @JsonBackReference //순환참조 방지
+    private List<StudentAttendance> studentAttendancces;
+
+    @JsonBackReference //순환참조 방지
+    @OneToMany(mappedBy="student", cascade = { CascadeType.PERSIST})
+    private List<Listener> listeners;
+
+
     @Column
     private LocalDateTime signupDate;
 
