@@ -27,6 +27,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final PointService pointService;
 
 //    @Value("${jwt.secret}")
 //    private final String secretKey;
@@ -45,7 +46,7 @@ public class AuthService {
         }
 
         Student student = signUpDto.toMember(passwordEncoder);
-//      ㅊㅂ redisTemplate.opsForZSet().add("ranking",member.getNickname(), member.getPoint());
+        student.setPoint(0);
         return StudentResponseDto.of(studentRepository.save(student));
     }
 
@@ -70,6 +71,7 @@ public class AuthService {
                 .build();
 
         refreshTokenRepository.save(refreshToken);
+
 
         // 5. 토큰 발급
         return tokenDto;
