@@ -14,6 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -41,19 +43,35 @@ public class AttendanceService {
     public int addAttendance(Long attedance_id) {
 //        Student student= studentService.getUser();
         // 중복 출석 방지
-
         System.out.println(attedance_id);
         Long student_id=Long.valueOf(1);
         Attendance attendance=attendanceRepository.findById(attedance_id).get();
         Student student= studentRepository.findById(student_id).get();
+        Date now_time = new Date();
+        Boolean attend=false;
+        Boolean islate=false;
+        SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         if (studentattendanceRepository.findByStudentAndAttendance(student,attendance).isPresent()) {
             // 이미 같은 출석에 대해 같은 학생이 출석했다면
             return 0;
         }
         else {
-            StudentAttendance studentAttendance = new StudentAttendance(student, attendance);
-            studentattendanceRepository.save(studentAttendance);
-            System.out.println(studentAttendance);
+            if (now_time.after(attendance.getEndTime()))
+            {
+                // 지각 경우
+                attend=true;
+                islate=true;
+                StudentAttendance studentAttendance = new StudentAttendance(student, attendance,now_time,attend,islate);
+                studentattendanceRepository.save(studentAttendance);
+            }
+
+            else{
+                // 지각하지 않고 출석
+                attend=true;
+                islate=false;
+                StudentAttendance studentAttendance = new StudentAttendance(student, attendance,now_time,attend,islate);
+                studentattendanceRepository.save(studentAttendance);
+            }
             return 1;
         }
     }

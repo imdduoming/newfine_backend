@@ -25,7 +25,6 @@ public class Attendance extends BaseTimeEntity {
     @Column
     private String url;
 
-
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST})
     @JsonManagedReference
@@ -34,14 +33,14 @@ public class Attendance extends BaseTimeEntity {
     @OneToMany(mappedBy="attendance", cascade = { CascadeType.PERSIST})
     @JsonBackReference //순환참조 방지
     private List<StudentAttendance> studentAttendances;
-//
-//    @Column
-//    @Temporal(TemporalType.TIMESTAMP) // 날짜와 시간, 데이터베이스 timestamp 타입과 매핑 (2020-12-18 23:36:33)
-//    private Date startTime;
-//
-//    @Column
-//    @Temporal(TemporalType.TIMESTAMP) // 날짜와 시간, 데이터베이스 timestamp 타입과 매핑 (2020-12-18 23:36:33)
-//    private Date endTime;
+
+    @Column
+    @Temporal(TemporalType.TIMESTAMP) // 날짜와 시간, 데이터베이스 timestamp 타입과 매핑 (2020-12-18 23:36:33)
+    private Date startTime;
+
+    @Column
+    @Temporal(TemporalType.TIMESTAMP) // 날짜와 시간, 데이터베이스 timestamp 타입과 매핑 (2020-12-18 23:36:33)
+    private Date endTime;
 
 
 //    @Builder

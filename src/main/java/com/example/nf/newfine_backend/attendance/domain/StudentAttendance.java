@@ -11,12 +11,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @Entity
-public class StudentAttendance extends BaseTimeEntity {
+public class StudentAttendance {
 
 
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,13 +33,25 @@ public class StudentAttendance extends BaseTimeEntity {
     @JsonManagedReference
     private Student student;
 
+    @Column
+    private boolean attend = false;
+    @Column
+    private boolean islate = false;
+    @Column
+    @Temporal(TemporalType.TIMESTAMP) // 날짜와 시간, 데이터베이스 timestamp 타입과 매핑 (2020-12-18 23:36:33)
+    private Date time;
+
     @Builder
-    public StudentAttendance(Student student,Attendance attendance) {
+    public StudentAttendance(Student student,Attendance attendance,Date time,Boolean attend,Boolean islate) {
         this.student=student;
         this.attendance=attendance;
+        this.time=time;
+        this.attend=attend; // 출석  여부
+        this.islate=islate; // 지각 여부
 
 
     }
+
 
 
 
