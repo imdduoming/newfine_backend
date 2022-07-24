@@ -49,6 +49,8 @@ public class StudentController {
 //        return ResponseEntity.ok(authService.findMemberByToken(token));
 //    }
 
+    //  닉네임 업뎃
+
     @PostMapping("/point")
     public String point(){
         //*******************************************************8
