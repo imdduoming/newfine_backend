@@ -1,5 +1,6 @@
 package com.example.nf.newfine_backend.teacher;
 
+import com.example.nf.newfine_backend.attendance.domain.StudentAttendance;
 import com.example.nf.newfine_backend.attendance.repository.StudentAttendanceRepository;
 import com.example.nf.newfine_backend.course.Course;
 import com.example.nf.newfine_backend.course.CourseRepository;
@@ -33,6 +34,23 @@ public class TeacherService {
         return courseList;
     }
 
+    public StudentAttendance editAttendance(Long id, String state){
+        StudentAttendance studentAttendance=studentAttendanceRepository.findById(id).get();
+        if (state=="지각"){
+            studentAttendance.setAttend(true);
+            studentAttendance.setIslate(true);
+        }
+        else if(state=="결석"){
+            studentAttendance.setAttend(false);
+            studentAttendance.setIslate(false);
+        }
+        else{
+            studentAttendance.setAttend(true);
+            studentAttendance.setIslate(false);
+        }
+        studentAttendanceRepository.save(studentAttendance);
+        return studentAttendance;
+    }
 
 
 }
