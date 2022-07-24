@@ -1,7 +1,8 @@
-package com.example.nf.newfine_backend.course;
-
+package com.example.nf.newfine_backend.teacher;
 import com.example.nf.newfine_backend.attendance.domain.StudentAttendance;
 import com.example.nf.newfine_backend.attendance.dto.AttendanceEditDto;
+import com.example.nf.newfine_backend.course.Course;
+import com.example.nf.newfine_backend.course.CourseService;
 import com.example.nf.newfine_backend.teacher.TeacherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
