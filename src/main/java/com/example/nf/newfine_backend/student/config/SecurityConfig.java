@@ -6,6 +6,7 @@ import com.example.nf.newfine_backend.student.jwt.JwtSecurityConfig;
 import com.example.nf.newfine_backend.student.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -18,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {  // Spring Security 설정
     private final TokenProvider tokenProvider;
+    private final RedisTemplate redisTemplate;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
@@ -72,6 +74,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {  // Spring Se
 
                 // JwtFilter 를 addFilterBefore 로 등록했던 JwtSecurityConfig 클래스를 적용
                 .and()
-                .apply(new JwtSecurityConfig(tokenProvider));
+                .apply(new JwtSecurityConfig(tokenProvider, redisTemplate));
     }
 }

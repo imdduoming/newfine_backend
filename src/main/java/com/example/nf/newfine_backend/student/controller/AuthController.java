@@ -5,6 +5,8 @@ import com.example.nf.newfine_backend.student.service.AuthService;
 import com.example.nf.newfine_backend.student.service.MessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -57,5 +59,14 @@ public class AuthController {
 //        messageService.sendMessage(phoneNumberDto, String.valueOf(randomNumber));
 //        return String.valueOf(randomNumber);
         return ResponseEntity.ok(messageService.sendMessage(phoneNumberDto, String.valueOf(randomNumber)));
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(@Validated TokenRequestDto tokenRequestDto, Errors errors) {
+        // validation check
+        if (errors.hasErrors()) {
+            throw new RuntimeException();
+        }
+        return ResponseEntity.ok(authService.logout(tokenRequestDto));
     }
 }
