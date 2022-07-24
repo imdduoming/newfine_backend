@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -34,6 +35,7 @@ public class TeacherService {
         return courseList;
     }
 
+    @Transactional
     public StudentAttendance editAttendance(Long id, String state){
         StudentAttendance studentAttendance=studentAttendanceRepository.findById(id).get();
         if (state=="지각"){
@@ -49,6 +51,7 @@ public class TeacherService {
             studentAttendance.setIslate(false);
         }
         studentAttendanceRepository.save(studentAttendance);
+        System.out.println(studentAttendance);
         return studentAttendance;
     }
 
