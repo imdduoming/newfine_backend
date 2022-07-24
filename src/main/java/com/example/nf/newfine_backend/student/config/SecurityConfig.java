@@ -30,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {  // Spring Se
     @Override
     public void configure(WebSecurity web) {
         web.ignoring()
-                .antMatchers("/h2-console/**", "/favicon.ico","/js/**");
+                .antMatchers("/h2-console/**", "/favicon.ico","/js/**","/resources/**");
     }
 
     @Override
