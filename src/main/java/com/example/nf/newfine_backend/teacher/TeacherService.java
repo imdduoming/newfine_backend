@@ -39,20 +39,26 @@ public class TeacherService {
     public StudentAttendance editAttendance(Long id, String state){
         System.out.println(state);
         StudentAttendance studentAttendance=studentAttendanceRepository.findById(id).get();
-        if (state=="지각"){
+        if (state.equals("지각")){
+            System.out.println(state);
             studentAttendance.setAttend(true);
             studentAttendance.setIslate(true);
+            studentAttendanceRepository.save(studentAttendance);
         }
-        else if(state=="결석"){
+        else if(state.equals("결석")){
+            System.out.println(state);
             studentAttendance.setAttend(false);
             studentAttendance.setIslate(false);
+            studentAttendanceRepository.save(studentAttendance);
         }
-        else{
+        else
+        {
+            System.out.println(state);
             studentAttendance.setAttend(true);
             studentAttendance.setIslate(false);
+            studentAttendanceRepository.save(studentAttendance);
         }
-        studentAttendanceRepository.save(studentAttendance);
-        System.out.println(studentAttendance);
+
         return studentAttendance;
     }
 
