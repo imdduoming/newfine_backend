@@ -37,6 +37,7 @@ public class TeacherService {
 
     @Transactional
     public StudentAttendance editAttendance(Long id, String state){
+        System.out.println(state);
         StudentAttendance studentAttendance=studentAttendanceRepository.findById(id).get();
         if (state=="지각"){
             studentAttendance.setAttend(true);
