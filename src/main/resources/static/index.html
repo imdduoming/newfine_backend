@@ -98,7 +98,7 @@ function get_course() {
     console.log("1")
     $.ajax({
         type: "GET",
-        url: `${domainURL}/get/all/courses`,
+        url: `${domainURL}/all/courses`,
         success: function (response) {
             console.log(response)
             for (let i =0 ;i < response.length ; i++){// obj 길이 만큼 반복
