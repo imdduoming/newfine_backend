@@ -1,7 +1,7 @@
 package com.example.nf.newfine_backend.student.service;
 
 import com.example.nf.newfine_backend.student.domain.Student;
-import com.example.nf.newfine_backend.student.dto.NickRequestDto;
+import com.example.nf.newfine_backend.student.dto.NicknameRequestDto;
 import com.example.nf.newfine_backend.student.dto.StudentResponseDto;
 import com.example.nf.newfine_backend.student.exception.CustomException;
 import com.example.nf.newfine_backend.student.exception.DuplicatedNicknameException;
@@ -42,13 +42,14 @@ public class StudentService {
 //                .orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다."));
     }
 
-    public StudentResponseDto setNickname(NickRequestDto nickRequestDto){
-        if (studentRepository.existsByNickname((nickRequestDto.getNickname()))) {
+    public StudentResponseDto setNickname(NicknameRequestDto nicknameRequestDto){
+        if (studentRepository.existsByNickname((nicknameRequestDto.getNickname()))) {
             throw new DuplicatedNicknameException("이미 사용 중인 닉네임입니다.");
         }
 
-        Student student = studentRepository.findByPhoneNumber(nickRequestDto.getPhoneNumber()).orElseThrow(PhoneNumberNotFoundException::new);
-        student.setNickname(nickRequestDto.getNickname());
+        Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
+//        Student student = studentRepository.findByPhoneNumber(nicknameRequestDto.getPhoneNumber()).orElseThrow(PhoneNumberNotFoundException::new);
+        student.setNickname(nicknameRequestDto.getNickname());
 
         Student student1=studentRepository.save(student);
 
@@ -57,6 +58,22 @@ public class StudentService {
         redisTemplate.opsForZSet().add("ranking", student1.getNickname(), student1.getPoint());
 
 //        return StudentResponseDto.of(studentRepository.save(student));
+        return StudentResponseDto.of(student1);
+    }
+
+    public StudentResponseDto updateNickname(NicknameRequestDto nicknameRequestDto){
+        if (studentRepository.existsByNickname((nicknameRequestDto.getNickname()))) {
+            throw new DuplicatedNicknameException("이미 사용 중인 닉네임입니다.");
+        }
+
+        Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
+        student.setNickname(nicknameRequestDto.getNickname());
+        Student student1=studentRepository.save(student);
+
+        redisTemplate.opsForZSet().remove("ranking",student1.getNickname());
+        // Redis SortedSet 에 RedisKey, Score(SortedSet 내의 Key), Value 추가
+        redisTemplate.opsForZSet().add("ranking", student1.getNickname(), student1.getPoint());
+
         return StudentResponseDto.of(student1);
     }
 

@@ -1,7 +1,7 @@
 package com.example.nf.newfine_backend.student.controller;
 
 import com.example.nf.newfine_backend.student.domain.Student;
-import com.example.nf.newfine_backend.student.dto.NickRequestDto;
+import com.example.nf.newfine_backend.student.dto.NicknameRequestDto;
 import com.example.nf.newfine_backend.student.dto.StudentResponseDto;
 import com.example.nf.newfine_backend.student.exception.PhoneNumberNotFoundException;
 import com.example.nf.newfine_backend.student.repository.StudentRepository;
@@ -39,8 +39,14 @@ public class StudentController {
 //
 //
     @PostMapping("/nickname")
-    public ResponseEntity<StudentResponseDto> setNickname(@RequestBody NickRequestDto nickRequestDto){
-        return ResponseEntity.ok(studentService.setNickname(nickRequestDto));
+    public ResponseEntity<StudentResponseDto> setNickname(@RequestBody NicknameRequestDto nicknameRequestDto){
+        return ResponseEntity.ok(studentService.setNickname(nicknameRequestDto));
+    }
+
+    @PostMapping(value = "/nickname/update")
+    public ResponseEntity<StudentResponseDto> updateNickname(@RequestBody NicknameRequestDto nicknameRequestDto) {
+        return ResponseEntity.ok(studentService.updateNickname(nicknameRequestDto));
+//        return responseService.getSuccessResult();
     }
 
     //    @PostMapping("/myInfo")
