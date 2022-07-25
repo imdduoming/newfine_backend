@@ -70,10 +70,10 @@ public class StudentService {
         }
 
         Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
+        redisTemplate.opsForZSet().remove("ranking",student.getNickname());
         student.setNickname(nicknameRequestDto.getNickname());
         Student student1=studentRepository.save(student);
 
-        redisTemplate.opsForZSet().remove("ranking",student1.getNickname());
         // Redis SortedSet 에 RedisKey, Score(SortedSet 내의 Key), Value 추가
         redisTemplate.opsForZSet().add("ranking", student1.getNickname(), student1.getPoint());
 
