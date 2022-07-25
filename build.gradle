@@ -46,6 +46,7 @@ dependencies {
     // redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     // https://mvnrepository.com/artifact/redis.clients/jedis
+    implementation group: 'io.lettuce', name: 'lettuce-core', version: '6.1.8.RELEASE'
     // sms 전송
     implementation 'net.nurigo:javaSDK:2.2'
     // 아마존 S3
