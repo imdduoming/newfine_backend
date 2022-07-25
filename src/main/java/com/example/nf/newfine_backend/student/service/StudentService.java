@@ -1,6 +1,7 @@
 package com.example.nf.newfine_backend.student.service;
 
 import com.example.nf.newfine_backend.student.domain.Student;
+import com.example.nf.newfine_backend.student.dto.DeleteRequestDto;
 import com.example.nf.newfine_backend.student.dto.NicknameRequestDto;
 import com.example.nf.newfine_backend.student.dto.StudentResponseDto;
 import com.example.nf.newfine_backend.student.exception.CustomException;
@@ -10,6 +11,7 @@ import com.example.nf.newfine_backend.student.repository.StudentRepository;
 import com.example.nf.newfine_backend.student.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +24,7 @@ public class StudentService {
 
     private final RedisTemplate redisTemplate;
     private final StudentRepository studentRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional(readOnly = true)
     public StudentResponseDto getMemberInfo(String phoneNumber){
@@ -77,16 +80,22 @@ public class StudentService {
         return StudentResponseDto.of(student1);
     }
 
-    // **********만들기
-//    public StudentResponseDto updateNickname()
+    public String deleteStudent(DeleteRequestDto deleteRequestDto){
+        Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
+        if (!passwordEncoder.matches(deleteRequestDto.getPassword(), student.getPassword())) {
+            throw new RuntimeException();
+        }
+        redisTemplate.opsForZSet().remove("ranking", student.getNickname());
+        if (redisTemplate.opsForValue().get("RT:" + student.getId()) != null) {
+            // Refresh Token 삭제
+            redisTemplate.delete("RT:" + student.getId());
+        }
+        // &*************************** 액토도.....?
 
-//    public StudentResponseDto setPhotoURL(String photoURL){
-//        Student student = studentRepository.findByPhoneNumber(nickRequestDto.getPhoneNumber()).orElseThrow(PhoneNumberNotFoundException::new);
-//        student.setPhotoURL(photoURL);
-//
-//        return StudentResponseDto.of(studentRepository.save(student));
-//    }
+        studentRepository.delete(student);
 
+        return "탈퇴 완료";
+    }
 
     // 현재 SecurityContext 에 있는 유저 정보 가져오기
     // SecurityContext는 전역 , Student 로 반환받기

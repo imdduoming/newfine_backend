@@ -1,6 +1,7 @@
 package com.example.nf.newfine_backend.student.controller;
 
 import com.example.nf.newfine_backend.student.domain.Student;
+import com.example.nf.newfine_backend.student.dto.DeleteRequestDto;
 import com.example.nf.newfine_backend.student.dto.NicknameRequestDto;
 import com.example.nf.newfine_backend.student.dto.StudentResponseDto;
 import com.example.nf.newfine_backend.student.exception.PhoneNumberNotFoundException;
@@ -55,7 +56,10 @@ public class StudentController {
 //        return ResponseEntity.ok(authService.findMemberByToken(token));
 //    }
 
-    //  닉네임 업뎃
+    @DeleteMapping(value = "/delete")
+    public ResponseEntity deleteStudent(@RequestBody DeleteRequestDto deleteRequestDto) {
+        return ResponseEntity.ok(studentService.deleteStudent(deleteRequestDto));
+    }
 
     @PostMapping("/point")
     public String point(){
