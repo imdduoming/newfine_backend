@@ -15,7 +15,14 @@
     <select name="course" id="course_list" >
         <option value='none'>===수업선택===</option>
     </select>
+<br></br>
 
+<br></br>
+<br>출석 인증 시작시간과 마감시간을 선택해주세요.<br>
+<br>출석 인증 시작시간<br>
+<input type="datetime-local" id='start_time'/>
+<br>출석 인증 마감시간<br>
+<input type="datetime-local" id='end_time'/>
 <button type="button" id="add_attendance" onclick="make_attendance()">수업 url 생성</button>
 
 <br>url을 입력하세요.<br>
@@ -44,12 +51,19 @@ function makeCode () {
 	
 	qrcode.makeCode(elText.value);
 }
+
+
 function make_attendance() {
 
     var selected_course=document.getElementById('course_list')
     let course= selected_course.options[selected_course.selectedIndex].value;
+
+
+    let startTime=document.getElementById('start_time');
+    let endTime=document.getElementById('end_time');
+
     console.log(course);
-    let data = {"course_id": course};
+    let data = {"course_id": course,"startTime":startTime,"endTime":endTime};
 
     $.ajax({
         type: "POST",

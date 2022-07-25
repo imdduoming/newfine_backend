@@ -6,8 +6,10 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -35,12 +37,12 @@ public class Attendance extends BaseTimeEntity {
     private List<StudentAttendance> studentAttendances;
 
     @Column
-    @Temporal(TemporalType.TIMESTAMP) // 날짜와 시간, 데이터베이스 timestamp 타입과 매핑 (2020-12-18 23:36:33)
-    private Date startTime;
+    @DateTimeFormat(pattern = "yyyy-MM-ddTHH:mm")
+    private LocalDateTime startTime;
 
     @Column
-    @Temporal(TemporalType.TIMESTAMP) // 날짜와 시간, 데이터베이스 timestamp 타입과 매핑 (2020-12-18 23:36:33)
-    private Date endTime;
+    @DateTimeFormat(pattern = "yyyy-MM-ddTHH:mm")
+    private LocalDateTime endTime;
 
 
 //    @Builder
@@ -50,8 +52,10 @@ public class Attendance extends BaseTimeEntity {
 //
 //    }
 
-    public Attendance(Course course) {
+    public Attendance(Course course,LocalDateTime startTime,LocalDateTime endTime) {
         this.course=course;
+        this.startTime=startTime;
+        this.endTime=endTime;
 
     }
 

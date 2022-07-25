@@ -9,9 +9,11 @@ import com.example.nf.newfine_backend.attendance.domain.Attendance;
 import com.example.nf.newfine_backend.course.Course;
 import com.example.nf.newfine_backend.course.CourseRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.jni.Local;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -25,12 +27,12 @@ public class AttendanceController {
 
     @PostMapping  (value = "/make/attendance" )
     public Attendance makeAttendance(@RequestBody AttendanceDto attendanceDto) {
-
-        System.out.println(attendanceDto.getCourse_id());
+        LocalDateTime startTime=attendanceDto.getStartTime();
+        LocalDateTime endTime= attendanceDto.getEndTime();
         Optional<Course> course = courseRepository.findById(attendanceDto.getCourse_id());
         Course course2 = course.get();
         System.out.println(course2);
-        return attendanceService.makeAttendance(course2);
+        return attendanceService.makeAttendance(course2,startTime,endTime);
 
 }
 

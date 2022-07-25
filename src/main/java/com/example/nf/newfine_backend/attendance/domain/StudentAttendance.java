@@ -9,8 +9,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Setter
@@ -37,11 +39,11 @@ public class StudentAttendance {
     @Column
     private boolean islate = false;
     @Column
-    @Temporal(TemporalType.TIMESTAMP) // 날짜와 시간, 데이터베이스 timestamp 타입과 매핑 (2020-12-18 23:36:33)
-    private Date time;
+    @DateTimeFormat(pattern = "yyyy-MM-ddTHH:mm")
+    private LocalDateTime time;
 
     @Builder
-    public StudentAttendance(Student student,Attendance attendance,Date time,Boolean attend,Boolean islate) {
+    public StudentAttendance(Student student,Attendance attendance,LocalDateTime time,Boolean attend,Boolean islate) {
         this.student=student;
         this.attendance=attendance;
         this.time=time;

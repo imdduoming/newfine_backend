@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -28,8 +29,8 @@ public class AttendanceService {
     private final StudentService studentService;
     private final CourseRepository courseRepository;
 
-    public Attendance makeAttendance(Course course) {
-        Attendance attendance= new Attendance(course);
+    public Attendance makeAttendance(Course course, LocalDateTime start, LocalDateTime end){
+        Attendance attendance= new Attendance(course,start,end);
         attendanceRepository.save(attendance);
         Long attendance_id=attendance.getAttendanceId();
         String a_id=Long.toString(attendance_id);
@@ -47,7 +48,7 @@ public class AttendanceService {
         Long student_id=Long.valueOf(1);
         Attendance attendance=attendanceRepository.findById(attedance_id).get();
         Student student= studentRepository.findById(student_id).get();
-        Date now_time = new Date();
+        LocalDateTime now_time = LocalDateTime.now();
         Boolean attend=false;
         Boolean islate=false;
         SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
@@ -56,7 +57,7 @@ public class AttendanceService {
             return 0;
         }
         else {
-            if (now_time.after(attendance.getEndTime()))
+            if (now_time.isAfter(attendance.getEndTime()))
             {
                 // 지각 경우
                 attend=true;
