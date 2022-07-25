@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @AllArgsConstructor
@@ -19,7 +20,7 @@ public class THomework extends BaseTimeEntity {
     private Long id;
 
 
-//    @ManyToOne(fetch = FetchType.LAZY)
+    //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "ThName")
     private String writer; //어케 해야 할지..
 
@@ -31,8 +32,6 @@ public class THomework extends BaseTimeEntity {
     @Column(nullable = false)
     private String content;
 
-    @Column(nullable = true)
-    private String filePath;
 
     private int count;
 
@@ -42,8 +41,9 @@ public class THomework extends BaseTimeEntity {
 
 
     //== 게시글을 삭제하면 달려있는 과제 이미지파일 모두 삭제 ==//
-//    @OneToMany(mappedBy = "post", cascade = ALL, orphanRemoval = true)
-//    private List<SHomework> homeworkList = new ArrayList<>();
+    @OneToMany(mappedBy = "tHomework", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OrderBy("id asc") // 과제 순서 정렬
+    private List<SHomework> sHomeworks;
 
 
     //== 연관관계 편의 메서드 ==//
@@ -59,20 +59,18 @@ public class THomework extends BaseTimeEntity {
 //    }
 
     @Builder
-    public THomework(String title, String content, String writer, int count, String filePath) {
+    public THomework(String title, String content, String writer, int count) {
         this.title = title;
         this.content = content;
         this.writer = writer;
         this.count = count;
-        this.filePath = filePath;
     }
 
-    public void update(String title, String content, String writer, String filePath) {
+    public void update(String title, String content, String writer) {
         this.title = title;
         this.content = content;
         this.writer = writer;
         //this.modifiedDate = LocalDateTime.now();
-        this.filePath = filePath;
     }
 }
 
