@@ -65,7 +65,7 @@ public class Student extends Timestamped {
         this.signupDate = LocalDateTime.now();
     }
 
-    @OneToMany(mappedBy="owner", orphanRemoval = true)  // 주체는 Point 객체
+    @OneToMany(mappedBy="owner", orphanRemoval = true, cascade = CascadeType.PERSIST)  // 주체는 Point 객체
     private List<Point> pointList=new ArrayList<>();
 
     @Builder
