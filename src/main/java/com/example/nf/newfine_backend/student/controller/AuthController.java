@@ -62,11 +62,11 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<?> logout(@Validated TokenRequestDto tokenRequestDto, Errors errors) {
+    public ResponseEntity<?> logout(@RequestBody TokenRequestDto tokenRequestDto) {
         // validation check
-        if (errors.hasErrors()) {
-            throw new RuntimeException();
-        }
+//        if (errors.hasErrors()) {
+//            throw new RuntimeException();
+//        }
         return ResponseEntity.ok(authService.logout(tokenRequestDto));
     }
 }
