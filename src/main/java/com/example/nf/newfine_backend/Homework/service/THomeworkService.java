@@ -80,7 +80,7 @@ public class THomeworkService {
     public Long update(final Long id, final SaveRequestDto params) {
 
         THomework entity = tHomeworkRepository.findById(id).orElseThrow(() -> new  IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
-        entity.update(params.getTitle(), params.getContent(), params.getWriter(), params.toEntity().getFilePath());
+        entity.update(params.getTitle(), params.getContent(), params.getWriter());
         return id;
     }
 
