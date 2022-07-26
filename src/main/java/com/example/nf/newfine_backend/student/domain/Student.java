@@ -65,6 +65,7 @@ public class Student extends Timestamped {
         this.signupDate = LocalDateTime.now();
     }
 
+    @JsonBackReference //순환참조 방지
     @OneToMany(mappedBy="owner", orphanRemoval = true, cascade = CascadeType.PERSIST)  // 주체는 Point 객체
     private List<Point> pointList=new ArrayList<>();
 
