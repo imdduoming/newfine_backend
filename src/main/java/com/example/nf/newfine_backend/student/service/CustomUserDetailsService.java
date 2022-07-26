@@ -31,9 +31,9 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException(username + " -> 데이터베이스에서 찾을 수 없습니다."));
     }
 
-    // DB 에 User 값이 존재한다면 UserDetails 객체로 만들어서 리턴
+    // DB 에 User 값이 존재한다면 UserDetails 객체로 만들어서 리턴 -> 해당 UserDetails 객체를 SecurityContext 에 저장
     private UserDetails createUserDetails(Student student) {
-        GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(student.getAuthority().toString());
+        GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(student.getAuthority().toString());  // 권한 설정
 
         return new User(
                 String.valueOf(student.getId()),

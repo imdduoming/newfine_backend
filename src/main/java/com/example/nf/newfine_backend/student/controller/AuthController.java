@@ -5,11 +5,13 @@ import com.example.nf.newfine_backend.student.service.AuthService;
 import com.example.nf.newfine_backend.student.service.MessageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+//@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/auth")    // SecurityConfig 에서 요청 허용, 토큰 검증 로직 필요 X
 public class AuthController {
     private final AuthService authService;
@@ -57,5 +59,14 @@ public class AuthController {
 //        messageService.sendMessage(phoneNumberDto, String.valueOf(randomNumber));
 //        return String.valueOf(randomNumber);
         return ResponseEntity.ok(messageService.sendMessage(phoneNumberDto, String.valueOf(randomNumber)));
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(@RequestBody TokenRequestDto tokenRequestDto) {
+        // validation check
+//        if (errors.hasErrors()) {
+//            throw new RuntimeException();
+//        }
+        return ResponseEntity.ok(authService.logout(tokenRequestDto));
     }
 }

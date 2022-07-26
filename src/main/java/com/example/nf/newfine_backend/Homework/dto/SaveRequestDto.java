@@ -15,9 +15,6 @@ public class SaveRequestDto {
     private String title;
     private String content;
     private String writer;
-    private String image;
-    private String image_real;
-    private String filePath;
 
     public THomework toEntity() {
         return THomework.builder()
@@ -25,7 +22,6 @@ public class SaveRequestDto {
                 .content(content)
                 .writer(writer)
                 .count(0)
-                .filePath(filePath)
                 .build();
     }
 }

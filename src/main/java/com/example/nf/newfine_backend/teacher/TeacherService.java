@@ -1,5 +1,6 @@
 package com.example.nf.newfine_backend.teacher;
 
+import com.example.nf.newfine_backend.attendance.domain.StudentAttendance;
 import com.example.nf.newfine_backend.attendance.repository.StudentAttendanceRepository;
 import com.example.nf.newfine_backend.course.Course;
 import com.example.nf.newfine_backend.course.CourseRepository;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -33,6 +35,32 @@ public class TeacherService {
         return courseList;
     }
 
+    @Transactional
+    public StudentAttendance editAttendance(Long id, String state){
+        System.out.println(state);
+        StudentAttendance studentAttendance=studentAttendanceRepository.findById(id).get();
+        if (state.equals("지각")){
+            System.out.println(state);
+            studentAttendance.setAttend(true);
+            studentAttendance.setIslate(true);
+            studentAttendanceRepository.save(studentAttendance);
+        }
+        else if(state.equals("결석")){
+            System.out.println(state);
+            studentAttendance.setAttend(false);
+            studentAttendance.setIslate(false);
+            studentAttendanceRepository.save(studentAttendance);
+        }
+        else
+        {
+            System.out.println(state);
+            studentAttendance.setAttend(true);
+            studentAttendance.setIslate(false);
+            studentAttendanceRepository.save(studentAttendance);
+        }
+
+        return studentAttendance;
+    }
 
 
 }

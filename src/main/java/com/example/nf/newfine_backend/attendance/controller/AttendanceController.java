@@ -8,10 +8,13 @@ import com.example.nf.newfine_backend.attendance.dto.StudentAttendanceDto;
 import com.example.nf.newfine_backend.attendance.domain.Attendance;
 import com.example.nf.newfine_backend.course.Course;
 import com.example.nf.newfine_backend.course.CourseRepository;
+import com.sun.tools.jconsole.JConsoleContext;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.jni.Local;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -25,12 +28,13 @@ public class AttendanceController {
 
     @PostMapping  (value = "/make/attendance" )
     public Attendance makeAttendance(@RequestBody AttendanceDto attendanceDto) {
-
-        System.out.println(attendanceDto.getCourse_id());
+        LocalDateTime startTime=attendanceDto.getStartTime();
+        LocalDateTime endTime= attendanceDto.getEndTime();
+        System.out.println(attendanceDto.getStartTime());
         Optional<Course> course = courseRepository.findById(attendanceDto.getCourse_id());
         Course course2 = course.get();
         System.out.println(course2);
-        return attendanceService.makeAttendance(course2);
+        return attendanceService.makeAttendance(course2,attendanceDto.getStartTime(),attendanceDto.getEndTime());
 
 }
 
@@ -50,17 +54,25 @@ public class AttendanceController {
 
     // 수업시간마다 출석부 가져오는 api , 출석 정보는 attendance 의 Student Attendance 로 가져오면 된다 .
     @GetMapping("/attendances")
-    public Attendance getAttendance(@RequestParam Integer id){
+    public List<Attendance> getAttendances(@RequestParam Integer id){
         Long idx=Long.valueOf(id);
-        return attendanceService.getAttendance(idx);
+
+        return attendanceService.getAttendances(idx);
     }
 
+    // 매 수업시간 마다 출석 현황
+    @GetMapping("/attendances/student")
+    public List<StudentAttendance> getStudentAttendance(@RequestParam Integer id){
+        Long idx=Long.valueOf(id);
+        return attendanceService.getStudentAttendance(idx);
+    }
 
 //    @GetMapping("/get/attendance/{phone_number}")
 //    public List<Attendance> getMyAttendances(@PathVariable String phone_number){
 //
 //        return attendanceService.getMyAttendances(phone_number);
 //    }
+
 
 
 }

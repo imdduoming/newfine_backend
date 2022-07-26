@@ -2,10 +2,14 @@ package com.example.nf.newfine_backend.attendance.domain;
 
 import com.example.nf.newfine_backend.BaseTimeEntity;
 import com.example.nf.newfine_backend.course.Course;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -23,20 +27,22 @@ public class Attendance extends BaseTimeEntity {
     @Column
     private String url;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST})
     @JsonManagedReference
     private Course course;
 
     @OneToMany(mappedBy="attendance", cascade = { CascadeType.PERSIST})
+    @JsonBackReference //순환참조 방지
     private List<StudentAttendance> studentAttendances;
-//
-//    @Column
-//    @Temporal(TemporalType.TIMESTAMP) // 날짜와 시간, 데이터베이스 timestamp 타입과 매핑 (2020-12-18 23:36:33)
-//    private Date startTime;
-//
-//    @Column
-//    @Temporal(TemporalType.TIMESTAMP) // 날짜와 시간, 데이터베이스 timestamp 타입과 매핑 (2020-12-18 23:36:33)
-//    private Date endTime;
+
+    @Column
+    @DateTimeFormat(pattern = "yyyy-MM-ddTHH:mm")
+    private LocalDateTime startTime;
+
+    @Column
+    @DateTimeFormat(pattern = "yyyy-MM-ddTHH:mm")
+    private LocalDateTime endTime;
 
 
 //    @Builder
@@ -46,8 +52,10 @@ public class Attendance extends BaseTimeEntity {
 //
 //    }
 
-    public Attendance(Course course) {
+    public Attendance(Course course,LocalDateTime startTime,LocalDateTime endTime) {
         this.course=course;
+        this.startTime=startTime;
+        this.endTime=endTime;
 
     }
 
