@@ -24,7 +24,7 @@ public class ImageController {
     }
 
     @PostMapping("/delete")
-    public Result delete(@RequestParam("image")String  fileName) {
+    public Result delete(@RequestParam("image")String fileName) {
         s3Uploader.delete(fileName,"profile-image");
         return responseService.getSuccessResult();
     }
