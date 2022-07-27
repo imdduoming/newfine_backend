@@ -1,6 +1,5 @@
 package com.example.nf.newfine_backend.course;
 
-import com.example.nf.newfine_backend.attendance.domain.Attendance;
 import com.example.nf.newfine_backend.student.domain.Student;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
@@ -26,6 +25,10 @@ public class Listener {
     @JsonManagedReference
     @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.REMOVE})
     private Student student;
+
+    //@JsonBackReference //순환참조 방지
+    //@OneToMany(mappedBy="listener", cascade = { CascadeType.PERSIST})
+   // private List<SHomework> sHomeworkList;
 
 
 }
