@@ -1,5 +1,6 @@
 package com.example.nf.newfine_backend.Homework.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,7 +17,7 @@ public class THomework extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ThId")
+    @Column(name = "th_id")
     private Long id;
 
 
@@ -41,8 +42,9 @@ public class THomework extends BaseTimeEntity {
 
 
     //== 게시글을 삭제하면 달려있는 과제 이미지파일 모두 삭제 ==//
-    @OneToMany(mappedBy = "tHomework", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-    @OrderBy("id asc") // 과제 순서 정렬
+    @JsonBackReference
+    @OneToMany(mappedBy = "thomework", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OrderBy("shid desc") // 과제 순서 정렬 (최신 꺼 순으로)
     private List<SHomework> sHomeworks;
 
 
