@@ -115,6 +115,7 @@ public class S3Uploader {
             amazonS3Client.deleteObject( new DeleteObjectRequest(bucket +"/"+dirName, filename));
             Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
             student.setPhotoURL(null);
+            studentRepository.save(student);
         } catch (AmazonServiceException e) {
             e.printStackTrace();
         } catch (SdkClientException e) {
