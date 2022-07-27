@@ -12,6 +12,7 @@
         idx = window.location.search.split("=")[1]
         add_attendance(idx);
     });
+
     function add_attendance(idx){
         let data = {"attendance_id":idx.toString()}
         $.ajax({
@@ -21,9 +22,21 @@
             data: JSON.stringify(data),
             success: function (response) {
                 console.log(response)
+                requestPermission(response)
             }
         });
     }
+    function requestPermission  (response) {
+        if (window.ReactNativeWebView) {
+            // 모바일이라면 모바일의 카메라 권한을 물어보는 액션을 전달합니다.
+            window.ReactNativeWebView.postMessage(
+                JSON.stringify({ data: response})
+            );
+        } else {
+            // 모바일이 아니라면 모바일 아님을 alert로 띄웁니다.
+            alert({ message: ERROR_TYPES.notMobile });
+        }
+    };
     </script>
 <body>
 <h1>출석 되었습니다!</h1>
