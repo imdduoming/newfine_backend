@@ -40,7 +40,7 @@ public class S3Uploader {
         // 이미 프로필 사진이 설정되어 있으면 삭제
         if (student.getPhotoURL() != null){
             try {
-                amazonS3Client.deleteObject( new DeleteObjectRequest(bucket +"/"+dirName, student.getPhotoURL()));
+                amazonS3Client.deleteObject( new DeleteObjectRequest(bucket +"/"+dirName, student.getPhotoURL().substring(62)));
             } catch (AmazonServiceException e) {
                 e.printStackTrace();
             } catch (SdkClientException e) {
