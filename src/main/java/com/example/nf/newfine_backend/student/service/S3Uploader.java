@@ -36,6 +36,18 @@ public class S3Uploader {
     public String bucket;  // S3 버킷 이름
 
     public String upload(MultipartFile file, String dirName){
+        Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
+        // 이미 프로필 사진이 설정되어 있으면 삭제
+        if (student.getPhotoURL() != null){
+            try {
+                amazonS3Client.deleteObject( new DeleteObjectRequest(bucket +"/"+dirName, student.getPhotoURL()));
+            } catch (AmazonServiceException e) {
+                e.printStackTrace();
+            } catch (SdkClientException e) {
+                e.printStackTrace();
+            }
+        }
+
         String fileName = CommonUtil.buildFileName(dirName, file.getOriginalFilename());
 
         ObjectMetadata objectMetadata = new ObjectMetadata();
@@ -48,7 +60,6 @@ public class S3Uploader {
             log.error("Error converting multipartFile to file", e);
         }
 
-        Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
         student.setPhotoURL(amazonS3Client.getUrl(bucket, fileName).toString());
         studentRepository.save(student);
 
@@ -101,8 +112,9 @@ public class S3Uploader {
 
     public void delete(String filename, String dirName) {
         try {
-            amazonS3Client.deleteObject( new DeleteObjectRequest(bucket +"/"+dirName,filename));
-
+            amazonS3Client.deleteObject( new DeleteObjectRequest(bucket +"/"+dirName, filename));
+            Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
+            student.setPhotoURL(null);
         } catch (AmazonServiceException e) {
             e.printStackTrace();
         } catch (SdkClientException e) {

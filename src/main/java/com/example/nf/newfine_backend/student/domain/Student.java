@@ -48,12 +48,12 @@ public class Student extends Timestamped {
     @Enumerated(EnumType.STRING)
     private Authority authority;
 
-    @OneToMany(mappedBy="student", cascade = { CascadeType.PERSIST})
+    @OneToMany(mappedBy="student", cascade = { CascadeType.REMOVE})
     @JsonBackReference //순환참조 방지
     private List<StudentAttendance> studentAttendancces;
 
     @JsonBackReference //순환참조 방지
-    @OneToMany(mappedBy="student", cascade = { CascadeType.PERSIST})
+    @OneToMany(mappedBy="student", cascade = { CascadeType.REMOVE})
     private List<Listener> listeners;
 
 
@@ -65,7 +65,8 @@ public class Student extends Timestamped {
         this.signupDate = LocalDateTime.now();
     }
 
-    @OneToMany(mappedBy="owner", orphanRemoval = true)  // 주체는 Point 객체
+    @JsonBackReference //순환참조 방지
+    @OneToMany(mappedBy="owner", orphanRemoval = true, cascade = CascadeType.REMOVE)  // 주체는 Point 객체
     private List<Point> pointList=new ArrayList<>();
 
     @Builder

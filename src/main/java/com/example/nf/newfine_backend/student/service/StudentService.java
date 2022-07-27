@@ -1,7 +1,8 @@
 package com.example.nf.newfine_backend.student.service;
 
 import com.example.nf.newfine_backend.student.domain.Student;
-import com.example.nf.newfine_backend.student.dto.NickRequestDto;
+import com.example.nf.newfine_backend.student.dto.DeleteRequestDto;
+import com.example.nf.newfine_backend.student.dto.NicknameRequestDto;
 import com.example.nf.newfine_backend.student.dto.StudentResponseDto;
 import com.example.nf.newfine_backend.student.exception.CustomException;
 import com.example.nf.newfine_backend.student.exception.DuplicatedNicknameException;
@@ -10,6 +11,7 @@ import com.example.nf.newfine_backend.student.repository.StudentRepository;
 import com.example.nf.newfine_backend.student.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +24,7 @@ public class StudentService {
 
     private final RedisTemplate redisTemplate;
     private final StudentRepository studentRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional(readOnly = true)
     public StudentResponseDto getMemberInfo(String phoneNumber){
@@ -42,13 +45,14 @@ public class StudentService {
 //                .orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다."));
     }
 
-    public StudentResponseDto setNickname(NickRequestDto nickRequestDto){
-        if (studentRepository.existsByNickname((nickRequestDto.getNickname()))) {
+    public StudentResponseDto setNickname(NicknameRequestDto nicknameRequestDto){
+        if (studentRepository.existsByNickname((nicknameRequestDto.getNickname()))) {
             throw new DuplicatedNicknameException("이미 사용 중인 닉네임입니다.");
         }
 
-        Student student = studentRepository.findByPhoneNumber(nickRequestDto.getPhoneNumber()).orElseThrow(PhoneNumberNotFoundException::new);
-        student.setNickname(nickRequestDto.getNickname());
+        Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
+//        Student student = studentRepository.findByPhoneNumber(nicknameRequestDto.getPhoneNumber()).orElseThrow(PhoneNumberNotFoundException::new);
+        student.setNickname(nicknameRequestDto.getNickname());
 
         Student student1=studentRepository.save(student);
 
@@ -60,16 +64,39 @@ public class StudentService {
         return StudentResponseDto.of(student1);
     }
 
-    // **********만들기
-//    public StudentResponseDto updateNickname()
+    public StudentResponseDto updateNickname(NicknameRequestDto nicknameRequestDto){
+        if (studentRepository.existsByNickname((nicknameRequestDto.getNickname()))) {
+            throw new DuplicatedNicknameException("이미 사용 중인 닉네임입니다.");
+        }
 
-//    public StudentResponseDto setPhotoURL(String photoURL){
-//        Student student = studentRepository.findByPhoneNumber(nickRequestDto.getPhoneNumber()).orElseThrow(PhoneNumberNotFoundException::new);
-//        student.setPhotoURL(photoURL);
-//
-//        return StudentResponseDto.of(studentRepository.save(student));
-//    }
+        Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
+        redisTemplate.opsForZSet().remove("ranking",student.getNickname());
+        student.setNickname(nicknameRequestDto.getNickname());
+        Student student1=studentRepository.save(student);
 
+        // Redis SortedSet 에 RedisKey, Score(SortedSet 내의 Key), Value 추가
+        redisTemplate.opsForZSet().add("ranking", student1.getNickname(), student1.getPoint());
+
+        return StudentResponseDto.of(student1);
+    }
+
+    public String deleteStudent(DeleteRequestDto deleteRequestDto){
+        Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
+        if (!passwordEncoder.matches(deleteRequestDto.getPassword(), student.getPassword())) {
+            throw new RuntimeException();
+        }
+
+//        if (redisTemplate.opsForValue().get("RT:" + student.getId()) != null) {
+//            // Refresh Token 삭제
+//            redisTemplate.delete("RT:" + student.getId());
+//        }
+        redisTemplate.opsForZSet().remove("ranking", student.getNickname());
+        // &*************************** 액토도.....?
+
+        studentRepository.delete(student);
+
+        return "탈퇴 완료";
+    }
 
     // 현재 SecurityContext 에 있는 유저 정보 가져오기
     // SecurityContext는 전역 , Student 로 반환받기

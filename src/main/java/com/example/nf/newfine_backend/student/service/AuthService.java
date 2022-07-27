@@ -72,12 +72,12 @@ public class AuthService {
         TokenDto tokenDto = tokenProvider.generateTokenDto(authentication);
 
         // 4. RefreshToken 저장
-        RefreshToken refreshToken = RefreshToken.builder()
-                .key(authentication.getName())
-                .value(tokenDto.getRefreshToken())
-                .build();
-
-        refreshTokenRepository.save(refreshToken);
+//        RefreshToken refreshToken = RefreshToken.builder()
+//                .key(authentication.getName())
+//                .value(tokenDto.getRefreshToken())
+//                .build();
+//
+//        refreshTokenRepository.save(refreshToken);
 
         // 4. RefreshToken Redis 에 저장 (Expiration -> 자동 삭제)
         redisTemplate.opsForValue()
