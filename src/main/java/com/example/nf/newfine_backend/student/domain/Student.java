@@ -74,6 +74,7 @@ public class Student extends Timestamped {
     @OneToMany(mappedBy="owner", orphanRemoval = true, cascade = CascadeType.REMOVE)  // 주체는 Point 객체
     private List<Point> pointList=new ArrayList<>();
 
+
     @Builder
     public Student(String phoneNumber, String name, String password, String nickname, Authority authority, String photoURL, Integer point) {
         this.phoneNumber=phoneNumber;
