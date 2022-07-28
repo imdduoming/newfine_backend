@@ -11,6 +11,10 @@
     $(document).ready(function () {
         idx = window.location.search.split("=")[1]
         add_attendance(idx);
+        requestPermission();
+        document.addEventListener("message", (e) => {
+            alert(e.data);
+        })
     });
 
     function add_attendance(idx){
@@ -30,7 +34,7 @@
         if (window.ReactNativeWebView) {
             // 모바일이라면 모바일의 카메라 권한을 물어보는 액션을 전달합니다.
             window.ReactNativeWebView.postMessage(
-                JSON.stringify({ data: response})
+                JSON.stringify( {data:response} )
             );
         } else {
             // 모바일이 아니라면 모바일 아님을 alert로 띄웁니다.
