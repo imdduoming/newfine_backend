@@ -83,7 +83,6 @@ public class Student extends Timestamped {
         this.nickname= nickname;
         this.photoURL=photoURL;
         this.point=point;
-        this.level=level;
     }
 
     public boolean availabelLevelUp() {
