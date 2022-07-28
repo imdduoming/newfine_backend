@@ -7,8 +7,10 @@ import com.example.nf.newfine_backend.attendance.domain.StudentAttendance;
 import com.example.nf.newfine_backend.course.CourseRepository;
 import com.example.nf.newfine_backend.student.domain.Student;
 import com.example.nf.newfine_backend.course.Course;
+import com.example.nf.newfine_backend.student.exception.PhoneNumberNotFoundException;
 import com.example.nf.newfine_backend.student.repository.StudentRepository;
 import com.example.nf.newfine_backend.student.service.StudentService;
+import com.example.nf.newfine_backend.student.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -44,10 +46,8 @@ public class AttendanceService {
     public int addAttendance(Long attedance_id) {
 //        Student student= studentService.getUser();
         // 중복 출석 방지
-        System.out.println(attedance_id);
-        Long student_id=Long.valueOf(1);
+        Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
         Attendance attendance=attendanceRepository.findById(attedance_id).get();
-        Student student= studentRepository.findById(student_id).get();
         LocalDateTime now_time = LocalDateTime.now();
         Boolean attend=false;
         Boolean islate=false;
