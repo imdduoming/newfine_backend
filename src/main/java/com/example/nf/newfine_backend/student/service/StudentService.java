@@ -3,6 +3,7 @@ package com.example.nf.newfine_backend.student.service;
 import com.example.nf.newfine_backend.student.domain.Student;
 import com.example.nf.newfine_backend.student.dto.DeleteRequestDto;
 import com.example.nf.newfine_backend.student.dto.NicknameRequestDto;
+import com.example.nf.newfine_backend.student.dto.PasswordUpdateDto;
 import com.example.nf.newfine_backend.student.dto.StudentResponseDto;
 import com.example.nf.newfine_backend.student.exception.CustomException;
 import com.example.nf.newfine_backend.student.exception.DuplicatedNicknameException;
@@ -25,6 +26,7 @@ public class StudentService {
     private final RedisTemplate redisTemplate;
     private final StudentRepository studentRepository;
     private final PasswordEncoder passwordEncoder;
+    private final MessageService messageService;
 
     @Transactional(readOnly = true)
     public StudentResponseDto getMemberInfo(String phoneNumber){
@@ -97,6 +99,18 @@ public class StudentService {
 
         return "탈퇴 완료";
     }
+
+    //// *********** 이거는 일단 추후에 하자!! (wanza)
+//    public String updatePassword(PasswordUpdateDto passwordUpdateDto){
+//
+//        // 1. 전화 인증 성공해야 비밀번호 재설정 가능.
+//
+//
+//        studentRepository.save(student);
+//
+//        return "비번 변경 완료";
+//    }
+
 
     // 현재 SecurityContext 에 있는 유저 정보 가져오기
     // SecurityContext는 전역 , Student 로 반환받기

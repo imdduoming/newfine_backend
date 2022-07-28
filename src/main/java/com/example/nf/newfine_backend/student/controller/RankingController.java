@@ -27,4 +27,6 @@ public class RankingController {
     public Result getMyRank() {
         return responseService.getSingleResult(rankingService.getMyRank());
     }
+
+
 }
