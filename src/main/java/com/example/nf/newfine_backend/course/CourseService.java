@@ -1,9 +1,8 @@
 package com.example.nf.newfine_backend.course;
 
-import com.example.nf.newfine_backend.attendance.domain.StudentAttendance;
 import com.example.nf.newfine_backend.attendance.repository.StudentAttendanceRepository;
-import com.example.nf.newfine_backend.student.domain.Student;
-import com.example.nf.newfine_backend.student.repository.StudentRepository;
+import com.example.nf.newfine_backend.member.student.domain.Student;
+import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
