@@ -56,6 +56,11 @@ public class Student extends Timestamped {
     @OneToMany(mappedBy="student", cascade = { CascadeType.REMOVE})
     private List<Listener> listeners;
 
+    @Column
+    @Enumerated(EnumType.STRING)
+    private Level level=Level.NEW;
+
+    private LocalDateTime levelUpDate;
 
     @Column
     private LocalDateTime signupDate;
@@ -78,5 +83,17 @@ public class Student extends Timestamped {
         this.nickname= nickname;
         this.photoURL=photoURL;
         this.point=point;
+    }
+
+    public boolean availabelLevelUp() {
+        return Level.availabelLevelUp(this.getLevel(), this.getPoint());
+    }
+
+    public Level levelUp() {
+        Level nextLevel = Level.getNextLevel(this.getPoint());
+        this.level = nextLevel;
+        this.levelUpDate = LocalDateTime.now();
+
+        return nextLevel;
     }
 }

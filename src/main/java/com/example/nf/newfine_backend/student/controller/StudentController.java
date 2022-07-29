@@ -3,10 +3,13 @@ package com.example.nf.newfine_backend.student.controller;
 import com.example.nf.newfine_backend.student.domain.Student;
 import com.example.nf.newfine_backend.student.dto.DeleteRequestDto;
 import com.example.nf.newfine_backend.student.dto.NicknameRequestDto;
+import com.example.nf.newfine_backend.student.dto.PasswordUpdateDto;
 import com.example.nf.newfine_backend.student.dto.StudentResponseDto;
 import com.example.nf.newfine_backend.student.exception.PhoneNumberNotFoundException;
 import com.example.nf.newfine_backend.student.repository.StudentRepository;
+import com.example.nf.newfine_backend.student.service.MessageService;
 import com.example.nf.newfine_backend.student.service.PointService;
+import com.example.nf.newfine_backend.student.service.S3Uploader;
 import com.example.nf.newfine_backend.student.service.StudentService;
 import com.example.nf.newfine_backend.student.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +23,7 @@ public class StudentController {
     private final StudentService studentService;
     public final StudentRepository studentRepository;
     public final PointService pointService;
+    public final MessageService messageService;
 
     @GetMapping("/me")
     public ResponseEntity<StudentResponseDto> getMyMemberInfo() {
@@ -60,6 +64,12 @@ public class StudentController {
     public ResponseEntity deleteStudent(@RequestBody DeleteRequestDto deleteRequestDto) {
         return ResponseEntity.ok(studentService.deleteStudent(deleteRequestDto));
     }
+
+    // ********* 추후 비번 찾기 만들기(wanza)
+//    @GetMapping("/updatePw")
+//    public ResponseEntity updatePassword(PasswordUpdateDto passwordUpdateDto){
+//        return ResponseEntity.ok(studentService.updatePassword(passwordUpdateDto));
+//    }
 
     @PostMapping("/point")
     public String point(){

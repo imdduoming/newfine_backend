@@ -20,6 +20,7 @@ import org.springframework.util.ObjectUtils;
 
 import java.util.concurrent.TimeUnit;
 
+import static com.example.nf.newfine_backend.student.domain.Level.NEW;
 import static com.example.nf.newfine_backend.student.exception.ErrorCode.*;
 
 @Service
