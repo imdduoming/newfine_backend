@@ -63,7 +63,7 @@ public class AuthService {
 
     @Transactional
     public TeacherResponseDto signupTeacher(SignUpDto signUpDto) {
-        if (teacherRepository.existsByTPhoneNumber(signUpDto.getPhoneNumber())) {
+        if (teacherRepository.existsByPhoneNumber(signUpDto.getPhoneNumber())) {
             throw new CustomException(DUPLICATE_MEMBER);
         }
 
