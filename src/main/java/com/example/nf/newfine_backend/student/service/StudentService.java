@@ -85,11 +85,12 @@ public class StudentService {
         if (!passwordEncoder.matches(deleteRequestDto.getPassword(), student.getPassword())) {
             throw new RuntimeException();
         }
+
+//        if (redisTemplate.opsForValue().get("RT:" + student.getId()) != null) {
+//            // Refresh Token 삭제
+//            redisTemplate.delete("RT:" + student.getId());
+//        }
         redisTemplate.opsForZSet().remove("ranking", student.getNickname());
-        if (redisTemplate.opsForValue().get("RT:" + student.getId()) != null) {
-            // Refresh Token 삭제
-            redisTemplate.delete("RT:" + student.getId());
-        }
         // &*************************** 액토도.....?
 
         studentRepository.delete(student);

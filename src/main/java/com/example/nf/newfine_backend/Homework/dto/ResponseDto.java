@@ -3,9 +3,6 @@ package com.example.nf.newfine_backend.Homework.dto;
 import com.example.nf.newfine_backend.Homework.domain.THomework;
 import lombok.*;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Setter
 @Getter
 @AllArgsConstructor
@@ -22,7 +19,6 @@ public class ResponseDto {
     private String createdDate; // 생성일
     private String modifiedDate; // 수정일
 
-    private List<SHResponseDto> sHomeworks;
 
     public ResponseDto(THomework entity) {
         this.id = entity.getId();
@@ -32,7 +28,6 @@ public class ResponseDto {
         this.count = entity.getCount();
         this.createdDate = entity.getCreatedDate();
         this.modifiedDate = entity.getModifiedDate();
-        this.sHomeworks = entity.getSHomeworks().stream().map(SHResponseDto::new).collect(Collectors.toList());
         // 엔티티간 무한참조 방지
     }
 
