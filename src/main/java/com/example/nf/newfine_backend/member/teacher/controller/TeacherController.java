@@ -3,8 +3,11 @@ import com.example.nf.newfine_backend.attendance.domain.StudentAttendance;
 import com.example.nf.newfine_backend.attendance.dto.AttendanceEditDto;
 import com.example.nf.newfine_backend.course.Course;
 import com.example.nf.newfine_backend.course.CourseService;
+import com.example.nf.newfine_backend.member.student.dto.StudentResponseDto;
+import com.example.nf.newfine_backend.member.teacher.dto.TeacherResponseDto;
 import com.example.nf.newfine_backend.member.teacher.service.TeacherService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,6 +31,10 @@ public class TeacherController {
         return teacherService.editAttendance(id,attendanceEditDto.getState());
     }
 
+    @GetMapping("/member/teacher")
+    public ResponseEntity<TeacherResponseDto> getTeacherInfo() {
+        return ResponseEntity.ok(teacherService.getTeacherInfo());
+    }
 
 }
 

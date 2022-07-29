@@ -5,15 +5,22 @@ import com.example.nf.newfine_backend.attendance.repository.StudentAttendanceRep
 import com.example.nf.newfine_backend.course.Course;
 import com.example.nf.newfine_backend.course.CourseRepository;
 import com.example.nf.newfine_backend.course.ListenerRepository;
+import com.example.nf.newfine_backend.member.exception.CustomException;
+import com.example.nf.newfine_backend.member.student.dto.StudentResponseDto;
 import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
 import com.example.nf.newfine_backend.member.teacher.domain.Teacher;
+import com.example.nf.newfine_backend.member.teacher.dto.TeacherResponseDto;
 import com.example.nf.newfine_backend.member.teacher.repository.TeacherRepository;
+import com.example.nf.newfine_backend.member.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+//import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+
+import static com.example.nf.newfine_backend.member.exception.ErrorCode.UNAUTHORIZED_MEMBER;
 
 @RequiredArgsConstructor
 @Service
@@ -60,6 +67,15 @@ public class TeacherService {
         }
 
         return studentAttendance;
+    }
+
+    @Transactional(readOnly = true)
+    public TeacherResponseDto getTeacherInfo() {
+        // api 요청이 들어오면 필터에서 access token 복호화하여 유저 정보를 꺼낸 뒤  Security Context에 저장
+        return teacherRepository.findById(SecurityUtil.getCurrentMemberId())
+                .map(TeacherResponseDto::of)
+                .orElseThrow(() -> new CustomException(UNAUTHORIZED_MEMBER));
+//                .orElseThrow(() -> new RuntimeException("로그인 유저 정보가 없습니다."));
     }
 
 
