@@ -4,9 +4,7 @@ import com.example.nf.newfine_backend.attendance.domain.StudentAttendance;
 import com.example.nf.newfine_backend.attendance.repository.StudentAttendanceRepository;
 import com.example.nf.newfine_backend.course.Course;
 import com.example.nf.newfine_backend.course.CourseRepository;
-import com.example.nf.newfine_backend.course.Listener;
 import com.example.nf.newfine_backend.course.ListenerRepository;
-import com.example.nf.newfine_backend.student.domain.Student;
 import com.example.nf.newfine_backend.student.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +20,7 @@ public class TeacherService {
     private final CourseRepository courseRepository;
     private final StudentAttendanceRepository studentAttendanceRepository;
     private final StudentRepository studentRepository;
-    private final TeacherRepostiory teacherRepostiory;
+    private final TeacherRepository teacherRepository;
     private final ListenerRepository listenerRepository;
     public List<Course> getAllCourses() {
         return courseRepository.findAll();
@@ -30,7 +28,7 @@ public class TeacherService {
 
     public List<Course> getTeacherCourses(){
         Long teacher_id=Long.valueOf(1);
-        Teacher teacher=teacherRepostiory.findById(teacher_id).get();
+        Teacher teacher= teacherRepository.findById(teacher_id).get();
         List<Course> courseList=courseRepository.findCoursesByTeacher(teacher);
         return courseList;
     }

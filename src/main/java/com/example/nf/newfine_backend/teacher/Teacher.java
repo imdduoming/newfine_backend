@@ -1,6 +1,7 @@
 package com.example.nf.newfine_backend.teacher;
 
 import com.example.nf.newfine_backend.course.Course;
+import com.example.nf.newfine_backend.student.domain.Authority;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
@@ -28,7 +29,10 @@ public class Teacher {
     private String tName;
 
     @Column(nullable = false)
-    private String tPhoneNumber;
+    private String phoneNumber;
+
+    @Enumerated(EnumType.STRING)
+    private Authority tAuthority;
 
     @JsonBackReference //순환참조 방지
     @OneToMany(mappedBy="teacher")

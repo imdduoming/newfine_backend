@@ -2,6 +2,8 @@ package com.example.nf.newfine_backend.student.service;
 
 import com.example.nf.newfine_backend.student.domain.Student;
 import com.example.nf.newfine_backend.student.repository.StudentRepository;
+import com.example.nf.newfine_backend.teacher.Teacher;
+import com.example.nf.newfine_backend.teacher.TeacherRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,12 +22,18 @@ import java.util.Collections;
 public class CustomUserDetailsService implements UserDetailsService {
 
     private final StudentRepository studentRepository;
+    private final TeacherRepository teacherRepository;
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // UserDetails 와 Authentication 의 패스워드를 비교하고 검증하는 로직을 처리
 
+        if (teacherRepository.findByPhoneNumber(username)!=null){
+            return teacherRepository.findByPhoneNumber(username)
+                    .map(this::createTeacherDetails)
+                    .orElseThrow(() -> new UsernameNotFoundException(username + " -> 데이터베이스에서 찾을 수 없습니다."));
+        }
         return studentRepository.findByPhoneNumber(username)
                 .map(this::createUserDetails)
                 .orElseThrow(() -> new UsernameNotFoundException(username + " -> 데이터베이스에서 찾을 수 없습니다."));
@@ -38,6 +46,16 @@ public class CustomUserDetailsService implements UserDetailsService {
         return new User(
                 String.valueOf(student.getId()),
                 student.getPassword(),
+                Collections.singleton(grantedAuthority)
+        );
+    }
+
+    private UserDetails createTeacherDetails(Teacher teacher) {
+        GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(teacher.getTAuthority().toString());  // 권한 설정
+
+        return new User(
+                String.valueOf(teacher.getTId()),
+                teacher.getTPassword(),
                 Collections.singleton(grantedAuthority)
         );
     }
