@@ -43,10 +43,9 @@ public class AttendanceService {
         return attendance2;
     }
 
-    public int addAttendance(Long attedance_id) {
+    public int addAttendance(Long attedance_id,Student student) {
 //        Student student= studentService.getUser();
         // 중복 출석 방지
-        Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
         Attendance attendance=attendanceRepository.findById(attedance_id).get();
         LocalDateTime now_time = LocalDateTime.now();
         Boolean attend=false;
