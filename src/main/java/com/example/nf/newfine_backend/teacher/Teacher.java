@@ -24,7 +24,7 @@ public class Teacher {
     private Long tId;
 
     @Column(nullable = false)
-    private String tPhoneNumber;
+    private String phoneNumber;
 
     @Column(nullable = false)
     private String tPassword;
@@ -45,8 +45,8 @@ public class Teacher {
 
 
     @Builder
-    public Teacher(String tPhoneNumber, String tName, String tPassword, Authority tAuthority) {
-        this.tPhoneNumber=tPhoneNumber;
+    public Teacher(String phoneNumber, String tName, String tPassword, Authority tAuthority) {
+        this.phoneNumber=phoneNumber;
         this.tName=tName;
         this.tPassword = tPassword;
         this.tAuthority = tAuthority;

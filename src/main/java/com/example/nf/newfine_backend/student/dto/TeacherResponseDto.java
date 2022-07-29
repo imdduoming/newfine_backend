@@ -16,6 +16,6 @@ public class TeacherResponseDto {
     private Authority authority;
 
     public static TeacherResponseDto of(Teacher teacher) {
-        return new TeacherResponseDto(teacher.getTPhoneNumber(), teacher.getTName(), teacher.getTAuthority());
+        return new TeacherResponseDto(teacher.getPhoneNumber(), teacher.getTName(), teacher.getTAuthority());
     }
 }

@@ -27,7 +27,7 @@ public class SignUpDto {
 
     public Teacher toTeacher(PasswordEncoder passwordEncoder) {
         return Teacher.builder()
-                .tPhoneNumber(phoneNumber)
+                .phoneNumber(phoneNumber)
                 .tName(name)
                 .tPassword(passwordEncoder.encode(password))
                 .tAuthority(Authority.ROLE_ADMIN)

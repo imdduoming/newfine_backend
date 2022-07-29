@@ -7,7 +7,7 @@ import java.util.Optional;
 
 @Repository
 public interface TeacherRepository extends JpaRepository<Teacher, Long> {
-    Optional<Teacher> findByTPhoneNumber(String phoneNumber);
+    Optional<Teacher> findByPhoneNumber(String phoneNumber);
 
-    boolean existsByTPhoneNumber(String phoneNumber);    // 중복 가입 방지용
+    boolean existsByPhoneNumber(String phoneNumber);    // 중복 가입 방지용
 }
