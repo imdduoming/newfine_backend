@@ -8,6 +8,10 @@ import com.example.nf.newfine_backend.attendance.dto.StudentAttendanceDto;
 import com.example.nf.newfine_backend.attendance.domain.Attendance;
 import com.example.nf.newfine_backend.course.Course;
 import com.example.nf.newfine_backend.course.CourseRepository;
+import com.example.nf.newfine_backend.student.domain.Student;
+import com.example.nf.newfine_backend.student.exception.PhoneNumberNotFoundException;
+import com.example.nf.newfine_backend.student.repository.StudentRepository;
+import com.example.nf.newfine_backend.student.util.SecurityUtil;
 import com.sun.tools.jconsole.JConsoleContext;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.jni.Local;
@@ -25,7 +29,9 @@ import java.util.Optional;
 public class AttendanceController {
     private final AttendanceService attendanceService;
     private final CourseRepository courseRepository;
+    private final StudentRepository studentRepository;
 
+    // 관리자가 수업시간 qr 코드 생성 api
     @PostMapping  (value = "/make/attendance" )
     public Attendance makeAttendance(@RequestBody AttendanceDto attendanceDto) {
         LocalDateTime startTime=attendanceDto.getStartTime();
@@ -37,11 +43,12 @@ public class AttendanceController {
         return attendanceService.makeAttendance(course2,attendanceDto.getStartTime(),attendanceDto.getEndTime());
 
 }
-
+    // 학생 출석 api
     @PostMapping  (value = "/add/attendance" )
     public int addAttendance(@RequestBody StudentAttendanceDto studentAttendanceDto) {
         Long attendance_id=Long.parseLong(studentAttendanceDto.getAttendance_id());
-        int ans=attendanceService.addAttendance(attendance_id);
+        Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
+        int ans=attendanceService.addAttendance(attendance_id,student);
         System.out.println(ans);
         return ans;
         // 출석하고 앱 화면으로 돌리기
@@ -52,7 +59,7 @@ public class AttendanceController {
         return attendanceService.getAllAttendances();
     }
 
-    // 수업시간마다 출석부 가져오는 api , 출석 정보는 attendance 의 Student Attendance 로 가져오면 된다 .
+    // 수업시간마다 매시간 출석부 가져오는 api , 출석 정보는 attendance 의 Student Attendance 로 가져오면 된다 .
     @GetMapping("/attendances")
     public List<Attendance> getAttendances(@RequestParam Integer id){
         Long idx=Long.valueOf(id);
