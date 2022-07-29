@@ -22,6 +22,11 @@ public class AuthController {
         return ResponseEntity.ok(authService.signup(signUpDto));    // 상태 코드 + data(body) (ResponseEntity 에 헤더 정보, 상태 코드 담을 수 있음)
     }
 
+    @PostMapping("/signupTeacher")
+    public ResponseEntity<TeacherResponseDto> signupTeacher(@RequestBody SignUpDto signUpDto) {
+        return ResponseEntity.ok(authService.signupTeacher(signUpDto));    // 상태 코드 + data(body) (ResponseEntity 에 헤더 정보, 상태 코드 담을 수 있음)
+    }
+
     @PostMapping("/login")
     public ResponseEntity<TokenDto> login(@RequestBody SignInDto signInDto) {
         return ResponseEntity.ok(authService.login(signInDto));
