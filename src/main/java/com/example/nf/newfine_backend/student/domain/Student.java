@@ -75,7 +75,7 @@ public class Student extends Timestamped {
     private List<Point> pointList=new ArrayList<>();
 
     @Builder
-    public Student(String phoneNumber, String name, String password, String nickname, Authority authority, String photoURL, Integer point, Level level) {
+    public Student(String phoneNumber, String name, String password, String nickname, Authority authority, String photoURL, Integer point) {
         this.phoneNumber=phoneNumber;
         this.name=name;
         this.password = password;
@@ -83,7 +83,6 @@ public class Student extends Timestamped {
         this.nickname= nickname;
         this.photoURL=photoURL;
         this.point=point;
-        this.level=level;
     }
 
     public boolean availabelLevelUp() {
