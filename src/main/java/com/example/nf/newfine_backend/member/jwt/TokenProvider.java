@@ -1,5 +1,6 @@
 package com.example.nf.newfine_backend.member.jwt;
 
+import com.example.nf.newfine_backend.member.domain.Authority;
 import com.example.nf.newfine_backend.member.exception.CustomException;
 import com.example.nf.newfine_backend.member.exception.ErrorCode;
 import com.example.nf.newfine_backend.member.dto.TokenDto;
@@ -67,6 +68,7 @@ public class TokenProvider {    // 유저 정보로 토큰 생성, 토큰으로 
                 .accessTokenExpiresIn(accessTokenExpiresIn.getTime())
                 .refreshToken(refreshToken)
                 .refreshTokenExpirationTime(REFRESH_TOKEN_EXPIRE_TIME)
+                .authority(Authority.valueOf(authorities))
                 .build();
     }
 

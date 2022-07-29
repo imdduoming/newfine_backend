@@ -1,5 +1,6 @@
 package com.example.nf.newfine_backend.member.student.dto;
 
+import com.example.nf.newfine_backend.member.domain.Authority;
 import com.example.nf.newfine_backend.member.student.domain.Student;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

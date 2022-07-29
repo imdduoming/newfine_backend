@@ -1,5 +1,6 @@
 package com.example.nf.newfine_backend.member.dto;
 
+import com.example.nf.newfine_backend.member.domain.Authority;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,4 +17,5 @@ public class TokenDto {
     private String refreshToken;
     private Long accessTokenExpiresIn;
     private Long refreshTokenExpirationTime;
+    private Authority authority;
 }
