@@ -8,6 +8,8 @@ import com.example.nf.newfine_backend.student.jwt.RefreshToken;
 import com.example.nf.newfine_backend.student.jwt.TokenProvider;
 import com.example.nf.newfine_backend.student.repository.StudentRepository;
 import com.example.nf.newfine_backend.student.repository.RefreshTokenRepository;
+import com.example.nf.newfine_backend.teacher.Teacher;
+import com.example.nf.newfine_backend.teacher.TeacherRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -30,6 +32,7 @@ public class AuthService {
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final StudentRepository studentRepository;
+    private final TeacherRepository teacherRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
@@ -56,6 +59,16 @@ public class AuthService {
         Student student = signUpDto.toMember(passwordEncoder);
         student.setPoint(0);
         return StudentResponseDto.of(studentRepository.save(student));
+    }
+
+    @Transactional
+    public TeacherResponseDto signupTeacher(SignUpDto signUpDto) {
+        if (teacherRepository.existsByTPhoneNumber(signUpDto.getPhoneNumber())) {
+            throw new CustomException(DUPLICATE_MEMBER);
+        }
+
+        Teacher teacher = signUpDto.toTeacher(passwordEncoder);
+        return TeacherResponseDto.of(teacherRepository.save(teacher));
     }
 
     // 로그인 예외처리**
