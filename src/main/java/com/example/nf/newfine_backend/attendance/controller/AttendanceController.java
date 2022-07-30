@@ -12,14 +12,11 @@ import com.example.nf.newfine_backend.member.student.exception.PhoneNumberNotFou
 import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
 import com.example.nf.newfine_backend.member.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
-<<<<<<< HEAD
-=======
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.jni.Local;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.web.header.Header;
->>>>>>> LSY
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
