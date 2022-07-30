@@ -12,6 +12,14 @@ import com.example.nf.newfine_backend.member.student.exception.PhoneNumberNotFou
 import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
 import com.example.nf.newfine_backend.member.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
+<<<<<<< HEAD
+=======
+import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.jni.Local;
+import org.springframework.http.HttpHeaders;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.web.header.Header;
+>>>>>>> LSY
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -21,6 +29,7 @@ import java.util.Optional;
 @RestController
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*", allowedHeaders = "*")
+@Slf4j
 public class AttendanceController {
     private final AttendanceService attendanceService;
     private final CourseRepository courseRepository;
@@ -40,7 +49,8 @@ public class AttendanceController {
 }
     // 학생 출석 api
     @PostMapping  (value = "/add/attendance" )
-    public int addAttendance(@RequestBody StudentAttendanceDto studentAttendanceDto) {
+    public int addAttendance(@RequestBody StudentAttendanceDto studentAttendanceDto, @RequestHeader HttpHeaders headers) {
+        log.info("token",headers.toSingleValueMap().toString());
         Long attendance_id=Long.parseLong(studentAttendanceDto.getAttendance_id());
         Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
         int ans=attendanceService.addAttendance(attendance_id,student);
