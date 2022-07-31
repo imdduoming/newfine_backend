@@ -35,9 +35,7 @@ public class TeacherService {
         return courseRepository.findAll();
     }
 
-    public List<Course> getTeacherCourses(){
-        Long teacher_id=Long.valueOf(1);
-        Teacher teacher= teacherRepository.findById(teacher_id).get();
+    public List<Course> getTeacherCourses(Teacher teacher){
         List<Course> courseList=courseRepository.findCoursesByTeacher(teacher);
         return courseList;
     }

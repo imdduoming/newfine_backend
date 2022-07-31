@@ -4,6 +4,7 @@ import com.example.nf.newfine_backend.attendance.domain.StudentAttendance;
 import com.example.nf.newfine_backend.course.Listener;
 import com.example.nf.newfine_backend.member.domain.Authority;
 import com.example.nf.newfine_backend.member.domain.Timestamped;
+import com.example.nf.newfine_backend.study.StudentStudy;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
@@ -53,6 +54,10 @@ public class Student extends Timestamped {
     @OneToMany(mappedBy="student", cascade = { CascadeType.REMOVE})
     @JsonBackReference //순환참조 방지
     private List<StudentAttendance> studentAttendancces;
+
+    @OneToMany(mappedBy="student", cascade = { CascadeType.REMOVE})
+    @JsonBackReference //순환참조 방지
+    private List<StudentStudy> studentStudies;
 
     @JsonBackReference //순환참조 방지
     @OneToMany(mappedBy="student", cascade = { CascadeType.REMOVE})
