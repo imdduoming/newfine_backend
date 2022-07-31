@@ -42,23 +42,23 @@ public class StudyController {
         return  studyService.makeStudy(studyDto.getStartTime(),studyDto.getEndTime());
 
     }
-    // 학생 출석 api
+    // 학생 쟈습 enter api
     @PostMapping  (value = "/study/start" )
     public int enterStudy(@RequestBody StudentStudyDto studentStudyDto, @RequestHeader HttpHeaders headers) {
         Long study_id=Long.parseLong(studentStudyDto.getStudyId());
         Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
-        int ans=attendanceService.addAttendance(study_id,student);
+        int ans=studyService.enterStudy(study_id,student);
         System.out.println(ans);
         return ans;
         // 출석하고 앱 화면으로 돌리기
     }
 
-    @PutMapping  (value = "/study/start" )
-    public int endStudy(@RequestBody StudentAttendanceDto studentAttendanceDto, @RequestHeader HttpHeaders headers) {
-        log.info("token",headers.toSingleValueMap().toString());
-        Long attendance_id=Long.parseLong(studentAttendanceDto.getAttendance_id());
+    // 학생 자습 퇴실 api
+    @PutMapping  (value = "/study/end" )
+    public int endStudy(@RequestBody StudentStudyDto studentStudyDto, @RequestHeader HttpHeaders headers) {
+        Long study_id=Long.parseLong(studentStudyDto.getStudyId());
         Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
-        int ans=attendanceService.addAttendance(attendance_id,student);
+        int ans=studyService.endStudy(study_id,student);
         System.out.println(ans);
         return ans;
         // 출석하고 앱 화면으로 돌리기
