@@ -101,6 +101,8 @@ public class Student extends Timestamped {
         Level nextLevel = Level.getNextLevel(this.getPoint());
         this.level = nextLevel;
         this.levelUpDate = LocalDateTime.now();
+        System.out.println(level);
+        System.out.println(point);
 
         return nextLevel;
     }
