@@ -61,7 +61,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {  // Spring Se
                 .and()
                 .authorizeRequests()
                 .antMatchers("/", "/**").permitAll()
-                .antMatchers("/listeners/**").permitAll()
                 .antMatchers("/attendances/**").permitAll()
                 .antMatchers("/all/**").permitAll()
                 .antMatchers("/auth/**").permitAll()
