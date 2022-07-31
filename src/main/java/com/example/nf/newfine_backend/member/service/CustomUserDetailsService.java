@@ -29,7 +29,6 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // UserDetails 와 Authentication 의 패스워드를 비교하고 검증하는 로직을 처리
 
-
         if (teacherRepository.existsByPhoneNumber(username)){
             return teacherRepository.findByPhoneNumber(username)
                     .map(this::createTeacherDetails)
