@@ -63,6 +63,7 @@ public class StudentController {
 
     @PostMapping("/newPassword")
     public ResponseEntity updatePassword(PasswordUpdateDto passwordUpdateDto){
+
         return ResponseEntity.ok(studentService.updatePassword(passwordUpdateDto));
     }
 
