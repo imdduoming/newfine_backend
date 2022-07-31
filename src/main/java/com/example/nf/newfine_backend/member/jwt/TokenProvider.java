@@ -69,7 +69,7 @@ public class TokenProvider {    // 유저 정보로 토큰 생성, 토큰으로 
                 .accessTokenExpiresIn(accessTokenExpiresIn.getTime())
                 .refreshToken(refreshToken)
                 .refreshTokenExpirationTime(REFRESH_TOKEN_EXPIRE_TIME)
-                .authority(authorities)
+                .authority(Authority.valueOf(authorities))
                 .build();
     }
 
