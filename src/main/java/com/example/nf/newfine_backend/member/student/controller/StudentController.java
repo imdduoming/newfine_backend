@@ -75,7 +75,7 @@ public class StudentController {
         Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
         pointService.create(student,"포인트 클릭!!!!",5);
 
-        if(student.availabelLevelUp()){
+        if(student.availableLevelUp()){
             student.levelUp();
         }
 

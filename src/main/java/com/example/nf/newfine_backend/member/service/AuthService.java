@@ -190,7 +190,7 @@ public class AuthService {
             throw new CustomException(INVALID_ACCESS_TOKEN);
         }
 
-        // 2. Access Token 에서 User email 을 가져옵니다.
+        // 2. Access Token 에서 User id 을 가져옵니다.
         Authentication authentication = tokenProvider.getAuthentication(tokenRequestDto.getAccessToken());
 
         // 3. Redis 에서 해당 User email 로 저장된 Refresh Token 이 있는지 여부를 확인 후 있을 경우 삭제합니다.
