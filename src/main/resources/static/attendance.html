@@ -14,11 +14,12 @@
         document.addEventListener("message", (e) => {
             token=e.data;
             console.log(token);
+            add_attendance(idx,token);
         })
-        add_attendance(idx);
+
     });
 
-    function add_attendance(idx){
+    function add_attendance(idx,token){
         let data = {"attendance_id":idx.toString()}
         $.ajax({
             type: "POST",
