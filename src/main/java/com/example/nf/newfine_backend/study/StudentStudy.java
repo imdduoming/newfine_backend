@@ -38,6 +38,9 @@ public class StudentStudy {
     @Column
     private boolean isOut = false;
 
+    // 자습 총 시간
+    @Column
+    private long total;
 
     @Column
     @DateTimeFormat(pattern = "yyyy-MM-ddTHH:mm")
@@ -46,6 +49,7 @@ public class StudentStudy {
     @Column
     @DateTimeFormat(pattern = "yyyy-MM-ddTHH:mm")
     private LocalDateTime endTime;
+
 
     @Builder
     public StudentStudy(Student student,Study study,LocalDateTime startTime,Boolean isIn,Boolean isOut) {
