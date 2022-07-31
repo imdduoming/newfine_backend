@@ -93,8 +93,8 @@ public class Student extends Timestamped {
         this.point=point;
     }
 
-    public boolean availabelLevelUp() {
-        return Level.availabelLevelUp(this.getLevel(), this.getPoint());
+    public boolean availableLevelUp() {
+        return Level.availableLevelUp(this.getLevel(), this.getPoint());
     }
 
     public Level levelUp() {
