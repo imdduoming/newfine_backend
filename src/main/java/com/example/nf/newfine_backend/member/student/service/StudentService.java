@@ -1,5 +1,6 @@
 package com.example.nf.newfine_backend.member.student.service;
 
+import com.example.nf.newfine_backend.member.student.dto.PasswordUpdateDto;
 import com.example.nf.newfine_backend.member.student.dto.StudentResponseDto;
 import com.example.nf.newfine_backend.member.student.exception.DuplicatedNicknameException;
 import com.example.nf.newfine_backend.member.student.exception.PhoneNumberNotFoundException;
@@ -99,16 +100,14 @@ public class StudentService {
         return "탈퇴 완료";
     }
 
-    //// *********** 이거는 일단 추후에 하자!! (wanza)
-//    public String updatePassword(PasswordUpdateDto passwordUpdateDto){
-//
-//        // 1. 전화 인증 성공해야 비밀번호 재설정 가능.
-//
-//
-//        studentRepository.save(student);
-//
-//        return "비번 변경 완료";
-//    }
+    public String updatePassword(PasswordUpdateDto passwordUpdateDto){
+
+        Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
+        student.setPassword(passwordEncoder.encode(passwordUpdateDto.getNewPassword()));
+
+        studentRepository.save(student);
+        return "비번 변경 완료";
+    }
 
 
     // 현재 SecurityContext 에 있는 유저 정보 가져오기
