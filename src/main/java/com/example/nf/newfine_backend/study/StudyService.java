@@ -50,7 +50,7 @@ public class StudyService {
         Boolean isIn;
         Boolean isOut;
         SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        if (studentStudyRepository.findByStudentAndStudyId(student,study).isPresent()) {
+        if (studentStudyRepository.findByStudentAndStudy(student,study).isPresent()) {
             // 입장한 경우
             // 1. 큐알코드 또 찍은 경우
             return 0;
@@ -73,9 +73,9 @@ public class StudyService {
         Boolean isIn;
         Boolean isOut;
         SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        if (studentStudyRepository.findByStudentAndStudyId(student,study).isPresent()) {
+        if (studentStudyRepository.findByStudentAndStudy(student,study).isPresent()) {
             // 입장한 경우 , 제대로된 퇴실
-            StudentStudy studentStudy=studentStudyRepository.findByStudentAndStudyId(student,study).get();
+            StudentStudy studentStudy=studentStudyRepository.findByStudentAndStudy(student,study).get();
             studentStudy.setEndTime(now_time); // 퇴실시간
             studentStudy.setOut(true); //나갔다고 표시
             studentStudyRepository.save(studentStudy);

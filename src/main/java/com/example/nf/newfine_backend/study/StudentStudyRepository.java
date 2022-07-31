@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface StudentStudyRepository extends JpaRepository <StudentStudy,Long> {
-    Optional<StudentStudy> findByStudentAndStudyId(Student student, Study study);
+    Optional<StudentStudy> findByStudentAndStudy(Student student, Study study);
 }
 
