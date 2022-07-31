@@ -1,5 +1,9 @@
 package com.example.nf.newfine_backend.course;
 
+import com.example.nf.newfine_backend.member.student.domain.Student;
+import com.example.nf.newfine_backend.member.student.exception.PhoneNumberNotFoundException;
+import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
+import com.example.nf.newfine_backend.member.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +14,7 @@ import java.util.List;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class CourseController {
     private final CourseService courseService;
+    private final StudentRepository studentRepository;
     @GetMapping("/all/courses")
     public List<Course> getAllCourses(){
         return courseService.getAllCourses();
@@ -24,9 +29,9 @@ public class CourseController {
 
     // 학생이 수강하고 았는 정보 가져오기
     @GetMapping("/student/courses")
-    public List<Listener> getStudentCourses(@RequestParam Integer id){
-        Long idx=Long.valueOf(id);
-        return courseService.getStudentCourses(idx);
+    public List<Listener> getStudentCourses(){
+        Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
+        return courseService.getStudentCourses(student);
 
     }
 
