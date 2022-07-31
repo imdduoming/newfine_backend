@@ -1,4 +1,4 @@
-package com.example.nf.newfine_backend.attendance.controller;
+package com.example.nf.newfine_backend.study;
 
 import com.example.nf.newfine_backend.attendance.domain.StudentAttendance;
 import com.example.nf.newfine_backend.attendance.dto.AttendanceDto;
@@ -27,26 +27,34 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @Slf4j
-public class AttendanceController {
+public class StudyController {
     private final AttendanceService attendanceService;
     private final CourseRepository courseRepository;
     private final StudentRepository studentRepository;
+    private final StudyService studyService;
 
     // 관리자가 수업시간 qr 코드 생성 api
-    @PostMapping  (value = "/make/attendance" )
-    public Attendance makeAttendance(@RequestBody AttendanceDto attendanceDto) {
-        LocalDateTime startTime=attendanceDto.getStartTime();
-        LocalDateTime endTime= attendanceDto.getEndTime();
-        System.out.println(attendanceDto.getStartTime());
-        Optional<Course> course = courseRepository.findById(attendanceDto.getCourse_id());
-        Course course2 = course.get();
-        System.out.println(course2);
-        return attendanceService.makeAttendance(course2,attendanceDto.getStartTime(),attendanceDto.getEndTime());
+    @PostMapping  (value = "/study/make" )
+    public Study makeStudy(@RequestBody StudyDto studyDto) {
+        LocalDateTime startTime=studyDto.getStartTime();
+        LocalDateTime endTime= studyDto.getEndTime();
+        System.out.println(studyDto.getStartTime());
+        return  studyService.makeStudy(studyDto.getStartTime(),studyDto.getEndTime());
 
-}
+    }
     // 학생 출석 api
-    @PostMapping  (value = "/add/attendance" )
-    public int addAttendance(@RequestBody StudentAttendanceDto studentAttendanceDto, @RequestHeader HttpHeaders headers) {
+    @PostMapping  (value = "/study/start" )
+    public int enterStudy(@RequestBody StudentStudyDto studentStudyDto, @RequestHeader HttpHeaders headers) {
+        Long attendance_id=Long.parseLong(studentStudyDto.get);
+        Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
+        int ans=attendanceService.addAttendance(attendance_id,student);
+        System.out.println(ans);
+        return ans;
+        // 출석하고 앱 화면으로 돌리기
+    }
+
+    @PostMapping  (value = "/study/start" )
+    public int endStudy(@RequestBody StudentAttendanceDto studentAttendanceDto, @RequestHeader HttpHeaders headers) {
         log.info("token",headers.toSingleValueMap().toString());
         Long attendance_id=Long.parseLong(studentAttendanceDto.getAttendance_id());
         Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);

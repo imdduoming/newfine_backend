@@ -26,8 +26,7 @@ public class CourseService {
         return listenerRepository.findListenersByCourse(course);
     }
 
-    public List<Listener> getStudentCourses(Long id){
-        Student student=studentRepository.findById(id).get();
+    public List<Listener> getStudentCourses(Student student){
         List<Listener> listeners =listenerRepository.findListenersByStudent(student);
         return listeners;
     }
