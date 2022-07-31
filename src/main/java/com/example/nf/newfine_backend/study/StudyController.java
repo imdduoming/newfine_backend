@@ -45,9 +45,9 @@ public class StudyController {
     // 학생 출석 api
     @PostMapping  (value = "/study/start" )
     public int enterStudy(@RequestBody StudentStudyDto studentStudyDto, @RequestHeader HttpHeaders headers) {
-        Long attendance_id=Long.parseLong(studentStudyDto.get);
+        Long study_id=Long.parseLong(studentStudyDto.getStudyId());
         Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
-        int ans=attendanceService.addAttendance(attendance_id,student);
+        int ans=attendanceService.addAttendance(study_id,student);
         System.out.println(ans);
         return ans;
         // 출석하고 앱 화면으로 돌리기
