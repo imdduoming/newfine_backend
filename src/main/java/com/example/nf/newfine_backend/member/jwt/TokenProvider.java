@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 @Component
 public class TokenProvider {    // 유저 정보로 토큰 생성, 토큰으로 유저 정보 가져옴 & Jwt 토큰에 관한 암/복호화+검증
 
+
     private static final String AUTHORITIES_KEY = "auth";
     private static final String BEARER_TYPE = "bearer";
     private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000L * 60 * 60;            // 1시간
