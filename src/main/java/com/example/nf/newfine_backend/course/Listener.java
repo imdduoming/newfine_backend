@@ -1,6 +1,6 @@
 package com.example.nf.newfine_backend.course;
 
-import com.example.nf.newfine_backend.student.domain.Student;
+import com.example.nf.newfine_backend.member.student.domain.Student;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

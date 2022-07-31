@@ -5,20 +5,16 @@ import com.example.nf.newfine_backend.attendance.repository.StudentAttendanceRep
 import com.example.nf.newfine_backend.attendance.domain.Attendance;
 import com.example.nf.newfine_backend.attendance.domain.StudentAttendance;
 import com.example.nf.newfine_backend.course.CourseRepository;
-import com.example.nf.newfine_backend.student.domain.Student;
+import com.example.nf.newfine_backend.member.student.domain.Student;
 import com.example.nf.newfine_backend.course.Course;
-import com.example.nf.newfine_backend.student.exception.PhoneNumberNotFoundException;
-import com.example.nf.newfine_backend.student.repository.StudentRepository;
-import com.example.nf.newfine_backend.student.service.StudentService;
-import com.example.nf.newfine_backend.student.util.SecurityUtil;
+import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
+import com.example.nf.newfine_backend.member.student.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @RequiredArgsConstructor
