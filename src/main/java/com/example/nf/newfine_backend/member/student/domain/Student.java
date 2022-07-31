@@ -103,7 +103,6 @@ public class Student extends Timestamped {
         this.levelUpDate = LocalDateTime.now();
         System.out.println(level);
         System.out.println(point);
-
         return nextLevel;
     }
 }
