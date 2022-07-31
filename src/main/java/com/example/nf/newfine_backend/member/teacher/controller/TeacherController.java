@@ -25,6 +25,7 @@ public class TeacherController {
         return teacherService.getTeacherCourses();
     }
 
+    // 선생님 출석 변경 api
     @PutMapping("/teacher/attendance")
     public StudentAttendance editAttendance(@RequestBody AttendanceEditDto attendanceEditDto){
         Long id=Long.valueOf(attendanceEditDto.getId());
