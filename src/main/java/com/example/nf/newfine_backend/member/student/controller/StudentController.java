@@ -1,5 +1,6 @@
 package com.example.nf.newfine_backend.member.student.controller;
 
+import com.example.nf.newfine_backend.member.exception.CustomException;
 import com.example.nf.newfine_backend.member.student.dto.*;
 import com.example.nf.newfine_backend.member.student.exception.PhoneNumberNotFoundException;
 import com.example.nf.newfine_backend.member.student.service.PointService;
@@ -11,6 +12,9 @@ import com.example.nf.newfine_backend.member.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import static com.example.nf.newfine_backend.member.exception.ErrorCode.DUPLICATE_MEMBER;
+import static com.example.nf.newfine_backend.member.exception.ErrorCode.MEMBER_NOT_FOUND;
 
 @RestController
 @RequiredArgsConstructor
@@ -67,12 +71,15 @@ public class StudentController {
         return ResponseEntity.ok(studentService.updatePassword(passwordUpdateDto));
     }
 
-    @PostMapping("/a")
-    public Boolean chkPhoneNumber(@RequestBody PhoneNumberDto phoneNumberDto){
-        if (studentRepository.existsByPhoneNumber(phoneNumberDto.getPhoneNumber())){
-            return true;
+    @PostMapping("/sendMessage")
+    public ResponseEntity<String> sendMessage(@RequestBody PhoneNumberDto phoneNumberDto) {
+        int randomNumber=(int)((Math.random()* (9999 - 1000 + 1)) + 1000);//난수 생성
+
+        // 가입된 회원인지 확인
+        if (!studentRepository.existsByPhoneNumber(phoneNumberDto.getPhoneNumber())) {
+            throw new CustomException(MEMBER_NOT_FOUND);
         }
-        throw new PhoneNumberNotFoundException();
+        return ResponseEntity.ok(messageService.sendMessage(phoneNumberDto, String.valueOf(randomNumber)));
     }
 
     @PostMapping("/point")
