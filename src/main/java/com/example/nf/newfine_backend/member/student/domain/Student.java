@@ -69,6 +69,7 @@ public class Student extends Timestamped {
 
     private LocalDateTime levelUpDate;
 
+
     @Column
     private LocalDateTime signupDate;
 
