@@ -32,16 +32,14 @@ public class AttendanceController {
     private final CourseRepository courseRepository;
     private final StudentRepository studentRepository;
 
+
     // 관리자가 수업시간 qr 코드 생성 api
     @PostMapping  (value = "/make/attendance" )
     public Attendance makeAttendance(@RequestBody AttendanceDto attendanceDto) {
         LocalDateTime startTime=attendanceDto.getStartTime();
         LocalDateTime endTime= attendanceDto.getEndTime();
         System.out.println(attendanceDto.getStartTime());
-        Optional<Course> course = courseRepository.findById(attendanceDto.getCourse_id());
-        Course course2 = course.get();
-        System.out.println(course2);
-        return attendanceService.makeAttendance(course2,attendanceDto.getStartTime(),attendanceDto.getEndTime());
+        return attendanceService.makeAttendance(attendanceDto.getCourse_id(),attendanceDto.getStartTime(),attendanceDto.getEndTime());
 
 }
     // 학생 출석 api
@@ -74,6 +72,11 @@ public class AttendanceController {
         return attendanceService.getStudentAttendance(idx);
     }
 
+//    @GetMapping("/attendances/my")
+//    public List<StudentAttendance> getMyAttendance(@RequestParam Integer id){
+//        Long idx=Long.valueOf(id);
+//        return attendanceService.getStudentAttendance(idx);
+//    }
 //    @GetMapping("/get/attendance/{phone_number}")
 //    public List<Attendance> getMyAttendances(@PathVariable String phone_number){
 //

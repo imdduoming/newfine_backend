@@ -5,6 +5,8 @@ import com.example.nf.newfine_backend.attendance.repository.StudentAttendanceRep
 import com.example.nf.newfine_backend.attendance.domain.Attendance;
 import com.example.nf.newfine_backend.attendance.domain.StudentAttendance;
 import com.example.nf.newfine_backend.course.CourseRepository;
+import com.example.nf.newfine_backend.course.CourseService;
+import com.example.nf.newfine_backend.course.Listener;
 import com.example.nf.newfine_backend.member.student.domain.Student;
 import com.example.nf.newfine_backend.course.Course;
 import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
@@ -26,8 +28,12 @@ public class AttendanceService {
     private final StudentAttendanceRepository studentattendanceRepository;
     private final StudentService studentService;
     private final CourseRepository courseRepository;
+    private final CourseService courseService;
 
-    public Attendance makeAttendance(Course course, LocalDateTime start, LocalDateTime end){
+    public Attendance makeAttendance(Long course_id, LocalDateTime start, LocalDateTime end){
+        Course course=courseRepository.findById(course_id).get();
+        List< Listener> listeners = courseService.getListeners(course_id);
+        System.out.println(listeners);
         Attendance attendance= new Attendance(course,start,end);
         attendanceRepository.save(attendance);
         Long attendance_id=attendance.getAttendanceId();
