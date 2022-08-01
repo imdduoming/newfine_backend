@@ -1,12 +1,10 @@
 package com.example.nf.newfine_backend.member.student.controller;
 
-import com.example.nf.newfine_backend.member.student.dto.StudentResponseDto;
+import com.example.nf.newfine_backend.member.student.dto.*;
 import com.example.nf.newfine_backend.member.student.exception.PhoneNumberNotFoundException;
 import com.example.nf.newfine_backend.member.student.service.PointService;
 import com.example.nf.newfine_backend.member.student.service.StudentService;
 import com.example.nf.newfine_backend.member.student.domain.Student;
-import com.example.nf.newfine_backend.member.student.dto.DeleteRequestDto;
-import com.example.nf.newfine_backend.member.student.dto.NicknameRequestDto;
 import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
 import com.example.nf.newfine_backend.member.student.service.MessageService;
 import com.example.nf.newfine_backend.member.util.SecurityUtil;
@@ -63,11 +61,19 @@ public class StudentController {
         return ResponseEntity.ok(studentService.deleteStudent(deleteRequestDto));
     }
 
-    // ********* 추후 비번 찾기 만들기(wanza)
-//    @GetMapping("/updatePw")
-//    public ResponseEntity updatePassword(PasswordUpdateDto passwordUpdateDto){
-//        return ResponseEntity.ok(studentService.updatePassword(passwordUpdateDto));
-//    }
+    @PostMapping("/newPassword")
+    public ResponseEntity updatePassword(PasswordUpdateDto passwordUpdateDto){
+
+        return ResponseEntity.ok(studentService.updatePassword(passwordUpdateDto));
+    }
+
+    @PostMapping("/a")
+    public Boolean chkPhoneNumber(@RequestBody PhoneNumberDto phoneNumberDto){
+        if (studentRepository.existsByPhoneNumber(phoneNumberDto.getPhoneNumber())){
+            return true;
+        }
+        throw new PhoneNumberNotFoundException();
+    }
 
     @PostMapping("/point")
     public String point(){
