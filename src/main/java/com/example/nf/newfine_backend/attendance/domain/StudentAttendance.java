@@ -1,9 +1,7 @@
 package com.example.nf.newfine_backend.attendance.domain;
 
 
-import com.example.nf.newfine_backend.BaseTimeEntity;
-import com.example.nf.newfine_backend.attendance.domain.Attendance;
-import com.example.nf.newfine_backend.student.domain.Student;
+import com.example.nf.newfine_backend.member.student.domain.Student;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,7 +11,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Setter
 @Getter

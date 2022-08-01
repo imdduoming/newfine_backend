@@ -1,7 +1,6 @@
 package com.example.nf.newfine_backend.course;
 
-import com.example.nf.newfine_backend.course.Course;
-import com.example.nf.newfine_backend.teacher.Teacher;
+import com.example.nf.newfine_backend.member.teacher.domain.Teacher;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
