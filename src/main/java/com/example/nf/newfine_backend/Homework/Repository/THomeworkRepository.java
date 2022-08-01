@@ -14,5 +14,5 @@ public interface THomeworkRepository extends JpaRepository<THomework, Long> {
 
     //Page<THomework> findAll(Pageable pageable);
 
-    List<THomework> findAllByCourse(Long courseId);
+    List<THomework> findTHomeworksByCourseId(Long courseId);
 }

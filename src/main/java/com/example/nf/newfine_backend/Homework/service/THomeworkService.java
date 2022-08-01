@@ -47,7 +47,7 @@ public class THomeworkService {
 //    }
     @Transactional(readOnly = true)
     public List<THomeworkDto> getTHomeworks(Long courseId) {
-        List<THomework> tHomeworks = tHomeworkRepository.findAllByCourse(courseId);
+        List<THomework> tHomeworks = tHomeworkRepository.findTHomeworksByCourseId(courseId);
         List<THomeworkDto> tHomeworkDtos = new ArrayList<>();
 
         tHomeworks.forEach(s -> tHomeworkDtos.add(THomeworkDto.toDto(s)));
