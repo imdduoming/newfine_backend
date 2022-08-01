@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -33,15 +34,22 @@ public class AttendanceService {
     public Attendance makeAttendance(Long course_id, LocalDateTime start, LocalDateTime end){
         Course course=courseRepository.findById(course_id).get();
         List <Listener> listeners = courseService.getListeners(course_id);
+        List <StudentAttendance> studentAttendances = new ArrayList<>();
         System.out.println("수강생");
         System.out.println( listeners);
         Attendance attendance= new Attendance(course,start,end);
         attendanceRepository.save(attendance);
+        for(Listener listener : listeners){
+            StudentAttendance studentAttendance=new StudentAttendance(listener.getStudent(),attendance, null,false,false);
+            studentAttendances.add(studentAttendance);
+        }
+
         Long attendance_id=attendance.getAttendanceId();
         String a_id=Long.toString(attendance_id);
         Attendance attendance2=attendanceRepository.findById(attendance_id).get();
         String attendance_url="https://eb.newfine.tk/attendance.html?idx="+a_id;
         attendance2.setUrl(attendance_url);
+        attendance2.setStudentAttendances(studentAttendances);
         attendanceRepository.save(attendance2);
         return attendance2;
     }
@@ -51,10 +59,8 @@ public class AttendanceService {
         // 중복 출석 방지
         Attendance attendance=attendanceRepository.findById(attedance_id).get();
         LocalDateTime now_time = LocalDateTime.now();
-        Boolean attend=false;
-        Boolean islate=false;
-        SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        if (studentattendanceRepository.findByStudentAndAttendance(student,attendance).isPresent()) {
+        StudentAttendance studentAttendance= studentattendanceRepository.findByStudentAndAttendance(student,attendance).get();
+        if (studentAttendance.isAttend()) {
             // 이미 같은 출석에 대해 같은 학생이 출석했다면
             return 0;
         }
@@ -62,17 +68,17 @@ public class AttendanceService {
             if (now_time.isAfter(attendance.getEndTime()))
             {
                 // 지각 경우
-                attend=true;
-                islate=true;
-                StudentAttendance studentAttendance = new StudentAttendance(student, attendance,now_time,attend,islate);
+                studentAttendance.setAttend(true);
+                studentAttendance.setIslate(true);
+                studentAttendance.setTime(now_time);
                 studentattendanceRepository.save(studentAttendance);
             }
 
             else{
                 // 지각하지 않고 출석
-                attend=true;
-                islate=false;
-                StudentAttendance studentAttendance = new StudentAttendance(student, attendance,now_time,attend,islate);
+                studentAttendance.setAttend(true);
+                studentAttendance.setIslate(false);
+                studentAttendance.setTime(now_time);
                 studentattendanceRepository.save(studentAttendance);
             }
             return 1;
