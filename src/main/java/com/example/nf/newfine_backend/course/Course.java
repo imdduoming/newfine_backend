@@ -1,9 +1,11 @@
 package com.example.nf.newfine_backend.course;
 
 
-import com.example.nf.newfine_backend.member.teacher.domain.Teacher;
+import com.example.nf.newfine_backend.Homework.domain.THomework;
 import com.example.nf.newfine_backend.attendance.domain.Attendance;
+import com.example.nf.newfine_backend.member.teacher.domain.Teacher;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -46,6 +48,10 @@ public class Course {
     @JsonBackReference //순환참조 방지
     @OneToMany(mappedBy="course", cascade = { CascadeType.PERSIST})
     private List<Listener> listeners;
+
+    @JsonIgnore
+    @OneToMany(mappedBy="course", cascade = { CascadeType.PERSIST})
+    private List<THomework> thomeworks;
 
 
 //    @OneToMany(mappedBy="course", cascade = {CascadeType.REMOVE})
