@@ -1,5 +1,6 @@
 package com.example.nf.newfine_backend.Homework.domain;
 
+import com.example.nf.newfine_backend.Homework.dto.THomeworkDto;
 import com.example.nf.newfine_backend.course.Course;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
@@ -48,9 +49,9 @@ public class THomework extends BaseTimeEntity {
 
 
     @Builder
-    public THomework(THomework tHomework, Course course) {
-        this.title = tHomework.getTitle();
-        this.content = tHomework.getContent();
+    public THomework(THomeworkDto tHomeworkDto, Course course) {
+        this.title = tHomeworkDto.getTitle();
+        this.content = tHomeworkDto.getContent();
         this.course = course;
         //this.count = count;
     }
