@@ -12,6 +12,8 @@ public interface StudentAttendanceRepository extends JpaRepository<StudentAttend
     Optional<StudentAttendance> findByStudentAndAttendance(Student student,Attendance attendance);
 
 
+    List<StudentAttendance> findStudentAttendancesByAttendanceAndAndStudent(Attendance attendance,Student student);
+
     List<StudentAttendance> findStudentAttendancesByAttendance(Attendance attendance);
 }
 

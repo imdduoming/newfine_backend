@@ -32,7 +32,7 @@ public class AttendanceService {
 
     public Attendance makeAttendance(Long course_id, LocalDateTime start, LocalDateTime end){
         Course course=courseRepository.findById(course_id).get();
-        List listeners = courseService.getListeners(course_id);
+        List <Listener> listeners = courseService.getListeners(course_id);
         System.out.println("수강생");
         System.out.println( listeners);
         Attendance attendance= new Attendance(course,start,end);
@@ -95,8 +95,12 @@ public class AttendanceService {
         List<StudentAttendance> studentAttendances=studentattendanceRepository.findStudentAttendancesByAttendance(attendance);
         return studentAttendances;
     }
-//    public List<Attendance> getMyAttendances(String phone_number) {
-//        return attendanceRepository.findByStudentPhone(phone_number);
+//    public List<StudentAttendance> getMyAttendance(Long idx) {
+//        Course course=courseRepository.findById(idx).get(); // 강의 찾기
+//        List<Attendance> attendances =attendanceRepository.findAttendancesByCourse(course);
+//        System.out.println("내 출석정보");
+//        System.out.println(attendances);
+//        return studentattendanceRepository.findStudentAttendancesByAttendanceAndAndStudent();
 //    }
 
 

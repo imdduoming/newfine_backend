@@ -75,8 +75,8 @@ public class AttendanceController {
 //    @GetMapping("/attendances/my")
 //    public List<StudentAttendance> getMyAttendance(@RequestParam Integer id){
 //        Long idx=Long.valueOf(id);
-//        return attendanceService.getStudentAttendance(idx);
-//    }
+//        return attendanceService.getMyAttendance(idx);
+    }
 //    @GetMapping("/get/attendance/{phone_number}")
 //    public List<Attendance> getMyAttendances(@PathVariable String phone_number){
 //
@@ -85,4 +85,4 @@ public class AttendanceController {
 
 
 
-}
+
