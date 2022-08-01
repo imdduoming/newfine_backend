@@ -43,7 +43,8 @@ public class AttendanceService {
             StudentAttendance studentAttendance=new StudentAttendance(listener.getStudent(),attendance, null,false,false);
             studentAttendances.add(studentAttendance);
         }
-
+        System.out.println("학생 출석부");
+        System.out.println(studentAttendances);
         Long attendance_id=attendance.getAttendanceId();
         String a_id=Long.toString(attendance_id);
         Attendance attendance2=attendanceRepository.findById(attendance_id).get();
