@@ -102,6 +102,8 @@ public class StudentService {
 
     public String updatePassword(PasswordUpdateDto passwordUpdateDto){
 
+        System.out.println(passwordUpdateDto.getPhoneNumber());
+
         Student student=studentRepository.findByPhoneNumber(passwordUpdateDto.getPhoneNumber()).orElseThrow(PhoneNumberNotFoundException::new);
         student.setPassword(passwordEncoder.encode(passwordUpdateDto.getNewPassword()));
 
