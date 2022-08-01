@@ -4,7 +4,9 @@ import com.example.nf.newfine_backend.member.dto.SignInDto;
 import com.example.nf.newfine_backend.member.dto.SignUpDto;
 import com.example.nf.newfine_backend.member.dto.TokenDto;
 import com.example.nf.newfine_backend.member.dto.TokenRequestDto;
+import com.example.nf.newfine_backend.member.exception.CustomException;
 import com.example.nf.newfine_backend.member.student.dto.*;
+import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
 import com.example.nf.newfine_backend.member.teacher.dto.TeacherResponseDto;
 import com.example.nf.newfine_backend.member.student.dto.*;
 import com.example.nf.newfine_backend.member.service.AuthService;
@@ -13,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static com.example.nf.newfine_backend.member.exception.ErrorCode.DUPLICATE_MEMBER;
+
 @RestController
 @RequiredArgsConstructor
 //@CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -20,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
     private final AuthService authService;
     private final MessageService messageService;
+    private final StudentRepository studentRepository;
 
     @PostMapping("/signup")
     public ResponseEntity<StudentResponseDto> signup(@RequestBody SignUpDto signUpDto) {
@@ -64,6 +69,10 @@ public class AuthController {
         int randomNumber=(int)((Math.random()* (9999 - 1000 + 1)) + 1000);//난수 생성
 
         //************************* 추후 DB 전화번호와 일치하는지 확인해야 함
+        // 전화번호 중복 확인
+        if (studentRepository.existsByPhoneNumber(phoneNumberDto.getPhoneNumber())) {
+            throw new CustomException(DUPLICATE_MEMBER);
+        }
 
 //        messageService.sendMessage(phoneNumberDto, String.valueOf(randomNumber));
 //        return String.valueOf(randomNumber);
