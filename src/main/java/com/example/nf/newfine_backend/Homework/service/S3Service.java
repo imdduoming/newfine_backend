@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
 
 @Service
 @Slf4j
@@ -24,7 +25,7 @@ public class S3Service {
     private String bucketName;
 
     public String uploadFile(String category, MultipartFile file){
-        String fileName = CommonUtils.buildFileName(category, file.getOriginalFilename());
+        String fileName = CommonUtils.buildFileName(category, Objects.requireNonNull(file.getOriginalFilename()));
 
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentType(file.getContentType());
