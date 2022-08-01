@@ -32,8 +32,9 @@ public class AttendanceService {
 
     public Attendance makeAttendance(Long course_id, LocalDateTime start, LocalDateTime end){
         Course course=courseRepository.findById(course_id).get();
-        List< Listener> listeners = courseService.getListeners(course_id);
-        System.out.println(listeners);
+        List listeners = courseService.getListeners(course_id);
+        System.out.println("수강생");
+        System.out.println( listeners);
         Attendance attendance= new Attendance(course,start,end);
         attendanceRepository.save(attendance);
         Long attendance_id=attendance.getAttendanceId();
