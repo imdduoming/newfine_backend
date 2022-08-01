@@ -1,4 +1,6 @@
+/*
 package com.example.nf.newfine_backend.Homework.dto;
+
 
 import com.example.nf.newfine_backend.Homework.domain.THomework;
 import com.example.nf.newfine_backend.course.Course;
@@ -18,7 +20,9 @@ public class SaveRequestDto {
 
     private Course course;
 
+
     public THomework toEntity() {
+
         return THomework.builder()
                 .title(title)
                 .content(content)
@@ -30,3 +34,5 @@ public class SaveRequestDto {
         this.course = course;
     }
 }
+*/
+

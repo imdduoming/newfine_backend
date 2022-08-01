@@ -48,9 +48,9 @@ public class THomework extends BaseTimeEntity {
 
 
     @Builder
-    public THomework(String title, String content, Course course) {
-        this.title = title;
-        this.content = content;
+    public THomework(THomework tHomework, Course course) {
+        this.title = tHomework.getTitle();
+        this.content = tHomework.getContent();
         this.course = course;
         //this.count = count;
     }
