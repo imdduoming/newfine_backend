@@ -15,10 +15,10 @@
             received=e.data;
             console.log(received);
             if(received[0]=='in'){
-                start(idx,token);
+                start(idx,received[1]);
             }
             else{
-                end(idx,token);
+                end(idx,received[1]);
             }
         })
 
