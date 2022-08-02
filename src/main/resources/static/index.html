@@ -7,6 +7,7 @@
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script type="text/javascript" src="js/qrcode.js"></script>
     <script type="text/javascript" src="js/back.js"></script>
+    <script type="http://malsup.github.com/jquery.form.js"></script>    // wz
 
 </head>
 <body>
@@ -30,6 +31,21 @@
 <button type="button" id="qrmake" onclick="makeCode()">qrcode 생성</button>
 <div id="qrcode" style="width:100px; height:100px; margin:auto; margin-top:15px;"></div>
 
+
+<!--<form id="excelUploadFoarm" name="excelUploadForm" enctype="multipart/form-data" method="post" action="">-->
+<!--    <br>엑셀 파일 업로드<br>-->
+<!--    <input id="excelFile" type="file" name="excelFile" />-->
+<!--    <button type="button" id="uploadExcel" onclick="">엑셀 파일 업로드</button>-->
+<!--</form>-->
+<form id="excelUploadForm" name="excelUploadForm" enctype="multipart/form-data"method="post" action= "excelUpload.do">
+    <div class="upload_file">
+        <label for="excelFile">Excel 업로드</label>
+        <input type="file" id="excelFile" name="excelFile"/>
+        <button type="button" onclick="check()"><span>저장</span></button>
+    </div>
+</form>
+
+
 <script type="text/javascript">
 
     $(document).ready(function () {
@@ -40,15 +56,15 @@ var qrcode = new QRCode(document.getElementById("qrcode"), {
 	height : 100
 });
 
-function makeCode () {		
+function makeCode () {
 	var elText = document.getElementById("text");
-	
+
 	if (!elText.value) {
 		alert("Input a text");
 		elText.focus();
 		return;
 	}
-	
+
 	qrcode.makeCode(elText.value);
 }
 
@@ -128,6 +144,63 @@ function get_course() {
 
 
 }
+
+function checkFileType(filePath) {
+    var fileFormat = filePath.split(".");
+
+    if (fileFormat.indexOf("xls") > -1 || fileFormat.indexOf("xlsx") > -1) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+// function check(){
+//     var file=$("#excelFile").val();
+//
+//     if(file=="" || file==null) {
+//         alert("파일을 선택해주세요.");
+//         return false;
+//     } else if(!checkFileType(file)){
+//         alert("엑셀 파일만 업로드 가능합니다.");
+//         return false;
+//     }
+//
+//     if(confirm("업로드하시겠습니까?")){
+//         var options={
+//             success: function(data){
+//                 console.log(data);
+//                 alert("모든 데이터가 업로드되었습니다.");
+//             },
+//             type: "POST"
+//         };
+//
+//         $("#excelUploadForm").ajaxSubmit(options);
+//     }
+// }
+
+function check() {
+    if (confirm("업로드 여부")) {
+        var options = {
+            success: function (result) {
+                if (result.code == "1") {
+                    console.log("data 전송 성공");
+                    alert(result.msg);
+                } else {
+                    console.log("data 전송 실패");
+                    alert(result.msg);
+                }
+            },
+            error: function (request, status, error) {
+                console.log("error");
+                alert("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+            },
+            type: "POST"
+        };
+        $("#excelUploadForm").ajaxSubmit(options);
+    }
+}
+
 
 
 // makeCode();
