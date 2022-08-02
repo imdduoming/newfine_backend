@@ -12,7 +12,7 @@ public class SHomeworkDto {
 
     private Long shId;
 
-    //private String name;
+    private String name;
     private String comment;
 
     private String createdDate;
@@ -22,6 +22,7 @@ public class SHomeworkDto {
     public static SHomeworkDto toDto(SHomework sHomework) {
         return new SHomeworkDto(
                 sHomework.getShid(),
+                sHomework.getListener().getStudent().getName(),
                 sHomework.getComment(),
                 sHomework.getCreatedDate(),
                 sHomework.getModifiedDate()

@@ -3,29 +3,39 @@ package com.example.nf.newfine_backend.Homework.service;
 
 import com.example.nf.newfine_backend.Homework.Repository.THomeworkRepository;
 import com.example.nf.newfine_backend.Homework.domain.THomework;
-import com.example.nf.newfine_backend.Homework.dto.ResponseDto;
-import com.example.nf.newfine_backend.Homework.dto.SaveRequestDto;
+import com.example.nf.newfine_backend.Homework.dto.THomeworkDto;
+import com.example.nf.newfine_backend.course.Course;
+import com.example.nf.newfine_backend.course.CourseRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class THomeworkService {
 
     private final THomeworkRepository tHomeworkRepository;
+    private final CourseRepository courseRepository;
     /**
      * 게시글 생성
      */
     @Transactional
-    public Long save(final SaveRequestDto params) {
+    public THomeworkDto save(Long courseId, THomeworkDto tHomeworkDto) {
+        //Course course = courseRepository.findById(courseId).orElseThrow(() -> new IllegalArgumentException("강의를 찾을 수 없습니다."));
 
-        THomework entity = tHomeworkRepository.save(params.toEntity());
-        return entity.getId();
+        THomework tHomework = new THomework();
+        tHomework.setTitle(tHomeworkDto.getTitle());
+
+        Course course = courseRepository.findById(courseId).orElseThrow(() -> new IllegalArgumentException("강의를 찾을 수 없습니다."));
+
+        tHomework.setContent(tHomeworkDto.getContent());
+        tHomework.setCourse(course);
+        tHomeworkRepository.save(tHomework);
+
+        return THomeworkDto.toDto(tHomework);
     }
 
     /**
@@ -35,10 +45,14 @@ public class THomeworkService {
 //        Page<THomework> page = tHomeworkRepository.findAll(pageable);
 //        return page.stream().map(ResponseDto::new).collect(Collectors.toList());
 //    }
-    public List<ResponseDto> findAll() {
-        Sort sort = Sort.by(Sort.Direction.DESC, "id", "createdDate");
-        List<THomework> list = tHomeworkRepository.findAll(sort);
-        return list.stream().map(ResponseDto::new).collect(Collectors.toList());
+    @Transactional(readOnly = true)
+    public List<THomeworkDto> getTHomeworks(Long courseId) {
+        List<THomework> tHomeworks = tHomeworkRepository.findTHomeworksByCourseId(courseId);
+        List<THomeworkDto> tHomeworkDtos = new ArrayList<>();
+
+        tHomeworks.forEach(s -> tHomeworkDtos.add(THomeworkDto.toDto(s)));
+        return tHomeworkDtos;
+
     }
     /*
     public List<BoardResponseDto> findAllByPageRequest(Pageable pageable) {
@@ -66,32 +80,31 @@ public class THomeworkService {
      * 게시글 개별 조회
      */
     @Transactional(readOnly = true)
-    public ResponseDto findById(Long id) {
-        THomework entity = tHomeworkRepository.findById(id).orElseThrow(()
-                -> new IllegalArgumentException("해당 게시물이 존재하지 않습니다."));
-//        entity.increaseCounts();
-        return new ResponseDto(entity);
+    public THomeworkDto findById(Long Id) {
+        THomework tHomework = tHomeworkRepository.findById(Id).orElseThrow(()-> new IllegalArgumentException("해당 게시글을 찾을 수 없습니다."));
+        tHomeworkRepository.findById(Id);
+        return THomeworkDto.toDto(tHomework);
     }
 
     /**
      * 게시글 수정
      */
     @Transactional
-    public Long update(final Long id, final SaveRequestDto params) {
+    public Long update(final Long Id, THomeworkDto tHomeworkDto) {
 
-        THomework entity = tHomeworkRepository.findById(id).orElseThrow(() -> new  IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
-        entity.update(params.getTitle(), params.getContent(), params.getWriter());
-        return id;
+        THomework tHomework = tHomeworkRepository.findById(Id).orElseThrow(() -> new  IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
+        tHomework.update(tHomeworkDto.getTitle(), tHomeworkDto.getContent());
+        return Id;
     }
 
     /**
      * 게시글 삭제
      */
     @Transactional
-    public void delete(Long id){
-        THomework entity = tHomeworkRepository.findById(id)
+    public void delete(Long Id){
+        THomework tHomework = tHomeworkRepository.findById(Id)
                 .orElseThrow(()->new IllegalArgumentException("해당 게시물이 존재하지 않습니다."));
-        tHomeworkRepository.delete(entity);
+        tHomeworkRepository.delete(tHomework);
     }
 
     /**

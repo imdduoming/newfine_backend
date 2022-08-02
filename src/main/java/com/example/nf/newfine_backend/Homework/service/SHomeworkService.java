@@ -5,6 +5,7 @@ import com.example.nf.newfine_backend.Homework.Repository.THomeworkRepository;
 import com.example.nf.newfine_backend.Homework.domain.SHomework;
 import com.example.nf.newfine_backend.Homework.domain.THomework;
 import com.example.nf.newfine_backend.Homework.dto.SHomeworkDto;
+import com.example.nf.newfine_backend.course.Listener;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,13 +21,13 @@ public class SHomeworkService {
     private final THomeworkRepository tHomeworkRepository;
 
     @Transactional
-    public SHomeworkDto uploadSHomework(Long ThId, SHomeworkDto sHomeworkDto) {
+    public SHomeworkDto uploadSHomework(Long ThId, SHomeworkDto sHomeworkDto, Listener listener) {
         SHomework sHomework = new SHomework();
         sHomework.setComment(sHomeworkDto.getComment());
 
         THomework tHomework = tHomeworkRepository.findById(ThId).orElseThrow(() -> new IllegalArgumentException("게시판을 찾을 수 없습니다."));
 
-        //sHomework.setListener(listener);
+        sHomework.setListener(listener);
         sHomework.setThomework(tHomework);
         sHomeworkRepository.save(sHomework);
 

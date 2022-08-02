@@ -41,10 +41,16 @@ public class AttendanceService {
         Attendance attendance= new Attendance(course,start,end);
         attendanceRepository.save(attendance);
         for(Listener listener : listeners){
+            System.out.println("수강생이름");
+            System.out.println(listener.getStudent().getName());
+            System.out.println("출석 id");
+            System.out.println(attendance.getAttendanceId());
             StudentAttendance studentAttendance=new StudentAttendance(listener.getStudent(),attendance, null,false,false);
+            studentattendanceRepository.save(studentAttendance);
             studentAttendances.add(studentAttendance);
         }
-
+        System.out.println("학생 출석부");
+        System.out.println(studentAttendances);
         Long attendance_id=attendance.getAttendanceId();
         String a_id=Long.toString(attendance_id);
         Attendance attendance2=attendanceRepository.findById(attendance_id).get();

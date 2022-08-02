@@ -17,9 +17,6 @@ import static com.example.nf.newfine_backend.member.exception.ErrorCode.DUPLICAT
 @Service
 @RequiredArgsConstructor
 public class MessageService {
-    //
-
-    private final StudentRepository studentRepository;
 
     @Value("${coolsms.nf.apikey}")
     private String apiKey;
@@ -31,11 +28,6 @@ public class MessageService {
     private String fromNumber;
 
     public String sendMessage(PhoneNumberDto phoneNumberDto, String randomNumber) {
-
-        // 전화번호 중복 확인
-        if (studentRepository.existsByPhoneNumber(phoneNumberDto.getPhoneNumber())) {
-            throw new CustomException(DUPLICATE_MEMBER);
-        }
 
         Message coolsms = new Message(apiKey, apiSecret);
 
