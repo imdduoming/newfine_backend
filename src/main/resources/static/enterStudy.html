@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script>
+    var idx;
+    let domainURL= 'https://eb.newfine.tk';
+    var token;
+    $(document).ready(function () {
+        idx = window.location.search.split("=")[1]
+        document.addEventListener("message", (e) => {
+            token=e.data;
+            console.log(token);
+            add_attendance(idx,token);
+        })
+
+    });
+
+    function add_attendance(idx,token){
+        let data = {"studyId":idx.toString()}
+        $.ajax({
+            type: "POST",
+            url: `${domainURL}/study/start`,
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            beforeSend: function (xhr){
+                xhr.setRequestHeader('Authorization', "Bearer " +token);
+            },
+            success: function (response) {
+                console.log(response)
+                requestPermission(response)
+            }
+        });
+    }
+    function requestPermission  (response) {
+        if (window.ReactNativeWebView) {
+            // 모바일이라면 모바일의 카메라 권한을 물어보는 액션을 전달합니다.
+            window.ReactNativeWebView.postMessage(
+                JSON.stringify( {data:response} )
+            );
+        } else {
+            // 모바일이 아니라면 모바일 아님을 alert로 띄웁니다.
+            alert({ message: ERROR_TYPES.notMobile });
+        }
+    };
+</script>
+<body>
+<h1>출석 되었습니다!</h1>
+</body>
+</html>
