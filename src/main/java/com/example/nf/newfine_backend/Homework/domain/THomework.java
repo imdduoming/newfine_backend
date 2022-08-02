@@ -1,10 +1,9 @@
 package com.example.nf.newfine_backend.Homework.domain;
 
+import com.example.nf.newfine_backend.Homework.dto.THomeworkDto;
+import com.example.nf.newfine_backend.course.Course;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -13,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Data
 public class THomework extends BaseTimeEntity {
 
     @Id
@@ -21,9 +21,9 @@ public class THomework extends BaseTimeEntity {
     private Long id;
 
 
-    //    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "ThName")
-    private String writer; //어케 해야 할지..
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_id")
+    private Course course; // 코스 별로 여러 과제 가질 수 있음
 
 
     @Column(length = 40, nullable = false)
@@ -48,30 +48,17 @@ public class THomework extends BaseTimeEntity {
     private List<SHomework> sHomeworks;
 
 
-    //== 연관관계 편의 메서드 ==//
-//    public void confirmWriter(String writer) {
-//        writer는 변경이 불가능하므로 이렇게만 해주어도 될듯
-//        this.writer = writer;
-//        writer.addPost(this);
-//    }
-
-//    public void addHomework(SHomework sHomework) {
-//        comment의 Post 설정은 comment에서 함
-//        sHomeworkList.add(sHomework);
-//    }
-
     @Builder
-    public THomework(String title, String content, String writer, int count) {
-        this.title = title;
-        this.content = content;
-        this.writer = writer;
-        this.count = count;
+    public THomework(THomeworkDto tHomeworkDto, Course course) {
+        this.title = tHomeworkDto.getTitle();
+        this.content = tHomeworkDto.getContent();
+        this.course = course;
+        //this.count = count;
     }
 
-    public void update(String title, String content, String writer) {
+    public void update(String title, String content) {
         this.title = title;
         this.content = content;
-        this.writer = writer;
         //this.modifiedDate = LocalDateTime.now();
     }
 }
