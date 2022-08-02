@@ -39,8 +39,6 @@ public class Study {
     private LocalDateTime startTime;
 
 
-
-
     public Study (LocalDateTime startTime) {
         this.startTime=startTime;
 

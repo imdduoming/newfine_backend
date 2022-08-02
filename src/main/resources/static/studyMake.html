@@ -67,24 +67,6 @@
         });
     }
 
-    function add_attendance() {
-
-        let course= $('#course').val();
-        let data = {"course": course};
-
-        $.ajax({
-            type: "POST",
-            url: `${domainURL}/add/attendance`,
-            contentType: "application/json",
-            data: JSON.stringify(data),
-            success: function (response) {
-                console.log(data)
-                alert('출석 되었습니다!');
-                window.location.reload();
-            }
-
-        });
-    }
 
     function select_course() {
 

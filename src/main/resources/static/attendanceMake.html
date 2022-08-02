@@ -78,34 +78,7 @@
         });
     }
 
-    function add_attendance() {
 
-        let course= $('#course').val();
-        let data = {"course": course};
-
-        $.ajax({
-            type: "POST",
-            url: `${domainURL}/add/attendance`,
-            contentType: "application/json",
-            data: JSON.stringify(data),
-            success: function (response) {
-                console.log(data)
-                alert('출석 되었습니다!');
-                window.location.reload();
-            }
-
-        });
-    }
-
-    function select_course() {
-
-        // 선택된 데이터 가져오기
-        const value = e.value;
-
-        // 데이터 출력
-        document.getElementById('result').innerText
-            = value;
-    }
 
     function get_course() {
         console.log("1")
@@ -116,7 +89,7 @@
                 console.log(response)
                 for (let i =0 ;i < response.length ; i++){// obj 길이 만큼 반복
 
-                    var optionValue = response[i]['cid']; // 서버에서 전달 받은 value
+                    var optionValue = response[i]['id']; // 서버에서 전달 받은 value
                     var optionFront = response[i]['cname']; // 사용자에게 보여지는 부분
                     var option = '<option value='+optionValue+'>'+optionFront+'</option>'; // 결합
 
