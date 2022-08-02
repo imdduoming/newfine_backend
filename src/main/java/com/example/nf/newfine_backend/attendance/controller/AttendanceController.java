@@ -34,48 +34,49 @@ public class AttendanceController {
 
 
     // 관리자가 수업시간 qr 코드 생성 api
-    @PostMapping  (value = "/make/attendance" )
+    @PostMapping(value = "/make/attendance")
     public Attendance makeAttendance(@RequestBody AttendanceDto attendanceDto) {
-        LocalDateTime startTime=attendanceDto.getStartTime();
-        LocalDateTime endTime= attendanceDto.getEndTime();
+        LocalDateTime startTime = attendanceDto.getStartTime();
+        LocalDateTime endTime = attendanceDto.getEndTime();
         System.out.println(attendanceDto.getStartTime());
-        return attendanceService.makeAttendance(attendanceDto.getCourse_id(),attendanceDto.getStartTime(),attendanceDto.getEndTime());
+        return attendanceService.makeAttendance(attendanceDto.getCourse_id(), attendanceDto.getStartTime(), attendanceDto.getEndTime());
 
-}
+    }
+
     // 학생 출석 api
-    @PostMapping  (value = "/add/attendance" )
+    @PostMapping(value = "/add/attendance")
     public int addAttendance(@RequestBody StudentAttendanceDto studentAttendanceDto) {
-        Long attendance_id=Long.parseLong(studentAttendanceDto.getAttendance_id());
-        Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
-        int ans=attendanceService.addAttendance(attendance_id,student);
+        Long attendance_id = Long.parseLong(studentAttendanceDto.getAttendance_id());
+        Student student = studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
+        int ans = attendanceService.addAttendance(attendance_id, student);
         System.out.println(ans);
         return ans;
     }
 
     @GetMapping("/attendances/all")
-    public List<Attendance> getAllAttendances(){
+    public List<Attendance> getAllAttendances() {
         return attendanceService.getAllAttendances();
     }
 
     // 수업시간마다 매시간 출석부 가져오는 api , 출석 정보는 attendance 의 Student Attendance 로 가져오면 된다 .
     @GetMapping("/attendances")
-    public List<Attendance> getAttendances(@RequestParam Integer id){
-        Long idx=Long.valueOf(id);
-
+    public List<Attendance> getAttendances(@RequestParam Integer id) {
+        Long idx = Long.valueOf(id);
         return attendanceService.getAttendances(idx);
     }
 
     // 매 수업시간 마다 출석 현황
     @GetMapping("/attendances/student")
-    public List<StudentAttendance> getStudentAttendance(@RequestParam Integer id){
-        Long idx=Long.valueOf(id);
+    public List<StudentAttendance> getStudentAttendance(@RequestParam Integer id) {
+        Long idx = Long.valueOf(id);
         return attendanceService.getStudentAttendance(idx);
     }
 
-//    @GetMapping("/attendances/my")
-//    public List<StudentAttendance> getMyAttendance(@RequestParam Integer id){
-//        Long idx=Long.valueOf(id);
-//        return attendanceService.getMyAttendance(idx);
+    @GetMapping("/attendances/my")
+    public List<StudentAttendance> getMyAttendance(@RequestParam Integer id) {
+        Long idx = Long.valueOf(id);
+        Student student = studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
+        return attendanceService.getMyAttendance(idx,student);
     }
 //    @GetMapping("/get/attendance/{phone_number}")
 //    public List<Attendance> getMyAttendances(@PathVariable String phone_number){
@@ -83,6 +84,6 @@ public class AttendanceController {
 //        return attendanceService.getMyAttendances(phone_number);
 //    }
 
-
+}
 
 
