@@ -12,18 +12,40 @@
     $(document).ready(function () {
         idx = window.location.search.split("=")[1]
         document.addEventListener("message", (e) => {
-            token=e.data;
-            console.log(token);
-            add_attendance(idx,token);
+            received=e.data;
+            console.log(received);
+            if(received[0]=='in'){
+                start(idx,token);
+            }
+            else{
+                end(idx,token);
+            }
         })
 
     });
 
-    function add_attendance(idx,token){
+    function start(idx,token){
         let data = {"studyId":idx.toString()}
         $.ajax({
             type: "POST",
             url: `${domainURL}/study/start`,
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            beforeSend: function (xhr){
+                xhr.setRequestHeader('Authorization', "Bearer " +token);
+            },
+            success: function (response) {
+                console.log(response)
+                requestPermission(response)
+            }
+        });
+    }
+
+    function end(idx,token){
+        let data = {"studyId":idx.toString()}
+        $.ajax({
+            type: "PUT",
+            url: `${domainURL}/study/end`,
             contentType: "application/json",
             data: JSON.stringify(data),
             beforeSend: function (xhr){
