@@ -34,12 +34,11 @@ public class StudyController {
     private final StudyService studyService;
 
     // 관리자가 수업시간 qr 코드 생성 api
-    @PostMapping  (value = "/study/make" )
+    @PostMapping  (value = "/make/study" )
     public Study makeStudy(@RequestBody StudyDto studyDto) {
         LocalDateTime startTime=studyDto.getStartTime();
-        LocalDateTime endTime= studyDto.getEndTime();
         System.out.println(studyDto.getStartTime());
-        return  studyService.makeStudy(studyDto.getStartTime(),studyDto.getEndTime());
+        return  studyService.makeStudy(studyDto.getStartTime());
 
     }
     // 학생 쟈습 enter api
@@ -49,7 +48,7 @@ public class StudyController {
         Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
         int ans=studyService.enterStudy(study_id,student);
         System.out.println(ans);
-        return ans;
+        return ans; //제대로 된 입실은 1
         // 출석하고 앱 화면으로 돌리기
     }
 
@@ -60,7 +59,7 @@ public class StudyController {
         Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
         int ans=studyService.endStudy(study_id,student);
         System.out.println(ans);
-        return ans;
+        return ans;//제대로 된 퇴실은 1
         // 출석하고 앱 화면으로 돌리기
     }
 

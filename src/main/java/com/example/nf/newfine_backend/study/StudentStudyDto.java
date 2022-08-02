@@ -11,5 +11,5 @@ import lombok.Setter;
 @NoArgsConstructor
 public class StudentStudyDto {
     private String studyId;
-    private String content; // 입장인지 퇴실인지
+
 }

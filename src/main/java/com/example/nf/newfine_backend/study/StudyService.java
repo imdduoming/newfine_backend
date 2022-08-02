@@ -30,8 +30,8 @@ public class StudyService {
     private final StudyRepository studyRepository;
     private final StudentStudyRepository studentStudyRepository;
 
-    public Study makeStudy(LocalDateTime start, LocalDateTime end){
-        Study study= new Study(start,end);
+    public Study makeStudy(LocalDateTime start){
+        Study study= new Study(start);
         studyRepository.save(study);
         Long study_id=study.getStudyId();
         String a_id=Long.toString(study_id);

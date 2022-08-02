@@ -13,5 +13,4 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class StudyDto {
     private LocalDateTime startTime;
-    private LocalDateTime endTime;
 }
