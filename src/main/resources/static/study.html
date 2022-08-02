@@ -8,12 +8,13 @@
 <script>
     var idx;
     let domainURL= 'https://eb.newfine.tk';
-    var token;
+    var received;
     $(document).ready(function () {
         idx = window.location.search.split("=")[1]
         document.addEventListener("message", (e) => {
             received=e.data;
             console.log(received);
+            alert(received);
             if(received[0]=='in'){
                 start(idx,received[1]);
             }
@@ -21,7 +22,6 @@
                 end(idx,received[1]);
             }
         })
-
     });
 
     function start(idx,token){
