@@ -5,15 +5,18 @@ import com.example.nf.newfine_backend.member.dto.SignUpDto;
 import com.example.nf.newfine_backend.member.dto.TokenDto;
 import com.example.nf.newfine_backend.member.dto.TokenRequestDto;
 import com.example.nf.newfine_backend.member.exception.CustomException;
-import com.example.nf.newfine_backend.member.student.dto.*;
-import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
-import com.example.nf.newfine_backend.member.teacher.dto.TeacherResponseDto;
-import com.example.nf.newfine_backend.member.student.dto.*;
 import com.example.nf.newfine_backend.member.service.AuthService;
+import com.example.nf.newfine_backend.member.student.dto.PhoneNumberDto;
+import com.example.nf.newfine_backend.member.student.dto.StudentResponseDto;
+import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
 import com.example.nf.newfine_backend.member.student.service.MessageService;
+import com.example.nf.newfine_backend.member.teacher.dto.TeacherResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import static com.example.nf.newfine_backend.member.exception.ErrorCode.DUPLICATE_MEMBER;
 

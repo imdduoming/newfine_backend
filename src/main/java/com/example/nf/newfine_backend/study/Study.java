@@ -38,15 +38,10 @@ public class Study {
     @DateTimeFormat(pattern = "yyyy-MM-ddTHH:mm")
     private LocalDateTime startTime;
 
-    @Column
-    @DateTimeFormat(pattern = "yyyy-MM-ddTHH:mm")
-    private LocalDateTime endTime;
 
-
-
-    public Study (LocalDateTime startTime, LocalDateTime endTime) {
+    public Study (LocalDateTime startTime) {
         this.startTime=startTime;
-        this.endTime=endTime;
+
 
     }
 }
