@@ -31,14 +31,13 @@ public class ExcelService{
         List<Map<String, String>> excelContent  = ExcelRead.read(excelReadOption);
 
         for(Map<String, String> article: excelContent){
-//            System.out.println(article.get("A"));
-//            System.out.println(article.get("B"));
-//            System.out.println(article.get("C"));
-//            System.out.println(article.get("D"));
-//            System.out.println(article.get("E"));
-//            System.out.println(article.get("F"));
-//            System.out.println(article.get("G"));
-//            DAO.excelUpload(article);
+            System.out.println(article.get("A"));
+            System.out.println(article.get("B"));
+            System.out.println(article.get("C"));
+            System.out.println(article.get("D"));
+            System.out.println(article.get("E"));
+            System.out.println(article.get("F"));
+            System.out.println(article.get("G"));
 
             ExcelDto excelInfo = new ExcelDto();
 
