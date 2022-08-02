@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -107,13 +108,19 @@ public class AttendanceService {
         List<StudentAttendance> studentAttendances=studentattendanceRepository.findStudentAttendancesByAttendance(attendance);
         return studentAttendances;
     }
-//    public List<StudentAttendance> getMyAttendance(Long idx) {
-//        Course course=courseRepository.findById(idx).get(); // 강의 찾기
-//        List<Attendance> attendances =attendanceRepository.findAttendancesByCourse(course);
-//        System.out.println("내 출석정보");
-//        System.out.println(attendances);
-//        return studentattendanceRepository.findStudentAttendancesByAttendanceAndAndStudent();
-//    }
+    public List<StudentAttendance> getMyAttendance(Long idx,Student student) {
+        Course course=courseRepository.findById(idx).get(); // 강의 찾기
+        List<Attendance> attendances =attendanceRepository.findAttendancesByCourse(course);
+        List<StudentAttendance> studentAttendances=new ArrayList<>();
+        for(Attendance attendance : attendances){
+            // 출석마다 학생 출석 정보 찾기
+            StudentAttendance studentAttendance=studentattendanceRepository.findByStudentAndAttendance(student,attendance).get();
+            studentAttendances.add(studentAttendance);
+
+        }
+        System.out.println(studentAttendances);
+        return studentAttendances;
+    }
 
 
 
