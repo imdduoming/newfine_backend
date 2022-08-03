@@ -22,6 +22,9 @@ public class ExcelService{
     @Transactional
     public void excelUpload(File destFile) throws Exception {
         ExcelReadOption excelReadOption = new ExcelReadOption();
+        System.out.println(excelReadOption.getFilePath());
+        System.out.println(excelReadOption.getFilePath().substring(1));
+        System.out.println(excelReadOption.getFilePath().substring(2));
         excelReadOption.setFilePath(destFile.getAbsolutePath()); //파일경로 추가
         excelReadOption.setOutputColumns("A", "B", "C", "D", "E", "F", "G"); //추출할 컬럼명 추가
         excelReadOption.setStartRow(2); //시작행(헤더부분 제외)
