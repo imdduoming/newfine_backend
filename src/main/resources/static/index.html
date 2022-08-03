@@ -5,6 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="css/bootstrap.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://malsup.github.io/jquery.form.js"></script>
+    <script type="text/javascript">
+        function checkFileType(filePath) {
+            var fileFormat = filePath.split(".");
+
+            if (fileFormat.indexOf("xls") > -1 || fileFormat.indexOf("xlsx") > -1) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        function check() {
+            if (confirm("업로드 여부")) {
+                var options = {
+                    success: function (result) {
+                        if (result.code == "1") {
+                            console.log("data 전송 성공");
+                            alert(result.msg);
+                        } else {
+                            console.log("data 전송 실패");
+                            alert(result.msg);
+                        }
+                    },
+                    error: function (request, status, error) {
+                        console.log("error");
+                        alert("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+                    },
+                    type: "POST"
+                };
+                $("#excelUploadForm").ajaxSubmit(options);
+            }
+        }
+    </script>
 </head>
 <body>
 <center><div id="main">
@@ -21,7 +55,14 @@
     <button class="w-btn-neon2" type="button">
         수업 정보
     </button>
-</body>
 </div></center>
+<form id="excelUploadForm" name="excelUploadForm" enctype="multipart/form-data"method="post" action= "excelUpload.do">
+    <div class="upload_file">
+        <label for="excelFile">Excel 업로드</label>
+        <input type="file" id="excelFile" name="excelFile"/>
+        <button type="button" onclick="check()"><span>저장</span></button>
+    </div>
+</form>
 </body>
 </html>
+
