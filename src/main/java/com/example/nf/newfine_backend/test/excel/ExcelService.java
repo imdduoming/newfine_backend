@@ -22,7 +22,7 @@ public class ExcelService{
     @Transactional
     public void excelUpload(File destFile) throws Exception {
         ExcelReadOption excelReadOption = new ExcelReadOption();
-        excelReadOption.setFilePath(destFile.getAbsolutePath()); //파일경로 추가
+        excelReadOption.setFilePath(destFile.getAbsolutePath().substring(1)); //파일경로 추가
         System.out.println(excelReadOption.getFilePath());
         System.out.println(excelReadOption.getFilePath().substring(1));
         System.out.println(excelReadOption.getFilePath().substring(2));
