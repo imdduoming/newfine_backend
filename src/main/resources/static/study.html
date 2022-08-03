@@ -8,18 +8,16 @@
 <script>
     var idx;
     let domainURL= 'https://eb.newfine.tk';
-    var state;
-    var token;
+
     $(document).ready(function () {
         idx = window.location.search.split("=")[1]
         document.addEventListener("message", (e) => {
-            state=e.data[0];
-            token=e.data[1];
-            if(state=="in"){
-                start(idx,state);
+            const { token , study_state } =JSON.parse(e.data);
+            if(study_state=="in"){
+                start(idx,token);
             }
             else{
-                end(idx,state);
+                end(idx,token);
             }
         })
     });
