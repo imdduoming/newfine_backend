@@ -27,6 +27,7 @@ public class SHomework extends BaseTimeEntity {
 
     @ManyToOne(fetch = EAGER)
     @JoinColumn(name = "th_id")
+    @JsonManagedReference
     private THomework thomework;
 
     @ManyToOne(fetch = EAGER)
