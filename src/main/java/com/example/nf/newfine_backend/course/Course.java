@@ -51,6 +51,7 @@ public class Course {
     private List<Listener> listeners;
 
     @JsonIgnore
+    @JsonBackReference //순환참조 방지
     @OneToMany(mappedBy="course", cascade = { CascadeType.PERSIST})
     private List<THomework> thomeworks;
 
