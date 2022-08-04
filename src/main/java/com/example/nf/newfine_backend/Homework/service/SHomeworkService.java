@@ -40,7 +40,7 @@ public class SHomeworkService {
 
 
     @Transactional(readOnly = true)
-    public List<SHomeworkDto> getSHomeworks2(Long thId) {
+    public List<SHomeworkDto> getSHomeworks(Long thId) {
         THomework tHomework=tHomeworkRepository.findById(thId).get();
         List<SHomework> sHomeworks = sHomeworkRepository.findAllByThomework(tHomework);
         List<SHomeworkDto> sHomeworkDtos = new ArrayList<>();

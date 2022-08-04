@@ -109,13 +109,6 @@ public class THomeworkService {
         return THomeworkDto.toDto(tHomework);
     }
 
-    @Transactional(readOnly = true)
-    public List<SHomework> getSHomeworks(Long thId) {
-        THomework tHomework=tHomeworkRepository.findById(thId).get();
-        List<SHomework> sHomeworks = sHomeworkRepository.findAllByThomework(tHomework);
-        return sHomeworks;
-    }
-
     /**
      * 게시글 수정
      */
