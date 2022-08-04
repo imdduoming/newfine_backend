@@ -1,4 +1,4 @@
-package com.example.nf.newfine_backend.test.excel;
+package com.example.nf.newfine_backend.test.excel.dto;
 
 import com.example.nf.newfine_backend.member.domain.Authority;
 import com.example.nf.newfine_backend.member.student.domain.Student;

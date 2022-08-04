@@ -1,4 +1,4 @@
-package com.example.nf.newfine_backend.test.excel;
+package com.example.nf.newfine_backend.test.excel.repository;
 
 import com.example.nf.newfine_backend.test.excel.domain.Excel;
 import org.springframework.data.jpa.repository.JpaRepository;

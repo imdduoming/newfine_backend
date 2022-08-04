@@ -1,5 +1,6 @@
 //package com.example.nf.newfine_backend;
 //
+//import com.example.nf.newfine_backend.member.domain.Timestamped;
 //import lombok.Getter;
 //import lombok.NoArgsConstructor;
 //import lombok.Setter;
@@ -12,7 +13,7 @@
 //@Getter
 //@NoArgsConstructor
 //@Entity
-//public class STest extends Timestamped{
+//public class STest extends Timestamped {
 //
 //    @GeneratedValue(strategy = GenerationType.AUTO)
 //    @Id
