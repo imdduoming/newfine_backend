@@ -19,6 +19,8 @@ public class SHomeworkDto {
 
     private String modifiedDate;
 
+    //private boolean check;
+
     public static SHomeworkDto toDto(SHomework sHomework) {
         return new SHomeworkDto(
                 sHomework.getShid(),
@@ -26,6 +28,7 @@ public class SHomeworkDto {
                 sHomework.getTitle(),
                 sHomework.getCreatedDate(),
                 sHomework.getModifiedDate()
+                //sHomework.getCheck()
         );
     }
 }

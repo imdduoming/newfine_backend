@@ -31,8 +31,8 @@ public class SHomework extends BaseTimeEntity {
     @JoinColumn(name = "listener_id")
     private Listener listener;
 
-    @Column(name = "check")
-    private boolean check = false;
+    //@Column
+    //private boolean check = false;
 
 
     @Builder
@@ -40,6 +40,7 @@ public class SHomework extends BaseTimeEntity {
         this.title = title;
         this.thomework = tHomework;
         this.listener = listener;
-        this.check = check;
+        //this.check = check;
     }
 }
+

@@ -49,7 +49,11 @@ public class THomeworkService {
             System.out.println(listener.getStudent().getName());
             System.out.println("thomework id");
             System.out.println(tHomework.getId());
-            SHomework sHomework=new SHomework(tHomeworkDto.getTitle(), tHomework, listener,false);
+            SHomework sHomework=new SHomework();
+            sHomework.setTitle(tHomeworkDto.getTitle());
+            sHomework.setListener(listener);
+            sHomework.setThomework(tHomework);
+            //sHomework.setCheck(false);
             sHomeworkRepository.save(sHomework);
             sHomeworks.add(sHomework);
         }
