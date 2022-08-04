@@ -3,10 +3,12 @@ package com.example.nf.newfine_backend.Homework.service;
 
 import com.example.nf.newfine_backend.Homework.Repository.SHomeworkRepository;
 import com.example.nf.newfine_backend.Homework.Repository.THomeworkRepository;
-import com.example.nf.newfine_backend.Homework.domain.SHomework;
 import com.example.nf.newfine_backend.Homework.domain.THomework;
 import com.example.nf.newfine_backend.Homework.dto.THomeworkDto;
-import com.example.nf.newfine_backend.course.*;
+import com.example.nf.newfine_backend.course.Course;
+import com.example.nf.newfine_backend.course.CourseRepository;
+import com.example.nf.newfine_backend.course.CourseService;
+import com.example.nf.newfine_backend.course.ListenerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,20 +41,6 @@ public class THomeworkService {
         tHomeworkRepository.save(tHomework);
 
         // shomeworklist 자동으로 생성하는 부분
-        List <Listener> listeners = courseService.getListeners(courseId);
-        List <SHomework> sHomeworks = new ArrayList<>();
-
-        System.out.println("수강생");
-        System.out.println( listeners);
-        for(Listener listener : listeners){
-            System.out.println("수강생이름");
-            System.out.println(listener.getStudent().getName());
-            System.out.println("thomework id");
-            System.out.println(tHomework.getId());
-            SHomework sHomework=new SHomework(tHomework.getTitle(), tHomework, listener,false);
-            sHomeworkRepository.save(sHomework);
-            sHomeworks.add(sHomework);
-        }
 
         return THomeworkDto.toDto(tHomework);
     }
