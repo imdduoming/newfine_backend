@@ -1,6 +1,5 @@
 package com.example.nf.newfine_backend.Homework.domain;
 
-import com.example.nf.newfine_backend.Homework.dto.SHomeworkDto;
 import com.example.nf.newfine_backend.course.Listener;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,7 +21,7 @@ public class SHomework extends BaseTimeEntity {
     private Long shid;
 
     @Column(columnDefinition = "TEXT")
-    private String comment; // 댓글 내용 (내용이 없어도 됨)
+    private String title; // thomework과 동일한 제목 (내용이 없어도 됨)
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "th_id")
@@ -32,11 +31,16 @@ public class SHomework extends BaseTimeEntity {
     @JoinColumn(name = "listener_id")
     private Listener listener;
 
+    //@Column
+    //private boolean check = false;
+
 
     @Builder
-    public SHomework(SHomeworkDto sHomeworkDto, THomework tHomework, Listener listener) {
+    public SHomework(String title, THomework tHomework, Listener listener, Boolean check) {
+        this.title = title;
         this.thomework = tHomework;
         this.listener = listener;
-        this.comment = sHomeworkDto.getComment();
+        //this.check = check;
     }
 }
+
