@@ -29,7 +29,7 @@ public class SHomeworkController {
     //댓글 목록 조회
     @GetMapping("/sh/list/{thId}")
     public List<SHomeworkDto> getSHomeworks(@PathVariable("thId") Long thId){
-        return sHomeworkService.getSHomeworks(thId);
+        return sHomeworkService.getSHomeworks2(thId);
     }
 
     //댓글 삭제

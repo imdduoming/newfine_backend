@@ -111,7 +111,8 @@ public class THomeworkService {
 
     @Transactional(readOnly = true)
     public List<SHomework> getSHomeworks(Long thId) {
-        List<SHomework> sHomeworks = sHomeworkRepository.findAllByThomeworkId(thId);
+        THomework tHomework=tHomeworkRepository.findById(thId).get();
+        List<SHomework> sHomeworks = sHomeworkRepository.findAllByThomework(tHomework);
         return sHomeworks;
     }
 
