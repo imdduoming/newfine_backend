@@ -13,7 +13,7 @@ public class SHomeworkDto {
     private Long shId;
 
     private String name;
-    private String comment;
+    private String title;
 
     private String createdDate;
 
@@ -23,7 +23,7 @@ public class SHomeworkDto {
         return new SHomeworkDto(
                 sHomework.getShid(),
                 sHomework.getListener().getStudent().getName(),
-                sHomework.getComment(),
+                sHomework.getTitle(),
                 sHomework.getCreatedDate(),
                 sHomework.getModifiedDate()
         );
