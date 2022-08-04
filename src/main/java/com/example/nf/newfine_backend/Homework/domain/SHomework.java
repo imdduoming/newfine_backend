@@ -1,6 +1,7 @@
 package com.example.nf.newfine_backend.Homework.domain;
 
 import com.example.nf.newfine_backend.course.Listener;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,6 +31,7 @@ public class SHomework extends BaseTimeEntity {
 
     @ManyToOne(fetch = EAGER)
     @JoinColumn(name = "listener_id")
+    @JsonManagedReference
     private Listener listener;
 
     //@Column
