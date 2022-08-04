@@ -31,9 +31,6 @@ public class ExcelCellRef {
             value = "";
         } else {
             switch (cell.getCellType()) {
-                case FORMULA:
-                    value = cell.getCellFormula();
-                    break;
                 case STRING:
                     value = cell.getStringCellValue();
                     break;
@@ -48,6 +45,9 @@ public class ExcelCellRef {
                     break;
                 case BLANK:
                     value = "";
+                    break;
+                case FORMULA:
+                    value = cell.getCellFormula();
                     break;
                 default:
                     value = cell.getStringCellValue();
