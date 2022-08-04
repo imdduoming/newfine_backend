@@ -3,6 +3,7 @@ package com.example.nf.newfine_backend.Homework.service;
 import com.example.nf.newfine_backend.Homework.Repository.SHomeworkRepository;
 import com.example.nf.newfine_backend.Homework.Repository.THomeworkRepository;
 import com.example.nf.newfine_backend.Homework.domain.SHomework;
+import com.example.nf.newfine_backend.Homework.domain.THomework;
 import com.example.nf.newfine_backend.Homework.dto.SHomeworkDto;
 import com.example.nf.newfine_backend.course.ListenerRepository;
 import lombok.RequiredArgsConstructor;
@@ -39,8 +40,9 @@ public class SHomeworkService {
 
 
     @Transactional(readOnly = true)
-    public List<SHomeworkDto> getSHomeworks(Long thId) {
-        List<SHomework> sHomeworks = sHomeworkRepository.findAllByThomeworkId(thId);
+    public List<SHomeworkDto> getSHomeworks2(Long thId) {
+        THomework tHomework=tHomeworkRepository.findById(thId).get();
+        List<SHomework> sHomeworks = sHomeworkRepository.findAllByThomework(tHomework);
         List<SHomeworkDto> sHomeworkDtos = new ArrayList<>();
 
         sHomeworks.forEach(s -> sHomeworkDtos.add(SHomeworkDto.toDto(s)));
