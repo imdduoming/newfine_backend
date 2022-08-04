@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,7 +31,9 @@ public class ExcelController {
                 result.put("msg", "업로드 성공");
 
                 File destFile = new File("C:\\upload\\"+excelFile.getOriginalFilename()); // 파일위치 지정
-                excelFile.transferTo(destFile); // 엑셀파일 생성
+                excelFile.transferTo(Paths.get(destFile.getAbsolutePath().substring(1))); // 엑셀파일 생성
+                System.out.println(destFile.getAbsolutePath().substring(1));
+                System.out.println(Paths.get(destFile.getAbsolutePath().substring(1)));
                 excelService.excelUpload(destFile); // service단 호출
                 destFile.delete(); // 업로드된 엑셀파일 삭제
             }else {
