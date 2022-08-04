@@ -52,7 +52,10 @@
         var startTime=document.getElementById('start_time').value;
         console.log(startTime)
         let data = {"startTime":startTime};
-
+        if (startTime.empty()){
+            alert("시간을 입력해주세요!")
+        }
+        else{
         $.ajax({
             type: "POST",
             url: `${domainURL}/make/study`,
@@ -64,7 +67,7 @@
                 $('input[name=url]').attr('value',response['url']);
             }
 
-        });
+        });}
     }
 
 
