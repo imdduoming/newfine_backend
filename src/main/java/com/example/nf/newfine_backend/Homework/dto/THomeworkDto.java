@@ -13,6 +13,7 @@ public class THomeworkDto {
 
     private Long id; // PK
     private String title; // 제목
+    private String name;
     private String content; // 내용
     //private int count; // 조회 수
     //private char deleteYn; // 삭제 여부
@@ -24,6 +25,7 @@ public class THomeworkDto {
         return new THomeworkDto(
                 tHomework.getId(),
                 tHomework.getTitle(),
+                tHomework.getCourse().getTeacher().getTName(), //추가
                 tHomework.getContent(),
                 tHomework.getCreatedDate(),
                 tHomework.getModifiedDate()
