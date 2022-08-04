@@ -78,7 +78,7 @@ public class StudyService {
             // 입장한 경우 , 제대로된 퇴실
             StudentStudy studentStudy=studentStudyRepository.findByStudentAndStudy(student,study).get();
             studentStudy.setEndTime(now_time); // 퇴실시간
-            long total = ChronoUnit.HOURS.between(studentStudy.getStartTime(),now_time);
+            long total = ChronoUnit.MINUTES.between(studentStudy.getStartTime(),now_time);
             studentStudy.setTotal(total);
             studentStudy.setOut(true); //나갔다고 표시
             studentStudyRepository.save(studentStudy);
@@ -90,25 +90,20 @@ public class StudyService {
         }
     }
 
+    public List<StudentStudy> getMyStudy(Student student){
+        List<StudentStudy> studentStudies = studentStudyRepository.findStudentStudiesByStudent(student);
+        return studentStudies;
+    }
+    public long totalMyStudy(List<StudentStudy> studentStudies) {
+        long minutes=0;
+        for(StudentStudy studentStudy : studentStudies){ // 내 자습 for 문으로 돌림
+            if (studentStudy.isOut()){
+                // 퇴실 처리가 완료된 자습
+                 minutes +=  studentStudy.getTotal();
+            }        }
+        return minutes;
+    }
 
-//    public List<Attendance> getAllAttendances() {
-//        return attendanceRepository.findAll();
-//    }
-//
-//    public List<Attendance> getAttendances(Long idx){
-//        Course course=courseRepository.findById(idx).get();
-//        List<Attendance> attendanceList=attendanceRepository.findAttendancesByCourse(course);
-//        return attendanceList;
-//    }
-//
-//    public List<StudentAttendance> getStudentAttendance(Long idx){
-//        Attendance attendance=attendanceRepository.findById(idx).get();
-//        List<StudentAttendance> studentAttendances=studentattendanceRepository.findStudentAttendancesByAttendance(attendance);
-//        return studentAttendances;
-//    }
-//    public List<Attendance> getMyAttendances(String phone_number) {
-//        return attendanceRepository.findByStudentPhone(phone_number);
-//    }
 
 
 
