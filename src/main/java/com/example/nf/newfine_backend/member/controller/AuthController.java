@@ -75,7 +75,7 @@ public class AuthController {
 
         //************************* 추후 DB 전화번호와 일치하는지 확인해야 함 ->일단 했음. ^^
         BranchStudent bs=branchStudentRepository.findByPhoneNumber(signUpAuthDto.getPhoneNumber()).orElseThrow(PhoneNumberNotFoundException::new);
-        if (String.valueOf(bs.getBranch().getBranchName()) != signUpAuthDto.getBranch()){
+        if (String.valueOf(bs.getBranch().getId()) != signUpAuthDto.getBranch()){
             throw new RuntimeException("이 분원엔 그런 학생이 없다!!");
         }
 
