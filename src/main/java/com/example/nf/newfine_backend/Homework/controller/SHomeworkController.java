@@ -1,5 +1,6 @@
 package com.example.nf.newfine_backend.Homework.controller;
 
+import com.example.nf.newfine_backend.Homework.domain.SHomework;
 import com.example.nf.newfine_backend.Homework.dto.SHomeworkDto;
 import com.example.nf.newfine_backend.Homework.service.SHomeworkService;
 import com.example.nf.newfine_backend.course.Listener;
@@ -26,7 +27,7 @@ public class SHomeworkController {
 
     //댓글 목록 조회
     @GetMapping("/sh/list/{thId}")
-    public List<SHomeworkDto> getSHomeworks(@PathVariable("thId") Long thId){
+    public List<SHomework> getSHomeworks(@PathVariable("thId") Long thId){
         return sHomeworkService.getSHomeworks(thId);
     }
 
