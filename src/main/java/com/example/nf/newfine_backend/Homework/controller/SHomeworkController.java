@@ -18,20 +18,20 @@ public class SHomeworkController {
     private final ListenerRepository listenerRepository;
 
     //댓글 작성
-    @PostMapping("/shomework/{thId}")
+    @PostMapping("/sh/{thId}")
     public SHomeworkDto uploadSHomework(@PathVariable("thId") Long thId, @RequestBody SHomeworkDto sHomeworkDto) {
         Listener listener = listenerRepository.findById(1L).get();
         return sHomeworkService.createSHomework(thId, sHomeworkDto, listener);
     }
 
     //댓글 목록 조회
-    @GetMapping("/shomework/list/{thId}")
+    @GetMapping("/sh/list/{thId}")
     public List<SHomeworkDto> getSHomeworks(@PathVariable("thId") Long thId){
         return sHomeworkService.getSHomeworks(thId);
     }
 
     //댓글 삭제
-    @DeleteMapping("/shomework/{thId}/{shId}")
+    @DeleteMapping("/sh/{thId}/{shId}")
     public String deleteSHomework(@PathVariable("thId") Long thId, @PathVariable("shId") Long shId) {
         // 추후 JWT 로그인 기능을 추가하고나서, 세션에 로그인된 유저와 댓글 작성자를 비교해서, 맞으면 삭제 진행하고
         // 틀리다면 예외처리를 해주면 된다.
