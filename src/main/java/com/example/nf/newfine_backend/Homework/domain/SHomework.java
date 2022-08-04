@@ -34,8 +34,8 @@ public class SHomework extends BaseTimeEntity {
     @JsonManagedReference
     private Listener listener;
 
-    //@Column
-    //private boolean check = false;
+    @Column
+    private boolean check = false;
 
 
     @Builder
@@ -43,7 +43,7 @@ public class SHomework extends BaseTimeEntity {
         this.title = title;
         this.thomework = tHomework;
         this.listener = listener;
-        //this.check = check;
+        this.check = check;
     }
 }
 
