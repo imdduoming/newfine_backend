@@ -3,14 +3,13 @@ package com.example.nf.newfine_backend.Homework.service;
 import com.example.nf.newfine_backend.Homework.Repository.SHomeworkRepository;
 import com.example.nf.newfine_backend.Homework.Repository.THomeworkRepository;
 import com.example.nf.newfine_backend.Homework.domain.SHomework;
-import com.example.nf.newfine_backend.Homework.domain.THomework;
 import com.example.nf.newfine_backend.Homework.dto.SHomeworkDto;
-import com.example.nf.newfine_backend.course.Listener;
 import com.example.nf.newfine_backend.course.ListenerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,8 +21,8 @@ public class SHomeworkService {
 
     private final ListenerRepository listenerRepository;
 
-    @Transactional
-    public SHomeworkDto createSHomework(Long ThId, SHomeworkDto sHomeworkDto, Listener listener) {
+    /*
+    @Transactional public SHomeworkDto createSHomework(Long ThId, SHomeworkDto sHomeworkDto, Listener listener) {
         SHomework sHomework = new SHomework();
         sHomework.setTitle(sHomeworkDto.getTitle());
 
@@ -36,10 +35,16 @@ public class SHomeworkService {
         return SHomeworkDto.toDto(sHomework);
 
     }
+    */
+
 
     @Transactional(readOnly = true)
-    public List<SHomework> getSHomeworks(Long thId) {
-        return sHomeworkRepository.findAllByThomeworkId(thId);
+    public List<SHomeworkDto> getSHomeworks(Long thId) {
+        List<SHomework> sHomeworks = sHomeworkRepository.findAllByThomeworkId(thId);
+        List<SHomeworkDto> sHomeworkDtos = new ArrayList<>();
+
+        sHomeworks.forEach(s -> sHomeworkDtos.add(SHomeworkDto.toDto(s)));
+        return sHomeworkDtos;
     }
 
     @Transactional
