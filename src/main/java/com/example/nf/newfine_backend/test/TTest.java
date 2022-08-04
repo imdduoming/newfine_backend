@@ -12,28 +12,23 @@
 //@Getter
 //@NoArgsConstructor
 //@Entity
-//public class SHomework extends Timestamped{
+//public class TTest {
 //
 //    @GeneratedValue(strategy = GenerationType.AUTO)
 //    @Id
-//    @Column(name = "SHomework_id")
-//    private Long ShId;
+//    @Column(name = "tTest_id")
+//    private Long TteId;
+//
+//    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST})
+//    private Teacher teacher;
+//
+//
+//    @OneToMany(mappedBy="course", cascade = { CascadeType.REMOVE})
+//    private List<STest> sTests;
 //
 //    @Column(nullable = false)
-//    private String ShName;
+//    private Date entranceTime;
 //
-//    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST})
-//    private Student student;
-//
-//    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST})
-//    private THomework tHomework;
-//
-//
-//
-//    // 파일 속성 추가해주세용
-////    @Column(nullable = false)
-////    private ;
-//
-//
-//
+//    @Column(nullable = false)
+//    private Date endTime;
 //}

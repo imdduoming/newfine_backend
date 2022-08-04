@@ -28,18 +28,16 @@ import java.util.Optional;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @Slf4j
 public class StudyController {
-    private final AttendanceService attendanceService;
-    private final CourseRepository courseRepository;
     private final StudentRepository studentRepository;
     private final StudyService studyService;
+    private final StudentStudyRepository studentStudyRepository;
 
     // 관리자가 수업시간 qr 코드 생성 api
-    @PostMapping  (value = "/study/make" )
+    @PostMapping  (value = "/make/study" )
     public Study makeStudy(@RequestBody StudyDto studyDto) {
         LocalDateTime startTime=studyDto.getStartTime();
-        LocalDateTime endTime= studyDto.getEndTime();
         System.out.println(studyDto.getStartTime());
-        return  studyService.makeStudy(studyDto.getStartTime(),studyDto.getEndTime());
+        return  studyService.makeStudy(studyDto.getStartTime());
 
     }
     // 학생 쟈습 enter api
@@ -49,7 +47,7 @@ public class StudyController {
         Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
         int ans=studyService.enterStudy(study_id,student);
         System.out.println(ans);
-        return ans;
+        return ans; //제대로 된 입실은 1
         // 출석하고 앱 화면으로 돌리기
     }
 
@@ -60,35 +58,23 @@ public class StudyController {
         Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
         int ans=studyService.endStudy(study_id,student);
         System.out.println(ans);
-        return ans;
+        return ans;//제대로 된 퇴실은 1
         // 출석하고 앱 화면으로 돌리기
     }
 
-//    @GetMapping("/attendances/all")
-//    public List<Attendance> getAllAttendances(){
-//        return attendanceService.getAllAttendances();
-//    }
-//
-//    // 수업시간마다 매시간 출석부 가져오는 api , 출석 정보는 attendance 의 Student Attendance 로 가져오면 된다 .
-//    @GetMapping("/attendances")
-//    public List<Attendance> getAttendances(@RequestParam Integer id){
-//        Long idx=Long.valueOf(id);
-//
-//        return attendanceService.getAttendances(idx);
-//    }
-//
-//    // 매 수업시간 마다 출석 현황
-//    @GetMapping("/attendances/student")
-//    public List<StudentAttendance> getStudentAttendance(@RequestParam Integer id){
-//        Long idx=Long.valueOf(id);
-//        return attendanceService.getStudentAttendance(idx);
-//    }
+    @GetMapping("/study/my")
+    public List<StudentStudy> getMyStudy(){
+        Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
+        return studyService.getMyStudy(student);
+    }
 
-//    @GetMapping("/get/attendance/{phone_number}")
-//    public List<Attendance> getMyAttendances(@PathVariable String phone_number){
-//
-//        return attendanceService.getMyAttendances(phone_number);
-//    }
+    @GetMapping("/study/total")
+    public long getTotal(){
+        Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
+        List<StudentStudy> studentStudyList= studentStudyRepository.findStudentStudiesByStudent(student);
+        return studyService.totalMyStudy(studentStudyList);
+    }
+
 
 
 

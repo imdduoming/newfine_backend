@@ -1,5 +1,6 @@
 //package com.example.nf.newfine_backend;
 //
+//import com.example.nf.newfine_backend.member.domain.Timestamped;
 //import lombok.Getter;
 //import lombok.NoArgsConstructor;
 //import lombok.Setter;
@@ -12,25 +13,19 @@
 //@Getter
 //@NoArgsConstructor
 //@Entity
-//public class TTest {
+//public class STest extends Timestamped {
 //
 //    @GeneratedValue(strategy = GenerationType.AUTO)
 //    @Id
-//    @Column(name = "tTest_id")
-//    private Long TteId;
+//    @Column(name = "sTest_id")
+//    private Long SteId;
 //
 //    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST})
-//    private Teacher teacher;
+//    private Student student;
 //
 //
-//    @OneToMany(mappedBy="course", cascade = { CascadeType.REMOVE})
-//    private List<STest> sTests;
-//
-//    @Column(nullable = false)
-//    private Date entranceTime;
-//
-//    @Column(nullable = false)
-//    private Date endTime;
+//    @ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST})
+//    private TTest tTest;
 //
 //
 //}
