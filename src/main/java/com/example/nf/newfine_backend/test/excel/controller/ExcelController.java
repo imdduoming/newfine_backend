@@ -58,6 +58,10 @@ public class ExcelController {
 
         Map<String, String> result = new HashMap<String, String>();
 
+        System.out.println(request);
+        System.out.println(request.getFile("courseTestResultsFile"));
+        System.out.println(request.getParameter("test_name"));
+
         String testName=request.getParameter("test_name");
         LocalDateTime testDate= LocalDateTime.parse(request.getParameter("test_date"));
         Long courseId= Long.valueOf(request.getParameter("course_id"));
