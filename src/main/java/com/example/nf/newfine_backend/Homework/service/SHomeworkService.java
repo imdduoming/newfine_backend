@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -39,12 +38,8 @@ public class SHomeworkService {
     }
 
     @Transactional(readOnly = true)
-    public List<SHomeworkDto> getSHomeworks(Long thId) {
-        List<SHomework> sHomeworks = sHomeworkRepository.findAllByThomeworkId(thId);
-        List<SHomeworkDto> sHomeworkDtos = new ArrayList<>();
-
-        sHomeworks.forEach(s -> sHomeworkDtos.add(SHomeworkDto.toDto(s)));
-        return sHomeworkDtos;
+    public List<SHomework> getSHomeworks(Long thId) {
+        return sHomeworkRepository.findAllByThomeworkId(thId);
     }
 
     @Transactional
