@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Objects;
+
 import static com.example.nf.newfine_backend.member.exception.ErrorCode.DUPLICATE_MEMBER;
 
 @RestController
@@ -77,7 +79,7 @@ public class AuthController {
         BranchStudent bs=branchStudentRepository.findByPhoneNumber(signUpAuthDto.getPhoneNumber()).orElseThrow(PhoneNumberNotFoundException::new);
         System.out.println(String.valueOf(bs.getBranch().getId()));
         System.out.println(signUpAuthDto.getBranch());
-        if (String.valueOf(bs.getBranch().getId()) != signUpAuthDto.getBranch()){
+        if (!Objects.equals(String.valueOf(bs.getBranch().getId()), signUpAuthDto.getBranch())){
             throw new RuntimeException("이 분원엔 그런 학생이 없다!!");
         }
 
