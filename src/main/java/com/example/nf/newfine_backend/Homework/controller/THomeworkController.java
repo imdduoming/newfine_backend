@@ -1,10 +1,8 @@
 package com.example.nf.newfine_backend.Homework.controller;
 
-import com.example.nf.newfine_backend.Homework.domain.SHomework;
 import com.example.nf.newfine_backend.Homework.dto.THomeworkDto;
 import com.example.nf.newfine_backend.Homework.service.THomeworkService;
 import com.example.nf.newfine_backend.course.CourseService;
-import com.example.nf.newfine_backend.course.Listener;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,19 +38,6 @@ public class THomeworkController {
 //        return tHomeworkService.findAllByPageRequest(pageable);
 //
 //    }
-
-
-    @GetMapping("/shomework/list/{thId}")
-    public List<SHomework> getSHomeworks(@PathVariable("thId") Long thId){
-        return tHomeworkService.getSHomeworks(thId);
-    }
-
-    @GetMapping("/homework/listeners")
-    public List<Listener> getListeners(@RequestParam Integer id){
-        Long idx=Long.valueOf(id);
-        return courseService.getListeners(idx);
-    }
-
 
     //개별 조회
     @GetMapping("/homework/{Id}")

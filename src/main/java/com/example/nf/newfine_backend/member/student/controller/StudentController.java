@@ -79,7 +79,7 @@ public class StudentController {
         if (!studentRepository.existsByPhoneNumber(phoneNumberDto.getPhoneNumber())) {
             throw new CustomException(MEMBER_NOT_FOUND);
         }
-        return ResponseEntity.ok(messageService.sendMessage(phoneNumberDto, String.valueOf(randomNumber)));
+        return ResponseEntity.ok(messageService.sendMessage(phoneNumberDto.getPhoneNumber(), String.valueOf(randomNumber)));
     }
 
     @PostMapping("/point")
