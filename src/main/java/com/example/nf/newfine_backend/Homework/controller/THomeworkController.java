@@ -2,6 +2,8 @@ package com.example.nf.newfine_backend.Homework.controller;
 
 import com.example.nf.newfine_backend.Homework.dto.THomeworkDto;
 import com.example.nf.newfine_backend.Homework.service.THomeworkService;
+import com.example.nf.newfine_backend.course.CourseService;
+import com.example.nf.newfine_backend.member.teacher.repository.TeacherRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,13 +16,15 @@ import java.util.List;
 public class THomeworkController {
 
     private final THomeworkService tHomeworkService;
+    private final CourseService courseService;
+    private final TeacherRepository teacherRepository;
 
 
     /**
      * 게시글 생성
      */
     @PostMapping("/homework/post/{courseId}")
-    public THomeworkDto save(@PathVariable("courseId") Long courseId, @RequestBody THomeworkDto tHomeworkDto) {
+    public Long save(@PathVariable("courseId") Long courseId, @RequestBody THomeworkDto tHomeworkDto) {
         return tHomeworkService.save(courseId, tHomeworkDto);
     }
 
@@ -36,8 +40,6 @@ public class THomeworkController {
 //        return tHomeworkService.findAllByPageRequest(pageable);
 //
 //    }
-
-
 
     //개별 조회
     @GetMapping("/homework/{Id}")

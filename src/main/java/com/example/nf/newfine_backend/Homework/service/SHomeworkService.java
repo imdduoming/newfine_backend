@@ -6,6 +6,8 @@ import com.example.nf.newfine_backend.Homework.domain.SHomework;
 import com.example.nf.newfine_backend.Homework.domain.THomework;
 import com.example.nf.newfine_backend.Homework.dto.SHomeworkDto;
 import com.example.nf.newfine_backend.course.Listener;
+import com.example.nf.newfine_backend.course.ListenerRepository;
+import com.example.nf.newfine_backend.member.student.domain.Student;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,10 +22,12 @@ public class SHomeworkService {
     private final SHomeworkRepository sHomeworkRepository;
     private final THomeworkRepository tHomeworkRepository;
 
-    @Transactional
-    public SHomeworkDto uploadSHomework(Long ThId, SHomeworkDto sHomeworkDto, Listener listener) {
+    private final ListenerRepository listenerRepository;
+
+    /*
+    @Transactional public SHomeworkDto createSHomework(Long ThId, SHomeworkDto sHomeworkDto, Listener listener) {
         SHomework sHomework = new SHomework();
-        sHomework.setComment(sHomeworkDto.getComment());
+        sHomework.setTitle(sHomeworkDto.getTitle());
 
         THomework tHomework = tHomeworkRepository.findById(ThId).orElseThrow(() -> new IllegalArgumentException("게시판을 찾을 수 없습니다."));
 
@@ -34,20 +38,35 @@ public class SHomeworkService {
         return SHomeworkDto.toDto(sHomework);
 
     }
+    */
+
 
     @Transactional(readOnly = true)
     public List<SHomeworkDto> getSHomeworks(Long thId) {
-        List<SHomework> sHomeworks = sHomeworkRepository.findAllByThomeworkId(thId);
+        THomework tHomework=tHomeworkRepository.findById(thId).get();
+        List<SHomework> sHomeworks = sHomeworkRepository.findAllByThomework(tHomework);
         List<SHomeworkDto> sHomeworkDtos = new ArrayList<>();
 
         sHomeworks.forEach(s -> sHomeworkDtos.add(SHomeworkDto.toDto(s)));
         return sHomeworkDtos;
     }
 
+    @Transactional(readOnly = true)
+    public List<SHomeworkDto> getSHomeworksByListener(Student student) {
+        Listener listener=listenerRepository.findListenerByStudent(student).get();
+        List<SHomework> sHomeworks = sHomeworkRepository.findAllByListener(listener);
+        List<SHomeworkDto> sHomeworkDtos = new ArrayList<>();
+
+        sHomeworks.forEach(s -> sHomeworkDtos.add(SHomeworkDto.toDto(s)));
+        return sHomeworkDtos;
+    }
+
+   /*
     @Transactional
     public String deleteSHomework(Long shId) {
         SHomework sHomework = sHomeworkRepository.findById(shId).orElseThrow(()-> new IllegalArgumentException("댓글 Id를 찾을 수 없습니다."));
         sHomeworkRepository.deleteById(shId);
         return "삭제 완료";
     }
+    */
 }

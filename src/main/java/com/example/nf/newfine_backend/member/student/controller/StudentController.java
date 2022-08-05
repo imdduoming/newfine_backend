@@ -21,9 +21,9 @@ import static com.example.nf.newfine_backend.member.exception.ErrorCode.MEMBER_N
 @RequestMapping("/member")
 public class StudentController {
     private final StudentService studentService;
-    public final StudentRepository studentRepository;
-    public final PointService pointService;
-    public final MessageService messageService;
+    private final StudentRepository studentRepository;
+    private final PointService pointService;
+    private final MessageService messageService;
 
     @GetMapping("/me")
     public ResponseEntity<StudentResponseDto> getMyMemberInfo() {
@@ -79,7 +79,7 @@ public class StudentController {
         if (!studentRepository.existsByPhoneNumber(phoneNumberDto.getPhoneNumber())) {
             throw new CustomException(MEMBER_NOT_FOUND);
         }
-        return ResponseEntity.ok(messageService.sendMessage(phoneNumberDto, String.valueOf(randomNumber)));
+        return ResponseEntity.ok(messageService.sendMessage(phoneNumberDto.getPhoneNumber(), String.valueOf(randomNumber)));
     }
 
     @PostMapping("/point")

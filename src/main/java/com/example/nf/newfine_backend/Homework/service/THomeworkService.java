@@ -1,11 +1,12 @@
 package com.example.nf.newfine_backend.Homework.service;
 
 
+import com.example.nf.newfine_backend.Homework.Repository.SHomeworkRepository;
 import com.example.nf.newfine_backend.Homework.Repository.THomeworkRepository;
+import com.example.nf.newfine_backend.Homework.domain.SHomework;
 import com.example.nf.newfine_backend.Homework.domain.THomework;
 import com.example.nf.newfine_backend.Homework.dto.THomeworkDto;
-import com.example.nf.newfine_backend.course.Course;
-import com.example.nf.newfine_backend.course.CourseRepository;
+import com.example.nf.newfine_backend.course.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,23 +20,45 @@ public class THomeworkService {
 
     private final THomeworkRepository tHomeworkRepository;
     private final CourseRepository courseRepository;
+    private final CourseService courseService;
+    private final SHomeworkRepository sHomeworkRepository;
+
+    private final ListenerRepository listenerRepository;
     /**
      * 게시글 생성
      */
     @Transactional
-    public THomeworkDto save(Long courseId, THomeworkDto tHomeworkDto) {
-        //Course course = courseRepository.findById(courseId).orElseThrow(() -> new IllegalArgumentException("강의를 찾을 수 없습니다."));
+    public Long save(Long courseId, THomeworkDto tHomeworkDto) {
+        Course course=courseRepository.findById(courseId).orElseThrow(() -> new IllegalArgumentException("강의를 찾을 수 없습니다."));
 
         THomework tHomework = new THomework();
         tHomework.setTitle(tHomeworkDto.getTitle());
-
-        Course course = courseRepository.findById(courseId).orElseThrow(() -> new IllegalArgumentException("강의를 찾을 수 없습니다."));
 
         tHomework.setContent(tHomeworkDto.getContent());
         tHomework.setCourse(course);
         tHomeworkRepository.save(tHomework);
 
-        return THomeworkDto.toDto(tHomework);
+        // shomeworklist 자동으로 생성하는 부분
+        List <Listener> listeners = courseService.getListeners(courseId);
+        List <SHomework> sHomeworks = new ArrayList<>();
+
+        System.out.println("수강생");
+        System.out.println( listeners);
+        for(Listener listener : listeners){
+            System.out.println("수강생이름");
+            System.out.println(listener.getStudent().getName());
+            System.out.println("thomework id");
+            System.out.println(tHomework.getId());
+            SHomework sHomework=new SHomework();
+            sHomework.setTitle(tHomeworkDto.getTitle());
+            sHomework.setListener(listener);
+            sHomework.setThomework(tHomework);
+            sHomework.setIschecked(false);
+            sHomeworkRepository.save(sHomework);
+            sHomeworks.add(sHomework);
+        }
+
+        return THomeworkDto.toDto(tHomework).getId();
     }
 
     /**
@@ -47,7 +70,8 @@ public class THomeworkService {
 //    }
     @Transactional(readOnly = true)
     public List<THomeworkDto> getTHomeworks(Long courseId) {
-        List<THomework> tHomeworks = tHomeworkRepository.findTHomeworksByCourseId(courseId);
+        Course course=courseRepository.findById(courseId).get();
+        List<THomework> tHomeworks = tHomeworkRepository.findTHomeworksByCourse(course);
         List<THomeworkDto> tHomeworkDtos = new ArrayList<>();
 
         tHomeworks.forEach(s -> tHomeworkDtos.add(THomeworkDto.toDto(s)));

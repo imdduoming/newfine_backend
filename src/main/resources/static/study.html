@@ -8,18 +8,16 @@
 <script>
     var idx;
     let domainURL= 'https://eb.newfine.tk';
-    var received=[];
+
     $(document).ready(function () {
         idx = window.location.search.split("=")[1]
         document.addEventListener("message", (e) => {
-            received=e.data;
-            console.log(received);
-            alert(received);
-            if(received[0]=='in'){
-                start(idx,received[1]);
+            const { token , study_state } =JSON.parse(e.data);
+            if(study_state=="in"){
+                start(idx,token);
             }
             else{
-                end(idx,received[1]);
+                end(idx,token);
             }
         })
     });
@@ -70,6 +68,6 @@
     };
 </script>
 <body>
-<h1>출석 되었습니다!</h1>
+<h1>자습 처리 완료 ! </h1>
 </body>
 </html>

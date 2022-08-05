@@ -31,6 +31,4 @@
 //
 //    @Column(nullable = false)
 //    private Date endTime;
-//
-//
 //}

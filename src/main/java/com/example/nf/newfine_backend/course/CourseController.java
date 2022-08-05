@@ -31,8 +31,14 @@ public class CourseController {
     @GetMapping("/student/courses")
     public List<Listener> getStudentCourses(){
         Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
-        return courseService.getStudentCourses(student);
+        List<Listener> listeners= courseService.getStudentCourses(student);
+        for (Listener listener : listeners){
+            System.out.println("수강생 이름");
+            System.out.println(listener.getStudent().getName());
 
+
+        }
+        return listeners;
     }
 
 
