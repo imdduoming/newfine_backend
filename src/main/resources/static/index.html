@@ -59,7 +59,7 @@
                     },
                     type: "POST"
                 };
-                $("#excelCourseTestResultsFileUploadForm").ajaxSubmit(options);
+                $("#courseTestResultsFileUploadForm").ajaxSubmit(options);
             }
         }
         function get_course() {
@@ -134,7 +134,6 @@
         <button type="button" onclick="check()"><span>저장</span></button>
     </div>
 </form>
-
 
 <form id="courseTestResultsFileUploadForm" name="courseTestResultsFileUploadForm" enctype="multipart/form-data"method="post" action= "courseTestResultsFileUpload.do">
     <br>수업을 입력하세요.<br>
