@@ -61,7 +61,6 @@ public class Course {
 //
     @JsonManagedReference
     @ManyToOne
-//    @JoinColumn(name="teacher_id")
     private Teacher teacher;
 
     @JsonBackReference  // 순환참조 방지
