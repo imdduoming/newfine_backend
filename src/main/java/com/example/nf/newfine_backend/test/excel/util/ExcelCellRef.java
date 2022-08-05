@@ -1,6 +1,7 @@
 package com.example.nf.newfine_backend.test.excel.util;
 
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.util.CellReference;
 
 public class ExcelCellRef {
@@ -36,25 +37,31 @@ public class ExcelCellRef {
                     break;
                 case NUMERIC:
 //                    value = (int) cell.getNumericCellValue() + "";   // (int) 형으로 변환하지 않으면 소수점 발생 가능
-                    value = cell.getNumericCellValue() + "";
+                    try {
+                        value = cell.getNumericCellValue() + "";
+                    } catch (Exception e){
+                        value = (int) cell.getNumericCellValue() + "";
+                    }
+//                    cell.setCellType(CellType.STRING);
+//                    value = cell.getStringCellValue();
                     break;
-                case BOOLEAN:
-                    value = cell.getBooleanCellValue() + "";
-                    break;
-                case ERROR:
-                    value = cell.getErrorCellValue() + "";
-                    break;
-                case BLANK:
-                    value = "";
-                    break;
-                case FORMULA:
-                    value = cell.getCellFormula();
-                    break;
-                default:
-                    value = cell.getStringCellValue();
+                    case BOOLEAN:
+                        value = cell.getBooleanCellValue() + "";
+                        break;
+                    case ERROR:
+                        value = cell.getErrorCellValue() + "";
+                        break;
+                    case BLANK:
+                        value = "";
+                        break;
+                    case FORMULA:
+                        value = cell.getCellFormula();
+                        break;
+                    default:
+                        value = cell.getStringCellValue();
+                }
             }
-        }
 
-        return value;
+            return value;
+        }
     }
-}
