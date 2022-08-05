@@ -28,7 +28,7 @@ public class THomeworkService {
      * 게시글 생성
      */
     @Transactional
-    public THomeworkDto save(Long courseId, THomeworkDto tHomeworkDto) {
+    public Long save(Long courseId, THomeworkDto tHomeworkDto) {
         Course course=courseRepository.findById(courseId).orElseThrow(() -> new IllegalArgumentException("강의를 찾을 수 없습니다."));
 
         THomework tHomework = new THomework();
@@ -58,7 +58,7 @@ public class THomeworkService {
             sHomeworks.add(sHomework);
         }
 
-        return THomeworkDto.toDto(tHomework);
+        return THomeworkDto.toDto(tHomework).getId();
     }
 
     /**
