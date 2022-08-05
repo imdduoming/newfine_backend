@@ -17,7 +17,7 @@ import java.util.List;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Test extends Timestamped {
+public class Test {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id

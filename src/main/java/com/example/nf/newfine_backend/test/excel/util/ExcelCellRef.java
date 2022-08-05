@@ -35,7 +35,8 @@ public class ExcelCellRef {
                     value = cell.getStringCellValue();
                     break;
                 case NUMERIC:
-                    value = (int) cell.getNumericCellValue() + "";   // (int) 형으로 변환하지 않으면 소수점 발생 가능
+//                    value = (int) cell.getNumericCellValue() + "";   // (int) 형으로 변환하지 않으면 소수점 발생 가능
+                    value = (int) cell.getNumericCellValue() + "";
                     break;
                 case BOOLEAN:
                     value = cell.getBooleanCellValue() + "";
