@@ -1,13 +1,13 @@
 package com.example.nf.newfine_backend.member.controller;
 
-import com.example.nf.newfine_backend.member.dto.SignInDto;
-import com.example.nf.newfine_backend.member.dto.SignUpDto;
-import com.example.nf.newfine_backend.member.dto.TokenDto;
-import com.example.nf.newfine_backend.member.dto.TokenRequestDto;
+import com.example.nf.newfine_backend.member.branch.domain.BranchStudent;
+import com.example.nf.newfine_backend.member.branch.repository.BranchRepository;
+import com.example.nf.newfine_backend.member.branch.repository.BranchStudentRepository;
+import com.example.nf.newfine_backend.member.dto.*;
 import com.example.nf.newfine_backend.member.exception.CustomException;
 import com.example.nf.newfine_backend.member.service.AuthService;
-import com.example.nf.newfine_backend.member.student.dto.PhoneNumberDto;
 import com.example.nf.newfine_backend.member.student.dto.StudentResponseDto;
+import com.example.nf.newfine_backend.member.student.exception.PhoneNumberNotFoundException;
 import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
 import com.example.nf.newfine_backend.member.student.service.MessageService;
 import com.example.nf.newfine_backend.member.teacher.dto.TeacherResponseDto;
@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Objects;
 
 import static com.example.nf.newfine_backend.member.exception.ErrorCode.DUPLICATE_MEMBER;
 
@@ -28,6 +30,8 @@ public class AuthController {
     private final AuthService authService;
     private final MessageService messageService;
     private final StudentRepository studentRepository;
+    private final BranchStudentRepository branchStudentRepository;
+    private final BranchRepository branchRepository;
 
     @PostMapping("/signup")
     public ResponseEntity<StudentResponseDto> signup(@RequestBody SignUpDto signUpDto) {
@@ -68,18 +72,25 @@ public class AuthController {
 
     // 전화번호 인증번호 전송
     @PostMapping("/sendMessage")
-    public ResponseEntity<String> sendMessage(@RequestBody PhoneNumberDto phoneNumberDto) {
+    public ResponseEntity<String> sendMessage(@RequestBody SignUpAuthDto signUpAuthDto) {
         int randomNumber=(int)((Math.random()* (9999 - 1000 + 1)) + 1000);//난수 생성
 
-        //************************* 추후 DB 전화번호와 일치하는지 확인해야 함
+        //************************* 추후 DB 전화번호와 일치하는지 확인해야 함 ->일단 했음. ^^
+        BranchStudent bs=branchStudentRepository.findByPhoneNumber(signUpAuthDto.getPhoneNumber()).orElseThrow(PhoneNumberNotFoundException::new);
+        System.out.println(String.valueOf(bs.getBranch().getId()));
+        System.out.println(signUpAuthDto.getBranch());
+        if (!Objects.equals(String.valueOf(bs.getBranch().getId()), signUpAuthDto.getBranch())){
+            throw new RuntimeException("이 분원엔 그런 학생이 없다!!");
+        }
+
         // 전화번호 중복 확인
-        if (studentRepository.existsByPhoneNumber(phoneNumberDto.getPhoneNumber())) {
+        if (studentRepository.existsByPhoneNumber(signUpAuthDto.getPhoneNumber())) {
             throw new CustomException(DUPLICATE_MEMBER);
         }
 
 //        messageService.sendMessage(phoneNumberDto, String.valueOf(randomNumber));
 //        return String.valueOf(randomNumber);
-        return ResponseEntity.ok(messageService.sendMessage(phoneNumberDto, String.valueOf(randomNumber)));
+        return ResponseEntity.ok(messageService.sendMessage(signUpAuthDto.getPhoneNumber(), String.valueOf(randomNumber)));
     }
 
     @PostMapping("/logout")
