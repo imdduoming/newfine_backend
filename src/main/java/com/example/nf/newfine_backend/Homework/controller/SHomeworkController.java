@@ -32,6 +32,12 @@ public class SHomeworkController {
         return sHomeworkService.getSHomeworks(thId);
     }
 
+    // shomework listener 별로 조회
+    @GetMapping("/sh/list/{listenerId}")
+    public List<SHomeworkDto> getSHomeworks2(@PathVariable("listenerId") Long listenerId){
+        return sHomeworkService.getSHomeworks2(listenerId);
+    }
+
     //댓글 삭제
     @DeleteMapping("/sh/{thId}/{shId}")
     public String deleteSHomework(@PathVariable("thId") Long thId, @PathVariable("shId") Long shId) {

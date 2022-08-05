@@ -5,6 +5,7 @@ import com.example.nf.newfine_backend.Homework.Repository.THomeworkRepository;
 import com.example.nf.newfine_backend.Homework.domain.SHomework;
 import com.example.nf.newfine_backend.Homework.domain.THomework;
 import com.example.nf.newfine_backend.Homework.dto.SHomeworkDto;
+import com.example.nf.newfine_backend.course.Listener;
 import com.example.nf.newfine_backend.course.ListenerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -43,6 +44,16 @@ public class SHomeworkService {
     public List<SHomeworkDto> getSHomeworks(Long thId) {
         THomework tHomework=tHomeworkRepository.findById(thId).get();
         List<SHomework> sHomeworks = sHomeworkRepository.findAllByThomework(tHomework);
+        List<SHomeworkDto> sHomeworkDtos = new ArrayList<>();
+
+        sHomeworks.forEach(s -> sHomeworkDtos.add(SHomeworkDto.toDto(s)));
+        return sHomeworkDtos;
+    }
+
+    @Transactional(readOnly = true)
+    public List<SHomeworkDto> getSHomeworks2(Long listenerId) {
+        Listener listener=listenerRepository.findById(listenerId).get();
+        List<SHomework> sHomeworks = sHomeworkRepository.findAllByListener(listener);
         List<SHomeworkDto> sHomeworkDtos = new ArrayList<>();
 
         sHomeworks.forEach(s -> sHomeworkDtos.add(SHomeworkDto.toDto(s)));
