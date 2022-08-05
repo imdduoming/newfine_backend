@@ -53,7 +53,7 @@ public class THomeworkService {
             sHomework.setTitle(tHomeworkDto.getTitle());
             sHomework.setListener(listener);
             sHomework.setThomework(tHomework);
-            //sHomework.setCheck(false);
+            sHomework.setCheck(false);
             sHomeworkRepository.save(sHomework);
             sHomeworks.add(sHomework);
         }
@@ -70,7 +70,8 @@ public class THomeworkService {
 //    }
     @Transactional(readOnly = true)
     public List<THomeworkDto> getTHomeworks(Long courseId) {
-        List<THomework> tHomeworks = tHomeworkRepository.findTHomeworksByCourseId(courseId);
+        Course course=courseRepository.findById(courseId).get();
+        List<THomework> tHomeworks = tHomeworkRepository.findTHomeworksByCourse(course);
         List<THomeworkDto> tHomeworkDtos = new ArrayList<>();
 
         tHomeworks.forEach(s -> tHomeworkDtos.add(THomeworkDto.toDto(s)));
@@ -107,13 +108,6 @@ public class THomeworkService {
         THomework tHomework = tHomeworkRepository.findById(Id).orElseThrow(()-> new IllegalArgumentException("해당 게시글을 찾을 수 없습니다."));
         tHomeworkRepository.findById(Id);
         return THomeworkDto.toDto(tHomework);
-    }
-
-    @Transactional(readOnly = true)
-    public List<SHomework> getSHomeworks(Long thId) {
-        THomework tHomework=tHomeworkRepository.findById(thId).get();
-        List<SHomework> sHomeworks = sHomeworkRepository.findAllByThomework(tHomework);
-        return sHomeworks;
     }
 
     /**

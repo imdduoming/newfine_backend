@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 import static javax.persistence.FetchType.EAGER;
-import static javax.persistence.FetchType.LAZY;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -35,8 +34,8 @@ public class SHomework extends BaseTimeEntity {
     @JsonManagedReference
     private Listener listener;
 
-    //@Column
-    //private boolean check = false;
+    @Column
+    private boolean check = false;
 
 
     @Builder
@@ -44,7 +43,7 @@ public class SHomework extends BaseTimeEntity {
         this.title = title;
         this.thomework = tHomework;
         this.listener = listener;
-        //this.check = check;
+        this.check = check;
     }
 }
 

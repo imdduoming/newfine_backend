@@ -27,12 +27,12 @@ public class MessageService {
     @Value("${coolsms.nf.fromnumber}")
     private String fromNumber;
 
-    public String sendMessage(PhoneNumberDto phoneNumberDto, String randomNumber) {
+    public String sendMessage(String phoneNumber, String randomNumber) {
 
         Message coolsms = new Message(apiKey, apiSecret);
 
         HashMap<String, String> params = new HashMap<String, String>();
-        params.put("to", phoneNumberDto.getPhoneNumber());
+        params.put("to", phoneNumber);
         params.put("from", fromNumber);
         params.put("type", "SMS");
         params.put("text", "[newfine] \n인증번호 "+randomNumber+" 를 입력하세요.");
