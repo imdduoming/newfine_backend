@@ -7,6 +7,7 @@ import com.example.nf.newfine_backend.Homework.domain.THomework;
 import com.example.nf.newfine_backend.Homework.dto.SHomeworkDto;
 import com.example.nf.newfine_backend.course.Listener;
 import com.example.nf.newfine_backend.course.ListenerRepository;
+import com.example.nf.newfine_backend.member.student.domain.Student;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,8 +52,8 @@ public class SHomeworkService {
     }
 
     @Transactional(readOnly = true)
-    public List<SHomeworkDto> getSHomeworks2(Long listenerId) {
-        Listener listener=listenerRepository.findById(listenerId).get();
+    public List<SHomeworkDto> getSHomeworks2(Student student) {
+        Listener listener=listenerRepository.findListenerByStudent(student).get();
         List<SHomework> sHomeworks = sHomeworkRepository.findAllByListener(listener);
         List<SHomeworkDto> sHomeworkDtos = new ArrayList<>();
 
@@ -60,10 +61,12 @@ public class SHomeworkService {
         return sHomeworkDtos;
     }
 
+   /*
     @Transactional
     public String deleteSHomework(Long shId) {
         SHomework sHomework = sHomeworkRepository.findById(shId).orElseThrow(()-> new IllegalArgumentException("댓글 Id를 찾을 수 없습니다."));
         sHomeworkRepository.deleteById(shId);
         return "삭제 완료";
     }
+    */
 }
