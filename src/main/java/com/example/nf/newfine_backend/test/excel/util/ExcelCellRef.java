@@ -37,13 +37,13 @@ public class ExcelCellRef {
                     break;
                 case NUMERIC:
 //                    value = (int) cell.getNumericCellValue() + "";   // (int) 형으로 변환하지 않으면 소수점 발생 가능
-                    try {
-                        value = cell.getNumericCellValue() + "";
-                    } catch (Exception e){
-                        value = (int) cell.getNumericCellValue() + "";
-                    }
-//                    cell.setCellType(CellType.STRING);
-//                    value = cell.getStringCellValue();
+//                    try {
+//                        value = cell.getNumericCellValue() + "";
+//                    } catch (Exception e){
+//                        value = (int) cell.getNumericCellValue() + "";
+//                    }
+                    cell.setCellType(CellType.STRING);
+                    value = cell.getStringCellValue();
                     break;
                     case BOOLEAN:
                         value = cell.getBooleanCellValue() + "";
