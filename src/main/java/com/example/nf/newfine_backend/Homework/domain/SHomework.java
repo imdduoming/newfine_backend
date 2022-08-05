@@ -34,16 +34,16 @@ public class SHomework extends BaseTimeEntity {
     @JsonManagedReference
     private Listener listener;
 
-    @Column
-    private boolean check = false;
+    //@Column
+    //private boolean check = false;
 
 
     @Builder
-    public SHomework(String title, THomework tHomework, Listener listener, Boolean check) {
+    public SHomework(String title, THomework tHomework, Listener listener) {
         this.title = title;
         this.thomework = tHomework;
         this.listener = listener;
-        this.check = check;
+        //this.check = check;
     }
 }
 
