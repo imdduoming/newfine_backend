@@ -53,7 +53,7 @@ public class THomeworkService {
             sHomework.setTitle(tHomeworkDto.getTitle());
             sHomework.setListener(listener);
             sHomework.setThomework(tHomework);
-            //sHomework.setCheck(false);
+            sHomework.setIschecked(false);
             sHomeworkRepository.save(sHomework);
             sHomeworks.add(sHomework);
         }
