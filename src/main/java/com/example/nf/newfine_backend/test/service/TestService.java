@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ public class TestService {
 
     private final CourseRepository courseRepository;
     private final TestRepository testRepository;
-    public Test createTest(Long course_id, LocalDateTime testDate, String testName){
+    public Test createTest(Long course_id, LocalDate testDate, String testName){
         Course course=courseRepository.findById(course_id).get();
 
 //        List<Listener> listeners = courseService.getListeners(course_id);

@@ -10,6 +10,7 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class Test {
 
     @Column
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDateTime testDate;
+    private LocalDate testDate;
 
     @Column
     private String testName;
@@ -40,7 +41,7 @@ public class Test {
     @JsonBackReference //순환참조 방지
     private List<CourseTestResults> courseTestResults;
 
-    public Test(Course course, LocalDateTime testDate, String testName) {
+    public Test(Course course, LocalDate testDate, String testName) {
         this.course=course;
         this.testDate=testDate;
         this.testName=testName;
