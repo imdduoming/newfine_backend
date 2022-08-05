@@ -33,7 +33,7 @@ public class SHomeworkController {
     }
 
     // shomework listener 별로 조회
-    @GetMapping("/sh/list/{listenerId}")
+    @GetMapping("/shlist/{listenerId}")
     public List<SHomeworkDto> getSHomeworks2(@PathVariable("listenerId") Long listenerId){
         return sHomeworkService.getSHomeworks2(listenerId);
     }
