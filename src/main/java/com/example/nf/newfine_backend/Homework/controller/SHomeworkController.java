@@ -3,6 +3,10 @@ package com.example.nf.newfine_backend.Homework.controller;
 import com.example.nf.newfine_backend.Homework.dto.SHomeworkDto;
 import com.example.nf.newfine_backend.Homework.service.SHomeworkService;
 import com.example.nf.newfine_backend.course.ListenerRepository;
+import com.example.nf.newfine_backend.member.student.domain.Student;
+import com.example.nf.newfine_backend.member.student.exception.PhoneNumberNotFoundException;
+import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
+import com.example.nf.newfine_backend.member.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +19,7 @@ public class SHomeworkController {
 
     private final SHomeworkService sHomeworkService;
     private final ListenerRepository listenerRepository;
+    private final StudentRepository studentRepository;
 
     //댓글 작성
     /*
@@ -33,12 +38,14 @@ public class SHomeworkController {
     }
 
     // shomework listener 별로 조회
-    @GetMapping("/shlist/{listenerId}")
-    public List<SHomeworkDto> getSHomeworks2(@PathVariable("listenerId") Long listenerId){
-        return sHomeworkService.getSHomeworks2(listenerId);
+    @GetMapping("/shlist")
+    public List<SHomeworkDto> getSHomeworks2(){
+        Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
+        return sHomeworkService.getSHomeworks2(student);
     }
 
     //댓글 삭제
+   /*
     @DeleteMapping("/sh/{thId}/{shId}")
     public String deleteSHomework(@PathVariable("thId") Long thId, @PathVariable("shId") Long shId) {
         // 추후 JWT 로그인 기능을 추가하고나서, 세션에 로그인된 유저와 댓글 작성자를 비교해서, 맞으면 삭제 진행하고
@@ -46,4 +53,5 @@ public class SHomeworkController {
 
         return sHomeworkService.deleteSHomework(shId);
     }
+    */
 }

@@ -3,6 +3,7 @@ package com.example.nf.newfine_backend.Homework.controller;
 import com.example.nf.newfine_backend.Homework.dto.THomeworkDto;
 import com.example.nf.newfine_backend.Homework.service.THomeworkService;
 import com.example.nf.newfine_backend.course.CourseService;
+import com.example.nf.newfine_backend.member.teacher.repository.TeacherRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +17,7 @@ public class THomeworkController {
 
     private final THomeworkService tHomeworkService;
     private final CourseService courseService;
+    private final TeacherRepository teacherRepository;
 
 
     /**
