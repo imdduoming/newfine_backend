@@ -61,6 +61,7 @@ public class ExcelController {
         System.out.println(request);
         System.out.println(request.getFile("courseTestResultsFile"));
         System.out.println(request.getParameter("test_name"));
+        System.out.println(request.getParameter("test_date"));
 
         String testName=request.getParameter("test_name");
         LocalDateTime testDate= LocalDateTime.parse(request.getParameter("test_date"));
@@ -76,8 +77,9 @@ public class ExcelController {
 
                 File destFile = new File("C:\\upload\\"+courseTestResultsFile.getOriginalFilename()); // 파일위치 지정
                 courseTestResultsFile.transferTo(Paths.get(destFile.getAbsolutePath().substring(1))); // 엑셀파일 생성
-//                System.out.println(destFile.getAbsolutePath().substring(1));
-//                System.out.println(Paths.get(destFile.getAbsolutePath().substring(1)));
+                System.out.println(destFile.getAbsolutePath());
+                System.out.println(destFile.getAbsolutePath().substring(1));
+                System.out.println(Paths.get(destFile.getAbsolutePath().substring(1)));
                 excelService.courseTestResultsFileUpload(test, destFile); // service단 호출
                 destFile.delete(); // 업로드된 엑셀파일 삭제
             }else {

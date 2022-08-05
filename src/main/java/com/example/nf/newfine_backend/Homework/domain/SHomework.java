@@ -35,15 +35,15 @@ public class SHomework extends BaseTimeEntity {
     private Listener listener;
 
     @Column
-    private boolean check = false;
+    private boolean ischecked = false;
 
 
     @Builder
-    public SHomework(String title, THomework tHomework, Listener listener, Boolean check) {
+    public SHomework(String title, THomework tHomework, Listener listener, Boolean ischecked) {
         this.title = title;
         this.thomework = tHomework;
         this.listener = listener;
-        this.check = check;
+        this.ischecked = ischecked;
     }
 }
 
