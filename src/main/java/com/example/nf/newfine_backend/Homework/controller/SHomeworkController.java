@@ -39,9 +39,9 @@ public class SHomeworkController {
 
     // shomework listener 별로 조회
     @GetMapping("/shlist")
-    public List<SHomeworkDto> getSHomeworks2(){
+    public List<SHomeworkDto> getSHomeworksByListener(){
         Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
-        return sHomeworkService.getSHomeworks2(student);
+        return sHomeworkService.getSHomeworksByListener(student);
     }
 
     //댓글 삭제

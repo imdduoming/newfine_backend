@@ -52,7 +52,7 @@ public class SHomeworkService {
     }
 
     @Transactional(readOnly = true)
-    public List<SHomeworkDto> getSHomeworks2(Student student) {
+    public List<SHomeworkDto> getSHomeworksByListener(Student student) {
         Listener listener=listenerRepository.findListenerByStudent(student).get();
         List<SHomework> sHomeworks = sHomeworkRepository.findAllByListener(listener);
         List<SHomeworkDto> sHomeworkDtos = new ArrayList<>();
