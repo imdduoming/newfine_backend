@@ -3,6 +3,7 @@ package com.example.nf.newfine_backend.Homework.domain;
 import com.example.nf.newfine_backend.Homework.dto.THomeworkDto;
 import com.example.nf.newfine_backend.course.Course;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -23,7 +24,7 @@ public class THomework extends BaseTimeEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id")
-    //@JsonManagedReference
+    @JsonManagedReference
     private Course course; // 코스 별로 여러 과제 가질 수 있음
 
 
