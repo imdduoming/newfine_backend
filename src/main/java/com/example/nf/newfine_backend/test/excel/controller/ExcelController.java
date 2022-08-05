@@ -58,7 +58,7 @@ public class ExcelController {
 
         Map<String, String> result = new HashMap<String, String>();
 
-        System.out.println(request);
+        System.out.println("\n\n\n\n\n\n\n\n 멀티파일 리퀘스트\n\n\n\n\n\n\n\n\n\n"+request);
         System.out.println(request.getFile("courseTestResultsFile"));
         System.out.println(request.getParameter("test_name"));
         System.out.println(request.getParameter("test_date"));
