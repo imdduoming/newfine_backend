@@ -22,7 +22,7 @@ public class THomeworkController {
      * 게시글 생성
      */
     @PostMapping("/homework/post/{courseId}")
-    public THomeworkDto save(@PathVariable("courseId") Long courseId, @RequestBody THomeworkDto tHomeworkDto) {
+    public Long save(@PathVariable("courseId") Long courseId, @RequestBody THomeworkDto tHomeworkDto) {
         return tHomeworkService.save(courseId, tHomeworkDto);
     }
 
