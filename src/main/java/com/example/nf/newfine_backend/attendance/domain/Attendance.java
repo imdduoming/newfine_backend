@@ -44,14 +44,6 @@ public class Attendance extends BaseTimeEntity {
     @DateTimeFormat(pattern = "yyyy-MM-ddTHH:mm")
     private LocalDateTime endTime;
 
-
-//    @Builder
-//    public Attendance(Student student) {
-//        this.student=student;
-//
-//
-//    }
-
     public Attendance(Course course,LocalDateTime startTime,LocalDateTime endTime) {
         this.course=course;
         this.startTime=startTime;
