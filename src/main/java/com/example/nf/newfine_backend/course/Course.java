@@ -49,11 +49,11 @@ public class Course {
     @JsonBackReference //순환참조 방지
     @OneToMany(mappedBy="course", cascade = { CascadeType.PERSIST})
     private List<Listener> listeners;
-
-    @JsonIgnore
-    @JsonBackReference //순환참조 방지
-    @OneToMany(mappedBy="course", cascade = { CascadeType.PERSIST})
-    private List<THomework> thomeworks;
+//
+//    @JsonIgnore
+//    @JsonBackReference //순환참조 방지
+//    @OneToMany(mappedBy="course", cascade = { CascadeType.PERSIST})
+//    private List<THomework> thomeworks;
 
 
 //    @OneToMany(mappedBy="course", cascade = {CascadeType.REMOVE})
@@ -61,7 +61,7 @@ public class Course {
 //
     @JsonManagedReference
     @ManyToOne
-    @JoinColumn(name="teacher_id")
+//    @JoinColumn(name="teacher_id")
     private Teacher teacher;
 
     @JsonBackReference  // 순환참조 방지
