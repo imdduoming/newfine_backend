@@ -1,7 +1,6 @@
 package com.example.nf.newfine_backend.Homework.controller;
 
 import com.example.nf.newfine_backend.Homework.Repository.SHomeworkRepository;
-import com.example.nf.newfine_backend.Homework.domain.SHomework;
 import com.example.nf.newfine_backend.Homework.dto.SHomeworkDto;
 import com.example.nf.newfine_backend.Homework.service.SHomeworkService;
 import com.example.nf.newfine_backend.course.ListenerRepository;
@@ -11,7 +10,10 @@ import com.example.nf.newfine_backend.member.student.repository.StudentRepositor
 import com.example.nf.newfine_backend.member.student.service.PointService;
 import com.example.nf.newfine_backend.member.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -43,6 +45,7 @@ public class SHomeworkController {
         return sHomeworkService.getSHomeworks(thId);
     }
 
+    /*
     @PostMapping("/sh/point")
     public void checkSHomework(@RequestParam(value="shidArray[]") List<Long> shidArray){
         for (Long s : shidArray){
@@ -54,12 +57,19 @@ public class SHomeworkController {
             //이 shid인 s로 listener를 구한 다음에 그 listener로 student를 찾아서 point부여
         }
     }
+    */
 
     // shomework student 별로 조회하되, 미제출인 과제만
     @GetMapping("/shlist")
     public List<SHomeworkDto> getSHomeworksByStudent1(){
         Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
         return sHomeworkService.getSHomeworksByStudent1(student);
+    }
+
+    @GetMapping("/shlist/checked")
+    public List<SHomeworkDto> getSHomeworksByStudent2(){
+        Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
+        return sHomeworkService.getSHomeworksByStudent2(student);
     }
 
     //댓글 삭제

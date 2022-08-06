@@ -20,4 +20,7 @@ public interface SHomeworkRepository extends JpaRepository<SHomework, Long> {
 
     @Query("SELECT s FROM SHomework s WHERE s.ischecked = false ORDER BY s.shid DESC")
     List<SHomework> findAllByStudent1(Student student);
+
+    @Query("SELECT s FROM SHomework s WHERE s.ischecked = true ORDER BY s.shid DESC")
+    List<SHomework> findAllByStudent2(Student student);
 }

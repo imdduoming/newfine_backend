@@ -58,6 +58,14 @@ public class SHomeworkService {
         return sHomeworkDtos;
     }
 
+    public List<SHomeworkDto> getSHomeworksByStudent2(Student student) {
+        List<SHomework> sHomeworks = sHomeworkRepository.findAllByStudent2(student);
+        List<SHomeworkDto> sHomeworkDtos = new ArrayList<>();
+
+        sHomeworks.forEach(s -> sHomeworkDtos.add(SHomeworkDto.toDto(s)));
+        return sHomeworkDtos;
+    }
+
     @Transactional public void checkSHomework(Long id) { sHomeworkRepository.checkSHomework(id); }
 
    /*
