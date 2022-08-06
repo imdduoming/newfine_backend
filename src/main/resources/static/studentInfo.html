@@ -101,7 +101,7 @@
     <input id="signUp_phoneNumber" type="text" name="signUp_phoneNumber" value="" style="width:30%"
            placeholder="전화번호(하이픈 없이 11자리)"/><br/>
     <input id="signUp_nickname" type="text" name="signUp_nickname" value="" style="width:30%" placeholder="닉네임"/><br/>
-    <input id="signUp_password" type="text" name="signUp_password" value="" style="width:30%"
+    <input id="signUp_password" type="password" name="signUp_password" value="" style="width:30%"
            placeholder="비밀번호(영문,숫자,특수문자($@^!%*#?&)를 모두 포함하여 8자 이상)"/><br/>
     <button type="button" id="studentSignUpButton" onclick="studentSignUp()">회원 가입</button>
 </form>
@@ -113,7 +113,7 @@
 <form id="studentDeleteForm" name="studentDeleteForm" method="post" action="/admin/studentDeleteForm.do">
     <input id="delete_phoneNumber" type="text" name="delete_phoneNumber" value="" style="width:30%"
            placeholder="전화번호(하이픈 없이 11자리)"/><br/>
-    <input id="delete_password" type="text" name="delete_password" value="" style="width:30%"
+    <input id="delete_password" type="password" name="delete_password" value="" style="width:30%"
            placeholder="비밀번호(영문,숫자,특수문자($@^!%*#?&)를 모두 포함하여 8자 이상)"/><br/>
     <button type="button" id="studentDeleteButton" onclick="studentDelete()">회원 탈퇴</button>
 </form>
