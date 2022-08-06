@@ -63,12 +63,10 @@
         console.log(startTime)
         console.log(course);
         let data = {"course_id": course,"startTime":startTime,"endTime":endTime};
-        if(course==null){
+        if(course == null){
             alert('강의를 선택해주세요!')
         }
-        else if(startTime==null){
-
-        }
+        else{
         $.ajax({
             type: "POST",
             url: `${domainURL}/make/attendance`,
@@ -80,7 +78,7 @@
                 $('input[name=url]').attr('value',response['url']);
             }
 
-        });
+        });}
     }
 
 
