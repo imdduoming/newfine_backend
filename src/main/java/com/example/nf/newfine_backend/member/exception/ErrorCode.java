@@ -30,6 +30,9 @@ public enum ErrorCode {
     DUPLICATE_MEMBER(INTERNAL_SERVER_ERROR, "이미 가입된 회원입니다"),
     DUPLICATE_NICKNAME(INTERNAL_SERVER_ERROR,"이미 존재하는 닉네임입니다"),
 
+
+
+
     ;
 
     private final HttpStatus httpStatus;
