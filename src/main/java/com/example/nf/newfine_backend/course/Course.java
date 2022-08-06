@@ -34,6 +34,12 @@ public class Course {
     @Column(nullable = false)
     private String school;
 
+    @Column
+    private String start_time;
+
+    @Column
+    private String end_time;
+
     // 수학 , 과학탐구
     @Column(nullable = false)
     private String subject;
@@ -49,6 +55,8 @@ public class Course {
     @JsonBackReference //순환참조 방지
     @OneToMany(mappedBy="course", cascade = { CascadeType.PERSIST})
     private List<Listener> listeners;
+
+
 //
 //    @JsonIgnore
 //    @JsonBackReference //순환참조 방지
