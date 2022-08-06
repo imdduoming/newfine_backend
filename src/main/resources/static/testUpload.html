@@ -8,7 +8,6 @@
     <script src="https://malsup.github.io/jquery.form.js"></script>
     <script type="text/javascript" src="js/back.js"></script>
     <script type="text/javascript">
-        var v;
         $(document).ready(function () {
             get_course();
         });
@@ -59,8 +58,8 @@
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (response) {
-                    v=response['id'];
-                    $('#response_test_id').val(v);
+                    $('#response_test_id').attr('value', response['id']);
+                    $('#test_code').attr('value', response['id']);
                     console.log(response)
                     alert('테스트 정보가 입력되었습니다!')
                     // $('input[name=url]').attr('value',response['url']);
@@ -165,7 +164,7 @@
 <!--    <input type="text" id="test_name" name="test_name"/>-->
 <!--    <br>테스트 날짜<br>-->
 <!--    <input type="date" id="test_date" name="test_date"/>-->
-    <input type="hidden" id="test_code" name="test_code" value=v />
+    <input type="hidden" id="test_code" name="test_code" value="" />
     <div class="upload_file">
         <label for="courseTestResultsFile">반별 테스트 데이터 업로드</label>
         <input type="file" id="courseTestResultsFile" name="courseTestResultsFile"/>
@@ -186,7 +185,7 @@
 <!--    <input type="text" id="test_name" name="test_name"/>-->
 <!--    <br>테스트 날짜<br>-->
 <!--    <input type="date" id="test_date" name="test_date"/>-->
-    <input type="hidden" id="test_code1" name="test_code" value=v />
+    <input type="hidden" id="test_code1" name="test_code" value="" />
     <div class="upload_file">
         <label for="studentTestResultsFile">반별 테스트 데이터 업로드</label>
         <input type="file" id="studentTestResultsFile" name="studentTestResultsFile"/>
