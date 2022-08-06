@@ -65,7 +65,7 @@ public class SHomeworkService {
         List<Listener> listeners = listenerRepository.findListenersByStudent(student);
         List<SHomeworkDto> sHomeworkDtos = new ArrayList<>();
         for(Listener listener : listeners){
-            List<SHomework> sHomeworks = sHomeworkRepository.findAllByListener2(listener);
+            List<SHomework> sHomeworks = sHomeworkRepository.findAllByListener2(listener.getId());
             sHomeworks.forEach(s -> sHomeworkDtos.add(SHomeworkDto.toDto(s)));
         }
         return sHomeworkDtos;
