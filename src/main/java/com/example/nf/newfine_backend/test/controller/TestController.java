@@ -18,7 +18,8 @@ public class TestController {
 
     @PostMapping(value = "/test/create")
     public Test createTest(HttpServletRequest request, TestDto testDto) {
-        System.out.println(request.getParameter("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"+"test_date"));
+        System.out.println(request);
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"+request.getParameter("test_date"));
         System.out.println(request.getParameter("course_id")+"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
         testDto.setCourse_id(Long.valueOf(request.getParameter("course_id")));
         testDto.setTestDate(LocalDate.parse(request.getParameter("test_date")));
