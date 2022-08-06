@@ -60,7 +60,7 @@ public class SHomeworkController {
     */
 
     // shomework student 별로 조회하되, 미제출인 과제만
-    @GetMapping("/shlist")
+    @GetMapping("/shlist/unchecked")
     public List<SHomeworkDto> getSHomeworksByStudent1(){
         Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
         return sHomeworkService.getSHomeworksByStudent1(student);

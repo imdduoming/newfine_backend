@@ -5,6 +5,7 @@ import com.example.nf.newfine_backend.Homework.Repository.THomeworkRepository;
 import com.example.nf.newfine_backend.Homework.domain.SHomework;
 import com.example.nf.newfine_backend.Homework.domain.THomework;
 import com.example.nf.newfine_backend.Homework.dto.SHomeworkDto;
+import com.example.nf.newfine_backend.course.Listener;
 import com.example.nf.newfine_backend.course.ListenerRepository;
 import com.example.nf.newfine_backend.member.student.domain.Student;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +21,8 @@ public class SHomeworkService {
 
     private final SHomeworkRepository sHomeworkRepository;
     private final THomeworkRepository tHomeworkRepository;
-
     private final ListenerRepository listenerRepository;
+
 
     /*
     @Transactional public SHomeworkDto createSHomework(Long ThId, SHomeworkDto sHomeworkDto, Listener listener) {
@@ -51,18 +52,22 @@ public class SHomeworkService {
     }
 
     public List<SHomeworkDto> getSHomeworksByStudent1(Student student) {
-        List<SHomework> sHomeworks = sHomeworkRepository.findAllByStudent1(student);
+        List<Listener> listeners = listenerRepository.findListenersByStudent(student);
         List<SHomeworkDto> sHomeworkDtos = new ArrayList<>();
-
-        sHomeworks.forEach(s -> sHomeworkDtos.add(SHomeworkDto.toDto(s)));
+        for(Listener listener : listeners){
+            List<SHomework> sHomeworks = sHomeworkRepository.findAllByListener1(listener);
+            sHomeworks.forEach(s -> sHomeworkDtos.add(SHomeworkDto.toDto(s)));
+        }
         return sHomeworkDtos;
     }
 
     public List<SHomeworkDto> getSHomeworksByStudent2(Student student) {
-        List<SHomework> sHomeworks = sHomeworkRepository.findAllByStudent2(student);
+        List<Listener> listeners = listenerRepository.findListenersByStudent(student);
         List<SHomeworkDto> sHomeworkDtos = new ArrayList<>();
-
-        sHomeworks.forEach(s -> sHomeworkDtos.add(SHomeworkDto.toDto(s)));
+        for(Listener listener : listeners){
+            List<SHomework> sHomeworks = sHomeworkRepository.findAllByListener2(listener);
+            sHomeworks.forEach(s -> sHomeworkDtos.add(SHomeworkDto.toDto(s)));
+        }
         return sHomeworkDtos;
     }
 
