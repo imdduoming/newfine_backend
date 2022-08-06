@@ -9,6 +9,7 @@ import com.example.nf.newfine_backend.member.dto.response.SingleResult;
 import com.example.nf.newfine_backend.member.student.domain.Student;
 import com.example.nf.newfine_backend.member.exception.CustomException;
 import com.example.nf.newfine_backend.member.jwt.TokenProvider;
+import com.example.nf.newfine_backend.member.student.exception.PhoneNumberNotFoundException;
 import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
 //import com.example.nf.newfine_backend.member.repository.RefreshTokenRepository;
 import com.example.nf.newfine_backend.member.student.service.PointService;
@@ -78,6 +79,14 @@ public class AuthService {
     // 로그인 예외처리**
     @Transactional
     public TokenDto login(SignInDto signInDto) {
+
+        Student student=studentRepository.findByPhoneNumber(signInDto.getPhoneNumber()).orElseThrow(PhoneNumberNotFoundException::new);
+
+        // 비밀번호 확인 추가
+        if (!passwordEncoder.matches(signInDto.getPassword(), student.getPassword())) {
+            throw new CustomException(INVALID_PASSWORD);
+        }
+
         // 1. Login ID/PW 를 기반으로 AuthenticationToken 생성 (인증 정보 객체 UsernamePasswordAuthenticationToken 생성)
         UsernamePasswordAuthenticationToken authenticationToken = signInDto.toAuthentication();
 
