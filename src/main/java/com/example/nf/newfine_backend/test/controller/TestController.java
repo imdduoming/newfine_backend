@@ -17,7 +17,7 @@ public class TestController {
     private final TestService testService;
 
     @ResponseBody
-    @RequestMapping(value = "/test/create", method = RequestMethod.POST)
+    @RequestMapping(value = "/makeTestForm.do", method = RequestMethod.POST)
     public Test createTest(HttpServletRequest request, TestDto testDto) throws Exception{
         System.out.println(request);
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"+request.getParameter("testDate"));
