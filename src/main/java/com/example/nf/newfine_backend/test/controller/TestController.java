@@ -6,6 +6,7 @@ import com.example.nf.newfine_backend.test.service.TestService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
@@ -16,6 +17,7 @@ public class TestController {
 
     private final TestService testService;
 
+    @ResponseBody
     @PostMapping(value = "/test/create")
     public Test createTest(HttpServletRequest request, TestDto testDto) {
         System.out.println(request);
