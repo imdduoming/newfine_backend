@@ -41,6 +41,10 @@ public class Test {
     @JsonBackReference //순환참조 방지
     private List<CourseTestResults> courseTestResults;
 
+    @OneToMany(mappedBy="test", cascade = { CascadeType.PERSIST})
+    @JsonBackReference //순환참조 방지
+    private List<StudentTestResults> studentTestResults;
+
     public Test(Course course, LocalDate testDate, String testName) {
         this.course=course;
         this.testDate=testDate;

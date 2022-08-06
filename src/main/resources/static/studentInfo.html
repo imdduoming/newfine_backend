@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
+<head>
+    <title>학생 정보 관리</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script src="https://malsup.github.io/jquery.form.js"></script>
+<!--    <script type="text/javascript" src="js/back.js"></script>-->
+    <script type="text/javascript">
+        function studentSignUp() {
+            // if ($('#signUp_branch').val() == '') {
+            //     alert("분원 정보를 입력해주세요!");
+            //     studentSignUpForm.signUp_branch.focus();
+            //     return false;
+            // }
+            if ($('#signUp_name').val() == '') {
+                alert("학생 이름을 입력해주세요!");
+                studentSignUpForm.signUp_name.focus();
+                return false;
+            }
+            if ($('#signUp_nickname').val() == '') {
+                alert("어플에서 사용할 학생 닉네임을 입력해주세요!");
+                studentSignUpForm.signUp_nickname.focus();
+                return false;
+            }
+            if ($('#signUp_phoneNumber').val() == '') {
+                alert("학생 핸드폰 번호를 입력해주세요!");
+                studentSignUpForm.signUp_phoneNumber.focus();
+                return false;
+            }
+            if ($('#signUp_password').val() == '') {
+                alert("비밀번호를 입력해주세요!");
+                studentSignUpForm.signUp_password.focus();
+                return false;
+            }
+
+            if (confirm("회원가입하시겠습니까?")) {
+                var options = {
+                    success: function (result) {
+                        if (result.code == "1") {
+                            console.log("회원가입 완료!!");
+                            alert(result.msg);
+                        } else {
+                            console.log("회원가입 실패!!");
+                            alert(result.msg);
+                        }
+                    },
+                    error: function (request, status, error) {
+                        console.log("error");
+                        alert("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+                    },
+                    type: "POST"
+                };
+                $("#studentSignUpForm").ajaxSubmit(options);
+            }
+        }
+
+        function studentDelete() {
+            if ($('#delete_phoneNumber').val() == '') {
+                alert("핸드폰 번호를 입력해주세요!");
+                studentDeleteForm.delete_phoneNumber.focus();
+                return false;
+            }
+            if ($('#delete_password').val() == '') {
+                alert("비밀번호를 입력해주세요!");
+                studentDeleteForm.delete_password.focus();
+                return false;
+            }
+            if (confirm("탈퇴하시겠습니까?")) {
+                var options = {
+                    success: function (result) {
+                        if (result.code == "1") {
+                            console.log("탈퇴 완료!!");
+                            alert(result.msg);
+                        } else {
+                            console.log("탈퇴 실패!!");
+                            alert(result.msg);
+                        }
+                    },
+                    error: function (request, status, error) {
+                        console.log("error");
+                        alert("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+                    },
+                    type: "POST"
+                };
+                $("#studentDeleteForm").ajaxSubmit(options);
+            }
+        }
+    </script>
+
+</head>
+<body>
+<br>회원 가입!!<br>
+<!--<br>분원, 이름, 전화번호, 닉네임, 비밀번호를 입력해주세요.<br>-->
+<br>가입할 학생의 이름, 전화번호, 닉네임, 비밀번호를 입력해주세요.<br>
+<form id="studentSignUpForm" name="studentSignUpForm" method="post" action="/admin/studentSignUpForm.do">
+<!--    <input id="signUp_branch" type="text" name="signUp_branch" value="" style="width:30%" placeholder="분원"/><br/>-->
+    <input id="signUp_name" type="text" name="signUp_name" value="" style="width:30%" placeholder="이름"/><br/>
+    <input id="signUp_phoneNumber" type="text" name="signUp_phoneNumber" value="" style="width:30%"
+           placeholder="전화번호(하이픈 없이 11자리)"/><br/>
+    <input id="signUp_nickname" type="text" name="signUp_nickname" value="" style="width:30%" placeholder="닉네임"/><br/>
+    <input id="signUp_password" type="text" name="signUp_password" value="" style="width:30%"
+           placeholder="비밀번호(영문,숫자,특수문자($@^!%*#?&)를 모두 포함하여 8자 이상)"/><br/>
+    <button type="button" id="studentSignUpButton" onclick="studentSignUp()">회원 가입</button>
+</form>
+
+<br>----------------------------------------------------------------------------<br>
+
+<br>회원 탈퇴!!<br>
+<br>전화번호와 비밀번호를 입력해주세요.<br>
+<form id="studentDeleteForm" name="studentDeleteForm" method="post" action="/admin/studentDeleteForm.do">
+    <input id="delete_phoneNumber" type="text" name="delete_phoneNumber" value="" style="width:30%"
+           placeholder="전화번호(하이픈 없이 11자리)"/><br/>
+    <input id="delete_password" type="text" name="delete_password" value="" style="width:30%"
+           placeholder="비밀번호(영문,숫자,특수문자($@^!%*#?&)를 모두 포함하여 8자 이상)"/><br/>
+    <button type="button" id="studentDeleteButton" onclick="studentDelete()">회원 탈퇴</button>
+</form>
+
+</body>

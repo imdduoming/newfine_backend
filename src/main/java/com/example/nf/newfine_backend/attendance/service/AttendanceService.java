@@ -4,20 +4,20 @@ import com.example.nf.newfine_backend.attendance.repository.AttendanceRepository
 import com.example.nf.newfine_backend.attendance.repository.StudentAttendanceRepository;
 import com.example.nf.newfine_backend.attendance.domain.Attendance;
 import com.example.nf.newfine_backend.attendance.domain.StudentAttendance;
-import com.example.nf.newfine_backend.course.CourseRepository;
-import com.example.nf.newfine_backend.course.CourseService;
-import com.example.nf.newfine_backend.course.Listener;
+import com.example.nf.newfine_backend.course.*;
 import com.example.nf.newfine_backend.member.student.domain.Student;
-import com.example.nf.newfine_backend.course.Course;
 import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
 import com.example.nf.newfine_backend.member.student.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,26 +31,22 @@ public class AttendanceService {
     private final StudentService studentService;
     private final CourseRepository courseRepository;
     private final CourseService courseService;
+    private final ListenerRepository listenerRepository;
+
 
     public Attendance makeAttendance(Long course_id, LocalDateTime start, LocalDateTime end){
         Course course=courseRepository.findById(course_id).get();
         List <Listener> listeners = courseService.getListeners(course_id);
         List <StudentAttendance> studentAttendances = new ArrayList<>();
-        System.out.println("수강생");
-        System.out.println( listeners);
         Attendance attendance= new Attendance(course,start,end);
         attendanceRepository.save(attendance);
+
         for(Listener listener : listeners){
-            System.out.println("수강생이름");
-            System.out.println(listener.getStudent().getName());
-            System.out.println("출석 id");
-            System.out.println(attendance.getAttendanceId());
-            StudentAttendance studentAttendance=new StudentAttendance(listener.getStudent(),attendance, null,false,false);
+            StudentAttendance studentAttendance=new StudentAttendance(listener.getStudent(),attendance, null,false,false,false);
             studentattendanceRepository.save(studentAttendance);
             studentAttendances.add(studentAttendance);
         }
-        System.out.println("학생 출석부");
-        System.out.println(studentAttendances);
+
         Long attendance_id=attendance.getAttendanceId();
         String a_id=Long.toString(attendance_id);
         Attendance attendance2=attendanceRepository.findById(attendance_id).get();
@@ -121,7 +117,6 @@ public class AttendanceService {
         System.out.println(studentAttendances);
         return studentAttendances;
     }
-
 
 
 
