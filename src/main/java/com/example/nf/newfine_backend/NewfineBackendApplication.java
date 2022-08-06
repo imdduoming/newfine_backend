@@ -17,11 +17,11 @@ import java.util.TimeZone;
 @EnableJpaAuditing // JPA Auditing 활성화
 @SpringBootApplication
 public class NewfineBackendApplication {
-    @PostConstruct
-    public void started() {
-        // timezone UTC 셋팅
-        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
-    }
+//    @PostConstruct
+//    public void started() {
+//        // timezone UTC 셋팅
+//        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
+//    }
     public static void main(String[] args) {
         SpringApplication.run(NewfineBackendApplication.class, args);
     }
