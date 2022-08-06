@@ -52,7 +52,7 @@
         var startTime=document.getElementById('start_time').value;
         console.log(startTime)
         let data = {"startTime":startTime};
-        if (startTime.empty()){
+        if (startTime==null){
             alert("시간을 입력해주세요!")
         }
         else{
