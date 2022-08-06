@@ -21,5 +21,5 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     List<Student> findStudentsByListeners(Course course);
 
 
-    Optional<Student> findByListener(Listener listener);
+//    Optional<Student> findByListener(Listener listener);
 }
