@@ -168,6 +168,9 @@ public class ExcelService{
             System.out.println(article.get("E"));
             System.out.println(article.get("F"));
             System.out.println(article.get("G"));
+            System.out.println(article.get("H"));
+            System.out.println(article.get("I"));
+            System.out.println(article.get("J"));
 
             StudentTestResultsDto studentTestResultsInfo = new StudentTestResultsDto();
 
