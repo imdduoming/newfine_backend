@@ -153,7 +153,7 @@ public class ExcelService{
 //        System.out.println(excelReadOption.getFilePath());
 //        System.out.println(excelReadOption.getFilePath().substring(1));
 //        System.out.println(excelReadOption.getFilePath().substring(2));
-        excelReadOption.setOutputColumns("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P"); //추출할 컬럼명 추가
+        excelReadOption.setOutputColumns("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "AA", "AB", "AC", "AD", "AE", "AF", "AG", "AH", "AI", "AJ", "AK", "AL", "AM", "AN", "AO", "AP", "AQ", "AR", "AS"); //추출할 컬럼명 추가
         excelReadOption.setStartRow(2); //시작행(헤더부분 제외)
 
         List<StudentTestResultsDto> listStudentTestResults = new ArrayList<StudentTestResultsDto>();
