@@ -21,7 +21,7 @@ public class TestController {
 
     @ResponseBody
     @RequestMapping(value = "/test/create", method = RequestMethod.POST)
-    public Test createTest(HttpServletRequest request, TestDto testDto) {
+    public Test createTest(HttpServletRequest request, TestDto testDto) throws Exception{
         System.out.println(request);
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"+request.getParameter("test_date"));
         System.out.println(request.getParameter("course_id")+"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
