@@ -23,7 +23,6 @@ public class THomeworkService {
     private final CourseService courseService;
     private final SHomeworkRepository sHomeworkRepository;
 
-    private final ListenerRepository listenerRepository;
     /**
      * 게시글 생성
      */
