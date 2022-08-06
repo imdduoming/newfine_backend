@@ -1,12 +1,14 @@
 package com.example.nf.newfine_backend.member.student.domain;
 
 import com.example.nf.newfine_backend.attendance.domain.StudentAttendance;
+import com.example.nf.newfine_backend.branch.domain.Branch;
 import com.example.nf.newfine_backend.course.Listener;
 import com.example.nf.newfine_backend.member.domain.Authority;
 import com.example.nf.newfine_backend.member.domain.Timestamped;
 import com.example.nf.newfine_backend.study.StudentStudy;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -82,6 +84,9 @@ public class Student extends Timestamped {
     @OneToMany(mappedBy="owner", orphanRemoval = true, cascade = CascadeType.REMOVE)  // 주체는 Point 객체
     private List<Point> pointList=new ArrayList<>();
 
+//    @JsonManagedReference
+//    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST})
+//    private Branch branch;
 
     @Builder
     public Student(String phoneNumber, String name, String password, String nickname, Authority authority, String photoURL, Integer point) {
@@ -92,6 +97,7 @@ public class Student extends Timestamped {
         this.nickname= nickname;
         this.photoURL=photoURL;
         this.point=point;
+//        this.branch=branch;
     }
 
     public boolean availableLevelUp() {

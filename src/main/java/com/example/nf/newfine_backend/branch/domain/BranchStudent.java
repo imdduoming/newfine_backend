@@ -1,4 +1,4 @@
-package com.example.nf.newfine_backend.member.branch.domain;
+package com.example.nf.newfine_backend.branch.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -23,6 +23,9 @@ public class BranchStudent {
 
     @Column
     private String phoneNumber;
+
+    @Column
+    private String parentPhoneNumber;
 
     @Column
     private String name;

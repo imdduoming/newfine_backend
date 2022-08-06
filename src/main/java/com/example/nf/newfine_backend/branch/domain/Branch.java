@@ -1,6 +1,7 @@
-package com.example.nf.newfine_backend.member.branch.domain;
+package com.example.nf.newfine_backend.branch.domain;
 
-import com.example.nf.newfine_backend.member.domain.Authority;
+import com.example.nf.newfine_backend.member.student.domain.Student;
+import com.example.nf.newfine_backend.test.domain.CourseTestResults;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
@@ -30,4 +31,8 @@ public class Branch {
     @OneToMany(mappedBy="branch", cascade = { CascadeType.PERSIST})
     @JsonBackReference //순환참조 방지
     private List<BranchStudent> branchStudent;
+
+//    @OneToMany(mappedBy="branch", cascade = { CascadeType.PERSIST})
+//    @JsonBackReference //순환참조 방지
+//    private List<Student> students;
 }

@@ -1,5 +1,6 @@
 package com.example.nf.newfine_backend.test.controller;
 
+import com.example.nf.newfine_backend.admin.dto.DeleteRequestByAdminDto;
 import com.example.nf.newfine_backend.attendance.domain.Attendance;
 import com.example.nf.newfine_backend.attendance.dto.AttendanceDto;
 import com.example.nf.newfine_backend.test.domain.Test;
@@ -10,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Controller
@@ -18,13 +21,12 @@ public class testController {
 
     private final TestService testService;
 
-//    @PostMapping(value = "/test/create")
-//    public Test createTest(@RequestBody TestDto testDto) {
-//        LocalDateTime testDate = testDto.getTestDate();
-//        String testName = testDto.getTestName();
-//        System.out.println(testDto.getTestName());
-//        return testService.createTest(testDto.getCourse_id(), testDate, testName);
-//
-//    }
+    @PostMapping(value = "/test/create")
+    public Test createTest(HttpServletRequest request, TestDto testDto) {
+        testDto.setTestDate(LocalDate.parse(request.getParameter("test_date")));
+        testDto.setTestName(request.getParameter("test_name"));
+        testDto.setCourse_id(Long.valueOf(request.getParameter("course_id")));
+        return testService.createTest(testDto);
+    }
 
 }

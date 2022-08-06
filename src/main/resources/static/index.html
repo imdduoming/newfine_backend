@@ -7,109 +7,7 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://malsup.github.io/jquery.form.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            get_course();
-        });
-        function checkFileType(filePath) {
-            var fileFormat = filePath.split(".");
 
-            if (fileFormat.indexOf("xls") > -1 || fileFormat.indexOf("xlsx") > -1) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-        function check() {
-            if (confirm("업로드 여부")) {
-                var options = {
-                    success: function (result) {
-                        if (result.code == "1") {
-                            console.log("data 전송 성공");
-                            alert(result.msg);
-                        } else {
-                            console.log("data 전송 실패");
-                            alert(result.msg);
-                        }
-                    },
-                    error: function (request, status, error) {
-                        console.log("error");
-                        alert("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
-                    },
-                    type: "POST"
-                };
-                $("#excelUploadForm").ajaxSubmit(options);
-            }
-        }
-        function checkCourseTestResultsFile() {
-            if (confirm("업로드 여부")) {
-                var options = {
-                    success: function (result) {
-                        if (result.code == "1") {
-                            console.log("data 전송 성공");
-                            alert(result.msg);
-                        } else {
-                            console.log("data 전송 실패");
-                            alert(result.msg);
-                        }
-                    },
-                    error: function (request, status, error) {
-                        console.log("error");
-                        alert("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
-                    },
-                    type: "POST"
-                };
-                $("#courseTestResultsFileUploadForm").ajaxSubmit(options);
-            }
-        }
-        function get_course() {
-            console.log("1")
-            $.ajax({
-                type: "GET",
-                url: `https://eb.newfine.tk/all/courses`,
-                success: function (response) {
-                    console.log(response)
-                    for (let i =0 ;i < response.length ; i++){// obj 길이 만큼 반복
-
-                        var optionValue = response[i]['id']; // 서버에서 전달 받은 value
-                        var optionFront = response[i]['cname']; // 사용자에게 보여지는 부분
-                        var option = '<option value='+optionValue+'>'+optionFront+'</option>'; // 결합
-
-                        $('#course_list').append(option); // Select 태그에 옵션 태그 추가
-                    }
-                }
-
-            });
-        }
-        var selectBoxChange=function(value){
-            console.log(value);
-            $("#course_id").val(value);
-        }
-        function makeTest(){
-            var selected_course=document.getElementById('course_list')
-            let course= selected_course.options[selected_course.selectedIndex].value;
-
-            var testName=document.getElementById('test_name').value;
-            var testDate=document.getElementById('test_date').value;
-            console.log(testName);
-            console.log(testDate);
-            console.log(course);
-            let data = {"course_id": course,"testName":testName,"testDate":testDate};
-
-            $.ajax({
-                type: "POST",
-                url: `${domainURL}/test/create`,
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (response) {
-                    console.log(response)
-                    alert('테스트 정보가 입력되었습니다!')
-                    // $('input[name=url]').attr('value',response['url']);
-                }
-
-            });
-        }
-    </script>
 </head>
 <body>
 <center><div id="main">
@@ -117,41 +15,20 @@
     <button class="w-btn-neon2" type="button" onclick="location.href='attendanceMake.html'">
         출석 QR생성
     </button>
-    <button class="w-btn-neon2" type="button"onclick="location.href='studyMake.html'">
+    <button class="w-btn-neon2" type="button" onclick="location.href='studyMake.html'">
         자습 QR생성
     </button>
-    <button class="w-btn-neon2" type="button">
-        학생 정보
+    <button class="w-btn-neon2" type="button" onclick="location.href='studentInfo.html'">
+        학생 정보 관리
     </button>
     <button class="w-btn-neon2" type="button">
         수업 정보
     </button>
+    <button class="w-btn-neon2" type="button" onclick="location.href='testUpload.html'">
+        테스트 데이터 업로드
+    </button>
 </div></center>
-<form id="excelUploadForm" name="excelUploadForm" enctype="multipart/form-data"method="post" action= "excelUpload.do">
-    <div class="upload_file">
-        <label for="excelFile">Excel 업로드</label>
-        <input type="file" id="excelFile" name="excelFile"/>
-        <button type="button" onclick="check()"><span>저장</span></button>
-    </div>
-</form>
 
-<form id="courseTestResultsFileUploadForm" name="courseTestResultsFileUploadForm" enctype="multipart/form-data"method="post" action= "courseTestResultsFileUpload.do">
-    <br>수업을 입력하세요.<br>
-    <select name="course" id="course_list" onchange="selectBoxChange(this.value);">
-        <option value='none'>===수업선택===</option>
-    </select>
-    <input type="text" id="course_id" name="course_id"/>
-    <br>테스트 이름<br>
-    <input type="text" id="test_name" name="test_name"/>
-    <br>테스트 날짜<br>
-    <input type="datetime-local" id="test_date" name="test_date"/>
-<!--    <button type="button" onclick="makeTest()"><span>테스트 정보 입력</span></button>-->
-    <div class="upload_file">
-        <label for="courseTestResultsFile">Excel 업로드</label>
-        <input type="file" id="courseTestResultsFile" name="courseTestResultsFile"/>
-        <button type="button" onclick="checkCourseTestResultsFile()"><span>저장</span></button>
-    </div>
-</form>
 </body>
 </html>
 
