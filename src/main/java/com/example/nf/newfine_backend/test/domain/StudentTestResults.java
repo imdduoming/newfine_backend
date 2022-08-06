@@ -33,118 +33,118 @@ public class StudentTestResults {
     private int score2;
 
     @Column
-    private int q1;
+    private String q1;
 
     @Column
-    private int q2;
+    private String q2;
 
     @Column
-    private int q3;
+    private String q3;
 
     @Column
-    private int q4;
+    private String q4;
 
     @Column
-    private int q5;
+    private String q5;
 
     @Column
-    private int q6;
+    private String q6;
 
     @Column
-    private int q7;
+    private String q7;
 
     @Column
-    private int q8;
+    private String q8;
 
     @Column
-    private int q9;
+    private String q9;
 
     @Column
-    private int q10;
+    private String q10;
 
     @Column
-    private int q11;
+    private String q11;
 
     @Column
-    private int q12;
+    private String q12;
 
     @Column
-    private int q13;
+    private String q13;
 
     @Column
-    private int q14;
+    private String q14;
 
     @Column
-    private int q15;
+    private String q15;
 
     @Column
-    private int q16;
+    private String q16;
 
     @Column
-    private int q17;
+    private String q17;
 
     @Column
-    private int q18;
+    private String q18;
 
     @Column
-    private int q19;
+    private String q19;
 
     @Column
-    private int q20;
+    private String q20;
 
     @Column
-    private int q21;
+    private String q21;
 
     @Column
-    private int q22;
+    private String q22;
 
     @Column
-    private int q23;
+    private String q23;
 
     @Column
-    private int q24;
+    private String q24;
 
     @Column
-    private int q25;
+    private String q25;
     @Column
-    private int q26;
+    private String q26;
     @Column
-    private int q27;
+    private String q27;
     @Column
-    private int q28;
+    private String q28;
 
     @Column
-    private int q29;
+    private String q29;
 
     @Column
-    private int q30;
+    private String q30;
     @Column
-    private int q31;
+    private String q31;
     @Column
-    private int q32;
+    private String q32;
     @Column
-    private int q33;
+    private String q33;
     @Column
-    private int q34;
+    private String q34;
     @Column
-    private int q35;
+    private String q35;
     @Column
-    private int q36;
+    private String q36;
     @Column
-    private int q37;
+    private String q37;
     @Column
-    private int q38;
+    private String q38;
     @Column
-    private int q39;
+    private String q39;
     @Column
-    private int q40;
+    private String q40;
 
     @JsonManagedReference
     @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST})
     private Test test;
 
     @Builder
-    public StudentTestResults(Test test, String name, String testCode, int totalScore, int score1, int score2, int q1, int q2, int q3, int q4, int q5, int q6, int q7, int q8, int q9, int q10, int q11, int q12, int q13, int q14, int q15, int q16, int q17, int q18, int q19, int q20, int q21, int q22, int q23, int q24, int q25, int q26, int q27, int q28, int q29, int q30, int q31, int q32, int q33, int q34, int q35, int q36, int q37, int q38, int q39, int q40) {
+    public StudentTestResults(Test test, String name, String testCode, int totalScore, int score1, int score2, String q1, String q2, String q3, String q4, String q5, String q6, String q7, String q8, String q9, String q10, String q11, String q12, String q13, String q14, String q15, String q16, String q17, String q18, String q19, String q20, String q21, String q22, String q23, String q24, String q25, String q26, String q27, String q28, String q29, String q30, String q31, String q32, String q33, String q34, String q35, String q36, String q37, String q38, String q39, String q40) {
         this.test = test;
         this.name = name;
         this.testCode = testCode;
