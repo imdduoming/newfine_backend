@@ -1,9 +1,10 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
 <head>
     <title>테스트 데이터 업로드</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script src="https://malsup.github.io/jquery.form.js"></script>
     <script type="text/javascript" src="js/back.js"></script>
@@ -11,6 +12,7 @@
         $(document).ready(function () {
             get_course();
         });
+
         function checkFileType(filePath) {
             var fileFormat = filePath.split(".");
 
@@ -20,6 +22,7 @@
                 return false;
             }
         }
+
         function check() {
             if (confirm("업로드 여부")) {
                 var options = {
@@ -41,16 +44,17 @@
                 $("#excelUploadForm").ajaxSubmit(options);
             }
         }
-        function makeTest(){
-            var selected_course=document.getElementById('course_list');
-            let course= selected_course.options[selected_course.selectedIndex].value;
 
-            var testName=document.getElementById('test_name').value;
-            var testDate=document.getElementById('test_date').value;
+        function makeTest() {
+            var selected_course = document.getElementById('course_list');
+            let course = selected_course.options[selected_course.selectedIndex].value;
+
+            var testName = document.getElementById('test_name').value;
+            var testDate = document.getElementById('test_date').value;
             console.log(testName);
             console.log(testDate);
             console.log(course);
-            let data = {"course_id": course,"testName":testName,"testDate":testDate};
+            let data = {"course_id": course, "testName": testName, "testDate": testDate};
 
             $.ajax({
                 type: "POST",
@@ -58,6 +62,7 @@
                 contentType: "application/json",
                 data: JSON.stringify(data),
                 success: function (response) {
+                    console.log(response)
                     $('#response_test_id').attr('value', response['id']);
                     $('#test_code').attr('value', response['id']);
                     console.log(response)
@@ -66,6 +71,7 @@
                 }
             });
         }
+
         function checkCourseTestResultsFile() {
             if (confirm("엑셀 파일을 업로드하시겠습니까?")) {
                 var options = {
@@ -87,6 +93,7 @@
                 $("#courseTestResultsFileUploadForm").ajaxSubmit(options);
             }
         }
+
         function get_course() {
             console.log("1")
             $.ajax({
@@ -94,11 +101,11 @@
                 url: `https://eb.newfine.tk/all/courses`,
                 success: function (response) {
                     console.log(response)
-                    for (let i =0 ; i < response.length ; i++){// obj 길이 만큼 반복
+                    for (let i = 0; i < response.length; i++) {// obj 길이 만큼 반복
 
                         var optionValue = response[i]['id']; // 서버에서 전달 받은 value
                         var optionFront = response[i]['cname']; // 사용자에게 보여지는 부분
-                        var option = '<option value='+optionValue+'>'+optionFront+'</option>'; // 결합
+                        var option = '<option value=' + optionValue + '>' + optionFront + '</option>'; // 결합
 
                         $('#course_list').append(option); // Select 태그에 옵션 태그 추가
                     }
@@ -106,10 +113,12 @@
 
             });
         }
-        var selectBoxChange=function(value){
+
+        var selectBoxChange = function (value) {
             console.log(value);
             $("#course_id").val(value);
         }
+
         function checkStudentTestResultsFile() {
             if (confirm("엑셀 파일을 업로드하시겠습니까?")) {
                 var options = {
@@ -136,7 +145,7 @@
 
 </head>
 <body>
-<form id="makeTestForm" name="makeTestForm" method="post" action= "makeTestForm.do">
+<form id="makeTestForm" name="makeTestForm" method="post" action="makeTestForm.do">
     <br>수업을 입력하세요.<br>
     <select name="course" id="course_list" onchange="selectBoxChange(this.value);">
         <option value='none'>===수업선택===</option>
@@ -153,18 +162,19 @@
 
 <br>----------------------------------------------------------------------------<br>
 
-<form id="courseTestResultsFileUploadForm" name="courseTestResultsFileUploadForm" enctype="multipart/form-data"method="post" action= "courseTestResultsFileUpload.do">
+<form id="courseTestResultsFileUploadForm" name="courseTestResultsFileUploadForm" enctype="multipart/form-data"
+      method="post" action="courseTestResultsFileUpload.do">
     <br>반별 테스트 데이터 입력<br>
-<!--    <br>수업을 입력하세요.<br>-->
-<!--    <select name="course" id="course_list" onchange="selectBoxChange(this.value);">-->
-<!--        <option value='none'>===수업선택===</option>-->
-<!--    </select>-->
-<!--    <input type="text" id="course_id" name="course_id"/>-->
-<!--    <br>테스트 이름<br>-->
-<!--    <input type="text" id="test_name" name="test_name"/>-->
-<!--    <br>테스트 날짜<br>-->
-<!--    <input type="date" id="test_date" name="test_date"/>-->
-    <input type="hidden" id="test_code" name="test_code" value="" />
+    <!--    <br>수업을 입력하세요.<br>-->
+    <!--    <select name="course" id="course_list" onchange="selectBoxChange(this.value);">-->
+    <!--        <option value='none'>===수업선택===</option>-->
+    <!--    </select>-->
+    <!--    <input type="text" id="course_id" name="course_id"/>-->
+    <!--    <br>테스트 이름<br>-->
+    <!--    <input type="text" id="test_name" name="test_name"/>-->
+    <!--    <br>테스트 날짜<br>-->
+    <!--    <input type="date" id="test_date" name="test_date"/>-->
+    <input type="hidden" id="test_code" name="test_code" value=""/>
     <div class="upload_file">
         <label for="courseTestResultsFile">반별 테스트 데이터 업로드</label>
         <input type="file" id="courseTestResultsFile" name="courseTestResultsFile"/>
@@ -174,18 +184,19 @@
 
 <br>----------------------------------------------------------------------------<br>
 
-<form id="studentTestResultsFileUploadForm" name="studentTestResultsFileUploadForm" enctype="multipart/form-data"method="post" action= "studentTestResultsFileUpload.do">
+<form id="studentTestResultsFileUploadForm" name="studentTestResultsFileUploadForm" enctype="multipart/form-data"
+      method="post" action="studentTestResultsFileUpload.do">
     <br>학생 개인별 정오표 입력<br>
-<!--    <br>수업을 입력하세요.<br>-->
-<!--    <select name="course" id="course_list" onchange="selectBoxChange(this.value);">-->
-<!--        <option value='none'>===수업선택===</option>-->
-<!--    </select>-->
-<!--    <input type="text" id="course_id" name="course_id"/>-->
-<!--    <br>테스트 이름<br>-->
-<!--    <input type="text" id="test_name" name="test_name"/>-->
-<!--    <br>테스트 날짜<br>-->
-<!--    <input type="date" id="test_date" name="test_date"/>-->
-    <input type="hidden" id="test_code1" name="test_code" value="" />
+    <!--    <br>수업을 입력하세요.<br>-->
+    <!--    <select name="course" id="course_list" onchange="selectBoxChange(this.value);">-->
+    <!--        <option value='none'>===수업선택===</option>-->
+    <!--    </select>-->
+    <!--    <input type="text" id="course_id" name="course_id"/>-->
+    <!--    <br>테스트 이름<br>-->
+    <!--    <input type="text" id="test_name" name="test_name"/>-->
+    <!--    <br>테스트 날짜<br>-->
+    <!--    <input type="date" id="test_date" name="test_date"/>-->
+    <input type="hidden" id="test_code1" name="test_code" value=""/>
     <div class="upload_file">
         <label for="studentTestResultsFile">반별 테스트 데이터 업로드</label>
         <input type="file" id="studentTestResultsFile" name="studentTestResultsFile"/>
