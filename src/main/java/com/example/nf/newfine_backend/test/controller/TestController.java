@@ -19,11 +19,11 @@ public class TestController {
     @ResponseBody
     @RequestMapping(value = "/makeTestForm.do", method = RequestMethod.POST)
     public Test createTest(HttpServletRequest request, TestDto testDto) throws Exception{
-        System.out.println(request);
-        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"+request.getParameter("testDate"));
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"+request.getParameter("test_date"));
+        System.out.println(request.getParameter("test_name"));
         System.out.println(request.getParameter("course_id")+"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-        testDto.setTestDate(LocalDate.parse(request.getParameter("testDate")));
-        testDto.setTestName(request.getParameter("testName"));
+        testDto.setTestDate(LocalDate.parse(request.getParameter("test_date")));
+        testDto.setTestName(request.getParameter("test_name"));
         testDto.setCourse_id(Long.valueOf(request.getParameter("course_id")));
         return testService.createTest(testDto);
     }
