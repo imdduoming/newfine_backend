@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface BranchStudentRepository extends JpaRepository<BranchStudent, Long> {
     Optional<BranchStudent> findByPhoneNumber(String PhoneNumber);
+    Optional<BranchStudent> findByParentPhoneNumber(String ParentNumber);
 }
