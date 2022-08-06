@@ -8,7 +8,10 @@ import com.example.nf.newfine_backend.attendance.dto.StudentAttendanceDto;
 import com.example.nf.newfine_backend.attendance.dto.VideoApplyDto;
 import com.example.nf.newfine_backend.attendance.service.AttendanceService;
 import com.example.nf.newfine_backend.attendance.service.VideoService;
+import com.example.nf.newfine_backend.branch.domain.BranchStudent;
+import com.example.nf.newfine_backend.branch.repository.BranchStudentRepository;
 import com.example.nf.newfine_backend.course.CourseRepository;
+import com.example.nf.newfine_backend.member.dto.SignUpAuthDto;
 import com.example.nf.newfine_backend.member.exception.CustomException;
 import com.example.nf.newfine_backend.member.student.domain.Student;
 import com.example.nf.newfine_backend.member.student.exception.PhoneNumberNotFoundException;
@@ -22,7 +25,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
+import static com.example.nf.newfine_backend.member.exception.ErrorCode.DUPLICATE_MEMBER;
 import static com.example.nf.newfine_backend.member.exception.ErrorCode.MEMBER_NOT_FOUND;
 
 @RestController
@@ -35,7 +40,7 @@ public class VideoController {
     private final StudentRepository studentRepository;
     private final MessageService messageService;
     private final VideoService videoService;
-
+    private final BranchStudentRepository branchStudentRepository;
     //동영상 신청을 위해 현재 출석이 생긴 수업을 불러오는 api
     @GetMapping("/attendances/my/now")
     public List<Attendance> getNowAttendance() {
@@ -47,11 +52,7 @@ public class VideoController {
     public ResponseEntity<String> sendMessage(@RequestBody ParentDto parentDto) {
         Student student = studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
         int randomNumber=(int)((Math.random()* (9999 - 1000 + 1)) + 1000);//난수 생성
-
-        // 가입된 회원인지 확인
-        if (!studentRepository.existsByPhoneNumber(parentDto.getPhoneNumber())) {
-            throw new CustomException(MEMBER_NOT_FOUND);
-        }
+        BranchStudent bs=branchStudentRepository.findByParentPhoneNumber(parentDto.getPhoneNumber()).orElseThrow(PhoneNumberNotFoundException::new);
         return ResponseEntity.ok(messageService.sendMessage(parentDto.getPhoneNumber(), String.valueOf(randomNumber)));
     }
 
