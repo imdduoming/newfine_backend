@@ -29,9 +29,6 @@ public class Listener {
     @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.REMOVE})
     private Student student;
 
-    @JsonBackReference //순환참조 방지
-    @OneToMany(mappedBy="listener", cascade = { CascadeType.PERSIST})
-    private List<SHomework> sHomeworkList;
 
 
 }

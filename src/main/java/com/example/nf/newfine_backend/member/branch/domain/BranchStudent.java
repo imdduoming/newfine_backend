@@ -25,6 +25,9 @@ public class BranchStudent {
     private String phoneNumber;
 
     @Column
+    private String parentPhoneNumber;
+
+    @Column
     private String name;
 
     @JsonManagedReference

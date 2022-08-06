@@ -59,7 +59,7 @@
                     },
                     type: "POST"
                 };
-                $("#excelCourseTestResultsFileUploadForm").ajaxSubmit(options);
+                $("#courseTestResultsFileUploadForm").ajaxSubmit(options);
             }
         }
         function get_course() {
@@ -135,17 +135,16 @@
     </div>
 </form>
 
-
 <form id="courseTestResultsFileUploadForm" name="courseTestResultsFileUploadForm" enctype="multipart/form-data"method="post" action= "courseTestResultsFileUpload.do">
     <br>수업을 입력하세요.<br>
     <select name="course" id="course_list" onchange="selectBoxChange(this.value);">
         <option value='none'>===수업선택===</option>
     </select>
-    <input type="text" id="course_id"/>
+    <input type="text" id="course_id" name="course_id"/>
     <br>테스트 이름<br>
-    <input type="text" id="test_name"/>
+    <input type="text" id="test_name" name="test_name"/>
     <br>테스트 날짜<br>
-    <input type="datetime-local" id="test_date"/>
+    <input type="date" id="test_date" name="test_date"/>
 <!--    <button type="button" onclick="makeTest()"><span>테스트 정보 입력</span></button>-->
     <div class="upload_file">
         <label for="courseTestResultsFile">Excel 업로드</label>

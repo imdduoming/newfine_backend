@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.File;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -58,13 +59,13 @@ public class ExcelController {
 
         Map<String, String> result = new HashMap<String, String>();
 
-        System.out.println(request);
+        System.out.println("\n\n\n\n\n\n\n\n 멀티파일 리퀘스트\n\n\n\n\n\n\n\n\n\n"+request);
         System.out.println(request.getFile("courseTestResultsFile"));
         System.out.println(request.getParameter("test_name"));
         System.out.println(request.getParameter("test_date"));
 
         String testName=request.getParameter("test_name");
-        LocalDateTime testDate= LocalDateTime.parse(request.getParameter("test_date"));
+        LocalDate testDate= LocalDate.parse(request.getParameter("test_date"));
         Long courseId= Long.valueOf(request.getParameter("course_id"));
         Test test= testService.createTest(courseId, testDate, testName);
 
