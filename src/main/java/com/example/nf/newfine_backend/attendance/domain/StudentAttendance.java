@@ -35,17 +35,21 @@ public class StudentAttendance {
     private boolean attend = false;
     @Column
     private boolean islate = false;
+
+    @Column
+    private boolean isvideo = false;
     @Column
     @DateTimeFormat(pattern = "yyyy-MM-ddTHH:mm")
     private LocalDateTime time;
 
     @Builder
-    public StudentAttendance(Student student,Attendance attendance,LocalDateTime time,Boolean attend,Boolean islate) {
+    public StudentAttendance(Student student,Attendance attendance,LocalDateTime time,Boolean attend,Boolean islate,Boolean isvideo) {
         this.student=student;
         this.attendance=attendance;
         this.time=time;
         this.attend=attend; // 출석  여부
         this.islate=islate; // 지각 여부
+        this.isvideo=isvideo; // 동영상 신청 여부
 
 
     }
