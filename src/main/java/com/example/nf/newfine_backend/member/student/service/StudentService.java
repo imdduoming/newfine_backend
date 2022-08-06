@@ -88,10 +88,10 @@ public class StudentService {
             throw new RuntimeException();
         }
 
-//        if (redisTemplate.opsForValue().get("RT:" + student.getId()) != null) {
-//            // Refresh Token 삭제
-//            redisTemplate.delete("RT:" + student.getId());
-//        }
+        if (redisTemplate.opsForValue().get("RT:" + student.getId()) != null) {
+            // Refresh Token 삭제
+            redisTemplate.delete("RT:" + student.getId());
+        }
         redisTemplate.opsForZSet().remove("ranking", student.getNickname());
         // &*************************** 액토도.....?
 

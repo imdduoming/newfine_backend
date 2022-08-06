@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Setter
@@ -14,5 +15,5 @@ import java.time.LocalDateTime;
 public class TestDto {
     private Long course_id;
     private String testName;
-    private LocalDateTime testDate;
+    private LocalDate testDate;
 }

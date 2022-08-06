@@ -1,8 +1,8 @@
 package com.example.nf.newfine_backend.member.controller;
 
-import com.example.nf.newfine_backend.member.branch.domain.BranchStudent;
-import com.example.nf.newfine_backend.member.branch.repository.BranchRepository;
-import com.example.nf.newfine_backend.member.branch.repository.BranchStudentRepository;
+import com.example.nf.newfine_backend.branch.domain.BranchStudent;
+import com.example.nf.newfine_backend.branch.repository.BranchRepository;
+import com.example.nf.newfine_backend.branch.repository.BranchStudentRepository;
 import com.example.nf.newfine_backend.member.dto.*;
 import com.example.nf.newfine_backend.member.exception.CustomException;
 import com.example.nf.newfine_backend.member.service.AuthService;
