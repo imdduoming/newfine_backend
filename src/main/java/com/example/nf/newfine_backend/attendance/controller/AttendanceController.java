@@ -1,11 +1,8 @@
 package com.example.nf.newfine_backend.attendance.controller;
 
 import com.example.nf.newfine_backend.attendance.domain.StudentAttendance;
-import com.example.nf.newfine_backend.attendance.dto.AttendanceDto;
-import com.example.nf.newfine_backend.attendance.dto.AttendanceEditDto;
-import com.example.nf.newfine_backend.attendance.dto.VideoApplyDto;
+import com.example.nf.newfine_backend.attendance.dto.*;
 import com.example.nf.newfine_backend.attendance.service.AttendanceService;
-import com.example.nf.newfine_backend.attendance.dto.StudentAttendanceDto;
 import com.example.nf.newfine_backend.attendance.domain.Attendance;
 import com.example.nf.newfine_backend.course.Course;
 import com.example.nf.newfine_backend.course.CourseRepository;
@@ -87,33 +84,6 @@ public class AttendanceController {
         Long idx = Long.valueOf(id);
         Student student = studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
         return attendanceService.getMyAttendance(idx,student);
-    }
-
-    //동영상 신청을 위해 현재 출석이 생긴 수업을 불러오는 api
-    @GetMapping("/attendances/my/now")
-    public List<Attendance> getNowAttendance() {
-        Student student = studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
-        return attendanceService.getNowAttendance(student);
-    }
-
-//    @PostMapping("/sendMessage/parents")
-//    public ResponseEntity<String> sendMessage(@RequestBody PhoneNumberDto phoneNumberDto) {
-//        Student student = studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
-//        int randomNumber=(int)((Math.random()* (9999 - 1000 + 1)) + 1000);//난수 생성
-//
-//        // 가입된 회원인지 확인
-//        if (!studentRepository.existsByPhoneNumber(phoneNumberDto.getPhoneNumber())) {
-//            throw new CustomException(MEMBER_NOT_FOUND);
-//        }
-//        return ResponseEntity.ok(messageService.sendMessage(phoneNumberDto.getPhoneNumber(), String.valueOf(randomNumber)));
-//    }
-
-    // 동영산 신청 api
-    @PutMapping("/apply/video")
-    public StudentAttendance applyVideo(@RequestBody VideoApplyDto videoApplyDto){
-        Student student = studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
-        Long id=Long.valueOf(videoApplyDto.getId());
-        return attendanceService.applyVideo(id,student);
     }
 
 }
