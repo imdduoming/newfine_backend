@@ -153,7 +153,7 @@ public class ExcelService{
 //        System.out.println(excelReadOption.getFilePath());
 //        System.out.println(excelReadOption.getFilePath().substring(1));
 //        System.out.println(excelReadOption.getFilePath().substring(2));
-        excelReadOption.setOutputColumns("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P"); //추출할 컬럼명 추가
+        excelReadOption.setOutputColumns("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "AA", "AB", "AC", "AD", "AE", "AF", "AG", "AH", "AI", "AJ", "AK", "AL", "AM", "AN", "AO", "AP", "AQ", "AR", "AS"); //추출할 컬럼명 추가
         excelReadOption.setStartRow(2); //시작행(헤더부분 제외)
 
         List<StudentTestResultsDto> listStudentTestResults = new ArrayList<StudentTestResultsDto>();
@@ -168,6 +168,9 @@ public class ExcelService{
             System.out.println(article.get("E"));
             System.out.println(article.get("F"));
             System.out.println(article.get("G"));
+            System.out.println(article.get("H"));
+            System.out.println(article.get("I"));
+            System.out.println(article.get("J"));
 
             StudentTestResultsDto studentTestResultsInfo = new StudentTestResultsDto();
 
@@ -193,46 +196,46 @@ public class ExcelService{
             studentTestResultsInfo.setTotalScore(Integer.parseInt(article.get("C")));
             studentTestResultsInfo.setScore1(Integer.parseInt(article.get("D")));
             studentTestResultsInfo.setScore2(Integer.parseInt(article.get("E")));
-            studentTestResultsInfo.setQ1(Integer.parseInt(article.get("F")));
-            studentTestResultsInfo.setQ2(Integer.parseInt(article.get("G")));
-            studentTestResultsInfo.setQ3(Integer.parseInt(article.get("H")));
-            studentTestResultsInfo.setQ4(Integer.parseInt(article.get("I")));
-            studentTestResultsInfo.setQ5(Integer.parseInt(article.get("J")));
-            studentTestResultsInfo.setQ6(Integer.parseInt(article.get("K")));
-            studentTestResultsInfo.setQ7(Integer.parseInt(article.get("L")));
-            studentTestResultsInfo.setQ8(Integer.parseInt(article.get("M")));
-            studentTestResultsInfo.setQ9(Integer.parseInt(article.get("N")));
-            studentTestResultsInfo.setQ10(Integer.parseInt(article.get("O")));
-            studentTestResultsInfo.setQ11(Integer.parseInt(article.get("P")));
-            studentTestResultsInfo.setQ12(Integer.parseInt(article.get("Q")));
-            studentTestResultsInfo.setQ13(Integer.parseInt(article.get("R")));
-            studentTestResultsInfo.setQ14(Integer.parseInt(article.get("S")));
-            studentTestResultsInfo.setQ15(Integer.parseInt(article.get("T")));
-            studentTestResultsInfo.setQ16(Integer.parseInt(article.get("U")));
-            studentTestResultsInfo.setQ17(Integer.parseInt(article.get("V")));
-            studentTestResultsInfo.setQ18(Integer.parseInt(article.get("W")));
-            studentTestResultsInfo.setQ19(Integer.parseInt(article.get("X")));
-            studentTestResultsInfo.setQ20(Integer.parseInt(article.get("Y")));
-            studentTestResultsInfo.setQ21(Integer.parseInt(article.get("Z")));
-            studentTestResultsInfo.setQ22(Integer.parseInt(article.get("AA")));
-            studentTestResultsInfo.setQ23(Integer.parseInt(article.get("AB")));
-            studentTestResultsInfo.setQ24(Integer.parseInt(article.get("AC")));
-            studentTestResultsInfo.setQ25(Integer.parseInt(article.get("AD")));
-            studentTestResultsInfo.setQ26(Integer.parseInt(article.get("AE")));
-            studentTestResultsInfo.setQ27(Integer.parseInt(article.get("AF")));
-            studentTestResultsInfo.setQ28(Integer.parseInt(article.get("AG")));
-            studentTestResultsInfo.setQ29(Integer.parseInt(article.get("AH")));
-            studentTestResultsInfo.setQ30(Integer.parseInt(article.get("AI")));
-            studentTestResultsInfo.setQ31(Integer.parseInt(article.get("AJ")));
-            studentTestResultsInfo.setQ32(Integer.parseInt(article.get("AK")));
-            studentTestResultsInfo.setQ33(Integer.parseInt(article.get("AL")));
-            studentTestResultsInfo.setQ34(Integer.parseInt(article.get("AM")));
-            studentTestResultsInfo.setQ35(Integer.parseInt(article.get("AN")));
-            studentTestResultsInfo.setQ36(Integer.parseInt(article.get("AO")));
-            studentTestResultsInfo.setQ37(Integer.parseInt(article.get("AP")));
-            studentTestResultsInfo.setQ38(Integer.parseInt(article.get("AQ")));
-            studentTestResultsInfo.setQ39(Integer.parseInt(article.get("AR")));
-            studentTestResultsInfo.setQ40(Integer.parseInt(article.get("AS")));
+            studentTestResultsInfo.setQ1((article.get("F")));
+            studentTestResultsInfo.setQ2((article.get("G")));
+            studentTestResultsInfo.setQ3((article.get("H")));
+            studentTestResultsInfo.setQ4((article.get("I")));
+            studentTestResultsInfo.setQ5((article.get("J")));
+            studentTestResultsInfo.setQ6((article.get("K")));
+            studentTestResultsInfo.setQ7((article.get("L")));
+            studentTestResultsInfo.setQ8((article.get("M")));
+            studentTestResultsInfo.setQ9((article.get("N")));
+            studentTestResultsInfo.setQ10((article.get("O")));
+            studentTestResultsInfo.setQ11((article.get("P")));
+            studentTestResultsInfo.setQ12((article.get("Q")));
+            studentTestResultsInfo.setQ13((article.get("R")));
+            studentTestResultsInfo.setQ14((article.get("S")));
+            studentTestResultsInfo.setQ15((article.get("T")));
+            studentTestResultsInfo.setQ16((article.get("U")));
+            studentTestResultsInfo.setQ17((article.get("V")));
+            studentTestResultsInfo.setQ18((article.get("W")));
+            studentTestResultsInfo.setQ19((article.get("X")));
+            studentTestResultsInfo.setQ20((article.get("Y")));
+            studentTestResultsInfo.setQ21((article.get("Z")));
+            studentTestResultsInfo.setQ22((article.get("AA")));
+            studentTestResultsInfo.setQ23((article.get("AB")));
+            studentTestResultsInfo.setQ24((article.get("AC")));
+            studentTestResultsInfo.setQ25((article.get("AD")));
+            studentTestResultsInfo.setQ26((article.get("AE")));
+            studentTestResultsInfo.setQ27((article.get("AF")));
+            studentTestResultsInfo.setQ28((article.get("AG")));
+            studentTestResultsInfo.setQ29((article.get("AH")));
+            studentTestResultsInfo.setQ30((article.get("AI")));
+            studentTestResultsInfo.setQ31((article.get("AJ")));
+            studentTestResultsInfo.setQ32((article.get("AK")));
+            studentTestResultsInfo.setQ33((article.get("AL")));
+            studentTestResultsInfo.setQ34((article.get("AM")));
+            studentTestResultsInfo.setQ35((article.get("AN")));
+            studentTestResultsInfo.setQ36((article.get("AO")));
+            studentTestResultsInfo.setQ37((article.get("AP")));
+            studentTestResultsInfo.setQ38((article.get("AQ")));
+            studentTestResultsInfo.setQ39((article.get("AR")));
+            studentTestResultsInfo.setQ40((article.get("AS")));
 
             listStudentTestResults.add(studentTestResultsInfo);
         }

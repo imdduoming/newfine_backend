@@ -1,11 +1,14 @@
 package com.example.nf.newfine_backend.Homework.controller;
 
+import com.example.nf.newfine_backend.Homework.Repository.SHomeworkRepository;
+import com.example.nf.newfine_backend.Homework.domain.SHomework;
 import com.example.nf.newfine_backend.Homework.dto.SHomeworkDto;
 import com.example.nf.newfine_backend.Homework.service.SHomeworkService;
 import com.example.nf.newfine_backend.course.ListenerRepository;
 import com.example.nf.newfine_backend.member.student.domain.Student;
 import com.example.nf.newfine_backend.member.student.exception.PhoneNumberNotFoundException;
 import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
+import com.example.nf.newfine_backend.member.student.service.PointService;
 import com.example.nf.newfine_backend.member.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +23,9 @@ public class SHomeworkController {
     private final SHomeworkService sHomeworkService;
     private final ListenerRepository listenerRepository;
     private final StudentRepository studentRepository;
+    private final SHomeworkRepository sHomeworkRepository;
+
+    private final PointService pointService;
 
     //댓글 작성
     /*
@@ -37,11 +43,23 @@ public class SHomeworkController {
         return sHomeworkService.getSHomeworks(thId);
     }
 
-    // shomework listener 별로 조회
+    @PostMapping("/sh/point")
+    public void checkSHomework(@RequestParam(value="shidArray[]") List<Long> shidArray){
+        for (Long s : shidArray){
+            sHomeworkService.checkSHomework(s);
+            SHomework sHomework = sHomeworkRepository.findById(s).get();
+            //Listener listener = listenerRepository.findListenerBySHomework(sHomework).get();
+            //Student student = studentRepository.findByListener(listener).get();
+            //pointService.create(student,"포인트 클릭!!!!",5);
+            //이 shid인 s로 listener를 구한 다음에 그 listener로 student를 찾아서 point부여
+        }
+    }
+
+    // shomework student 별로 조회하되, 미제출인 과제만
     @GetMapping("/shlist")
-    public List<SHomeworkDto> getSHomeworksByListener(){
+    public List<SHomeworkDto> getSHomeworksByStudent1(){
         Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
-        return sHomeworkService.getSHomeworksByListener(student);
+        return sHomeworkService.getSHomeworksByStudent1(student);
     }
 
     //댓글 삭제

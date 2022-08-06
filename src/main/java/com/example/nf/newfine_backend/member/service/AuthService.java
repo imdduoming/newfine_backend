@@ -10,7 +10,7 @@ import com.example.nf.newfine_backend.member.student.domain.Student;
 import com.example.nf.newfine_backend.member.exception.CustomException;
 import com.example.nf.newfine_backend.member.jwt.TokenProvider;
 import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
-import com.example.nf.newfine_backend.member.repository.RefreshTokenRepository;
+//import com.example.nf.newfine_backend.member.repository.RefreshTokenRepository;
 import com.example.nf.newfine_backend.member.student.service.PointService;
 import com.example.nf.newfine_backend.member.teacher.dto.TeacherResponseDto;
 import com.example.nf.newfine_backend.member.teacher.domain.Teacher;
@@ -39,7 +39,7 @@ public class AuthService {
     private final TeacherRepository teacherRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
-    private final RefreshTokenRepository refreshTokenRepository;
+//    private final RefreshTokenRepository refreshTokenRepository;
     private final PointService pointService;
     private final RedisTemplate redisTemplate;
     private final ResponseService responseService;
