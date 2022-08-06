@@ -10,5 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class VideoApplyDto {
+    // 출석 id
     Integer id;
 }
