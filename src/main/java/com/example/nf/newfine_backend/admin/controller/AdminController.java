@@ -35,10 +35,10 @@ public class AdminController {
         try {
             if(Objects.equals(adminService.signupByAdmin(signUpByAdminDto), "회원 가입 완료")) {
                 result.put("code", "1");
-                result.put("msg", "탈퇴 완료");
+                result.put("msg", "회원가입되었습니다!");
             }else {
                 result.put("code", "0");
-                result.put("msg", "탈퇴 실패");
+                result.put("msg", "회원가입 실패!");
             }
         }catch(Exception e) {
             e.printStackTrace();
