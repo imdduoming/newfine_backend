@@ -2,7 +2,9 @@ package com.example.nf.newfine_backend.member.teacher.controller;
 import com.example.nf.newfine_backend.attendance.domain.Attendance;
 import com.example.nf.newfine_backend.attendance.domain.StudentAttendance;
 import com.example.nf.newfine_backend.attendance.dto.AttendanceEditDto;
+import com.example.nf.newfine_backend.attendance.dto.VideoEditDto;
 import com.example.nf.newfine_backend.attendance.service.AttendanceService;
+import com.example.nf.newfine_backend.attendance.service.VideoService;
 import com.example.nf.newfine_backend.course.Course;
 import com.example.nf.newfine_backend.course.CourseService;
 import com.example.nf.newfine_backend.member.student.domain.Student;
@@ -27,6 +29,7 @@ public class TeacherController {
     private final TeacherService teacherService;
     private final TeacherRepository teacherRepository;
     private final AttendanceService attendanceService;
+    private final VideoService videoService;
 
     //선생님이 자신 강의 불러오기
     @GetMapping("/teacher/courses")
@@ -65,6 +68,19 @@ public class TeacherController {
         return attendanceService.getAttendances(idx);
     }
 
+    // 선생님이 비디오 신청 현황
+    @GetMapping("/video/list")
+    public List<StudentAttendance> getVideos(@RequestParam Integer id) {
+        Teacher teacher=teacherRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
+        return videoService.getVideos(teacher);
+    }
+
+    @PutMapping("/video/ok")
+    public StudentAttendance editVideo(@RequestBody VideoEditDto videoEditDto){
+        Teacher teacher=teacherRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
+        Long id=Long.valueOf(videoEditDto.getId());
+        return videoService.editVideo(id);
+    }
 }
 
 

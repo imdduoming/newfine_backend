@@ -10,6 +10,7 @@ import com.example.nf.newfine_backend.course.*;
 import com.example.nf.newfine_backend.member.student.domain.Student;
 import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
 import com.example.nf.newfine_backend.member.student.service.StudentService;
+import com.example.nf.newfine_backend.member.teacher.domain.Teacher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -90,4 +91,32 @@ public class VideoService {
         return phone;
     }
 
+    public List<StudentAttendance> getVideos(Teacher teacher){
+        List<Course> courses = courseRepository.findCoursesByTeacher(teacher);
+        List<StudentAttendance> newList = new ArrayList<>();
+        for (Course course : courses){
+            List<Attendance> attendances = attendanceRepository.findAttendancesByCourse(course);
+            for (Attendance attendance : attendances){
+                List<StudentAttendance> studentAttendances = studentattendanceRepository.findStudentAttendancesByAttendance(attendance);
+                for(StudentAttendance studentAttendance : studentAttendances){
+                    if (studentAttendance.isIsvideo()){
+                        if (!studentAttendance.isReceiveVideo()){
+                            // 비디오 신청 했고 비디오신청 못받았으면
+                            newList.add(studentAttendance);
+                        }
+                    }
+                }
+            }
+        }
+        return newList;
+    }
+
+    @Transactional
+    public StudentAttendance editVideo(Long id){
+        StudentAttendance studentAttendance=studentattendanceRepository.findById(id).get();
+        studentAttendance.setIsvideo(true);
+        studentAttendance.setReceiveVideo(true);
+        studentattendanceRepository.save(studentAttendance);
+        return studentAttendance;
+    }
 }
