@@ -70,7 +70,7 @@ public class TeacherController {
 
     // 선생님이 비디오 신청 현황
     @GetMapping("/video/list")
-    public List<StudentAttendance> getVideos(@RequestParam Integer id) {
+    public List<StudentAttendance> getVideos() {
         Teacher teacher=teacherRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
         return videoService.getVideos(teacher);
     }
