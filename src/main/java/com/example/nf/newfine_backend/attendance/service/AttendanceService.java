@@ -62,6 +62,8 @@ public class AttendanceService {
         // 중복 출석 방지
         Attendance attendance=attendanceRepository.findById(attedance_id).get();
         LocalDateTime now_time = LocalDateTime.now();
+        System.out.println("현재시간");
+        System.out.println(now_time);
         StudentAttendance studentAttendance= studentattendanceRepository.findByStudentAndAttendance(student,attendance).get();
         if (studentAttendance.isAttend()) {
             // 이미 같은 출석에 대해 같은 학생이 출석했다면
