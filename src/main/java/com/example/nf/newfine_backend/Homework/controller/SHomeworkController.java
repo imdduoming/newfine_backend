@@ -45,10 +45,10 @@ public class SHomeworkController {
 
 
     @PostMapping("/sh/point")
-    public void checkSHomework(@RequestParam(value="checkedList[]") List<Long> checkedList){
-        for (Long c : checkedList){
-            sHomeworkService.checkSHomework(c);
-            SHomework sHomework = sHomeworkRepository.findById(c).get();
+    public void checkSHomework(@RequestParam(value="checklist[]") List<String> checklist){
+        for (String c : checklist){
+            sHomeworkService.checkSHomework(Long.valueOf(c));
+            SHomework sHomework = sHomeworkRepository.findById(Long.valueOf(c)).get();
             //Listener listener = listenerRepository.findListenerBySHomework(sHomework).get();
             //Student student = studentRepository.findByListener(listener).get();
             //pointService.create(student,"포인트 클릭!!!!",5);
