@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,7 +19,7 @@ public class SHomeworkDto {
 
     private String createdDate;
 
-    private String modifiedDate;
+    private LocalDateTime checkedDate;
 
 
     public static SHomeworkDto toDto(SHomework sHomework) {
@@ -26,7 +28,7 @@ public class SHomeworkDto {
                 sHomework.getListener().getStudent().getName(),
                 sHomework.getTitle(),
                 sHomework.getCreatedDate(),
-                sHomework.getModifiedDate()
+                sHomework.getCheckedDate()
         );
     }
 }
