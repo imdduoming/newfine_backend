@@ -13,8 +13,8 @@ public interface SHomeworkRepository extends JpaRepository<SHomework, Long> {
     List<SHomework> findAllByThomework(THomework tHomework);
 
     @Modifying
-    @Query ("UPDATE SHomework s set s.ischecked = true WHERE s.shid = :shid")
-    void checkSHomework(Long shid);
+    @Query ("UPDATE SHomework s set s.ischecked = true, s.checkedDate = GETDATE() WHERE s.shid = :id")
+    void checkSHomework(@Param("id") Long shid);
 
     @Query("SELECT s FROM SHomework s WHERE s.ischecked = false and s.listener.Id = :id ORDER BY s.shid")
     List<SHomework> findAllByListener1(@Param("id") Long listenerId);
