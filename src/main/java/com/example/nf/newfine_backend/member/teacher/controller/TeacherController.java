@@ -3,6 +3,7 @@ import com.example.nf.newfine_backend.attendance.domain.Attendance;
 import com.example.nf.newfine_backend.attendance.domain.StudentAttendance;
 import com.example.nf.newfine_backend.attendance.dto.AttendanceEditDto;
 import com.example.nf.newfine_backend.attendance.dto.VideoEditDto;
+import com.example.nf.newfine_backend.attendance.dto.VideoReturnDto;
 import com.example.nf.newfine_backend.attendance.service.AttendanceService;
 import com.example.nf.newfine_backend.attendance.service.VideoService;
 import com.example.nf.newfine_backend.course.Course;
@@ -70,7 +71,7 @@ public class TeacherController {
 
     // 선생님이 비디오 신청 현황
     @GetMapping("/video/list")
-    public List<StudentAttendance> getVideos() {
+    public List<VideoReturnDto> getVideos() {
         Teacher teacher=teacherRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
         return videoService.getVideos(teacher);
     }
