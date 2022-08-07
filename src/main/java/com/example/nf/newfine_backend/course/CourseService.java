@@ -21,6 +21,9 @@ public class CourseService {
         return courseRepository.findAll();
     }
 
+    public List<Course> getTypeCourses(String type) {
+        return courseRepository.findCoursesBySubjectType(type);
+    }
     public List<Listener> getListeners(Long id){
         Course course=courseRepository.findById(id).get();
         return listenerRepository.findListenersByCourse(course);
