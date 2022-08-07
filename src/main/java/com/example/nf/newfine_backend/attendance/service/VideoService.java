@@ -2,6 +2,7 @@ package com.example.nf.newfine_backend.attendance.service;
 
 import com.example.nf.newfine_backend.attendance.domain.Attendance;
 import com.example.nf.newfine_backend.attendance.domain.StudentAttendance;
+import com.example.nf.newfine_backend.attendance.dto.VideoReturnDto;
 import com.example.nf.newfine_backend.attendance.repository.AttendanceRepository;
 import com.example.nf.newfine_backend.attendance.repository.StudentAttendanceRepository;
 import com.example.nf.newfine_backend.branch.domain.BranchStudent;
@@ -10,6 +11,7 @@ import com.example.nf.newfine_backend.course.*;
 import com.example.nf.newfine_backend.member.student.domain.Student;
 import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
 import com.example.nf.newfine_backend.member.student.service.StudentService;
+import com.example.nf.newfine_backend.member.teacher.domain.Teacher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -51,7 +53,10 @@ public class VideoService {
                 StudentAttendance studentAttendance = studentattendanceRepository.findByStudentAndAttendance(student,attendance).get();
                 if(studentAttendance.isAttend()==false){
                     // 출석하지 않았고
+
+                    System.out.println("학생 출석"+studentAttendance.isAttend());
                     if(attendance.getStartTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).equals(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))){
+                        // 출석하려는 날짜가 오늘 날짜와 같고
                         LocalTime endtime = LocalTime.parse(listener.getCourse().getEnd_time(), DateTimeFormatter.ofPattern("HH:mm"));
                         LocalTime now= LocalTime.now();
                         System.out.println("끝나는시간"+endtime);
@@ -87,4 +92,33 @@ public class VideoService {
         return phone;
     }
 
+    public List<VideoReturnDto> getVideos(Teacher teacher){
+        List<Course> courses = courseRepository.findCoursesByTeacher(teacher);
+        List<VideoReturnDto> newList = new ArrayList<>();
+        for (Course course : courses){
+            List<Attendance> attendances = attendanceRepository.findAttendancesByCourse(course);
+            for (Attendance attendance : attendances){
+                List<StudentAttendance> studentAttendances = studentattendanceRepository.findStudentAttendancesByAttendance(attendance);
+                for(StudentAttendance studentAttendance : studentAttendances){
+                    if (studentAttendance.isIsvideo()){
+                        if (!studentAttendance.isReceiveVideo()){
+                            // 비디오 신청 했고 비디오신청 못받았으면
+                            VideoReturnDto videoReturnDto = new VideoReturnDto(course,studentAttendance,attendance,studentAttendance.getStudent());
+                            newList.add(videoReturnDto);
+                        }
+                    }
+                }
+            }
+        }
+        return newList;
+    }
+
+    @Transactional
+    public StudentAttendance editVideo(Long id){
+        StudentAttendance studentAttendance=studentattendanceRepository.findById(id).get();
+        studentAttendance.setIsvideo(true);
+        studentAttendance.setReceiveVideo(true);
+        studentattendanceRepository.save(studentAttendance);
+        return studentAttendance;
+    }
 }

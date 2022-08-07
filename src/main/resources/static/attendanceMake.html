@@ -10,30 +10,106 @@
 
 </head>
 <body>
-<br>수업을 입력하세요.<br>
+<h2>출석 생성</h2>
+과목 선택
+<select name="subject_list" id="subject_list" >
+    <option value='none'>===과목선택===</option>
+</select>
+과목유형 선택
+<select name="type_list" id="type_list" >
+    <option value='none'>==과목유형선택==</option>
+</select>
 
-<select name="course" id="course_list" >
+수업 선택
+<select name="course_list" id="course_list" >
     <option value='none'>===수업선택===</option>
 </select>
 <br></br>
 
-<br></br>
 <br>출석 인증 시작시간과 마감시간을 선택해주세요.<br>
 <br>출석 인증 시작시간<br>
 <input type="datetime-local" id="start_time"/>
 <br>출석 인증 마감시간<br>
 <input type="datetime-local" id="end_time"/>
 <button type="button" id="add_attendance" onclick="make_attendance()">수업 url 생성</button>
+<br></br>
+<br>생성된 url 입니다!<br>
 
-<br>url을 입력하세요.<br>
 <input id="text" type="text" name="url" value="" style="width:80%" /><br />
 <button type="button" id="qrmake" onclick="makeCode()">qrcode 생성</button>
 <div id="qrcode" style="width:100px; height:100px; margin:auto; margin-top:15px;"></div>
 
 <script type="text/javascript">
-
+    let subCategoryArray;
+    let courseArray;
     $(document).ready(function () {
-        get_course();
+        set_box();
+
+    });
+
+    //*********** 1depth카테고리 선택 후 2depth 생성 START ***********
+    $(document).on("change","select[name='subject_list']",function(){
+
+        //두번째 셀렉트 박스를 삭제 시킨다.
+        var subCategorySelectBox = $("select[name='type_list']");
+        subCategorySelectBox.children().remove(); //기존 리스트 삭제
+
+        //선택한 첫번째 박스의 값을 가져와 일치하는 값을 두번째 셀렉트 박스에 넣는다.
+        $("option:selected", this).each(function(){
+            var selectValue = $(this).val(); //main category 에서 선택한 값
+            subCategorySelectBox.append("<option value=''>==과목유형선택==</option>");
+            for(var i=0;i<subCategoryArray.length;i++){
+                if(selectValue == subCategoryArray[i].main_category_id){
+
+                    subCategorySelectBox.append("<option value='"+subCategoryArray[i].sub_category_id+"'>"+subCategoryArray[i].sub_category_name+"</option>");
+
+                }
+            }
+        });
+
+    });
+
+    // 과목 유형을 선택할 때마다 불러오는 강의가 달라져야함
+    $(document).on("change","select[name='type_list']",function(){
+
+        //세번째 셀렉트 박스를 삭제 시킨다.
+        var subCategorySelectBox = $("select[name='course_list']");
+        subCategorySelectBox.children().remove(); //기존 리스트 삭제
+
+        //선택한 두번째 박스의 값을 가져와 일치하는 값을 세번째 셀렉트 박스에 넣는다.
+        $("option:selected", this).each(function(){
+            var selectValue = $(this).val(); //과목 유형 에서 선택한 값
+            var type = $(this).text(); //과목 유형 에서 선택한 값
+            console.log(type);
+            subCategorySelectBox.append("<option value=''>==수업 선택==</option>");
+            $.ajax({
+                type: "GET",
+                url: `${domainURL}/courses?type=`+type,
+                success: function (response) {
+                    console.log(response)
+                    courseArray = new Array();
+                    for (let i =0 ;i < response.length ; i++){// obj 길이 만큼 반복
+                        course = new Object();
+                        course.type_category_id = selectValue;
+                        course.course_id = response[i]['id'];
+                        course.course_name = response[i]['cname'];
+
+                        //Sub 카테고리 셋팅 (DB에서 값을 가져와 셋팅 하세요.)
+                       courseArray.push(course);
+                    }
+                    console.log(courseArray);
+                    for(var i=0;i<courseArray.length;i++){
+                        if(selectValue == courseArray[i].type_category_id){
+                            subCategorySelectBox.append("<option value='"+courseArray[i].course_id+"'>"+courseArray[i].course_name+"</option>");
+
+                        }
+                    }
+                }
+
+            });
+
+        });
+
     });
     var qrcode = new QRCode(document.getElementById("qrcode"), {
         width : 100,
@@ -52,7 +128,75 @@
         qrcode.makeCode(elText.value);
     }
 
+    function set_box(){
+        var mainCategoryArray = new Array();
+        var mainCategoryObject = new Object();
 
+        mainCategoryObject = new Object();
+        mainCategoryObject.main_category_id = "1";
+        mainCategoryObject.main_category_name = "수학";
+        mainCategoryArray.push(mainCategoryObject);
+
+        mainCategoryObject = new Object();
+        mainCategoryObject.main_category_id = "2";
+        mainCategoryObject.main_category_name = "과학";
+        mainCategoryArray.push(mainCategoryObject);
+
+        subCategoryArray = new Array();
+        var subCategoryObject = new Object();
+
+        //스포츠에 해당하는 sub category 리스트
+        subCategoryObject = new Object();
+        subCategoryObject.main_category_id = "1";
+        subCategoryObject.sub_category_id = "1"
+        subCategoryObject.sub_category_name = "미적분"
+        subCategoryArray.push(subCategoryObject);
+
+        subCategoryObject = new Object();
+        subCategoryObject.main_category_id = "1";
+        subCategoryObject.sub_category_id = "2"
+        subCategoryObject.sub_category_name = "기하와벡터"
+        subCategoryArray.push(subCategoryObject);
+
+        subCategoryObject = new Object();
+        subCategoryObject.main_category_id = "1";
+        subCategoryObject.sub_category_id = "3"
+        subCategoryObject.sub_category_name = "수1"
+        subCategoryArray.push(subCategoryObject);
+
+        //공연에 해당하는 sub category 리스트
+        subCategoryObject = new Object();
+        subCategoryObject.main_category_id = "2";
+        subCategoryObject.sub_category_id = "1"
+        subCategoryObject.sub_category_name = "생명과학"
+        subCategoryArray.push(subCategoryObject);
+
+        subCategoryObject = new Object();
+        subCategoryObject.main_category_id = "2";
+        subCategoryObject.sub_category_id = "2"
+        subCategoryObject.sub_category_name = "지구과학"
+        subCategoryArray.push(subCategoryObject);
+
+        subCategoryObject = new Object();
+        subCategoryObject.main_category_id = "2";
+        subCategoryObject.sub_category_id = "3"
+        subCategoryObject.sub_category_name = "화학"
+        subCategoryArray.push(subCategoryObject);
+
+        subCategoryObject = new Object();
+        subCategoryObject.main_category_id = "2";
+        subCategoryObject.sub_category_id = "4"
+        subCategoryObject.sub_category_name = "물리"
+        subCategoryArray.push(subCategoryObject);
+
+
+        //메인 카테고리 셋팅
+        var mainCategorySelectBox = $("select[name='subject_list']");
+
+        for(var i=0;i<mainCategoryArray.length;i++){
+            mainCategorySelectBox.append("<option value='"+mainCategoryArray[i].main_category_id+"'>"+mainCategoryArray[i].main_category_name+"</option>");
+        }
+    }
     function make_attendance() {
 
         var selected_course=document.getElementById('course_list')
@@ -63,22 +207,24 @@
         console.log(startTime)
         console.log(course);
         let data = {"course_id": course,"startTime":startTime,"endTime":endTime};
-        if(course ==""){
-            alert('강의를 선택해주세요!')
+        if(course && startTime && endTime){
+            $.ajax({
+                type: "POST",
+                url: `${domainURL}/make/attendance`,
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (response) {
+                    console.log(response)
+                    alert('출석이 생성됐습니다!')
+                    $('input[name=url]').attr('value',response['url']);
+                }
+
+            });
+
         }
         else{
-        $.ajax({
-            type: "POST",
-            url: `${domainURL}/make/attendance`,
-            contentType: "application/json",
-            data: JSON.stringify(data),
-            success: function (response) {
-                console.log(response)
-                alert('출석이 생성됐습니다!')
-                $('input[name=url]').attr('value',response['url']);
-            }
-
-        });}
+            alert('강의 또는 시간을 모두 선택해주세요!')
+        }
     }
 
 
@@ -97,6 +243,14 @@
                     var option = '<option value='+optionValue+'>'+optionFront+'</option>'; // 결합
 
                     $('#course_list').append(option); // Select 태그에 옵션 태그 추가
+
+                    //Sub 카테고리 셋팅 (DB에서 값을 가져와 셋팅 하세요.)
+
+                    //****************이부분은 DB로 셋팅하세요.
+
+
+
+                    //*********** 1depth카테고리 선택 후 2depth 생성 END ***********
                 }
             }
 

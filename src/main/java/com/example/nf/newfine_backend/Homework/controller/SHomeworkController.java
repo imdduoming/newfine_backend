@@ -1,6 +1,7 @@
 package com.example.nf.newfine_backend.Homework.controller;
 
 import com.example.nf.newfine_backend.Homework.Repository.SHomeworkRepository;
+import com.example.nf.newfine_backend.Homework.domain.SHomework;
 import com.example.nf.newfine_backend.Homework.dto.SHomeworkDto;
 import com.example.nf.newfine_backend.Homework.service.SHomeworkService;
 import com.example.nf.newfine_backend.course.ListenerRepository;
@@ -10,10 +11,7 @@ import com.example.nf.newfine_backend.member.student.repository.StudentRepositor
 import com.example.nf.newfine_backend.member.student.service.PointService;
 import com.example.nf.newfine_backend.member.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -45,19 +43,19 @@ public class SHomeworkController {
         return sHomeworkService.getSHomeworks(thId);
     }
 
-    /*
+
     @PostMapping("/sh/point")
-    public void checkSHomework(@RequestParam(value="shidArray[]") List<Long> shidArray){
-        for (Long s : shidArray){
-            sHomeworkService.checkSHomework(s);
-            SHomework sHomework = sHomeworkRepository.findById(s).get();
+    public void checkSHomework(@RequestParam(value="checklist[]") List<String> checklist){
+        for (String c : checklist){
+            sHomeworkService.checkSHomework(Long.valueOf(c));
+            SHomework sHomework = sHomeworkRepository.findById(Long.valueOf(c)).get();
             //Listener listener = listenerRepository.findListenerBySHomework(sHomework).get();
             //Student student = studentRepository.findByListener(listener).get();
             //pointService.create(student,"포인트 클릭!!!!",5);
             //이 shid인 s로 listener를 구한 다음에 그 listener로 student를 찾아서 point부여
         }
     }
-    */
+
 
     // shomework student 별로 조회하되, 미제출인 과제만
     @GetMapping("/shlist/unchecked")

@@ -3,6 +3,7 @@ package com.example.nf.newfine_backend.course;
 
 import com.example.nf.newfine_backend.Homework.domain.THomework;
 import com.example.nf.newfine_backend.attendance.domain.Attendance;
+import com.example.nf.newfine_backend.branch.domain.Branch;
 import com.example.nf.newfine_backend.member.teacher.domain.Teacher;
 import com.example.nf.newfine_backend.test.domain.Test;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -74,4 +75,9 @@ public class Course {
     @JsonBackReference  // 순환참조 방지
     @OneToMany(mappedBy = "course", cascade = {CascadeType.PERSIST})
     private List<Test> tests;
+
+    @JsonManagedReference
+    @ManyToOne
+    private Branch branch;
+
 }

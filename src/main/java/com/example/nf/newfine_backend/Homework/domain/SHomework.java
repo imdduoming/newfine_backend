@@ -6,8 +6,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+
+import java.time.LocalDateTime;
 
 import static javax.persistence.FetchType.EAGER;
 
@@ -37,13 +40,18 @@ public class SHomework extends BaseTimeEntity {
     @Column
     private boolean ischecked = false;
 
+    @Column
+    @DateTimeFormat(pattern = "yyyy-MM-ddTHH:mm")
+    private LocalDateTime checkedDate;
+
 
     @Builder
-    public SHomework(String title, THomework tHomework, Listener listener, Boolean ischecked) {
+    public SHomework(String title, THomework tHomework, Listener listener, Boolean ischecked, LocalDateTime checkedDate) {
         this.title = title;
         this.thomework = tHomework;
         this.listener = listener;
         this.ischecked = ischecked;
+        this.checkedDate = checkedDate;
     }
 }
 

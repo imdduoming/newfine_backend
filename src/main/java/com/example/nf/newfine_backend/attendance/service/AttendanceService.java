@@ -42,7 +42,7 @@ public class AttendanceService {
         attendanceRepository.save(attendance);
 
         for(Listener listener : listeners){
-            StudentAttendance studentAttendance=new StudentAttendance(listener.getStudent(),attendance, null,false,false,false);
+            StudentAttendance studentAttendance=new StudentAttendance(listener.getStudent(),attendance, null,false,false,false,false);
             studentattendanceRepository.save(studentAttendance);
             studentAttendances.add(studentAttendance);
         }
