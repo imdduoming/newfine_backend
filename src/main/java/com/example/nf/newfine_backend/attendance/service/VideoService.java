@@ -51,7 +51,10 @@ public class VideoService {
                 StudentAttendance studentAttendance = studentattendanceRepository.findByStudentAndAttendance(student,attendance).get();
                 if(studentAttendance.isAttend()==false){
                     // 출석하지 않았고
+
+                    System.out.println("학생 출석"+studentAttendance.isAttend());
                     if(attendance.getStartTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).equals(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))){
+                        // 출석하려는 날짜가 오늘 날짜와 같고
                         LocalTime endtime = LocalTime.parse(listener.getCourse().getEnd_time(), DateTimeFormatter.ofPattern("HH:mm"));
                         LocalTime now= LocalTime.now();
                         System.out.println("끝나는시간"+endtime);
