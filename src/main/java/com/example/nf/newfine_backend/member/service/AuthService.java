@@ -73,6 +73,7 @@ public class AuthService {
             throw new CustomException(DUPLICATE_MEMBER);
         }
 
+
         Teacher teacher = signUpDto.toTeacher(passwordEncoder);
         return TeacherResponseDto.of(teacherRepository.save(teacher));
     }
