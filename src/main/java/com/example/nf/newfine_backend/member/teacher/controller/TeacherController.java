@@ -1,6 +1,8 @@
 package com.example.nf.newfine_backend.member.teacher.controller;
+import com.example.nf.newfine_backend.attendance.domain.Attendance;
 import com.example.nf.newfine_backend.attendance.domain.StudentAttendance;
 import com.example.nf.newfine_backend.attendance.dto.AttendanceEditDto;
+import com.example.nf.newfine_backend.attendance.service.AttendanceService;
 import com.example.nf.newfine_backend.course.Course;
 import com.example.nf.newfine_backend.course.CourseService;
 import com.example.nf.newfine_backend.member.student.domain.Student;
@@ -24,6 +26,7 @@ public class TeacherController {
     private final CourseService courseService;
     private final TeacherService teacherService;
     private final TeacherRepository teacherRepository;
+    private final AttendanceService attendanceService;
 
     //선생님이 자신 강의 불러오기
     @GetMapping("/teacher/courses")
@@ -43,6 +46,23 @@ public class TeacherController {
     @GetMapping("/member/teacher")
     public ResponseEntity<TeacherResponseDto> getTeacherInfo() {
         return ResponseEntity.ok(teacherService.getTeacherInfo());
+    }
+
+    // 매 수업시간 마다 출석 현황
+    @GetMapping("/attendances/student")
+    public List<StudentAttendance> getStudentAttendance(@RequestParam Integer id) {
+        Teacher teacher=teacherRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
+        Long idx = Long.valueOf(id);
+        return attendanceService.getStudentAttendance(idx);
+    }
+
+
+    // 수업시간마다 매시간 출석부 가져오는 api , 출석 정보는 attendance 의 Student Attendance 로 가져오면 된다 .
+    @GetMapping("/attendances")
+    public List<Attendance> getAttendances(@RequestParam Integer id) {
+        Teacher teacher=teacherRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
+        Long idx = Long.valueOf(id);
+        return attendanceService.getAttendances(idx);
     }
 
 }

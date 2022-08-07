@@ -64,20 +64,6 @@ public class AttendanceController {
         return attendanceService.getAllAttendances();
     }
 
-    // 수업시간마다 매시간 출석부 가져오는 api , 출석 정보는 attendance 의 Student Attendance 로 가져오면 된다 .
-    @GetMapping("/attendances")
-    public List<Attendance> getAttendances(@RequestParam Integer id) {
-        Long idx = Long.valueOf(id);
-        return attendanceService.getAttendances(idx);
-    }
-
-    // 매 수업시간 마다 출석 현황
-    @GetMapping("/attendances/student")
-    public List<StudentAttendance> getStudentAttendance(@RequestParam Integer id) {
-        Long idx = Long.valueOf(id);
-        return attendanceService.getStudentAttendance(idx);
-    }
-
 
     @GetMapping("/attendances/my")
     public List<StudentAttendance> getMyAttendance(@RequestParam Integer id) {
