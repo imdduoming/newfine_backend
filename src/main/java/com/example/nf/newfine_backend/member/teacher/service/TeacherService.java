@@ -56,6 +56,13 @@ public class TeacherService {
             studentAttendance.setIslate(false);
             studentAttendanceRepository.save(studentAttendance);
         }
+        else if(state.equals("동영상")){
+            System.out.println(state);
+            studentAttendance.setAttend(true);
+            studentAttendance.setIslate(false);
+            studentAttendance.setIsvideo(true);
+            studentAttendanceRepository.save(studentAttendance);
+        }
         else
         {
             System.out.println(state);

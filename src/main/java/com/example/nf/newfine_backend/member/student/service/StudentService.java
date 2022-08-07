@@ -29,8 +29,8 @@ public class StudentService {
     private final MessageService messageService;
 
     @Transactional(readOnly = true)
-    public StudentResponseDto getMemberInfo(String phoneNumber){
-        return studentRepository.findByPhoneNumber(phoneNumber)
+    public StudentResponseDto getMemberInfo(String nickname){
+        return studentRepository.findByNickname(nickname)
                 .map(StudentResponseDto::of)
                 .orElseThrow(() -> new CustomException(MEMBER_NOT_FOUND));
 //                .orElseThrow(() -> new RuntimeException("유저 정보가 없습니다."));
