@@ -30,19 +30,11 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getMyInfo());
     }
 
-    @GetMapping("/{phoneNumber}")
-    public ResponseEntity<StudentResponseDto> getMemberInfo(@PathVariable String phoneNumber) {
-        return ResponseEntity.ok(studentService.getMemberInfo(phoneNumber));
+    @GetMapping("/{nickname}")
+    public ResponseEntity<StudentResponseDto> getMemberInfo(@PathVariable String nickname) {
+        return ResponseEntity.ok(studentService.getMemberInfo(nickname));
     }
 
-    //    /////// ㅁㄱ
-//    @PostMapping("/myInfo")
-//    public ResponseEntity<MemberResponseDto> getMyInfo(@RequestHeader("token") String token){
-//        token.replace("Bearer ", "");
-//        return ResponseEntity.ok(authService.findMemberByToken(token));
-//    }
-//
-//
     @PostMapping("/nickname")
     public ResponseEntity<StudentResponseDto> setNickname(@RequestBody NicknameRequestDto nicknameRequestDto){
         return ResponseEntity.ok(studentService.setNickname(nicknameRequestDto));
