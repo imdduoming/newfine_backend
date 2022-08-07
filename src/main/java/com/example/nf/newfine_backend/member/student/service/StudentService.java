@@ -31,8 +31,9 @@ public class StudentService {
                 .map(StudentRankingDetailDto::of)
                 .orElseThrow(() -> new CustomException(MEMBER_NOT_FOUND));
 
-//                .orElseThrow(() -> new RuntimeException("유저 정보가 없습니다."));
+//
     }
+
 
     // 현재 SecurityContext 에 있는 유저 정보 가져오기
     // SecurityContext 는 전역
