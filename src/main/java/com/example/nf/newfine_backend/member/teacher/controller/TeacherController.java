@@ -35,6 +35,7 @@ public class TeacherController {
     // 선생님 출석 변경 api
     @PutMapping("/teacher/attendance")
     public StudentAttendance editAttendance(@RequestBody AttendanceEditDto attendanceEditDto){
+        Teacher teacher=teacherRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
         Long id=Long.valueOf(attendanceEditDto.getId());
         return teacherService.editAttendance(id,attendanceEditDto.getState());
     }
