@@ -30,9 +30,9 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getMyInfo());
     }
 
-    @GetMapping("/{phoneNumber}")
-    public ResponseEntity<StudentResponseDto> getMemberInfo(@PathVariable String phoneNumber) {
-        return ResponseEntity.ok(studentService.getMemberInfo(phoneNumber));
+    @GetMapping("/{nickname}")
+    public ResponseEntity<StudentResponseDto> getMemberInfo(@PathVariable String nickname) {
+        return ResponseEntity.ok(studentService.getMemberInfo(nickname));
     }
 
     //    /////// ㅁㄱ
