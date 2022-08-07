@@ -35,14 +35,6 @@ public class StudentController {
         return ResponseEntity.ok(studentService.getMemberInfo(nickname));
     }
 
-    //    /////// ㅁㄱ
-//    @PostMapping("/myInfo")
-//    public ResponseEntity<MemberResponseDto> getMyInfo(@RequestHeader("token") String token){
-//        token.replace("Bearer ", "");
-//        return ResponseEntity.ok(authService.findMemberByToken(token));
-//    }
-//
-//
     @PostMapping("/nickname")
     public ResponseEntity<StudentResponseDto> setNickname(@RequestBody NicknameRequestDto nicknameRequestDto){
         return ResponseEntity.ok(studentService.setNickname(nicknameRequestDto));
