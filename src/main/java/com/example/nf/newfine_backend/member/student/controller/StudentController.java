@@ -32,7 +32,6 @@ public class StudentController {
 
     @GetMapping("/{nickname}")
     public ResponseEntity<StudentResponseDto> getMemberInfo(@PathVariable String nickname) {
-
         return ResponseEntity.ok(studentService.getMemberInfo(nickname));
     }
 
