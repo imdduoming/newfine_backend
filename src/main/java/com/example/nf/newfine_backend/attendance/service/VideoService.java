@@ -103,7 +103,7 @@ public class VideoService {
                     if (studentAttendance.isIsvideo()){
                         if (!studentAttendance.isReceiveVideo()){
                             // 비디오 신청 했고 비디오신청 못받았으면
-                            VideoReturnDto videoReturnDto = new VideoReturnDto(course,studentAttendance);
+                            VideoReturnDto videoReturnDto = new VideoReturnDto(course,studentAttendance,attendance,studentAttendance.getStudent());
                             newList.add(videoReturnDto);
                         }
                     }
