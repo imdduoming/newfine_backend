@@ -9,6 +9,7 @@ import com.example.nf.newfine_backend.course.CourseRepository;
 import com.example.nf.newfine_backend.member.student.domain.Student;
 import com.example.nf.newfine_backend.course.Course;
 import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
+import com.example.nf.newfine_backend.member.student.service.PointService;
 import com.example.nf.newfine_backend.member.student.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +30,7 @@ public class StudyService {
     private final StudentService studentService;
     private final StudyRepository studyRepository;
     private final StudentStudyRepository studentStudyRepository;
+    private final PointService pointService;
 
     public Study makeStudy(LocalDateTime start){
         Study study= new Study(start);
@@ -82,6 +84,7 @@ public class StudyService {
             studentStudy.setTotal(total);
             studentStudy.setOut(true); //나갔다고 표시
             studentStudyRepository.save(studentStudy);
+            pointService.create(student,"자습완료!",5);
             return 1; // 제대로 퇴실
         }
         else {

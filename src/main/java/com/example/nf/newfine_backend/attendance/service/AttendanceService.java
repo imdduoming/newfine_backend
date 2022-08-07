@@ -7,6 +7,7 @@ import com.example.nf.newfine_backend.attendance.domain.StudentAttendance;
 import com.example.nf.newfine_backend.course.*;
 import com.example.nf.newfine_backend.member.student.domain.Student;
 import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
+import com.example.nf.newfine_backend.member.student.service.PointService;
 import com.example.nf.newfine_backend.member.student.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +33,7 @@ public class AttendanceService {
     private final CourseRepository courseRepository;
     private final CourseService courseService;
     private final ListenerRepository listenerRepository;
+    private final PointService pointService;
 
 
     public Attendance makeAttendance(Long course_id, LocalDateTime start, LocalDateTime end){
@@ -77,6 +79,7 @@ public class AttendanceService {
                 studentAttendance.setIslate(true);
                 studentAttendance.setTime(now_time);
                 studentattendanceRepository.save(studentAttendance);
+                pointService.create(student,"지각 ㅠ_ㅠ",2);
             }
 
             else{
@@ -85,6 +88,7 @@ public class AttendanceService {
                 studentAttendance.setIslate(false);
                 studentAttendance.setTime(now_time);
                 studentattendanceRepository.save(studentAttendance);
+                pointService.create(student,"정상 출석하였습니다!",5);
             }
             return 1;
         }

@@ -45,7 +45,7 @@ public class SHomeworkController {
 
 
     @PostMapping("/sh/point")
-    public void checkSHomework(@RequestParam(value="checklist[]") List<String> checklist){
+    public void checkSHomework(@RequestParam(value="checklist") String[] checklist){
         for (String c : checklist){
             sHomeworkService.checkSHomework(Long.valueOf(c));
             SHomework sHomework = sHomeworkRepository.findById(Long.valueOf(c)).get();
