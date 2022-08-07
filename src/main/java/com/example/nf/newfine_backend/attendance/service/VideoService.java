@@ -2,6 +2,7 @@ package com.example.nf.newfine_backend.attendance.service;
 
 import com.example.nf.newfine_backend.attendance.domain.Attendance;
 import com.example.nf.newfine_backend.attendance.domain.StudentAttendance;
+import com.example.nf.newfine_backend.attendance.dto.VideoReturnDto;
 import com.example.nf.newfine_backend.attendance.repository.AttendanceRepository;
 import com.example.nf.newfine_backend.attendance.repository.StudentAttendanceRepository;
 import com.example.nf.newfine_backend.branch.domain.BranchStudent;
@@ -91,9 +92,9 @@ public class VideoService {
         return phone;
     }
 
-    public List<StudentAttendance> getVideos(Teacher teacher){
+    public List<VideoReturnDto> getVideos(Teacher teacher){
         List<Course> courses = courseRepository.findCoursesByTeacher(teacher);
-        List<StudentAttendance> newList = new ArrayList<>();
+        List<VideoReturnDto> newList = new ArrayList<>();
         for (Course course : courses){
             List<Attendance> attendances = attendanceRepository.findAttendancesByCourse(course);
             for (Attendance attendance : attendances){
@@ -102,7 +103,8 @@ public class VideoService {
                     if (studentAttendance.isIsvideo()){
                         if (!studentAttendance.isReceiveVideo()){
                             // 비디오 신청 했고 비디오신청 못받았으면
-                            newList.add(studentAttendance);
+                            VideoReturnDto videoReturnDto = new VideoReturnDto(course,studentAttendance);
+                            newList.add(videoReturnDto);
                         }
                     }
                 }
