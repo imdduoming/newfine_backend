@@ -21,6 +21,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -80,11 +81,17 @@ public class AuthService {
     @Transactional
     public TokenDto login(SignInDto signInDto) {
 
-        Student student=studentRepository.findByPhoneNumber(signInDto.getPhoneNumber()).orElseThrow(PhoneNumberNotFoundException::new);
-
         // 비밀번호 확인 추가
-        if (!passwordEncoder.matches(signInDto.getPassword(), student.getPassword())) {
-            throw new CustomException(INVALID_PASSWORD);
+        if (teacherRepository.existsByPhoneNumber(signInDto.getPhoneNumber())){
+            Teacher teacher=teacherRepository.findByPhoneNumber(signInDto.getPhoneNumber()).orElseThrow(PhoneNumberNotFoundException::new);
+            if (!passwordEncoder.matches(signInDto.getPassword(), teacher.getTPassword())) {
+                throw new CustomException(INVALID_PASSWORD);
+            }
+        } else{
+            Student student=studentRepository.findByPhoneNumber(signInDto.getPhoneNumber()).orElseThrow(PhoneNumberNotFoundException::new);
+            if (!passwordEncoder.matches(signInDto.getPassword(), student.getPassword())) {
+                throw new CustomException(INVALID_PASSWORD);
+            }
         }
 
         // 1. Login ID/PW 를 기반으로 AuthenticationToken 생성 (인증 정보 객체 UsernamePasswordAuthenticationToken 생성)
