@@ -63,22 +63,24 @@
         console.log(startTime)
         console.log(course);
         let data = {"course_id": course,"startTime":startTime,"endTime":endTime};
-        if(course ==""){
-            alert('강의를 선택해주세요!')
+        if(course && startTime && endTime){
+            $.ajax({
+                type: "POST",
+                url: `${domainURL}/make/attendance`,
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (response) {
+                    console.log(response)
+                    alert('출석이 생성됐습니다!')
+                    $('input[name=url]').attr('value',response['url']);
+                }
+
+            });
+
         }
         else{
-        $.ajax({
-            type: "POST",
-            url: `${domainURL}/make/attendance`,
-            contentType: "application/json",
-            data: JSON.stringify(data),
-            success: function (response) {
-                console.log(response)
-                alert('출석이 생성됐습니다!')
-                $('input[name=url]').attr('value',response['url']);
-            }
-
-        });}
+            alert('강의 또는 시간을 모두 선택해주세요!')
+        }
     }
 
 
