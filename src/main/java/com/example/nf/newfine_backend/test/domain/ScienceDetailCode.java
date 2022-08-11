@@ -9,19 +9,22 @@ public enum ScienceDetailCode {
         this.scienceDetailCode=scienceDetailCode;
     }
 
+    public String scienceDetailCode(){
+        return scienceDetailCode;
+    }
 
     public static String generateScienceSubjectCode(String detailSubject){
         switch (detailSubject){
             case "화학":
-                return "1"+화학.scienceDetailCode;
+                return "1"+화학.scienceDetailCode();
             case "물리":
-                return "1"+물리.scienceDetailCode;
+                return "1"+물리.scienceDetailCode();
             case "생명과학":
-                return "1"+생명과학.scienceDetailCode;
+                return "1"+생명과학.scienceDetailCode();
             case "지구과학":
-                return "1"+지구과학.scienceDetailCode;
+                return "1"+지구과학.scienceDetailCode();
             default:
-                return "1"+공통과학.scienceDetailCode;
+                return "1"+공통과학.scienceDetailCode();
         }
     }
 }

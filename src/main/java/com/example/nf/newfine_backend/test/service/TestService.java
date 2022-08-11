@@ -38,7 +38,7 @@ public class TestService {
             code= MathDetailCode.generateMathSubjectCode(course.getSubjectType());
         }
         System.out.println("테스트:             "+code);
-        System.out.println("SubjectCode:             "+SubjectCode.과학+SubjectCode.과학.subjectCode());
+        System.out.println("SubjectCode:             "+SubjectCode.과학+", "+SubjectCode.과학.subjectCode());
 
 //        List<Listener> listeners = courseService.getListeners(course_id);
 //        List <StudentAttendance> studentAttendances = new ArrayList<>();
