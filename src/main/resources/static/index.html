@@ -31,33 +31,33 @@
             });
         });
 
-        // function login() {
-        //     if ($('#phoneNumber').val() == '') {
-        //         alert("핸드폰 번호를 입력해주세요!");
-        //         login[phoneNumber].focus();
-        //         return false;
-        //     }
-        //     if ($('#password').val() == '') {
-        //         alert("비밀번호를 입력해주세요!");
-        //         login[password].focus();
-        //         return false;
-        //     }
-        //     var options = {
-        //         success: function (result) {
-        //             $.cookie('accessToken', result['accessToken']);
-        //             $.cookie('refreshToken', result['refreshToken']);
-        //
-        //             alert('로그인되었습니다!');
-        //             // window.location.href='/nickname'
-        //         },
-        //         error: function (request, status, error) {
-        //             console.log("error");
-        //             alert("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
-        //         },
-        //         type: "POST"
-        //     };
-        //     $("#login").ajaxSubmit(options);
-        // }
+        function login() {
+            if ($('#phoneNumber').val() == '') {
+                alert("핸드폰 번호를 입력해주세요!");
+                login[phoneNumber].focus();
+                return false;
+            }
+            if ($('#password').val() == '') {
+                alert("비밀번호를 입력해주세요!");
+                login[password].focus();
+                return false;
+            }
+            var options = {
+                success: function (result) {
+                    $.cookie('accessToken', result['accessToken']);
+                    $.cookie('refreshToken', result['refreshToken']);
+
+                    alert('로그인되었습니다!');
+                    // window.location.href='/nickname'
+                },
+                error: function (request, status, error) {
+                    console.log("error");
+                    alert("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+                },
+                type: "POST"
+            };
+            $("#login").ajaxSubmit(options);
+        }
     </script>
 </head>
 <body>
