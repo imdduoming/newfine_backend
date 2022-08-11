@@ -42,11 +42,11 @@ public class TestService {
 //        System.out.println("수강생");
 //        System.out.println( listeners);
         Test test= new Test(course, testDto.getTestDate(), testDto.getTestName());
-        testRepository.save(test);
 
         code+=test.getId();
 
         test.setTestCode(code);
+        testRepository.save(test);
 
         return test;
     }
