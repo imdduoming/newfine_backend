@@ -16,11 +16,11 @@
             $('.hide-show span').click(function () {
                 if ($(this).hasClass('show')) {
                     $(this).text('Hide');
-                    $('input[name="login[password]"]').attr('type', 'text');
+                    $('input[name="login[password]"]').prop('type', 'text');
                     $(this).removeClass('show');
                 } else {
                     $(this).text('Show');
-                    $('input[name="login[password]"]').attr('type', 'password');
+                    $('input[name="login[password]"]').prop('type', 'password');
                     $(this).addClass('show');
                 }
             });
@@ -31,33 +31,33 @@
             });
         });
 
-        function login() {
-            if ($('#phoneNumber').val() == '') {
-                alert("핸드폰 번호를 입력해주세요!");
-                login[phoneNumber].focus();
-                return false;
-            }
-            if ($('#password').val() == '') {
-                alert("비밀번호를 입력해주세요!");
-                login[password].focus();
-                return false;
-            }
-            var options = {
-                success: function (result) {
-                    $.cookie('accessToken', result['accessToken']);
-                    $.cookie('refreshToken', result['refreshToken']);
-
-                    alert('로그인되었습니다!');
-                    window.location.href='/'
-                },
-                error: function (request, status, error) {
-                    console.log("error");
-                    alert("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
-                },
-                type: "POST"
-            };
-            $("#login").ajaxSubmit(options);
-        }
+        // function login() {
+        //     if ($('#phoneNumber').val() == '') {
+        //         alert("핸드폰 번호를 입력해주세요!");
+        //         login[phoneNumber].focus();
+        //         return false;
+        //     }
+        //     if ($('#password').val() == '') {
+        //         alert("비밀번호를 입력해주세요!");
+        //         login[password].focus();
+        //         return false;
+        //     }
+        //     var options = {
+        //         success: function (result) {
+        //             $.cookie('accessToken', result['accessToken']);
+        //             $.cookie('refreshToken', result['refreshToken']);
+        //
+        //             alert('로그인되었습니다!');
+        //             // window.location.href='/nickname'
+        //         },
+        //         error: function (request, status, error) {
+        //             console.log("error");
+        //             alert("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+        //         },
+        //         type: "POST"
+        //     };
+        //     $("#login").ajaxSubmit(options);
+        // }
     </script>
 </head>
 <body>
@@ -82,6 +82,8 @@
             </div>
             <button type="submit" onclick="login()">로그인</button>
         </form>
+
+
 
     </section>
 </div>

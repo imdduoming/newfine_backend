@@ -5,6 +5,9 @@ import com.example.nf.newfine_backend.attendance.domain.StudentAttendance;
 import com.example.nf.newfine_backend.course.Course;
 import com.example.nf.newfine_backend.course.CourseRepository;
 import com.example.nf.newfine_backend.course.Listener;
+import com.example.nf.newfine_backend.test.domain.MathDetailCode;
+import com.example.nf.newfine_backend.test.domain.ScienceDetailCode;
+import com.example.nf.newfine_backend.test.domain.SubjectCode;
 import com.example.nf.newfine_backend.test.domain.Test;
 import com.example.nf.newfine_backend.test.dto.TestDto;
 import com.example.nf.newfine_backend.test.repository.TestRepository;
@@ -27,12 +30,23 @@ public class TestService {
     public Test createTest(TestDto testDto){
         Course course=courseRepository.findById(testDto.getCourse_id()).get();
 
+        String code = "";
+        if(course.getSubject()=="과학"){
+            code=ScienceDetailCode.generateScienceSubjectCode(SubjectCode.과학, course.getSubjectType());
+        } else if(course.getSubject()=="수학"){
+            code= MathDetailCode.generateMathSubjectCode(SubjectCode.수학, course.getSubjectType());
+        }
+
 //        List<Listener> listeners = courseService.getListeners(course_id);
 //        List <StudentAttendance> studentAttendances = new ArrayList<>();
 //        System.out.println("수강생");
 //        System.out.println( listeners);
         Test test= new Test(course, testDto.getTestDate(), testDto.getTestName());
         testRepository.save(test);
+
+        code+=test.getId();
+
+        test.setTestCode(code);
 
         return test;
     }
