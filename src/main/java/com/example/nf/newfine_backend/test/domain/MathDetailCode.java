@@ -9,18 +9,18 @@ public enum MathDetailCode {
         this.mathDetailCode=mathDetailCode;
     }
 
-    public static String generateMathSubjectCode(SubjectCode subjectCode, String detailSubject){
+    public static String generateMathSubjectCode( String detailSubject){
         switch (detailSubject){
             case "미적분":
-                return subjectCode.subjectCode()+미적분.mathDetailCode;
+                return "0"+미적분.mathDetailCode;
             case "기하":
-                return subjectCode.subjectCode()+기하.mathDetailCode;
+                return "0"+기하.mathDetailCode;
             case "확통":
-                return subjectCode.subjectCode()+확통.mathDetailCode;
+                return "0"+확통.mathDetailCode;
             case "수1":
-                return subjectCode.subjectCode()+수1.mathDetailCode;
+                return "0"+수1.mathDetailCode;
             default:
-                return subjectCode.subjectCode()+수2.mathDetailCode;
+                return "0"+수2.mathDetailCode;
         }
     }
 }

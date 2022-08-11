@@ -32,11 +32,13 @@ public class TestService {
 
         String code = "";
         if(course.getSubject()=="과학"){
-            code=ScienceDetailCode.generateScienceSubjectCode(SubjectCode.과학, course.getSubjectType());
+            code=ScienceDetailCode.generateScienceSubjectCode(course.getSubjectType());
         } else if(course.getSubject()=="수학"){
-            code= MathDetailCode.generateMathSubjectCode(SubjectCode.수학, course.getSubjectType());
+//            code= MathDetailCode.generateMathSubjectCode(SubjectCode.수학, course.getSubjectType());
+            code= MathDetailCode.generateMathSubjectCode(course.getSubjectType());
         }
         System.out.println("테스트:             "+code);
+        System.out.println("SubjectCode:             "+SubjectCode.과학+SubjectCode.과학.subjectCode());
 
 //        List<Listener> listeners = courseService.getListeners(course_id);
 //        List <StudentAttendance> studentAttendances = new ArrayList<>();
@@ -44,7 +46,8 @@ public class TestService {
 //        System.out.println( listeners);
         Test test= new Test(course, testDto.getTestDate(), testDto.getTestName());
 
-        code+=test.getId();
+        String code2 = String.format("%04d", test.getId());
+        code+=code2;
 
         System.out.println("테스트:             "+code);
 
