@@ -36,6 +36,7 @@ public class TestService {
         } else if(course.getSubject()=="수학"){
             code= MathDetailCode.generateMathSubjectCode(SubjectCode.수학, course.getSubjectType());
         }
+        System.out.println("테스트:             "+code);
 
 //        List<Listener> listeners = courseService.getListeners(course_id);
 //        List <StudentAttendance> studentAttendances = new ArrayList<>();
@@ -44,6 +45,8 @@ public class TestService {
         Test test= new Test(course, testDto.getTestDate(), testDto.getTestName());
 
         code+=test.getId();
+
+        System.out.println("테스트:             "+code);
 
         test.setTestCode(code);
         testRepository.save(test);
