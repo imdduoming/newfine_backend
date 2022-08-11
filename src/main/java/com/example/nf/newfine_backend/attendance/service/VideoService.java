@@ -46,26 +46,20 @@ public class VideoService {
             List<Attendance> attendances= attendanceRepository.findAttendancesByCourse(listener.getCourse());
             // 강의마다 조건에 맞는 출석 넣기
             for (Attendance attendance : attendances){
-                // 시간이 오늘이고 수업끝나는시간이 현재시간보다 after
-                System.out.println(attendance.getStartTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-                System.out.println(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-                // 현재와 날짜가 같아야함
-                StudentAttendance studentAttendance = studentattendanceRepository.findByStudentAndAttendance(student,attendance).get();
-                if(studentAttendance.isAttend()==false){
-                    // 출석하지 않았고
 
-                    System.out.println("학생 출석"+studentAttendance.isAttend());
-                    if(attendance.getStartTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).equals(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))){
+                StudentAttendance studentAttendance = studentattendanceRepository.findByStudentAndAttendance(student,attendance).get();
+                if(studentAttendance.isAttend()==false && studentAttendance.isIsvideo()==false ){
+                    // 출석하지 않았고 비디오 신청도 하지 않았다면
+
                         // 출석하려는 날짜가 오늘 날짜와 같고
-                        LocalTime endtime = LocalTime.parse(listener.getCourse().getEnd_time(), DateTimeFormatter.ofPattern("HH:mm"));
-                        LocalTime now= LocalTime.now();
-                        System.out.println("끝나는시간"+endtime);
-                        System.out.println("현재"+now);
-                        if(now.isBefore(endtime))
-                        { // 아직 현재가 끝나는 시간보다 전이라면
-                            nowAttendances.add(attendance);
-                        }
-                    }
+//                        LocalTime endtime = LocalTime.parse(listener.getCourse().getEnd_time(), DateTimeFormatter.ofPattern("HH:mm"));
+//                        LocalTime now= LocalTime.now();
+//                        System.out.println("끝나는시간"+endtime);
+//                        System.out.println("현재"+now);
+//                        // 아직 현재가 끝나는 시간보다 전이라면
+                        nowAttendances.add(attendance);
+
+
                 }
 
             }
@@ -77,11 +71,33 @@ public class VideoService {
     public StudentAttendance applyVideo(Long id , Student student){
         Attendance attendance = attendanceRepository.findById(id).get();
         StudentAttendance studentAttendance= studentattendanceRepository.findByStudentAndAttendance(student,attendance).get();
-        studentAttendance.setAttend(true); // 출석처리
-        studentAttendance.setIslate(false);
-        studentAttendance.setIsvideo(true);
-        studentattendanceRepository.save(studentAttendance);
+        if(attendance.getStartTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).equals(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))){
+            // 출석하려는 날짜가 오늘 날짜와 같고
+            LocalTime endtime = LocalTime.parse(attendance.getCourse().getEnd_time(), DateTimeFormatter.ofPattern("HH:mm"));
+            LocalTime now= LocalTime.now();
+            System.out.println("끝나는시간"+endtime);
+            System.out.println("현재"+now);
+            if(now.isBefore(endtime))
+            { // 아직 현재가 끝나는 시간보다 전이라면 동영상 신청 가능하고 출석처리
+                studentAttendance.setAttend(true); // 출석처리
+                studentAttendance.setIslate(false);
+                studentAttendance.setIsvideo(true);
+                studentattendanceRepository.save(studentAttendance);
+            }
+            else{
+                studentAttendance.setAttend(false); // 결석 처리
+                studentAttendance.setIslate(false);
+                studentAttendance.setIsvideo(true);
+                studentattendanceRepository.save(studentAttendance);
+            }
+        }
+        else{
+            studentAttendance.setAttend(false); // 출석처리
+            studentAttendance.setIslate(false);
+            studentAttendance.setIsvideo(true);
+            studentattendanceRepository.save(studentAttendance);
 
+        }
         return studentAttendance;
     }
 
