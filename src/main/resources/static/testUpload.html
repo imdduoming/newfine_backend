@@ -49,9 +49,9 @@
             var options = {
                 success: function (result) {
                     console.log(result)
-                    $('#response_test_id').attr('value', result['id']);
-                    $('#test_code').attr('value', result['id']);
-                    $('#test_code1').attr('value', result['id']);
+                    $('#response_test_id').attr('value', result['testCode']);
+                    $('#test_code').attr('value', result['testCode']);
+                    $('#test_code1').attr('value', result['testCode']);
                     console.log(result)
                     alert('테스트 정보가 입력되었습니다!')
                 },
