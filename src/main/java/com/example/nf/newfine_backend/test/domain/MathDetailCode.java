@@ -13,9 +13,10 @@ public enum MathDetailCode {
         return mathDetailCode;
     }
 
-    public static String generateMathSubjectCode( String detailSubject){
+    public static String generateMathSubjectCode(String detailSubject){
         switch (detailSubject){
             case "미적분":
+                System.out.println(미적분.mathDetailCode());
                 return "0"+미적분.mathDetailCode();
             case "기하":
                 return "0"+기하.mathDetailCode();

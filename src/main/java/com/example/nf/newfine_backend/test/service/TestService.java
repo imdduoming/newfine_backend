@@ -36,6 +36,7 @@ public class TestService {
         } else if(course.getSubject()=="수학"){
 //            code= MathDetailCode.generateMathSubjectCode(SubjectCode.수학, course.getSubjectType());
             code= MathDetailCode.generateMathSubjectCode(course.getSubjectType());
+            System.out.println("테스트:             "+code);
         }
         System.out.println("테스트:             "+code);
         System.out.println("SubjectCode:             "+SubjectCode.과학+", "+SubjectCode.과학.subjectCode());
