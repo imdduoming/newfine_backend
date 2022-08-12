@@ -75,7 +75,7 @@ function getTokenAndRefresh() {
         error: function (response) {
             alert(response.message);
             localStorage.clear();
-            location.href =  `/index.html`
+            location.href = "index.html"
         }
     })
 }
