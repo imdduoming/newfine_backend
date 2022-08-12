@@ -41,6 +41,9 @@ public class SHomework extends BaseTimeEntity {
     private boolean ischecked = false;
 
     @Column
+    private char grade = 'C';
+
+    @Column
     @DateTimeFormat(pattern = "yyyy-MM-ddTHH:mm")
     private LocalDateTime checkedDate;
 
