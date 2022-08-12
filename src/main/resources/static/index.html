@@ -53,6 +53,8 @@
                     await localStorage.setItem('accessToken', result['accessToken']);
                     await localStorage.setItem('refreshToken', result['refreshToken']);
 
+                    console.log(result['accessToken']);
+                    console.log(result['refreshToken']);
                     alert('로그인 성공!');
                     window.location.href = '/main.html'
                 },
