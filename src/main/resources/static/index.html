@@ -9,6 +9,9 @@
     <script src="https://malsup.github.io/jquery.form.js"></script>
     <script type="text/javascript" src="js/back.js"></script>
     <script type="text/javascript">
+        $(document).ready(function () {
+            getTokenAndRefresh();
+        });
         $(function () {
             $('.hide-show').show();
             $('.hide-show span').addClass('show')
@@ -34,21 +37,21 @@
         function login() {
             if ($('#phoneNumber').val() == '') {
                 alert("핸드폰 번호를 입력해주세요!");
-                login[phoneNumber].focus();
+                index.phoneNumber.focus();
                 return false;
             }
             if ($('#password').val() == '') {
                 alert("비밀번호를 입력해주세요!");
-                login[password].focus();
+                index.password.focus();
                 return false;
             }
             var options = {
                 success: function (result) {
-                    $.cookie('accessToken', result['accessToken']);
-                    $.cookie('refreshToken', result['refreshToken']);
+                    localStorage.setItem('accessToken', result['accessToken']);
+                    localStorage.setItem('refreshToken', result['refreshToken']);
 
-                    alert('로그인되었습니다!');
-                    // window.location.href='/nickname'
+                    alert('로그인 성공!');
+                    window.location.href='/main.html'
                 },
                 error: function (request, status, error) {
                     console.log("error");
@@ -72,16 +75,17 @@
         <form id="login" method="post" action="/auth/login">
 
             <label for="phoneNumber">핸드폰 번호</label>
-            <input id="phoneNumber" required name="login[phoneNumber]" type="text" autocapitalize="off"
+            <input id="phoneNumber" name="phoneNumber" type="text" autocapitalize="off"
                    autocorrect="off"/>
 
             <label for="password">비밀번호</label>
-            <input id="password" class="password" required name="login[password]" type="password"/>
+            <input id="password" class="password" name="password" type="password"/>
             <div class="hide-show">
                 <span>Show</span>
             </div>
             <button type="submit" onclick="login()">로그인</button>
         </form>
+        <div id="login-failed" style="display:none" class="alert alert-danger" role="alert">로그인에 실패하였습니다.</div>
 
 
 
@@ -89,4 +93,5 @@
 </div>
 
 </body>
+
 </html>
