@@ -7,6 +7,7 @@ import com.example.nf.newfine_backend.course.CourseRepository;
 import com.example.nf.newfine_backend.course.Listener;
 import com.example.nf.newfine_backend.test.domain.MathDetailCode;
 import com.example.nf.newfine_backend.test.domain.ScienceDetailCode;
+import com.example.nf.newfine_backend.test.domain.SubjectCode;
 import com.example.nf.newfine_backend.course.ListenerRepository;
 import com.example.nf.newfine_backend.member.student.domain.Student;
 import com.example.nf.newfine_backend.test.domain.Test;
@@ -16,6 +17,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+
+import java.util.ArrayList;
+import java.util.List;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
