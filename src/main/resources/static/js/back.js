@@ -65,6 +65,7 @@ function getTokenAndRefresh() {
         type: "POST",
         url: "${domainURL}/auth/refreshToken",
         data: JSON.stringify(data),
+        contentType: "application/json",
         success: function (response) {
             console.log(response)
             localStorage.setItem('accessToken', response['accessToken']);
@@ -72,7 +73,7 @@ function getTokenAndRefresh() {
             location.href =  `/main.html`
         },
         error: function (response) {
-            alert(response.responseJSON.message);
+            alert(response.message);
             localStorage.clear();
             location.href =  `/index.html`
         }
