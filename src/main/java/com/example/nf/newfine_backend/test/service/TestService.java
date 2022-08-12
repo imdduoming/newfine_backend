@@ -8,6 +8,8 @@ import com.example.nf.newfine_backend.course.Listener;
 import com.example.nf.newfine_backend.test.domain.MathDetailCode;
 import com.example.nf.newfine_backend.test.domain.ScienceDetailCode;
 import com.example.nf.newfine_backend.test.domain.SubjectCode;
+import com.example.nf.newfine_backend.course.ListenerRepository;
+import com.example.nf.newfine_backend.member.student.domain.Student;
 import com.example.nf.newfine_backend.test.domain.Test;
 import com.example.nf.newfine_backend.test.dto.TestDto;
 import com.example.nf.newfine_backend.test.repository.TestRepository;
@@ -15,6 +17,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+
+import java.util.ArrayList;
+import java.util.List;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -27,6 +32,7 @@ public class TestService {
 
     private final CourseRepository courseRepository;
     private final TestRepository testRepository;
+    private final ListenerRepository listenerRepository;
     public Test createTest(TestDto testDto){
         Course course=courseRepository.findById(testDto.getCourse_id()).get();
 
@@ -56,5 +62,22 @@ public class TestService {
         testRepository.save(test);
 
         return test;
+    }
+    public List<Test> getTests(Long course_id){
+        Course course=courseRepository.findById(course_id).get();
+        List<Test> tests=testRepository.findTestsByCourse(course);
+        return tests;
+
+    }
+
+    public List<Test> getAllMyTests(Student student){
+        List<Listener> listeners = listenerRepository.findListenersByStudent(student);
+        List<Test> tests = new ArrayList<>();
+        for(Listener listener : listeners) {
+            for (Test test : listener.getCourse().getTests()) {
+                tests.add(test);
+            }
+        }
+        return tests;
     }
 }

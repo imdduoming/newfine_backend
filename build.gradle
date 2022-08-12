@@ -72,6 +72,8 @@ dependencies {
 //    runtimeOnly 'mysql:mysql-connector-java:8.0.25'
 //    // https://mvnrepository.com/artifact/org.springframework/spring-dao
 //    implementation group: 'org.springframework', name: 'spring-dao', version: '2.0.8'
+//    // 관리자 (우리) spring boot admin
+//    implementation 'de.codecentric:spring-boot-admin-starter-server:2.6.2'
 }
 
 tasks.named('test') {
