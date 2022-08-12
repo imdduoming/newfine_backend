@@ -113,25 +113,25 @@
         // }
 
         function checkCourseTestResultsFile() {
-            if (confirm("엑셀 파일을 업로드하시겠습니까?")) {
-                var options = {
-                    success: function (result) {
-                        if (result.code == "1") {
-                            console.log("data 전송 성공");
-                            alert(result.msg);
-                        } else {
-                            console.log("data 전송 실패");
-                            alert(result.msg);
-                        }
-                    },
-                    error: function (request, status, error) {
-                        console.log("error");
-                        alert("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
-                    },
-                    type: "POST"
-                };
-                $("#courseTestResultsFileUploadForm").ajaxSubmit(options);
-            }
+            // if (confirm("엑셀 파일을 업로드하시겠습니까?")) {
+            var options = {
+                success: function (result) {
+                    if (result.code == "1") {
+                        console.log("data 전송 성공");
+                        alert(result.msg);
+                    } else {
+                        console.log("data 전송 실패");
+                        alert(result.msg);
+                    }
+                },
+                error: function (request, status, error) {
+                    console.log("error");
+                    alert("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+                },
+                type: "POST"
+            };
+            $("#courseTestResultsFileUploadForm").ajaxSubmit(options);
+            // }
         }
 
         function get_course() {
