@@ -1,12 +1,9 @@
 package com.example.nf.newfine_backend.member.student.service;
 
-import com.example.nf.newfine_backend.member.student.dto.PasswordUpdateDto;
-import com.example.nf.newfine_backend.member.student.dto.StudentResponseDto;
+import com.example.nf.newfine_backend.member.student.dto.*;
 import com.example.nf.newfine_backend.member.student.exception.DuplicatedNicknameException;
 import com.example.nf.newfine_backend.member.student.exception.PhoneNumberNotFoundException;
 import com.example.nf.newfine_backend.member.student.domain.Student;
-import com.example.nf.newfine_backend.member.student.dto.DeleteRequestDto;
-import com.example.nf.newfine_backend.member.student.dto.NicknameRequestDto;
 import com.example.nf.newfine_backend.member.exception.CustomException;
 import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
 import com.example.nf.newfine_backend.member.util.SecurityUtil;
@@ -29,12 +26,14 @@ public class StudentService {
     private final MessageService messageService;
 
     @Transactional(readOnly = true)
-    public StudentResponseDto getMemberInfo(String nickname){
+    public StudentRankingDetailDto getMemberInfo(String nickname){
         return studentRepository.findByNickname(nickname)
-                .map(StudentResponseDto::of)
+                .map(StudentRankingDetailDto::of)
                 .orElseThrow(() -> new CustomException(MEMBER_NOT_FOUND));
-//                .orElseThrow(() -> new RuntimeException("유저 정보가 없습니다."));
+
+//
     }
+
 
     // 현재 SecurityContext 에 있는 유저 정보 가져오기
     // SecurityContext 는 전역
