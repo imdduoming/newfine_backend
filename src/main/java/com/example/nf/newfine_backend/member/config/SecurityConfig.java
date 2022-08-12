@@ -65,7 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {  // Spring Se
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers("/make/attendance").permitAll()
                 .antMatchers("/get/**").permitAll()
-                .antMatchers("/resources/static/login").permitAll()
+                .antMatchers("/resources/static/login.html").permitAll()
                 .antMatchers("/resources/static/js/**").permitAll()
                 .anyRequest().authenticated()   // 나머지 API 는 전부 인증 필요
 
