@@ -82,6 +82,5 @@ function getTokenAndRefresh() {
     } else{
         location.href = "index.html"
     }
-
 }
 
