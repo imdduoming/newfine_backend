@@ -9,7 +9,7 @@
     <script src="https://malsup.github.io/jquery.form.js"></script>
     <script type="text/javascript" src="js/back.js"></script>
     <script type="text/javascript">
-        $(document).ready(function () {
+        $(function () {
             getTokenAndRefresh();
             $.ajaxSetup({
                 error: function (jqXHR, exception) {
@@ -32,6 +32,26 @@
                 }
             });
         });
+        async function logout() {
+            const accessToken = await localStorage.getItem('accessToken');
+            const refreshToken = await localStorage.getItem('refreshToken');
+
+            let data = {"accessToken": accessToken, "refreshToken": refreshToken}
+            $.ajax({
+                type: "POST",
+                url: `${domainURL}/auth/logout`,
+                data: JSON.stringify(data),
+                contentType: "application/json",
+                success: async function (response) {
+                    console.log(response)
+                    await localStorage.clear();
+                    location.href = "index.html"
+                },
+                error: function (response) {
+                    alert(response.message);
+                }
+            })
+        }
     </script>
 </head>
 <body>
@@ -51,6 +71,9 @@
     </button>
     <button class="w-btn-neon2" type="button" onclick="location.href='testUpload.html'">
         테스트 데이터 업로드
+    </button>
+    <button class="w-btn-neon2" type="button" onclick="logout()">
+        로그아웃
     </button>
 </div></center>
 
