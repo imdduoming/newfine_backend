@@ -30,6 +30,9 @@ public class Test {
     private LocalDate testDate;
 
     @Column
+    private String testCode;
+
+    @Column
     private String testName;
 
     @JsonIgnore
@@ -46,6 +49,7 @@ public class Test {
     private List<StudentTestResults> studentTestResults;
 
     public Test(Course course, LocalDate testDate, String testName) {
+//        this.testCode=testCode;
         this.course=course;
         this.testDate=testDate;
         this.testName=testName;

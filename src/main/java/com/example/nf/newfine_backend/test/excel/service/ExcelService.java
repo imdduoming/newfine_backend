@@ -192,7 +192,7 @@ public class ExcelService{
 //                    .proportion4(proportion4)
 //                    .proportion5(proportion5)
             studentTestResultsInfo.setName(article.get("A"));
-            studentTestResultsInfo.setTestCode(article.get("B"));
+            studentTestResultsInfo.setStudentCode(article.get("B"));
             studentTestResultsInfo.setTotalScore(Integer.parseInt(article.get("C")));
             studentTestResultsInfo.setScore1(Integer.parseInt(article.get("D")));
             studentTestResultsInfo.setScore2(Integer.parseInt(article.get("E")));
