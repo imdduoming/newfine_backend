@@ -12,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class StudentTestResultsDto {
     private String name;
-    private String testCode;
+    private String studentCode;
     private int totalScore;
     private int score1;
     private int score2;
@@ -60,7 +60,7 @@ public class StudentTestResultsDto {
     public StudentTestResults toStudentTestResults() {
         return StudentTestResults.builder()
                 .name(name)
-                .testCode(testCode)
+                .studentCode(studentCode)
                 .totalScore(totalScore)
                 .score1(score1)
                 .score2(score2)

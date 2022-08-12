@@ -38,7 +38,6 @@ public class AttendanceController {
     private final StudentRepository studentRepository;
     private final MessageService messageService;
 
-
     // 관리자가 수업시간 qr 코드 생성 api
     @PostMapping(value = "/make/attendance")
     public Attendance makeAttendance(@RequestBody AttendanceDto attendanceDto) {

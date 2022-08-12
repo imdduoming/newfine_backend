@@ -1,34 +1,140 @@
-<!DOCTYPE html>
-<html lang="ko">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <link rel="stylesheet" href="css/login.css" type="text/css">
+    <title>Login</title>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
     <script src="https://malsup.github.io/jquery.form.js"></script>
+    <script type="text/javascript" src="js/back.js"></script>
+    <script type="text/javascript">
+        $(async function () {
+            // getTokenAndRefresh();
+            const accessToken = await localStorage.getItem('accessToken');
+            const refreshToken = await localStorage.getItem('refreshToken');
+            console.log(accessToken, refreshToken);
+            let data = {"accessToken": accessToken, "refreshToken": refreshToken}
+            $.ajax({
+                type: "POST",
+                url: `${domainURL}/auth/refreshToken`,
+                data: JSON.stringify(data),
+                contentType: "application/json",
+                success: async function (response) {
+                    console.log(response)
+                    await localStorage.setItem('accessToken', response['accessToken']);
+                    await localStorage.setItem('refreshToken', response['refreshToken']);
+                    window.location.href = '/main.html'
+                },
+                error: function (response) {
+                    alert(response.message);
+                    localStorage.clear();
+                    window.location.href = '/index.html'
+                }
+            })
 
+            $.ajaxSetup({
+                error: function (jqXHR, exception) {
+                    switch (jqXHR.status) {
+                        case 401:
+                            alert('인증 에러!!');
+                            break;
+                        case 423:
+                            alert('중복된 id!!');
+                            break;
+                    }
+                },
+                beforeSend: function (xhr) {
+                    if (localStorage.getItem('accessToken') != null) {
+                        xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('accessToken'));
+                    } else {
+                        location.href = "index.html"
+                        alert("로그인 해주세요")
+                    }
+                }
+            });
+        });
+        $(function () {
+            $('.hide-show').show();
+            $('.hide-show span').addClass('show')
+
+            $('.hide-show span').click(function () {
+                if ($(this).hasClass('show')) {
+                    $(this).text('Hide');
+                    $('input[name="password"]').prop('type', 'text');
+                    $(this).removeClass('show');
+                } else {
+                    $(this).text('Show');
+                    $('input[name="password"]').prop('type', 'password');
+                    $(this).addClass('show');
+                }
+            });
+
+            $('form button[type="submit"]').on('click', function () {
+                $('.hide-show span').text('Show').addClass('show');
+                $('.hide-show').parent().find('input[name="password"]').attr('type', 'password');
+            });
+        });
+
+        function adminLogin() {
+            if ($('#phoneNumber').val() == '') {
+                alert("핸드폰 번호를 입력해주세요!");
+                index.phoneNumber.focus();
+                return false;
+            }
+            if ($('#password').val() == '') {
+                alert("비밀번호를 입력해주세요!");
+                index.password.focus();
+                return false;
+            }
+            var options = {
+                success: async function (result) {
+                    await localStorage.setItem('accessToken', result['accessToken']);
+                    await localStorage.setItem('refreshToken', result['refreshToken']);
+                    alert('로그인 성공!');
+                    window.location.href = '/main.html'
+                },
+                error: function (request, status, error) {
+                    console.log("error");
+                    alert("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+                },
+                type: "POST"
+            };
+            $("#login").ajaxSubmit(options);
+        }
+        $("#login").keypress(function(e){
+            if (e.keyCode===13){
+                adminLogin();
+            }
+        });
+    </script>
 </head>
 <body>
-<center><div id="main">
-    <h1>관리자 페이지</h1><br>
-    <button class="w-btn-neon2" type="button" onclick="location.href='attendanceMake.html'">
-        출석 QR생성
-    </button>
-    <button class="w-btn-neon2" type="button" onclick="location.href='studyMake.html'">
-        자습 QR생성
-    </button>
-    <button class="w-btn-neon2" type="button" onclick="location.href='studentInfo.html'">
-        학생 정보 관리
-    </button>
-    <button class="w-btn-neon2" type="button">
-        수업 정보
-    </button>
-    <button class="w-btn-neon2" type="button" onclick="location.href='testUpload.html'">
-        테스트 데이터 업로드
-    </button>
-</div></center>
+<div class="login_form">
+    <section class="login-wrapper">
+        <div class="logo">
+            관리자 로그인~~!
+            <!--            <a target="_blank" rel="noopener" href="https://unrealnavigation.com">-->
+            <!--                <img src="https://unrealnavigation.com/_themes/unrealnavigation/img/unreal-navigation-logo.png?v=1474018625" alt=""></a>-->
+        </div>
+
+        <form id="login" name="login" method="post" action="/admin/login">
+
+            <label for="phoneNumber">핸드폰 번호</label>
+            <input id="phoneNumber" name="phoneNumber" type="text" value="" autocapitalize="off"
+                   autocorrect="off"/>
+
+            <label for="password">비밀번호</label>
+            <input id="password" class="password" name="password" type="password" value=""/>
+            <div class="hide-show">
+                <span>Show</span>
+            </div>
+            <button type="button" id="loginButton" onclick="adminLogin()">로그인</button>
+        </form>
+
+    </section>
+</div>
 
 </body>
-</html>
 
+</html>

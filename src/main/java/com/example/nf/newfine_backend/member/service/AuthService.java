@@ -81,15 +81,14 @@ public class AuthService {
     // 로그인 예외처리**
     @Transactional
     public TokenDto login(SignInDto signInDto) {
-
         // 비밀번호 확인 추가
         if (teacherRepository.existsByPhoneNumber(signInDto.getPhoneNumber())){
-            Teacher teacher=teacherRepository.findByPhoneNumber(signInDto.getPhoneNumber()).orElseThrow(PhoneNumberNotFoundException::new);
+            Teacher teacher=teacherRepository.findByPhoneNumber(signInDto.getPhoneNumber()).orElseThrow(()->new PhoneNumberNotFoundException("회원 정보가 없습니다.\n회원가입을 먼저 해주세요."));
             if (!passwordEncoder.matches(signInDto.getPassword(), teacher.getTPassword())) {
                 throw new CustomException(INVALID_PASSWORD);
             }
         } else{
-            Student student=studentRepository.findByPhoneNumber(signInDto.getPhoneNumber()).orElseThrow(PhoneNumberNotFoundException::new);
+            Student student=studentRepository.findByPhoneNumber(signInDto.getPhoneNumber()).orElseThrow(()->new PhoneNumberNotFoundException("회원 정보가 없습니다.\n회원가입을 먼저 해주세요."));
             if (!passwordEncoder.matches(signInDto.getPassword(), student.getPassword())) {
                 throw new CustomException(INVALID_PASSWORD);
             }
