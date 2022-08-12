@@ -37,7 +37,7 @@
             });
         });
 
-        function login() {
+        function adminLogin() {
             if ($('#phoneNumber').val() == '') {
                 alert("핸드폰 번호를 입력해주세요!");
                 index.phoneNumber.focus();
@@ -86,7 +86,7 @@
             <div class="hide-show">
                 <span>Show</span>
             </div>
-            <button type="button" id="loginButton" onclick="login()">로그인</button>
+            <button type="button" id="loginButton" onclick="adminLogin()">로그인</button>
         </form>
 
     </section>
