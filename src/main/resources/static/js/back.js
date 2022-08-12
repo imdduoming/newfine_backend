@@ -1,4 +1,4 @@
-let domainURL= 'https://eb.newfine.tk';
+let domainURL = 'https://eb.newfine.tk';
 
 // function add_attendance() {
 //
@@ -58,25 +58,29 @@ let domainURL= 'https://eb.newfine.tk';
 //
 
 function getTokenAndRefresh() {
-    const accessToken=localStorage.getItem('accessToken');
-    const refreshToken=localStorage.getItem('refreshToken');
-    let data={"accessToken": accessToken, "refreshToken": refreshToken}
-    $.ajax({
-        type: "POST",
-        url: "${domainURL}/auth/refreshToken",
-        data: JSON.stringify(data),
-        contentType: "application/json",
-        success: function (response) {
-            console.log(response)
-            localStorage.setItem('accessToken', response['accessToken']);
-            localStorage.setItem('refreshToken', response['refreshToken']);
-            location.href =  `/main.html`
-        },
-        error: function (response) {
-            alert(response.message);
-            localStorage.clear();
-            location.href = "index.html"
-        }
-    })
+    const accessToken = localStorage.getItem('accessToken');
+    const refreshToken = localStorage.getItem('refreshToken');
+    if (accessToken != null) {
+        let data = {"accessToken": accessToken, "refreshToken": refreshToken}
+        $.ajax({
+            type: "POST",
+            url: "${domainURL}/auth/refreshToken",
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            success: function (response) {
+                console.log(response)
+                localStorage.setItem('accessToken', response['accessToken']);
+                localStorage.setItem('refreshToken', response['refreshToken']);
+                location.href = `/main.html`
+            },
+            error: function (response) {
+                alert(response.message);
+                localStorage.clear();
+                location.href = "index.html"
+            }
+        })
+    } else{
+        location.href = "index.html"
+    }
 }
 
