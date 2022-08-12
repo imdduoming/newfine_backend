@@ -28,12 +28,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {  // Spring Se
         return new BCryptPasswordEncoder();
     }
 
-    // h2 database 테스트가 원활하도록 관련 API 들은 전부 무시
+//     h2 database 테스트가 원활하도록 관련 API 들은 전부 무시
 //    @Override
 //    public void configure(WebSecurity web) {
-//        web.ignoring()
-//                .antMatchers("/h2-console/**", "/favicon.ico");
+////        web.ignoring()
+////                .antMatchers("/h2-console/**", "/favicon.ico");
 ////                .antMatchers("/h2-console/**", "/favicon.ico","/js/**","/resources/**", "/index.html");
+//        web.ignoring()
+//                .antMatchers("/index.html")
+//                .antMatchers("/resources/**")
+//                .antMatchers("/js/**")
+//                .antMatchers("/h2-console/**", "/favicon.ico");
 //    }
 
     @Override
