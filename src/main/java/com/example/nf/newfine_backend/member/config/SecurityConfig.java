@@ -32,7 +32,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {  // Spring Se
     @Override
     public void configure(WebSecurity web) {
         web.ignoring()
-                .antMatchers("/h2-console/**", "/favicon.ico","/js/**","/resources/**", "/index.html");
+                .antMatchers("/h2-console/**", "/favicon.ico");
+//                .antMatchers("/h2-console/**", "/favicon.ico","/js/**","/resources/**", "/index.html");
     }
 
     @Override
@@ -65,6 +66,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {  // Spring Se
                 .antMatchers("/auth/**").permitAll()
                 .antMatchers("/make/attendance").permitAll()
                 .antMatchers("/get/**").permitAll()
+                .antMatchers("/index.html").permitAll()
+                .antMatchers("/resources/**").permitAll()
+                .antMatchers("/js/**").permitAll()
                 .anyRequest().authenticated()   // 나머지 API 는 전부 인증 필요
 
                 // JwtFilter 를 addFilterBefore 로 등록했던 JwtSecurityConfig 클래스를 적용
