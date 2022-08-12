@@ -3,8 +3,12 @@ package com.example.nf.newfine_backend.admin.controller;
 import com.example.nf.newfine_backend.admin.dto.DeleteRequestByAdminDto;
 import com.example.nf.newfine_backend.admin.dto.SignUpByAdminDto;
 import com.example.nf.newfine_backend.admin.service.AdminService;
+import com.example.nf.newfine_backend.member.dto.SignInDto;
 import com.example.nf.newfine_backend.member.dto.SignUpDto;
+import com.example.nf.newfine_backend.member.dto.TokenDto;
+import com.example.nf.newfine_backend.member.service.AuthService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +22,7 @@ import java.util.Objects;
 public class AdminController {
 
     private final AdminService adminService;
+    private final AuthService authService;
 
     // ************ 관리자 페이지에서 학생 회원가입
     @ResponseBody
@@ -72,5 +77,14 @@ public class AdminController {
         }
         return result;
         //        return ResponseEntity.ok(adminService.deleteStudentByAdmin(deleteRequestDto));
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public ResponseEntity<TokenDto> login(HttpServletRequest request, SignInDto signInDto) {
+
+        signInDto.setPhoneNumber(request.getParameter("phoneNumber"));
+        signInDto.setPassword(request.getParameter("password"));
+        return ResponseEntity.ok(authService.login(signInDto));
     }
 }

@@ -75,18 +75,18 @@
             <!--                <img src="https://unrealnavigation.com/_themes/unrealnavigation/img/unreal-navigation-logo.png?v=1474018625" alt=""></a>-->
         </div>
 
-        <form id="login" method="post" action="/auth/login">
+        <form id="login" name="login" method="post" action="/admin/login">
 
             <label for="phoneNumber">핸드폰 번호</label>
-            <input id="phoneNumber" name="phoneNumber" type="text" autocapitalize="off"
+            <input id="phoneNumber" name="phoneNumber" type="text" value="" autocapitalize="off"
                    autocorrect="off"/>
 
             <label for="password">비밀번호</label>
-            <input id="password" class="password" name="password" type="password"/>
+            <input id="password" class="password" name="password" type="password" value=""/>
             <div class="hide-show">
                 <span>Show</span>
             </div>
-            <button type="button" onclick="login()">로그인</button>
+            <button type="button" id="loginButton" onclick="login()">로그인</button>
         </form>
 
     </section>
