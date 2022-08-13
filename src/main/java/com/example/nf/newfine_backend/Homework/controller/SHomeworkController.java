@@ -68,6 +68,7 @@ public class SHomeworkController {
     public void checkSHomework(@RequestBody CheckedList checkedList){
         checkedList.getItems().forEach(c -> {
             System.console().printf("ShId : " + c.getShId());
+            sHomeworkService.updateSHomework(c.getShId(), String.valueOf(c.getGrade()));
             System.console().printf("Grade : " + c.getGrade());
         });
     }
