@@ -44,7 +44,7 @@ public class SHomework extends BaseTimeEntity {
     @Column
     private char grade = 'C';
 
-    @Column(nullable = false)
+    @Column
     private Long studentId;
 
 
