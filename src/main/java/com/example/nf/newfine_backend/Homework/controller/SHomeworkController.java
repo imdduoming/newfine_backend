@@ -50,10 +50,15 @@ public class SHomeworkController {
 //    }
 
     @PutMapping("/sh/point")
-    public String checkSHomework(@RequestBody Map<String, Object>[] checklist){
+    public Map<String, Object>[] checkSHomework(@RequestBody Map<String, Object>[] checklist){
 //        for (String c : checkedlist){
 //            sHomeworkService.updateSHomework(Long.valueOf(c), state);
-        return "제발";
+        return checklist;
+    }
+
+    @PutMapping("/sh/test")
+    public List<Map<String, Object>> test(@RequestBody List<Map<String, Object>> param) {
+          return param;
     }
 
     //    public Map<String,Object> updateBrandPage(HttpServletRequest request, HttpServletResponse response,

@@ -74,6 +74,8 @@ dependencies {
 //    implementation group: 'org.springframework', name: 'spring-dao', version: '2.0.8'
 //    // 관리자 (우리) spring boot admin
 //    implementation 'de.codecentric:spring-boot-admin-starter-server:2.6.2'
+    //Json 처리
+    implementation group: 'org.json', name: 'json', version: '20090211'
 }
 
 tasks.named('test') {
