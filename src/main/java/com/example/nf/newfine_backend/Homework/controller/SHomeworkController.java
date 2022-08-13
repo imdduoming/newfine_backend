@@ -1,6 +1,7 @@
 package com.example.nf.newfine_backend.Homework.controller;
 
 import com.example.nf.newfine_backend.Homework.Repository.SHomeworkRepository;
+import com.example.nf.newfine_backend.Homework.domain.SHomework;
 import com.example.nf.newfine_backend.Homework.dto.SHomeworkDto;
 import com.example.nf.newfine_backend.Homework.service.SHomeworkService;
 import com.example.nf.newfine_backend.course.ListenerRepository;
@@ -12,12 +13,7 @@ import com.example.nf.newfine_backend.member.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -53,24 +49,32 @@ public class SHomeworkController {
 //        return sHomeworkService.updateSHomework(Id, sHomeworkDto);
 //    }
 
-    @PutMapping("/sh/point")
-    public Map<String,Object> updateBrandPage(HttpServletRequest request, HttpServletResponse response,
-                                              HttpSession session, @RequestBody Map<String, Object> data) {
-        System.out.println(data);
-        Map<String,Object> map = new HashMap<String,Object>();
-        return map;
-    }
 //    @PutMapping("/sh/point")
-//    public void checkSHomework(@RequestParam(value="checklist") String[] checklist){
-//        for (String c : checklist){
-//            sHomeworkService.checkSHomework(Long.valueOf(c));
-//            SHomework sHomework = sHomeworkRepository.findById(Long.valueOf(c)).get();
+//    public SHomework checkSHomework(@RequestBody SHomeworkCheckDto sHomeworkCheckDto){
+//        for (String c : checkedlist){
+//            sHomeworkService.updateSHomework(Long.valueOf(c), state);
+//
+//    }
+
+    //    public Map<String,Object> updateBrandPage(HttpServletRequest request, HttpServletResponse response,
+//                                              HttpSession session, @RequestBody Map<String, Object> data) {
+//        System.out.println(data);
+//        Map<String,Object> map = new HashMap<String,Object>();
+//        return map;
+
+
+
+    @PutMapping("/sh/point")
+    public void checkSHomework(@RequestParam(value="checkedlist[]") List<String> checkedlist){
+        for (String c : checkedlist){
+            sHomeworkService.updateSHomework(Long.valueOf(c));
+            SHomework sHomework = sHomeworkRepository.findById(Long.valueOf(c)).get();
             //Listener listener = listenerRepository.findListenerBySHomework(sHomework).get();
             //Student student = studentRepository.findByListener(listener).get();
             //pointService.create(student,"포인트 클릭!!!!",5);
             //이 shid인 s로 listener를 구한 다음에 그 listener로 student를 찾아서 point부여
-//        }
-//    }
+        }
+    }
 
 
     // shomework student 별로 조회하되, 미제출인 과제만

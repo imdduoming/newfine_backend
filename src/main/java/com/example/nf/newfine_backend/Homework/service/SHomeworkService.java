@@ -71,14 +71,40 @@ public class SHomeworkService {
         return sHomeworkDtos;
     }
 
+    @Transactional
+      public SHomework updateSHomework(Long Id) {
+//            System.out.println(state);
+            SHomework sHomework = sHomeworkRepository.findById(Id).get();
+            sHomework.setIschecked(true);
+//        if (state.equals("A")){
+//            System.out.println(state);
+//            sHomework.setIschecked(true);
+//            sHomework.setGrade('A');
+//            sHomeworkRepository.save(sHomework);
+//        }
+//        else if(state.equals("B")){
+//            System.out.println(state);
+//            sHomework.setIschecked(true);
+//            sHomework.setGrade('B');
+//            sHomeworkRepository.save(sHomework);
+//        }
+//        else if(state.equals("C")){
+//            System.out.println(state);
+//            sHomework.setIschecked(true);
+//            sHomework.setGrade('C');
+//            sHomeworkRepository.save(sHomework);
+//        }
+
+        return sHomework;
+    }
     //@Transactional public void checkSHomework(Long id) { sHomeworkRepository.checkSHomework(id); }
 
-    @Transactional
-    public Long updateSHomework(final Long Id, SHomeworkDto sHomeworkDto) {
-
-        SHomework sHomework = sHomeworkRepository.findById(Id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
-        sHomework.update(sHomeworkDto.isIschecked(), sHomeworkDto.getGrade(), sHomeworkDto.getCheckedDate());
-        return Id;
+//    @Transactional
+//    public Long updateSHomework(final Long Id, SHomeworkDto sHomeworkDto) {
+//
+//        SHomework sHomework = sHomeworkRepository.findById(Id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
+//        sHomework.update(sHomeworkDto.isIschecked(), sHomeworkDto.getGrade(), sHomeworkDto.getCheckedDate());
+//        return Id;
    /*
     @Transactional
     public String deleteSHomework(Long shId) {
@@ -87,5 +113,5 @@ public class SHomeworkService {
         return "삭제 완료";
     }
     */
-    }
 }
+
