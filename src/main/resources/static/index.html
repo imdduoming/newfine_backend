@@ -20,12 +20,17 @@
                 $.ajax({
                     type: "POST",
                     url: `${domainURL}/auth/refreshToken`,
-                    data: JSON.stringify(data),
-                    contentType: "application/json",
-                    success: async function (response) {
+                    data: data,
+                    // contentType: "application/json",
+                    success: function (response) {
+                        if (result) {
+                            alert("완료");
+                        } else {
+                            alert("전송된 값 없음");
+                        }
                         console.log(response)
-                        await localStorage.setItem('accessToken', response['accessToken']);
-                        await localStorage.setItem('refreshToken', response['refreshToken']);
+                        localStorage.setItem('accessToken', response['accessToken']);
+                        localStorage.setItem('refreshToken', response['refreshToken']);
                         window.location.href = '/main.html'
                     },
                     error: function (response) {
@@ -36,6 +41,7 @@
                 })
             }
         });
+
         //
         //     $.ajaxSetup({
         //         error: function (jqXHR, exception) {
@@ -93,13 +99,14 @@
             }
             var options = {
                 success: async function (result) {
-                    await localStorage.setItem('accessToken', result['accessToken']);
-                    await localStorage.setItem('refreshToken', result['refreshToken']);
                     let authority=result['authority'];
-
                     if (authority=="ROLE_USER"){
+                        alert("선생님 계정으로 로그인해주세요.");
                         throw new Error("선생님 계정으로 로그인해주세요.");
                     }
+                    await localStorage.setItem('accessToken', result['accessToken']);
+                    await localStorage.setItem('refreshToken', result['refreshToken']);
+
                     alert('로그인 성공!');
                     window.location.href = '/main.html'
                 },
