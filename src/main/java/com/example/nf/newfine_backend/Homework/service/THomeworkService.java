@@ -50,6 +50,7 @@ public class THomeworkService {
             System.out.println(tHomework.getId());
             SHomework sHomework=new SHomework();
             sHomework.setTitle(tHomeworkDto.getTitle());
+            sHomework.setStudentId(listener.getStudent().getId());
             sHomework.setListener(listener);
             sHomework.setThomework(tHomework);
             sHomework.setIschecked(false);
