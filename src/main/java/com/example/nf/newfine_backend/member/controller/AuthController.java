@@ -107,4 +107,13 @@ public class AuthController {
 //        }
         return ResponseEntity.ok(authService.logout(tokenRequestDto));
     }
+
+    @PostMapping("/refreshTokenWeb")
+    public TokenDto refreshToken(@RequestBody TokenRequestDto tokenRequestDto) {
+
+        System.out.println("되니..?");
+        System.out.println(tokenRequestDto.getAccessToken());
+
+        return authService.reissue(tokenRequestDto);
+    }
 }
