@@ -64,7 +64,7 @@ public class SHomeworkController {
 
 
 
-    @PutMapping("/sh/point")
+    @PostMapping("/sh/point")
     public void checkSHomework(@RequestBody CheckedList checkedList){
         checkedList.getItems().forEach(c -> {
             System.console().printf("ShId : " + c.getShId());
