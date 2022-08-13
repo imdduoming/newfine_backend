@@ -15,24 +15,26 @@
             const refreshToken = localStorage.getItem('refreshToken');
             console.log("되고 있냐...");
             console.log(accessToken, refreshToken);
-            let data = {"accessToken": accessToken, "refreshToken": refreshToken}
-            $.ajax({
-                type: "POST",
-                url: `${domainURL}/auth/refreshToken`,
-                data: JSON.stringify(data),
-                contentType: "application/json",
-                success: async function (response) {
-                    console.log(response)
-                    await localStorage.setItem('accessToken', response['accessToken']);
-                    await localStorage.setItem('refreshToken', response['refreshToken']);
-                    window.location.href = '/main.html'
-                },
-                error: function (response) {
-                    alert(response.message);
-                    localStorage.clear();
-                    window.location.href = '/index.html'
-                }
-            })
+            if (accessToken!=null || refreshToken!=null){
+                let data = {"accessToken": accessToken, "refreshToken": refreshToken}
+                $.ajax({
+                    type: "POST",
+                    url: `${domainURL}/auth/refreshToken`,
+                    data: JSON.stringify(data),
+                    contentType: "application/json",
+                    success: async function (response) {
+                        console.log(response)
+                        await localStorage.setItem('accessToken', response['accessToken']);
+                        await localStorage.setItem('refreshToken', response['refreshToken']);
+                        window.location.href = '/main.html'
+                    },
+                    error: function (response) {
+                        alert(response.message);
+                        localStorage.clear();
+                        window.location.href = '/index.html'
+                    }
+                })
+            }
         });
         //
         //     $.ajaxSetup({
