@@ -61,7 +61,7 @@ public class SHomework extends BaseTimeEntity {
         this.listener = listener;
         this.grade = sHomeworkDto.getGrade();
         this.ischecked = sHomeworkDto.isIschecked();
-        this.studentId = listener.getStudent().getId();
+        this.studentId = sHomeworkDto.getStudentId();
         this.checkedDate = sHomeworkDto.getCheckedDate();
     }
 
