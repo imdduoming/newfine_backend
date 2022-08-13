@@ -24,7 +24,7 @@ public class TestController {
     private final StudentRepository studentRepository;
 
     @ResponseBody
-    @RequestMapping(value = "/makeTestForm.do", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/makeTestForm.do", method = RequestMethod.POST)
     public Test createTest(HttpServletRequest request, TestDto testDto) throws Exception{
         testDto.setTestDate(LocalDate.parse(request.getParameter("test_date")));
         testDto.setTestName(request.getParameter("test_name"));

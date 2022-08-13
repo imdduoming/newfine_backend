@@ -10,7 +10,7 @@
     <script type="text/javascript" src="js/back.js"></script>
     <script type="text/javascript">
         $(function () {
-            getTokenAndRefresh();
+            // getTokenAndRefresh();
             $.ajaxSetup({
                 error: function (jqXHR, exception) {
                     switch (jqXHR.status) {
@@ -185,7 +185,7 @@
 
 </head>
 <body>
-<form id="makeTestForm" name="makeTestForm" method="post" action="makeTestForm.do">
+<form id="makeTestForm" name="makeTestForm" method="post" action="/admin/makeTestForm.do">
     <br>수업을 입력하세요.<br>
     <select name="course" id="course_list" onchange="selectBoxChange(this.value);">
         <option value='none'>===수업선택===</option>
@@ -202,8 +202,8 @@
 
 <br>----------------------------------------------------------------------------<br>
 
-<form id="courseTestResultsFileUploadForm" name="courseTestResultsFileUploadForm" enctype="multipart/form-data"
-      method="post" action="courseTestResultsFileUpload.do">
+<form id="courseTestResultsFileUploadForm" name="/admin/courseTestResultsFileUploadForm" enctype="multipart/form-data"
+      method="post" action="/admin/courseTestResultsFileUpload.do">
     <br>반별 테스트 데이터 입력<br>
     <!--    <br>수업을 입력하세요.<br>-->
     <!--    <select name="course" id="course_list" onchange="selectBoxChange(this.value);">-->
@@ -224,8 +224,8 @@
 
 <br>----------------------------------------------------------------------------<br>
 
-<form id="studentTestResultsFileUploadForm" name="studentTestResultsFileUploadForm" enctype="multipart/form-data"
-      method="post" action="studentTestResultsFileUpload.do">
+<form id="studentTestResultsFileUploadForm" name="/admin/studentTestResultsFileUploadForm" enctype="multipart/form-data"
+      method="post" action="/admin/studentTestResultsFileUpload.do">
     <br>학생 개인별 정오표 입력<br>
     <!--    <br>수업을 입력하세요.<br>-->
     <!--    <select name="course" id="course_list" onchange="selectBoxChange(this.value);">-->
