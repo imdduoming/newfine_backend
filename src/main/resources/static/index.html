@@ -47,9 +47,9 @@
             // }
         });
 
-        function getTokenAndRefresh() {
-            const accessToken = localStorage.getItem('accessToken');
-            const refreshToken = localStorage.getItem('refreshToken');
+        async function getTokenAndRefresh() {
+            const accessToken = await localStorage.getItem('accessToken');
+            const refreshToken = await localStorage.getItem('refreshToken');
             console.log("되고 있냐...");
             console.log(accessToken, refreshToken);
             if (accessToken != null || refreshToken != null) {
