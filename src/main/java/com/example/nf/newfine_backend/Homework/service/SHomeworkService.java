@@ -75,6 +75,7 @@ public class SHomeworkService {
       public void updateSHomework(Long Id, String state) {
             System.out.println(state);
             SHomework sHomework = sHomeworkRepository.findById(Id).get();
+            Listener listener = listenerRepository.findById(1L).get();
             sHomework.setIschecked(true);
             sHomeworkRepository.save(sHomework);
         if (state.equals("A")){
