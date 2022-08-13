@@ -50,6 +50,7 @@ public class SHomeworkController {
 //    }
 
     @PutMapping("/sh/point")
+    @ResponseBody
     public Map<String, Object>[] checkSHomework(@RequestBody Map<String, Object>[] checklist){
 //        for (String c : checkedlist){
 //            sHomeworkService.updateSHomework(Long.valueOf(c), state);
@@ -57,8 +58,33 @@ public class SHomeworkController {
     }
 
     @PutMapping("/sh/test")
-    public List<Map<String, Object>> test(@RequestBody List<Map<String, Object>> param) {
-          return param;
+    @ResponseBody
+    public List<Map<String, Object>> test(@RequestBody List<Map<String, Object>> checklist) {
+        for (Map<String, Object> c : checklist) {
+            System.out.println(c.get("shId") + " : " + c.get("grade"));
+        }
+        return checklist;
+    }
+
+    @PutMapping("/sh/ppoint")
+    @ResponseBody
+    public String insertMemberInfo(@RequestParam String checklist){
+//
+//        Map<String, Object> result = new HashMap<>();
+//        try {
+//            /*JSONArray jsonArray = JSONArray.fromObject(paramData);*/
+//            List<Map<String,Object>> datalist = new ArrayList<Map<String,Object>>();
+//            datalist = JSONArray.fromObject(paramData);
+//
+//            for (Map<String, Object> data : datalist) {
+//                System.out.println(data.get("shId") + " : " + data.get("grade"));
+//            }
+//            result.put("result", true);
+//        } catch (Exception e) {
+//            result.put("result", false);
+//        }
+        return "제발";
+
     }
 
     //    public Map<String,Object> updateBrandPage(HttpServletRequest request, HttpServletResponse response,
