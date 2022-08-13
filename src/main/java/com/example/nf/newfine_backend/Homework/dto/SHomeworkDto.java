@@ -17,6 +17,10 @@ public class SHomeworkDto {
     private String name;
     private String title;
 
+    private char grade;
+
+    private boolean ischecked;
+
     private String createdDate;
 
     private LocalDateTime checkedDate;
@@ -27,6 +31,8 @@ public class SHomeworkDto {
                 sHomework.getShid(),
                 sHomework.getListener().getStudent().getName(),
                 sHomework.getTitle(),
+                sHomework.getGrade(),
+                sHomework.isIschecked(),
                 sHomework.getCreatedDate(),
                 sHomework.getCheckedDate()
         );

@@ -1,15 +1,16 @@
 package com.example.nf.newfine_backend.Homework.domain;
 
+import com.example.nf.newfine_backend.Homework.dto.SHomeworkDto;
 import com.example.nf.newfine_backend.course.Listener;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-
 import java.time.LocalDateTime;
 
 import static javax.persistence.FetchType.EAGER;
@@ -44,17 +45,26 @@ public class SHomework extends BaseTimeEntity {
     private char grade = 'C';
 
     @Column
+    @LastModifiedDate
     @DateTimeFormat(pattern = "yyyy-MM-ddTHH:mm")
     private LocalDateTime checkedDate;
 
 
     @Builder
-    public SHomework(String title, THomework tHomework, Listener listener, Boolean ischecked, LocalDateTime checkedDate) {
-        this.title = title;
+    public SHomework(SHomeworkDto sHomeworkDto, THomework tHomework, Listener listener) {
+        this.title = sHomeworkDto.getTitle();
         this.thomework = tHomework;
         this.listener = listener;
+        this.grade = sHomeworkDto.getGrade();
+        this.ischecked = sHomeworkDto.isIschecked();
+        this.checkedDate = sHomeworkDto.getCheckedDate();
+    }
+
+    public void update(Boolean ischecked, char grade, LocalDateTime checkedDate) {
         this.ischecked = ischecked;
+        this.grade = grade;
         this.checkedDate = checkedDate;
+        //this.modifiedDate = LocalDateTime.now();
     }
 }
 
