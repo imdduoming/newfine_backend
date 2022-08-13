@@ -64,6 +64,9 @@ public class AuthController {
     public ResponseEntity<TokenDto> reissue(@RequestBody TokenRequestDto tokenRequestDto) {
 //        token.replace("Bearer ", "");
 
+        System.out.println("되니..?");
+        System.out.println(tokenRequestDto.getAccessToken());
+
 //        TokenRequestDto tokenRequestDto=TokenRequestDto.builder()
 //                .accessToken(accessToken)
 //                .refreshToken(token)
