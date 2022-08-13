@@ -9,10 +9,11 @@
     <script src="https://malsup.github.io/jquery.form.js"></script>
     <script type="text/javascript" src="js/back.js"></script>
     <script type="text/javascript">
-        $(async function () {
+        $(function () {
             // getTokenAndRefresh();
-            const accessToken = await localStorage.getItem('accessToken');
-            const refreshToken = await localStorage.getItem('refreshToken');
+            const accessToken = localStorage.getItem('accessToken');
+            const refreshToken = localStorage.getItem('refreshToken');
+            console.log("되고 있냐...");
             console.log(accessToken, refreshToken);
             let data = {"accessToken": accessToken, "refreshToken": refreshToken}
             $.ajax({
@@ -92,6 +93,11 @@
                 success: async function (result) {
                     await localStorage.setItem('accessToken', result['accessToken']);
                     await localStorage.setItem('refreshToken', result['refreshToken']);
+                    let authority=result['authority'];
+
+                    if (authority=="ROLE_USER"){
+                        throw new Error("선생님 계정으로 로그인해주세요.");
+                    }
                     alert('로그인 성공!');
                     window.location.href = '/main.html'
                 },
