@@ -43,7 +43,7 @@ public class SHomeworkService {
 
     @Transactional(readOnly = true)
     public List<SHomeworkDto> getSHomeworks(Long thId) {
-        THomework tHomework=tHomeworkRepository.findById(thId).get();
+        THomework tHomework = tHomeworkRepository.findById(thId).get();
         List<SHomework> sHomeworks = sHomeworkRepository.findAllByThomework(tHomework);
         List<SHomeworkDto> sHomeworkDtos = new ArrayList<>();
 
@@ -54,7 +54,7 @@ public class SHomeworkService {
     public List<SHomeworkDto> getSHomeworksByStudent1(Student student) {
         List<Listener> listeners = listenerRepository.findListenersByStudent(student);
         List<SHomeworkDto> sHomeworkDtos = new ArrayList<>();
-        for(Listener listener : listeners){
+        for (Listener listener : listeners) {
             List<SHomework> sHomeworks = sHomeworkRepository.findAllByListener1(listener.getId());
             sHomeworks.forEach(s -> sHomeworkDtos.add(SHomeworkDto.toDto(s)));
         }
@@ -64,15 +64,21 @@ public class SHomeworkService {
     public List<SHomeworkDto> getSHomeworksByStudent2(Student student) {
         List<Listener> listeners = listenerRepository.findListenersByStudent(student);
         List<SHomeworkDto> sHomeworkDtos = new ArrayList<>();
-        for(Listener listener : listeners){
+        for (Listener listener : listeners) {
             List<SHomework> sHomeworks = sHomeworkRepository.findAllByListener2(listener.getId());
             sHomeworks.forEach(s -> sHomeworkDtos.add(SHomeworkDto.toDto(s)));
         }
         return sHomeworkDtos;
     }
 
-    @Transactional public void checkSHomework(Long id) { sHomeworkRepository.checkSHomework(id); }
+    //@Transactional public void checkSHomework(Long id) { sHomeworkRepository.checkSHomework(id); }
 
+    @Transactional
+    public Long updateSHomework(final Long Id, SHomeworkDto sHomeworkDto) {
+
+        SHomework sHomework = sHomeworkRepository.findById(Id).orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
+        sHomework.update(sHomeworkDto.isIschecked(), sHomeworkDto.getGrade(), sHomeworkDto.getCheckedDate());
+        return Id;
    /*
     @Transactional
     public String deleteSHomework(Long shId) {
@@ -81,4 +87,5 @@ public class SHomeworkService {
         return "삭제 완료";
     }
     */
+    }
 }
