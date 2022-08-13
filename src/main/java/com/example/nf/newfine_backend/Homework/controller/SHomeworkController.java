@@ -1,7 +1,7 @@
 package com.example.nf.newfine_backend.Homework.controller;
 
 import com.example.nf.newfine_backend.Homework.Repository.SHomeworkRepository;
-import com.example.nf.newfine_backend.Homework.domain.CheckedList;
+import com.example.nf.newfine_backend.Homework.domain.CheckedItem;
 import com.example.nf.newfine_backend.Homework.dto.SHomeworkDto;
 import com.example.nf.newfine_backend.Homework.service.SHomeworkService;
 import com.example.nf.newfine_backend.course.ListenerRepository;
@@ -64,9 +64,9 @@ public class SHomeworkController {
 
 
 
-    @PostMapping("/sh/point")
-    public void checkSHomework(@RequestBody CheckedList checkedList){
-        checkedList.getItems().forEach(c -> {
+    @PutMapping("/sh/point")
+    public void checkSHomework(@RequestBody List<CheckedItem> checkedItems){
+        checkedItems.forEach(c -> {
             System.console().printf("ShId : " + c.getShId());
             sHomeworkService.updateSHomework(c.getShId(), String.valueOf(c.getGrade()));
             System.console().printf("Grade : " + c.getGrade());
