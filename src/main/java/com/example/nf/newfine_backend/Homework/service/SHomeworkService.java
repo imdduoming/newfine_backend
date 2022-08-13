@@ -90,21 +90,20 @@ public class SHomeworkService {
             sHomework.setIschecked(true);
             sHomework.setGrade('A');
             sHomeworkRepository.save(sHomework);
-            pointService.create(student,"포인트 클릭!!!!",10);
+            pointService.create(student,"과제 등급: A",10);
         }
         else if(state.equals("B")){
             System.out.println(state);
             sHomework.setIschecked(true);
             sHomework.setGrade('B');
             sHomeworkRepository.save(sHomework);
-            pointService.create(student,"포인트 클릭!!!!",5);
+            pointService.create(student,"과제 등급: B",5);
         }
         else if(state.equals("C")){
             System.out.println(state);
             sHomework.setIschecked(true);
             sHomework.setGrade('C');
             sHomeworkRepository.save(sHomework);
-            pointService.create(student,"포인트 클릭!!!!",0);
         }
     }
     //@Transactional public void checkSHomework(Long id) { sHomeworkRepository.checkSHomework(id); }
