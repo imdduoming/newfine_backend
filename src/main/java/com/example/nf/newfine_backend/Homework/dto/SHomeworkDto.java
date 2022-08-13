@@ -31,7 +31,7 @@ public class SHomeworkDto {
     public static SHomeworkDto toDto(SHomework sHomework) {
         return new SHomeworkDto(
                 sHomework.getShid(),
-                sHomework.getStudentId(),
+                sHomework.getListener().getStudent().getId(),
                 sHomework.getListener().getStudent().getName(),
                 sHomework.getTitle(),
                 sHomework.getGrade(),
