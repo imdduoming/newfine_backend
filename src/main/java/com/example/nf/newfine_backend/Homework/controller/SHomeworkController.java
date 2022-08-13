@@ -12,7 +12,12 @@ import com.example.nf.newfine_backend.member.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -43,9 +48,17 @@ public class SHomeworkController {
     }
 
 
+//    @PutMapping("/sh/point")
+//    public Long update(@PathVariable final Long Id, @RequestBody SHomeworkDto sHomeworkDto) {
+//        return sHomeworkService.updateSHomework(Id, sHomeworkDto);
+//    }
+
     @PutMapping("/sh/point")
-    public Long update(@PathVariable final Long Id, @RequestBody SHomeworkDto sHomeworkDto) {
-        return sHomeworkService.updateSHomework(Id, sHomeworkDto);
+    public Map<String,Object> updateBrandPage(HttpServletRequest request, HttpServletResponse response,
+                                              HttpSession session, @RequestBody Map<String, Object> data) {
+        System.out.println(data);
+        Map<String,Object> map = new HashMap<String,Object>();
+        return map;
     }
 //    @PutMapping("/sh/point")
 //    public void checkSHomework(@RequestParam(value="checklist") String[] checklist){
