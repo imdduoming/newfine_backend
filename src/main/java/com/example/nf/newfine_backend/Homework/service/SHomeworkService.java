@@ -8,6 +8,9 @@ import com.example.nf.newfine_backend.Homework.dto.SHomeworkDto;
 import com.example.nf.newfine_backend.course.Listener;
 import com.example.nf.newfine_backend.course.ListenerRepository;
 import com.example.nf.newfine_backend.member.student.domain.Student;
+import com.example.nf.newfine_backend.member.student.exception.PhoneNumberNotFoundException;
+import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
+import com.example.nf.newfine_backend.member.student.service.PointService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +25,10 @@ public class SHomeworkService {
     private final SHomeworkRepository sHomeworkRepository;
     private final THomeworkRepository tHomeworkRepository;
     private final ListenerRepository listenerRepository;
+
+    private final StudentRepository studentRepository;
+
+    private final PointService pointService;
 
 
     /*
@@ -75,24 +82,29 @@ public class SHomeworkService {
       public void updateSHomework(Long Id, String state) {
             System.out.println(state);
             SHomework sHomework = sHomeworkRepository.findById(Id).get();
-//            Listener listener = listenerRepository.findById(Id).get();
+            Long studentId = sHomework.getStudentId();
+            System.out.println(studentId);
+            Student student = studentRepository.findById(studentId).orElseThrow(PhoneNumberNotFoundException::new);
         if (state.equals("A")){
             System.out.println(state);
             sHomework.setIschecked(true);
             sHomework.setGrade('A');
             sHomeworkRepository.save(sHomework);
+            pointService.create(student,"포인트 클릭!!!!",10);
         }
         else if(state.equals("B")){
             System.out.println(state);
             sHomework.setIschecked(true);
             sHomework.setGrade('B');
             sHomeworkRepository.save(sHomework);
+            pointService.create(student,"포인트 클릭!!!!",5);
         }
         else if(state.equals("C")){
             System.out.println(state);
             sHomework.setIschecked(true);
             sHomework.setGrade('C');
             sHomeworkRepository.save(sHomework);
+            pointService.create(student,"포인트 클릭!!!!",0);
         }
     }
     //@Transactional public void checkSHomework(Long id) { sHomeworkRepository.checkSHomework(id); }

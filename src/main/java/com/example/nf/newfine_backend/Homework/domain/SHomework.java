@@ -44,6 +44,10 @@ public class SHomework extends BaseTimeEntity {
     @Column
     private char grade = 'C';
 
+    @Column(nullable = false)
+    private Long studentId;
+
+
     @Column
     @LastModifiedDate
     @DateTimeFormat(pattern = "yyyy-MM-ddTHH:mm")
@@ -57,6 +61,7 @@ public class SHomework extends BaseTimeEntity {
         this.listener = listener;
         this.grade = sHomeworkDto.getGrade();
         this.ischecked = sHomeworkDto.isIschecked();
+        this.studentId = listener.getStudent().getId();
         this.checkedDate = sHomeworkDto.getCheckedDate();
     }
 
