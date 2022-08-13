@@ -72,7 +72,7 @@ public class SHomeworkService {
     }
 
     @Transactional
-      public SHomework updateSHomework(Long Id, String state) {
+      public void updateSHomework(Long Id, String state) {
             System.out.println(state);
             SHomework sHomework = sHomeworkRepository.findById(Id).get();
             sHomework.setIschecked(true);
@@ -95,8 +95,6 @@ public class SHomeworkService {
             sHomework.setGrade('C');
             sHomeworkRepository.save(sHomework);
         }
-
-        return sHomework;
     }
     //@Transactional public void checkSHomework(Long id) { sHomeworkRepository.checkSHomework(id); }
 

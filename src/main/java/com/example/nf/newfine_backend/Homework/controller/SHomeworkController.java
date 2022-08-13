@@ -59,11 +59,12 @@ public class SHomeworkController {
 
     @PutMapping("/sh/test")
     @ResponseBody
-    public List<Map<String, Object>> test(@RequestBody List<Map<String, Object>> checklist) {
+    public String test(@RequestBody List<Map<String, Object>> checklist) {
         for (Map<String, Object> c : checklist) {
             System.out.println(c.get("shId") + " : " + c.get("grade"));
+            sHomeworkService.updateSHomework((Long) c.get("shId"), (String) c.get("grade"));
         }
-        return checklist;
+        return "성공";
     }
 
     @PutMapping("/sh/ppoint")
