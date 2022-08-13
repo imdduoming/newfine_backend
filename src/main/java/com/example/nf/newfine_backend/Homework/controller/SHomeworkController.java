@@ -63,6 +63,7 @@ public class SHomeworkController {
         for (Map<String, Object> c : checklist) {
             System.out.println(c.get("shId") + " : " + c.get("grade"));
             Long shId = Long.parseLong(String.valueOf(c.get("shId")));
+            System.out.println(shId + " : " + c.get("grade"));
             sHomeworkService.updateSHomework(shId, (String) c.get("grade"));
         }
         return "성공";
