@@ -1,6 +1,7 @@
 package com.example.nf.newfine_backend.Homework.controller;
 
 import com.example.nf.newfine_backend.Homework.Repository.SHomeworkRepository;
+import com.example.nf.newfine_backend.Homework.domain.CheckedItem;
 import com.example.nf.newfine_backend.Homework.dto.SHomeworkDto;
 import com.example.nf.newfine_backend.Homework.service.SHomeworkService;
 import com.example.nf.newfine_backend.course.ListenerRepository;
@@ -64,16 +65,12 @@ public class SHomeworkController {
 
 
     @PutMapping("/sh/point")
-    public void checkSHomework(@RequestParam(value="checklist[]") String[] checklist){
-        for (String c : checklist){
-            sHomeworkService.updateSHomework(Long.valueOf(c));
-            //SHomework sHomework = sHomeworkRepository.findById(Long.valueOf(c)).get();
-            //Listener listener = listenerRepository.findListenerBySHomework(sHomework).get();
-            //Student student = studentRepository.findByListener(listener).get();
-            //pointService.create(student,"포인트 클릭!!!!",5);
-            //이 shid인 s로 listener를 구한 다음에 그 listener로 student를 찾아서 point부여
-            System.out.println(c);
-        }
+    public void checkSHomework(@RequestBody List<CheckedItem> checkedItems){
+        checkedItems.forEach(c -> {
+            System.console().printf("ShId : " + c.getShId());
+            sHomeworkService.updateSHomework(c.getShId(), String.valueOf(c.getGrade()));
+            System.console().printf("Grade : " + c.getGrade());
+        });
     }
 
 

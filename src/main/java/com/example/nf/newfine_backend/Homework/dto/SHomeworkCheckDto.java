@@ -5,13 +5,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class SHomeworkCheckDto {
-    private List<String> checkedlist;
-    private String state;
+    private Long id;
+    private Long shId;
+    private String name;
+    private String title;
+    private char grade;
+    private boolean ischecked;
+
+
+
 }
