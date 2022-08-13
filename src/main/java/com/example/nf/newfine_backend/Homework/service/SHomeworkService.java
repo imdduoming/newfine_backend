@@ -72,29 +72,29 @@ public class SHomeworkService {
     }
 
     @Transactional
-      public SHomework updateSHomework(Long Id) {
-//            System.out.println(state);
+      public SHomework updateSHomework(Long Id, String state) {
+            System.out.println(state);
             SHomework sHomework = sHomeworkRepository.findById(Id).get();
             sHomework.setIschecked(true);
             sHomeworkRepository.save(sHomework);
-//        if (state.equals("A")){
-//            System.out.println(state);
-//            sHomework.setIschecked(true);
-//            sHomework.setGrade('A');
-//            sHomeworkRepository.save(sHomework);
-//        }
-//        else if(state.equals("B")){
-//            System.out.println(state);
-//            sHomework.setIschecked(true);
-//            sHomework.setGrade('B');
-//            sHomeworkRepository.save(sHomework);
-//        }
-//        else if(state.equals("C")){
-//            System.out.println(state);
-//            sHomework.setIschecked(true);
-//            sHomework.setGrade('C');
-//            sHomeworkRepository.save(sHomework);
-//        }
+        if (state.equals("A")){
+            System.out.println(state);
+            sHomework.setIschecked(true);
+            sHomework.setGrade('A');
+            sHomeworkRepository.save(sHomework);
+        }
+        else if(state.equals("B")){
+            System.out.println(state);
+            sHomework.setIschecked(true);
+            sHomework.setGrade('B');
+            sHomeworkRepository.save(sHomework);
+        }
+        else if(state.equals("C")){
+            System.out.println(state);
+            sHomework.setIschecked(true);
+            sHomework.setGrade('C');
+            sHomeworkRepository.save(sHomework);
+        }
 
         return sHomework;
     }
