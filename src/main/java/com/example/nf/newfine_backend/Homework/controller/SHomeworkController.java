@@ -1,7 +1,6 @@
 package com.example.nf.newfine_backend.Homework.controller;
 
 import com.example.nf.newfine_backend.Homework.Repository.SHomeworkRepository;
-import com.example.nf.newfine_backend.Homework.domain.CheckedItem;
 import com.example.nf.newfine_backend.Homework.dto.SHomeworkDto;
 import com.example.nf.newfine_backend.Homework.service.SHomeworkService;
 import com.example.nf.newfine_backend.course.ListenerRepository;
@@ -14,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -49,12 +49,12 @@ public class SHomeworkController {
 //        return sHomeworkService.updateSHomework(Id, sHomeworkDto);
 //    }
 
-//    @PutMapping("/sh/point")
-//    public SHomework checkSHomework(@RequestBody SHomeworkCheckDto sHomeworkCheckDto){
+    @PutMapping("/sh/point")
+    public String checkSHomework(@RequestBody Map<String, Object>[] checklist){
 //        for (String c : checkedlist){
 //            sHomeworkService.updateSHomework(Long.valueOf(c), state);
-//
-//    }
+        return "제발";
+    }
 
     //    public Map<String,Object> updateBrandPage(HttpServletRequest request, HttpServletResponse response,
 //                                              HttpSession session, @RequestBody Map<String, Object> data) {
@@ -64,14 +64,14 @@ public class SHomeworkController {
 
 
 
-    @PostMapping("/sh/point")
-    public void checkSHomework(@RequestBody List<CheckedItem> checkedItems){
-        checkedItems.forEach(c -> {
-            System.console().printf("ShId : " + c.getShId());
-            sHomeworkService.updateSHomework(c.getShId(), String.valueOf(c.getGrade()));
-            System.console().printf("Grade : " + c.getGrade());
-        });
-    }
+//    @PostMapping("/sh/point")
+//    public void checkSHomework(@RequestBody List<CheckedItem> checkedItems){
+//        checkedItems.forEach(c -> {
+//            System.console().printf("ShId : " + c.getShId());
+//            sHomeworkService.updateSHomework(c.getShId(), String.valueOf(c.getGrade()));
+//            System.console().printf("Grade : " + c.getGrade());
+//        });
+//    }
 
 
     // shomework student 별로 조회하되, 미제출인 과제만
