@@ -16,14 +16,15 @@
             console.log("되고 있냐...");
             console.log(accessToken, refreshToken);
             if (accessToken!=null || refreshToken!=null){
-                let data = {"accessToken": accessToken, "refreshToken": refreshToken}
+                let data = {accessToken: accessToken, refreshToken: refreshToken}
                 $.ajax({
                     type: "POST",
                     url: `${domainURL}/auth/refreshToken`,
                     data: data,
                     // contentType: "application/json",
+                    contentType: "application/json; charset=UTF-8",
                     success: function (response) {
-                        if (result) {
+                        if (response) {
                             alert("완료");
                         } else {
                             alert("전송된 값 없음");
