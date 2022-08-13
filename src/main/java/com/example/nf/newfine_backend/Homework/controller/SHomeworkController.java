@@ -62,10 +62,11 @@ public class SHomeworkController {
     public String test(@RequestBody List<Map<String, Object>> checklist) {
         for (Map<String, Object> c : checklist) {
             System.out.println(c.get("shId") + " : " + c.get("grade"));
-//            Long shId = Long.parseLong(String.valueOf(c.get("shId")));
-            Long shId = Long.valueOf(c.get("shId").toString());
-            System.out.println("shId: " + shId + " : " + c.get("grade"));
-            sHomeworkService.updateSHomework(shId, (String) c.get("grade"));
+            Long Id = Long.parseLong(String.valueOf(c.get("shId")));
+            String grade = String.valueOf(c.get("grade"));
+//            Long Id = Long.valueOf(c.get("shId").toString());
+            System.out.println("shId: " + Id + " : grade: " + grade);
+            sHomeworkService.updateSHomework(Id, grade);
         }
         return "성공";
     }
