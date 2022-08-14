@@ -1,7 +1,5 @@
 package com.example.nf.newfine_backend.test.service;
 
-import com.example.nf.newfine_backend.attendance.domain.Attendance;
-import com.example.nf.newfine_backend.attendance.domain.StudentAttendance;
 import com.example.nf.newfine_backend.course.Course;
 import com.example.nf.newfine_backend.course.CourseRepository;
 import com.example.nf.newfine_backend.course.Listener;
@@ -18,10 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 
-import java.util.ArrayList;
-import java.util.List;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -2,17 +2,13 @@ package com.example.nf.newfine_backend.attendance.controller;
 
 import com.example.nf.newfine_backend.attendance.domain.Attendance;
 import com.example.nf.newfine_backend.attendance.domain.StudentAttendance;
-import com.example.nf.newfine_backend.attendance.dto.AttendanceDto;
 import com.example.nf.newfine_backend.attendance.dto.ParentDto;
-import com.example.nf.newfine_backend.attendance.dto.StudentAttendanceDto;
 import com.example.nf.newfine_backend.attendance.dto.VideoApplyDto;
 import com.example.nf.newfine_backend.attendance.service.AttendanceService;
 import com.example.nf.newfine_backend.attendance.service.VideoService;
 import com.example.nf.newfine_backend.branch.domain.BranchStudent;
 import com.example.nf.newfine_backend.branch.repository.BranchStudentRepository;
 import com.example.nf.newfine_backend.course.CourseRepository;
-import com.example.nf.newfine_backend.member.dto.SignUpAuthDto;
-import com.example.nf.newfine_backend.member.exception.CustomException;
 import com.example.nf.newfine_backend.member.student.domain.Student;
 import com.example.nf.newfine_backend.member.student.exception.PhoneNumberNotFoundException;
 import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
@@ -23,12 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
-
-import static com.example.nf.newfine_backend.member.exception.ErrorCode.DUPLICATE_MEMBER;
-import static com.example.nf.newfine_backend.member.exception.ErrorCode.MEMBER_NOT_FOUND;
 
 @RestController
 @RequiredArgsConstructor

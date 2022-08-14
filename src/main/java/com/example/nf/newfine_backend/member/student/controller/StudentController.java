@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static com.example.nf.newfine_backend.member.exception.ErrorCode.DUPLICATE_MEMBER;
 import static com.example.nf.newfine_backend.member.exception.ErrorCode.MEMBER_NOT_FOUND;
 
 @RestController

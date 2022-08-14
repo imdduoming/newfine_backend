@@ -1,27 +1,16 @@
 package com.example.nf.newfine_backend.study;
 
-import com.example.nf.newfine_backend.attendance.domain.StudentAttendance;
-import com.example.nf.newfine_backend.attendance.dto.AttendanceDto;
-import com.example.nf.newfine_backend.attendance.service.AttendanceService;
-import com.example.nf.newfine_backend.attendance.dto.StudentAttendanceDto;
-import com.example.nf.newfine_backend.attendance.domain.Attendance;
-import com.example.nf.newfine_backend.course.Course;
-import com.example.nf.newfine_backend.course.CourseRepository;
 import com.example.nf.newfine_backend.member.student.domain.Student;
 import com.example.nf.newfine_backend.member.student.exception.PhoneNumberNotFoundException;
 import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
 import com.example.nf.newfine_backend.member.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.jni.Local;
 import org.springframework.http.HttpHeaders;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.web.header.Header;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor

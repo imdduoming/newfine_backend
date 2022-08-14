@@ -2,7 +2,6 @@ package com.example.nf.newfine_backend.study;
 
 
 import com.example.nf.newfine_backend.member.student.domain.Student;
-import com.example.nf.newfine_backend.study.Study;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Builder;
 import lombok.Getter;

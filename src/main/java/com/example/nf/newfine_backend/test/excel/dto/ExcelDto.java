@@ -1,10 +1,7 @@
 package com.example.nf.newfine_backend.test.excel.dto;
 
-import com.example.nf.newfine_backend.member.domain.Authority;
-import com.example.nf.newfine_backend.member.student.domain.Student;
 import com.example.nf.newfine_backend.test.excel.domain.Excel;
 import lombok.*;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Setter
 @Getter
