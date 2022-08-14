@@ -13,7 +13,7 @@
             $.ajaxSetup({
                 headers: { "Authorization": `Bearer ${localStorage.getItem('accessToken')}` }
             });
-            // login_check();
+            login_check();
             // $.ajaxSetup({
             //     error: function (jqXHR, exception) {
             //         switch (jqXHR.status) {
@@ -66,19 +66,19 @@
 <body>
 <center><div id="main">
     <h1>관리자 페이지</h1><br>
-    <button class="w-btn-neon2" type="button" onclick="location.href='attendanceMake.html'">
+    <button class="w-btn-neon2" type="button" onclick="location.href='attendanceMake'">
         출석 QR생성
     </button>
-    <button class="w-btn-neon2" type="button" onclick="location.href='studyMake.html'">
+    <button class="w-btn-neon2" type="button" onclick="location.href='studyMake'">
         자습 QR생성
     </button>
-    <button class="w-btn-neon2" type="button" onclick="location.href='studentInfo.html'">
+    <button class="w-btn-neon2" type="button" onclick="location.href='studentInfo'">
         학생 정보 관리
     </button>
     <button class="w-btn-neon2" type="button">
         수업 정보
     </button>
-    <button class="w-btn-neon2" type="button" onclick="location.href='testUpload.html'">
+    <button class="w-btn-neon2" type="button" onclick="location.href='testUpload'">
         테스트 데이터 업로드
     </button>
     <button class="w-btn-neon2" type="button" onclick="logout()">
