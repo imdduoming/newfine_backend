@@ -89,7 +89,7 @@ public class TestService {
         Test test = testRepository.findById(test_id).get();
         String student_code= student.getTest_code();
         // 오답률 best 5
-        List<CourseTestResults> courseTestResultsList= courseTestResultsRepository.findTop5ByTestOOrderByCorrectAnsRate(test);
+        List<CourseTestResults> courseTestResultsList= courseTestResultsRepository.findTop5ByTestOrderByCorrectAnsRate(test);
         // 학생 답안 가져오기
         StudentTestResults studentTestResults=studentTestResultsRepository.findByTestAndStudentCode(test,student_code).get();
 

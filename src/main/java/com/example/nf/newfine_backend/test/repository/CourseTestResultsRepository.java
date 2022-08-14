@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface CourseTestResultsRepository extends JpaRepository<CourseTestResults, Long> {
-    List<CourseTestResults> findTop5ByTestOOrderByCorrectAnsRate(Test test); // 역순
+    List<CourseTestResults> findTop5ByTestOrderByCorrectAnsRate(Test test); // 역순
 }
