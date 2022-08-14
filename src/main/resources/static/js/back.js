@@ -83,8 +83,8 @@ function getTokenAndRefresh() {
             console.log(response)
             localStorage.setItem('accessToken', response['accessToken']);
             localStorage.setItem('refreshToken', response['refreshToken']);
-            // window.location.href = '/main.html'
-            window.location.href = '/main'
+            window.location.href = '/main.html'
+            // window.location.href = '/main'
         },
         // error: function (response) {
         //     alert(response.message);

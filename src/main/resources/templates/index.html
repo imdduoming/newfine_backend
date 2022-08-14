@@ -37,10 +37,12 @@
                 $('.hide-show span').text('Show').addClass('show');
                 $('.hide-show').parent().find('input[name="password"]').attr('type', 'password');
             });
-            getTokenAndRefresh();
+
             $.ajaxSetup({
                 headers: { "Authorization": `Bearer ${localStorage.getItem('accessToken')}` }
             });
+
+            getTokenAndRefresh();
             // const accessToken = localStorage.getItem('accessToken');
             // const refreshToken = localStorage.getItem('refreshToken');
             // console.log("되고 있냐...");
