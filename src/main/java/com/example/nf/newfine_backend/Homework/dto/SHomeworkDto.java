@@ -14,8 +14,14 @@ public class SHomeworkDto {
 
     private Long shId;
 
+    private Long studentId;
+
     private String name;
     private String title;
+
+    private char grade;
+
+    private boolean ischecked;
 
     private String createdDate;
 
@@ -25,8 +31,11 @@ public class SHomeworkDto {
     public static SHomeworkDto toDto(SHomework sHomework) {
         return new SHomeworkDto(
                 sHomework.getShid(),
+                sHomework.getListener().getStudent().getId(),
                 sHomework.getListener().getStudent().getName(),
                 sHomework.getTitle(),
+                sHomework.getGrade(),
+                sHomework.isIschecked(),
                 sHomework.getCreatedDate(),
                 sHomework.getCheckedDate()
         );

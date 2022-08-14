@@ -1,19 +1,16 @@
 package com.example.nf.newfine_backend.Homework.controller;
 
-import com.example.nf.newfine_backend.Homework.Repository.SHomeworkRepository;
-import com.example.nf.newfine_backend.Homework.domain.SHomework;
 import com.example.nf.newfine_backend.Homework.dto.SHomeworkDto;
 import com.example.nf.newfine_backend.Homework.service.SHomeworkService;
-import com.example.nf.newfine_backend.course.ListenerRepository;
 import com.example.nf.newfine_backend.member.student.domain.Student;
 import com.example.nf.newfine_backend.member.student.exception.PhoneNumberNotFoundException;
 import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
-import com.example.nf.newfine_backend.member.student.service.PointService;
 import com.example.nf.newfine_backend.member.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -21,11 +18,8 @@ import java.util.List;
 public class SHomeworkController {
 
     private final SHomeworkService sHomeworkService;
-    private final ListenerRepository listenerRepository;
     private final StudentRepository studentRepository;
-    private final SHomeworkRepository sHomeworkRepository;
 
-    private final PointService pointService;
 
     //댓글 작성
     /*
@@ -44,17 +38,90 @@ public class SHomeworkController {
     }
 
 
-    @PostMapping("/sh/point")
-    public void checkSHomework(@RequestParam(value="checklist") String[] checklist){
-        for (String c : checklist){
-            sHomeworkService.checkSHomework(Long.valueOf(c));
-            SHomework sHomework = sHomeworkRepository.findById(Long.valueOf(c)).get();
-            //Listener listener = listenerRepository.findListenerBySHomework(sHomework).get();
-            //Student student = studentRepository.findByListener(listener).get();
-            //pointService.create(student,"포인트 클릭!!!!",5);
-            //이 shid인 s로 listener를 구한 다음에 그 listener로 student를 찾아서 point부여
+//    @PutMapping("/sh/point")
+//    public Long update(@PathVariable final Long Id, @RequestBody SHomeworkDto sHomeworkDto) {
+//        return sHomeworkService.updateSHomework(Id, sHomeworkDto);
+//    }
+
+    @PutMapping("/sh/point")
+    @ResponseBody
+    public String checkSHomework(@RequestBody Map<String, Object>[] checklist){
+        for (Map<String, Object> ck : checklist) {
+            System.out.println(ck.get("shId") + " : " + ck.get("grade"));
+            Long Id = Long.parseLong(String.valueOf(ck.get("shId")));
+            String grade = String.valueOf(ck.get("grade"));
+//            Long Id = Long.valueOf(c.get("shId").toString());
+            System.out.println("shId: " + Id + " : grade: " + grade);
+            sHomeworkService.updateSHomework(Id, grade);
         }
+        return "성공";
     }
+
+    @PutMapping("/sh/point2")
+    @ResponseBody
+    public String checkSHomework2(@RequestBody Map<String, String>[] checklist){
+        for (Map<String, String> ck : checklist) {
+            System.out.println(ck.get("shId") + " : " + ck.get("grade"));
+            Long Id = Long.parseLong(String.valueOf(ck.get("shId")));
+            String grade = String.valueOf(ck.get("grade"));
+//            Long Id = Long.valueOf(c.get("shId").toString());
+            System.out.println("shId: " + Id + " : grade: " + grade);
+            sHomeworkService.updateSHomework(Id, grade);
+        }
+        return "성공";
+    }
+
+    @PutMapping("/sh/test")
+    @ResponseBody
+    public String test(@RequestBody List<Map<String, Object>> checklist) {
+        for (Map<String, Object> c : checklist) {
+            System.out.println(c.get("shId") + " : " + c.get("grade"));
+            Long Id = Long.parseLong(String.valueOf(c.get("shId")));
+            String grade = String.valueOf(c.get("grade"));
+//            Long Id = Long.valueOf(c.get("shId").toString());
+            System.out.println("shId: " + Id + " : grade: " + grade);
+            sHomeworkService.updateSHomework(Id, grade);
+        }
+        return "성공";
+    }
+
+    @PutMapping("/sh/ppoint")
+    @ResponseBody
+    public String insertMemberInfo(@RequestBody List<String> checklist){
+//
+//        Map<String, Object> result = new HashMap<>();
+//        try {
+//            /*JSONArray jsonArray = JSONArray.fromObject(paramData);*/
+//            List<Map<String,Object>> datalist = new ArrayList<Map<String,Object>>();
+//            datalist = JSONArray.fromObject(paramData);
+//
+//            for (Map<String, Object> data : datalist) {
+//                System.out.println(data.get("shId") + " : " + data.get("grade"));
+//            }
+//            result.put("result", true);
+//        } catch (Exception e) {
+//            result.put("result", false);
+//        }
+        return "제발";
+
+    }
+
+    //    public Map<String,Object> updateBrandPage(HttpServletRequest request, HttpServletResponse response,
+//                                              HttpSession session, @RequestBody Map<String, Object> data) {
+//        System.out.println(data);
+//        Map<String,Object> map = new HashMap<String,Object>();
+//        return map;
+
+
+
+//    @PostMapping("/sh/point")
+//    public void checkSHomework(@RequestBody List<CheckedItem> checkedItems){
+//        checkedItems.forEach(c -> {
+//            System.console().printf("ShId : " + c.getShId());
+//            sHomeworkService.updateSHomework(c.getShId(), String.valueOf(c.getGrade()));
+//            System.console().printf("Grade : " + c.getGrade());
+//        });
+//    }
 
 
     // shomework student 별로 조회하되, 미제출인 과제만

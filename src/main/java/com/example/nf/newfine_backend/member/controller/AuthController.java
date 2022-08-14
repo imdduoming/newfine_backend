@@ -64,6 +64,9 @@ public class AuthController {
     public ResponseEntity<TokenDto> reissue(@RequestBody TokenRequestDto tokenRequestDto) {
 //        token.replace("Bearer ", "");
 
+        System.out.println("되니..?");
+        System.out.println(tokenRequestDto.getAccessToken());
+
 //        TokenRequestDto tokenRequestDto=TokenRequestDto.builder()
 //                .accessToken(accessToken)
 //                .refreshToken(token)
@@ -103,5 +106,14 @@ public class AuthController {
 //            throw new RuntimeException();
 //        }
         return ResponseEntity.ok(authService.logout(tokenRequestDto));
+    }
+
+    @PostMapping("/refreshTokenWeb")
+    public TokenDto refreshToken(@RequestBody TokenRequestDto tokenRequestDto) {
+
+        System.out.println("되니..?");
+        System.out.println(tokenRequestDto.getAccessToken());
+
+        return authService.reissue(tokenRequestDto);
     }
 }
