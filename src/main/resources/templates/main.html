@@ -10,9 +10,9 @@
     <script type="text/javascript" src="js/back.js"></script>
     <script type="text/javascript">
         $(function () {
-            $.ajaxSetup({
-                headers: { "Authorization": `Bearer ${localStorage.getItem('accessToken')}` }
-            });
+            // $.ajaxSetup({
+            //     headers: { "Authorization": `Bearer ${localStorage.getItem('accessToken')}` }
+            // });
             login_check();
             // $.ajaxSetup({
             //     error: function (jqXHR, exception) {
@@ -48,7 +48,7 @@
                 success: async function (response) {
                     console.log(response)
                     await localStorage.clear();
-                    location.href = "index.html"
+                    window.location.href = "/"
                 },
                 error: function (response) {
                     alert(response.message);
