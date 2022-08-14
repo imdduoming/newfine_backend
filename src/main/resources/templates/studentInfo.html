@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script src="https://malsup.github.io/jquery.form.js"></script>
-<!--    <script type="text/javascript" src="js/back.js"></script>-->
+    <script type="text/javascript" src="js/back.js"></script>
     <script type="text/javascript">
         $(function () {
             // getTokenAndRefresh();
@@ -31,9 +31,9 @@
             //         }
             //     }
             // });
-            $.ajaxSetup({
-                headers: { "Authorization": `Bearer ${localStorage.getItem('accessToken')}` }
-            });
+            // $.ajaxSetup({
+            //     headers: { "Authorization": `Bearer ${localStorage.getItem('accessToken')}` }
+            // });
             login_check();
         });
         function studentSignUp() {
@@ -78,6 +78,7 @@
                         console.log("error");
                         alert("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
                     },
+                    headers: { "Authorization": `Bearer ${localStorage.getItem('accessToken')}` },
                     type: "POST"
                 };
                 $("#studentSignUpForm").ajaxSubmit(options);
@@ -110,6 +111,7 @@
                         console.log("error");
                         alert("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
                     },
+                    headers: { "Authorization": `Bearer ${localStorage.getItem('accessToken')}` },
                     type: "POST"
                 };
                 $("#studentDeleteForm").ajaxSubmit(options);
