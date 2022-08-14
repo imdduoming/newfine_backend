@@ -38,10 +38,6 @@
                 $('.hide-show').parent().find('input[name="password"]').attr('type', 'password');
             });
 
-            $.ajaxSetup({
-                headers: { "Authorization": `Bearer ${localStorage.getItem('accessToken')}` }
-            });
-
             getTokenAndRefresh();
             // const accessToken = localStorage.getItem('accessToken');
             // const refreshToken = localStorage.getItem('refreshToken');
