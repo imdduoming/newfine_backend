@@ -45,11 +45,11 @@ public class TestController {
         return testService.getAllMyTests(student);
     }
 
-    @GetMapping("/test/result")
-    public List<Test> getTestResults(){
-        Student student = studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
-        return testService.getAllMyTests(student);
-    }
+//    @GetMapping("/test/result")
+//    public List<Test> getTestResults(){
+//        Student student = studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
+//        return testService.getAllMyTests(student);
+//    }
 
 
 
