@@ -79,4 +79,10 @@ public class AdminController {
         //        return ResponseEntity.ok(adminService.deleteStudentByAdmin(deleteRequestDto));
     }
 
+    @PostMapping("/checkLogin")
+    public String checkLogin() {
+
+        return "로그인ing";
+    }
+
 }

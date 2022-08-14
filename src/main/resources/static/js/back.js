@@ -83,8 +83,8 @@ function getTokenAndRefresh() {
             console.log(response)
             localStorage.setItem('accessToken', response['accessToken']);
             localStorage.setItem('refreshToken', response['refreshToken']);
-            window.location.href = '/main.html'
-            // window.location.href = '/main'
+            // window.location.href = '/main.html'
+            window.location.href = '/main'
         },
         // error: function (response) {
         //     alert(response.message);
@@ -99,10 +99,10 @@ function getTokenAndRefresh() {
     })
 }
 
-function login_check(options, originalOptions, jqXHR){
+function login_check(){
     $.ajax({
         type: "POST",
-        url: `${domainURL}/auth/checkLogin`,
+        url: `${domainURL}/admin/checkLogin`,
         data: {},
         success: function (response) {
             console.log(response)
@@ -111,7 +111,7 @@ function login_check(options, originalOptions, jqXHR){
             console.log("error");
             localStorage.clear();
             alert("code : " + request.status + "\n" + "message : " + request.message + "\n" + "error : " + error);
-            window.location.href = '/index.html'
+            window.location.href = '/index'
         }
     })
 }
