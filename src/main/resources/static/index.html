@@ -47,6 +47,15 @@
             // }
         });
 
+        $(window).bind("pageshow", function (event) {
+            if (event.originalEvent.persisted) {
+                console.log('BFCahe로부터 복원됨');
+            }
+            else {
+                console.log('새로 열린 페이지');
+            }
+        });
+
         function getTokenAndRefresh() {
             const accessToken = localStorage.getItem('accessToken');
             const refreshToken = localStorage.getItem('refreshToken');
@@ -78,6 +87,7 @@
                     // }
                     error: function (request, status, error) {
                         console.log("error");
+                        localStorage.clear();
                         alert("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
                     },
                 })
