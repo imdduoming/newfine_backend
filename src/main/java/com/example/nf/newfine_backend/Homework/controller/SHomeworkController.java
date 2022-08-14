@@ -1,13 +1,10 @@
 package com.example.nf.newfine_backend.Homework.controller;
 
-import com.example.nf.newfine_backend.Homework.Repository.SHomeworkRepository;
 import com.example.nf.newfine_backend.Homework.dto.SHomeworkDto;
 import com.example.nf.newfine_backend.Homework.service.SHomeworkService;
-import com.example.nf.newfine_backend.course.ListenerRepository;
 import com.example.nf.newfine_backend.member.student.domain.Student;
 import com.example.nf.newfine_backend.member.student.exception.PhoneNumberNotFoundException;
 import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
-import com.example.nf.newfine_backend.member.student.service.PointService;
 import com.example.nf.newfine_backend.member.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -21,11 +18,8 @@ import java.util.Map;
 public class SHomeworkController {
 
     private final SHomeworkService sHomeworkService;
-    private final ListenerRepository listenerRepository;
     private final StudentRepository studentRepository;
-    private final SHomeworkRepository sHomeworkRepository;
 
-    private final PointService pointService;
 
     //댓글 작성
     /*
@@ -51,10 +45,16 @@ public class SHomeworkController {
 
     @PutMapping("/sh/point")
     @ResponseBody
-    public Map<String, Object>[] checkSHomework(@RequestBody Map<String, Object>[] checklist){
-//        for (String c : checkedlist){
-//            sHomeworkService.updateSHomework(Long.valueOf(c), state);
-        return checklist;
+    public String checkSHomework(@RequestBody Map<String, Object>[] checklist){
+        for (Map<String, Object> ck : checklist) {
+            System.out.println(ck.get("shId") + " : " + ck.get("grade"));
+            Long Id = Long.parseLong(String.valueOf(ck.get("shId")));
+            String grade = String.valueOf(ck.get("grade"));
+//            Long Id = Long.valueOf(c.get("shId").toString());
+            System.out.println("shId: " + Id + " : grade: " + grade);
+            sHomeworkService.updateSHomework(Id, grade);
+        }
+        return "성공";
     }
 
     @PutMapping("/sh/test")
@@ -73,7 +73,7 @@ public class SHomeworkController {
 
     @PutMapping("/sh/ppoint")
     @ResponseBody
-    public String insertMemberInfo(@RequestParam String checklist){
+    public String insertMemberInfo(@RequestBody List<String> checklist){
 //
 //        Map<String, Object> result = new HashMap<>();
 //        try {

@@ -82,7 +82,7 @@ public class SHomeworkService {
       public void updateSHomework(Long Id, String state) {
             System.out.println(state);
             SHomework sHomework = sHomeworkRepository.findById(Id).get();
-            Long studentId = sHomework.getListener().getStudent().getId();
+            Long studentId = sHomework.getStudentId();
             System.out.println(studentId);
             Student student = studentRepository.findById(studentId).orElseThrow(PhoneNumberNotFoundException::new);
         if (state.equals("A")){
