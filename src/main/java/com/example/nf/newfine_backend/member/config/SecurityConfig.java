@@ -79,7 +79,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {  // Spring Se
                 .antMatchers("/css/**").permitAll()
                 .antMatchers("/h2-console/**", "/favicon.ico").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/attendance", "/attendanceMake", "/main", "/studentInfo", "/study", "/studyInfo", "/testUpload").hasRole("ADMIN")
+//                .antMatchers("/attendance", "/attendanceMake", "/main", "/studentInfo", "/study", "/studyInfo", "/testUpload").hasRole("ADMIN")
 //                .antMatchers("/index.html").permitAll()
 //                .antMatchers("/studyMake.html").hasAuthority("ADMIN")
 //                .antMatchers("/testUpload.html").hasRole("ADMIN")
