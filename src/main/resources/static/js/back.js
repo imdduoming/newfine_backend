@@ -71,7 +71,7 @@ async function getTokenAndRefresh() {
     let data = {"accessToken": accessToken, "refreshToken": refreshToken}
     $.ajax({
         type: "POST",
-        url: `${domainURL}/auth/refreshToken`,
+        url: `${domainURL}/auth/refreshTokenWeb`,
         data: JSON.stringify(data),
         contentType: "application/json",
         success: async function (response) {

@@ -114,6 +114,7 @@ public class AuthController {
 
         System.out.println("되니..?");
         System.out.println(tokenRequestDto.getAccessToken());
+        System.out.println(tokenRequestDto.getRefreshToken());
 
         return authService.reissue(tokenRequestDto);
     }

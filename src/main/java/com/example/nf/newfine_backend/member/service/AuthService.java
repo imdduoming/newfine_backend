@@ -209,7 +209,8 @@ public class AuthService {
 //        refreshTokenRepository.save(newRefreshToken);
 
         System.out.println("됨?");
-        System.out.println(tokenDto.getAccessToken());
+        System.out.println("새 액토: "+tokenDto.getAccessToken());
+        System.out.println("새 리토: "+tokenDto.getRefreshToken());
 
         // 토큰 발급
         return tokenDto;
