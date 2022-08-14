@@ -82,6 +82,8 @@ public class AdminController {
     @PostMapping("/checkLogin")
     public String checkLogin() {
 
+        System.out.println("\n\n\n\n\n\n\n\n\n로그인???????\n\n\n\n\n\n\n\n\n");
+
         return "로그인ing";
     }
 
