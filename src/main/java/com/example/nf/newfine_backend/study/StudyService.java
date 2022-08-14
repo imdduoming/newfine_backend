@@ -1,13 +1,6 @@
 package com.example.nf.newfine_backend.study;
 
-import com.amazonaws.services.rds.model.SNSTopicArnNotFoundException;
-import com.example.nf.newfine_backend.attendance.repository.AttendanceRepository;
-import com.example.nf.newfine_backend.attendance.repository.StudentAttendanceRepository;
-import com.example.nf.newfine_backend.attendance.domain.Attendance;
-import com.example.nf.newfine_backend.attendance.domain.StudentAttendance;
-import com.example.nf.newfine_backend.course.CourseRepository;
 import com.example.nf.newfine_backend.member.student.domain.Student;
-import com.example.nf.newfine_backend.course.Course;
 import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
 import com.example.nf.newfine_backend.member.student.service.PointService;
 import com.example.nf.newfine_backend.member.student.service.StudentService;

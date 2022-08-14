@@ -1,6 +1,5 @@
 package com.example.nf.newfine_backend.test.controller;
 
-import com.example.nf.newfine_backend.course.Course;
 import com.example.nf.newfine_backend.member.student.domain.Student;
 import com.example.nf.newfine_backend.member.student.exception.PhoneNumberNotFoundException;
 import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
@@ -9,7 +8,6 @@ import com.example.nf.newfine_backend.test.domain.Test;
 import com.example.nf.newfine_backend.test.dto.TestDto;
 import com.example.nf.newfine_backend.test.service.TestService;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -46,5 +44,14 @@ public class TestController {
         Student student = studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
         return testService.getAllMyTests(student);
     }
+
+//    @GetMapping("/test/result")
+//    public List<Test> getTestResults(){
+//        Student student = studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
+//        return testService.getAllMyTests(student);
+//    }
+
+
+
 
 }

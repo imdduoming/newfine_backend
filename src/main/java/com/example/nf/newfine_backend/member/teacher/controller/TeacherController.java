@@ -8,8 +8,6 @@ import com.example.nf.newfine_backend.attendance.service.AttendanceService;
 import com.example.nf.newfine_backend.attendance.service.VideoService;
 import com.example.nf.newfine_backend.course.Course;
 import com.example.nf.newfine_backend.course.CourseService;
-import com.example.nf.newfine_backend.member.student.domain.Student;
-import com.example.nf.newfine_backend.member.student.dto.StudentResponseDto;
 import com.example.nf.newfine_backend.member.student.exception.PhoneNumberNotFoundException;
 import com.example.nf.newfine_backend.member.teacher.domain.Teacher;
 import com.example.nf.newfine_backend.member.teacher.dto.TeacherResponseDto;
