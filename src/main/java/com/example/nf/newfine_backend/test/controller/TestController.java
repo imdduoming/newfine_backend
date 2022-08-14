@@ -6,6 +6,7 @@ import com.example.nf.newfine_backend.member.student.repository.StudentRepositor
 import com.example.nf.newfine_backend.member.util.SecurityUtil;
 import com.example.nf.newfine_backend.test.domain.Test;
 import com.example.nf.newfine_backend.test.dto.TestDto;
+import com.example.nf.newfine_backend.test.dto.TestResultDto;
 import com.example.nf.newfine_backend.test.service.TestService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -45,11 +46,12 @@ public class TestController {
         return testService.getAllMyTests(student);
     }
 
-//    @GetMapping("/test/result")
-//    public List<Test> getTestResults(){
-//        Student student = studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
-//        return testService.getAllMyTests(student);
-//    }
+    @GetMapping("/test/result")
+    public TestResultDto getTestResults(@RequestParam Integer id){
+        Student student = studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
+        Long test_id = Long.valueOf(id);
+        return testService.getTestResults(student,test_id);
+    }
 
 
 
