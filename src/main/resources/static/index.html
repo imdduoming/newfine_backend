@@ -9,6 +9,14 @@
     <script src="https://malsup.github.io/jquery.form.js"></script>
     <script type="text/javascript" src="js/back.js"></script>
     <script type="text/javascript">
+        $(window).bind("pageshow", function (event) {
+            if (event.originalEvent.persisted) {
+                console.log('BFCahe로부터 복원됨');
+            }
+            else {
+                console.log('새로 열린 페이지');
+            }
+        });
         $(function () {
             getTokenAndRefresh();
             // const accessToken = localStorage.getItem('accessToken');
@@ -45,15 +53,6 @@
             //         },
             //     })
             // }
-        });
-
-        $(window).bind("pageshow", function (event) {
-            if (event.originalEvent.persisted) {
-                console.log('BFCahe로부터 복원됨');
-            }
-            else {
-                console.log('새로 열린 페이지');
-            }
         });
 
         // function getTokenAndRefresh() {
@@ -177,20 +176,30 @@
         //         $('#loginBtn').click();
         //     }
         // });
-    </script>
-    <script>
+        history.pushState(null, null, location.href);
+        window.onpopstate = function(event) {
+            history.go(1);
+        };
+
         $("#login").keypress(function(e){
             if (e.keyCode===13){
                 adminLogin();
             }
         });
     </script>
-    <script>
-        history.pushState(null, null, location.href);
-        window.onpopstate = function(event) {
-            history.go(1);
-        };
-    </script>
+<!--    <script>-->
+<!--        $("#login").keypress(function(e){-->
+<!--            if (e.keyCode===13){-->
+<!--                adminLogin();-->
+<!--            }-->
+<!--        });-->
+<!--    </script>-->
+<!--    <script>-->
+<!--        history.pushState(null, null, location.href);-->
+<!--        window.onpopstate = function(event) {-->
+<!--            history.go(1);-->
+<!--        };-->
+<!--    </script>-->
 </head>
 
 <body>

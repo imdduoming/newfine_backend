@@ -66,6 +66,7 @@ public class AuthController {
 
         System.out.println("되니..?");
         System.out.println(tokenRequestDto.getAccessToken());
+        System.out.println(tokenRequestDto.getRefreshToken());
 
 //        TokenRequestDto tokenRequestDto=TokenRequestDto.builder()
 //                .accessToken(accessToken)
