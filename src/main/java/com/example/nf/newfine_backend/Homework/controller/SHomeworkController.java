@@ -1,5 +1,6 @@
 package com.example.nf.newfine_backend.Homework.controller;
 
+import com.example.nf.newfine_backend.Homework.domain.CheckedItem;
 import com.example.nf.newfine_backend.Homework.dto.SHomeworkDto;
 import com.example.nf.newfine_backend.Homework.service.SHomeworkService;
 import com.example.nf.newfine_backend.member.student.domain.Student;
@@ -42,6 +43,12 @@ public class SHomeworkController {
 //    public Long update(@PathVariable final Long Id, @RequestBody SHomeworkDto sHomeworkDto) {
 //        return sHomeworkService.updateSHomework(Id, sHomeworkDto);
 //    }
+
+    @PutMapping("/sh/merge")
+    @ResponseBody
+    public String test2(@RequestBody CheckedItem[] checklist) {
+        return "성공";
+    }
 
     @PutMapping("/sh/point")
     @ResponseBody
