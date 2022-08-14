@@ -47,42 +47,52 @@
             // }
         });
 
-        function getTokenAndRefresh() {
-            const accessToken = localStorage.getItem('accessToken');
-            const refreshToken = localStorage.getItem('refreshToken');
-            console.log("되고 있냐...");
-            console.log(accessToken, refreshToken);
-            if (accessToken != null || refreshToken != null) {
-                let data = {"accessToken": accessToken, "refreshToken": refreshToken}
-                $.ajax({
-                    type: "POST",
-                    url: `${domainURL}/auth/refreshTokenWeb`,
-                    data: data,
-                    contentType: "application/json",
-                    // contentType: "application/json; charset=UTF-8",
-                    success: async function (response) {
-                        if (response) {
-                            alert("완료");
-                        } else {
-                            alert("전송된 값 없음");
-                        }
-                        console.log(response)
-                        await localStorage.setItem('accessToken', response['accessToken']);
-                        await localStorage.setItem('refreshToken', response['refreshToken']);
-                        window.location.href = '/main.html'
-                    },
-                    // error: function (response) {
-                    //     alert(response.message);
-                    //     localStorage.clear();
-                    //     window.location.href = '/index.html'
-                    // }
-                    error: function (request, status, error) {
-                        console.log("error");
-                        alert("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
-                    },
-                })
+        $(window).bind("pageshow", function (event) {
+            if (event.originalEvent.persisted) {
+                console.log('BFCahe로부터 복원됨');
             }
-        }
+            else {
+                console.log('새로 열린 페이지');
+            }
+        });
+
+        // function getTokenAndRefresh() {
+        //     const accessToken = localStorage.getItem('accessToken');
+        //     const refreshToken = localStorage.getItem('refreshToken');
+        //     console.log("되고 있냐...");
+        //     console.log(accessToken, refreshToken);
+        //     if (accessToken != null || refreshToken != null) {
+        //         let data = {"accessToken": accessToken, "refreshToken": refreshToken}
+        //         $.ajax({
+        //             type: "POST",
+        //             url: `${domainURL}/auth/refreshTokenWeb`,
+        //             data: data,
+        //             contentType: "application/json",
+        //             // contentType: "application/json; charset=UTF-8",
+        //             success: async function (response) {
+        //                 if (response) {
+        //                     alert("완료");
+        //                 } else {
+        //                     alert("전송된 값 없음");
+        //                 }
+        //                 console.log(response)
+        //                 await localStorage.setItem('accessToken', response['accessToken']);
+        //                 await localStorage.setItem('refreshToken', response['refreshToken']);
+        //                 window.location.href = '/main.html'
+        //             },
+        //             // error: function (response) {
+        //             //     alert(response.message);
+        //             //     localStorage.clear();
+        //             //     window.location.href = '/index.html'
+        //             // }
+        //             error: function (request, status, error) {
+        //                 console.log("error");
+        //                 localStorage.clear();
+        //                 alert("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+        //             },
+        //         })
+        //     }
+        // }
 
         //
         //     $.ajaxSetup({
