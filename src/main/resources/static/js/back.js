@@ -60,7 +60,14 @@ let domainURL = 'https://eb.newfine.tk';
 async function getTokenAndRefresh() {
     const accessToken = await localStorage.getItem('accessToken');
     const refreshToken = await localStorage.getItem('refreshToken');
-    console.log(accessToken, refreshToken);
+    console.log("되고 있냐...");
+    console.log("로컬 스토리지 액세스 토큰: ", accessToken, "\n로컬 스토리지 리프레시 토큰: ", refreshToken);
+
+    if (accessToken==null || refreshToken==null){
+        console.log("로그인쭈고");
+        throw new Error();
+    }
+
     let data = {"accessToken": accessToken, "refreshToken": refreshToken}
     $.ajax({
         type: "POST",
@@ -68,15 +75,25 @@ async function getTokenAndRefresh() {
         data: JSON.stringify(data),
         contentType: "application/json",
         success: async function (response) {
+            if (response) {
+                alert("완료");
+            } else {
+                alert("전송된 값 없음");
+            }
             console.log(response)
             await localStorage.setItem('accessToken', response['accessToken']);
             await localStorage.setItem('refreshToken', response['refreshToken']);
-            // window.location.href = '/main.html'
+            window.location.href = '/main.html'
         },
-        error: function (response) {
-            alert(response.message);
+        // error: function (response) {
+        //     alert(response.message);
+        //     localStorage.clear();
+        //     window.location.href = '/index.html'
+        // }
+        error: function (request, status, error) {
+            console.log("error");
             localStorage.clear();
-            window.location.href = '/index.html'
+            alert("code : " + request.status + "\n" + "message : " + request.message + "\n" + "error : " + error);
         }
     })
 }
