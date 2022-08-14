@@ -13,10 +13,7 @@ import com.example.nf.newfine_backend.member.student.service.MessageService;
 import com.example.nf.newfine_backend.member.teacher.dto.TeacherResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Objects;
@@ -125,4 +122,13 @@ public class AuthController {
 //
 //        return authService.loginCheck();
 //    }
+
+    @ResponseBody
+    @RequestMapping(value = "/adminLogin", method = RequestMethod.POST)
+    public ResponseEntity<TokenDto> login(HttpServletRequest request, SignInDto signInDto) {
+
+        signInDto.setPhoneNumber(request.getParameter("phoneNumber"));
+        signInDto.setPassword(request.getParameter("password"));
+        return ResponseEntity.ok(authService.login(signInDto));
+    }
 }
