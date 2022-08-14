@@ -22,9 +22,9 @@
                             break;
                     }
                 },
-                beforeSend: function (xhr) {
-                    if (localStorage.getItem('accessToken') != null) {
-                        xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('accessToken'));
+                beforeSend: async function (xhr) {
+                    if (await localStorage.getItem('accessToken') != null) {
+                        xhr.setRequestHeader('Authorization', 'Bearer ' + await localStorage.getItem('accessToken'));
                     } else {
                         location.href = "index.html"
                         alert("로그인 해주세요")

@@ -155,6 +155,7 @@ public class AuthService {
     public TokenDto reissue(TokenRequestDto tokenRequestDto) {  // 토큰 재발급
         System.out.println("됨?");
         System.out.println(tokenRequestDto.getAccessToken());
+        System.out.println("리: "+ tokenRequestDto.getRefreshToken());
 
         // 1. Refresh Token 만료 여부 검증
         if (!tokenProvider.validateToken(tokenRequestDto.getRefreshToken())) {
@@ -171,6 +172,8 @@ public class AuthService {
 //        RefreshToken refreshToken = refreshTokenRepository.findByKey(authentication.getName())
 //                .orElseThrow(() -> new CustomException(REFRESH_TOKEN_NOT_FOUND));
 
+        System.out.println("리프: "+ tokenRequestDto.getRefreshToken());
+
         // 3. Redis 에서 User email 을 기반으로 저장된 Refresh Token 값을 가져옵니다.
         String refreshToken = (String)redisTemplate.opsForValue().get("RT:" + authentication.getName());
         // (추가) 로그아웃되어 Redis 에 RefreshToken 이 존재하지 않는 경우 처리
@@ -178,6 +181,9 @@ public class AuthService {
             throw new CustomException(INVALID_REFRESH_TOKEN);
 //            return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
         }
+
+        System.out.println("리프레: "+tokenRequestDto.getRefreshToken());
+        System.out.println("레디스에서 가져온 거: "+ refreshToken);
 
         // 4. 클라이언트의 Refresh Token 일치하는지 검사
         if(!refreshToken.equals(tokenRequestDto.getRefreshToken())) {
