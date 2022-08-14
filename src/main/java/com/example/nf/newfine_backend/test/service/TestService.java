@@ -121,7 +121,7 @@ public class TestService {
 
         int myScore = studentTestResults.getTotalScore();// 학생 점수
         List<StudentTestResults> highStudents = studentTestResultsRepository.findAllByTestAndTotalScoreAfter(test,myScore);// 나보다 점수 높은 애들 가져오기
-        int rank = highStudents.size();// 내 순위
+        int rank = highStudents.size()+1;// 내 순위
         List<StudentTestResults> allStudents = studentTestResultsRepository.findAllByTest(test);
         int students_num = allStudents.size(); // 총 학생 명수
         Double avg = scoreService.get_avg(students_num,allStudents); // 평균구하기
