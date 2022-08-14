@@ -19,6 +19,9 @@
         });
         $(function () {
             getTokenAndRefresh();
+            $.ajaxSetup({
+                headers: { "Authorization": `Bearer ${localStorage.getItem('accessToken')}` }
+            });
             // const accessToken = localStorage.getItem('accessToken');
             // const refreshToken = localStorage.getItem('refreshToken');
             // console.log("되고 있냐...");
