@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Objects;
 
 import static com.example.nf.newfine_backend.member.exception.ErrorCode.DUPLICATE_MEMBER;
@@ -118,4 +119,10 @@ public class AuthController {
 
         return authService.reissue(tokenRequestDto);
     }
+
+//    @PostMapping("/loginCheck")
+//    public String loginCheck(HttpServletRequest request) {
+//
+//        return authService.loginCheck();
+//    }
 }

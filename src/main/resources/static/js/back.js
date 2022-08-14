@@ -75,11 +75,11 @@ function getTokenAndRefresh() {
         data: JSON.stringify(data),
         contentType: "application/json",
         success: function (response) {
-            if (response) {
-                alert("완료");
-            } else {
-                alert("전송된 값 없음");
-            }
+            // if (response) {
+            //     alert("완료");
+            // } else {
+            //     alert("전송된 값 없음");
+            // }
             console.log(response)
             localStorage.setItem('accessToken', response['accessToken']);
             localStorage.setItem('refreshToken', response['refreshToken']);
@@ -94,6 +94,23 @@ function getTokenAndRefresh() {
             console.log("error");
             localStorage.clear();
             alert("code : " + request.status + "\n" + "message : " + request.message + "\n" + "error : " + error);
+        }
+    })
+}
+
+function login_check(options, originalOptions, jqXHR){
+    $.ajax({
+        type: "POST",
+        url: `${domainURL}/auth/checkLogin`,
+        data: {},
+        success: function (response) {
+            console.log(response)
+        },
+        error: function (request, status, error) {
+            console.log("error");
+            localStorage.clear();
+            alert("code : " + request.status + "\n" + "message : " + request.message + "\n" + "error : " + error);
+            window.location.href = '/index.html'
         }
     })
 }
