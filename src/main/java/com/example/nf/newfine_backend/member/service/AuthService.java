@@ -153,14 +153,19 @@ public class AuthService {
 
     @Transactional
     public TokenDto reissue(TokenRequestDto tokenRequestDto) {  // 토큰 재발급
+        System.out.println("됨?");
+        System.out.println(tokenRequestDto.getAccessToken());
 
         // 1. Refresh Token 만료 여부 검증
         if (!tokenProvider.validateToken(tokenRequestDto.getRefreshToken())) {
             throw new CustomException(INVALID_REFRESH_TOKEN);
         }
+        System.out.println("됨?");
 
         // 2. Access Token 복호화 -> Member ID 가져오기
         Authentication authentication = tokenProvider.getAuthentication(tokenRequestDto.getAccessToken());
+
+        System.out.println("됨?");
 
 //        // 3. 저장소에서 Member ID 를 기반으로 Refresh Token 값 가져옴
 //        RefreshToken refreshToken = refreshTokenRepository.findByKey(authentication.getName())
@@ -179,6 +184,8 @@ public class AuthService {
             throw new CustomException(MISMATCH_REFRESH_TOKEN);
         }
 
+        System.out.println("됨?");
+
 //        // 4. 클라이언트의 Refresh Token 일치하는지 검사
 //        if (!refreshToken.getValue().equals(tokenRequestDto.getRefreshToken())) {
 //            throw new CustomException(MISMATCH_REFRESH_TOKEN);
@@ -194,6 +201,9 @@ public class AuthService {
 //        // 6. 저장소 정보 업데이트 (이전의 Refresh Token 을 사용할 수 없도록)
 //        RefreshToken newRefreshToken = refreshToken.updateValue(tokenDto.getRefreshToken());
 //        refreshTokenRepository.save(newRefreshToken);
+
+        System.out.println("됨?");
+        System.out.println(tokenDto.getAccessToken());
 
         // 토큰 발급
         return tokenDto;

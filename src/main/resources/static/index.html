@@ -9,11 +9,102 @@
     <script src="https://malsup.github.io/jquery.form.js"></script>
     <script type="text/javascript" src="js/back.js"></script>
     <script type="text/javascript">
-        // $(document).ready(function () {
-        //     const accessToken=localStorage.getItem('accessToken');
-        //     if (accessToken!=null){
+        $(function () {
+            getTokenAndRefresh();
+            // const accessToken = localStorage.getItem('accessToken');
+            // const refreshToken = localStorage.getItem('refreshToken');
+            // console.log("되고 있냐...");
+            // console.log(accessToken, refreshToken);
+            // if (accessToken!=null || refreshToken!=null){
+            //     let data = {"accessToken": accessToken, "refreshToken": refreshToken}
+            //     $.ajax({
+            //         type: "POST",
+            //         url: `${domainURL}/auth/refreshToken`,
+            //         data: data,
+            //         contentType: "application/json",
+            //         // contentType: "application/json; charset=UTF-8",
+            //         success: function (response) {
+            //             if (response) {
+            //                 alert("완료");
+            //             } else {
+            //                 alert("전송된 값 없음");
+            //             }
+            //             console.log(response)
+            //             localStorage.setItem('accessToken', response['accessToken']);
+            //             localStorage.setItem('refreshToken', response['refreshToken']);
+            //             window.location.href = '/main.html'
+            //         },
+            //         // error: function (response) {
+            //         //     alert(response.message);
+            //         //     localStorage.clear();
+            //         //     window.location.href = '/index.html'
+            //         // }
+            //         error: function (request, status, error) {
+            //             console.log("error");
+            //             alert("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+            //         },
+            //     })
+            // }
+        });
+
+        function getTokenAndRefresh() {
+            const accessToken = localStorage.getItem('accessToken');
+            const refreshToken = localStorage.getItem('refreshToken');
+            console.log("되고 있냐...");
+            console.log(accessToken, refreshToken);
+            if (accessToken != null || refreshToken != null) {
+                let data = {"accessToken": accessToken, "refreshToken": refreshToken}
+                $.ajax({
+                    type: "POST",
+                    url: `${domainURL}/auth/refreshTokenWeb`,
+                    data: data,
+                    contentType: "application/json",
+                    // contentType: "application/json; charset=UTF-8",
+                    success: async function (response) {
+                        if (response) {
+                            alert("완료");
+                        } else {
+                            alert("전송된 값 없음");
+                        }
+                        console.log(response)
+                        await localStorage.setItem('accessToken', response['accessToken']);
+                        await localStorage.setItem('refreshToken', response['refreshToken']);
+                        window.location.href = '/main.html'
+                    },
+                    // error: function (response) {
+                    //     alert(response.message);
+                    //     localStorage.clear();
+                    //     window.location.href = '/index.html'
+                    // }
+                    error: function (request, status, error) {
+                        console.log("error");
+                        alert("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+                    },
+                })
+            }
+        }
+
         //
-        //     }
+        //     $.ajaxSetup({
+        //         error: function (jqXHR, exception) {
+        //             switch (jqXHR.status) {
+        //                 case 401:
+        //                     alert('인증 에러!!');
+        //                     break;
+        //                 case 423:
+        //                     alert('중복된 id!!');
+        //                     break;
+        //             }
+        //         },
+        //         beforeSend: function (xhr) {
+        //             if (localStorage.getItem('accessToken') != null) {
+        //                 xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('accessToken'));
+        //             } else {
+        //                 location.href = "index.html"
+        //                 alert("로그인 해주세요")
+        //             }
+        //         }
+        //     });
         // });
         $(function () {
             $('.hide-show').show();
@@ -37,7 +128,7 @@
             });
         });
 
-        function login() {
+        function adminLogin() {
             if ($('#phoneNumber').val() == '') {
                 alert("핸드폰 번호를 입력해주세요!");
                 index.phoneNumber.focus();
@@ -50,6 +141,11 @@
             }
             var options = {
                 success: async function (result) {
+                    let authority=result['authority'];
+                    if (authority=="ROLE_USER"){
+                        alert("선생님 계정으로 로그인해주세요.");
+                        throw new Error("선생님 계정으로 로그인해주세요.");
+                    }
                     await localStorage.setItem('accessToken', result['accessToken']);
                     await localStorage.setItem('refreshToken', result['refreshToken']);
 
@@ -64,8 +160,29 @@
             };
             $("#login").ajaxSubmit(options);
         }
+        // e.keyCode == '13'을 통해서 엔터키를 인식하여 로그인 버튼 클릭 이벤트 실행
+        //
+        // $('#pwd').on('keypress', function(e){
+        //     if(e.keyCode == '13'){
+        //         $('#loginBtn').click();
+        //     }
+        // });
+    </script>
+    <script>
+        $("#login").keypress(function(e){
+            if (e.keyCode===13){
+                adminLogin();
+            }
+        });
+    </script>
+    <script>
+        history.pushState(null, null, location.href);
+        window.onpopstate = function(event) {
+            history.go(1);
+        };
     </script>
 </head>
+
 <body>
 <div class="login_form">
     <section class="login-wrapper">
@@ -75,18 +192,18 @@
             <!--                <img src="https://unrealnavigation.com/_themes/unrealnavigation/img/unreal-navigation-logo.png?v=1474018625" alt=""></a>-->
         </div>
 
-        <form id="login" method="post" action="/auth/login">
+        <form id="login" name="login" method="post" action="/admin/login">
 
             <label for="phoneNumber">핸드폰 번호</label>
-            <input id="phoneNumber" name="phoneNumber" type="text" autocapitalize="off"
+            <input id="phoneNumber" name="phoneNumber" type="text" value="" autocapitalize="off"
                    autocorrect="off"/>
 
             <label for="password">비밀번호</label>
-            <input id="password" class="password" name="password" type="password"/>
+            <input id="password" class="password" name="password" type="password" value=""/>
             <div class="hide-show">
                 <span>Show</span>
             </div>
-            <button type="button" onclick="login()">로그인</button>
+            <button type="button" id="loginButton" onclick="adminLogin()">로그인</button>
         </form>
 
     </section>
