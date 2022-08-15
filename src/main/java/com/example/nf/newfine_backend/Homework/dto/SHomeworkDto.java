@@ -5,14 +5,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class SHomeworkDto {
 
     private Long shId;
+
+    private Long thId;
+
+    private String course;
 
     private Long studentId;
 
@@ -25,12 +27,14 @@ public class SHomeworkDto {
 
     private String createdDate;
 
-    private LocalDateTime checkedDate;
+    private String checkedDate;
 
 
     public static SHomeworkDto toDto(SHomework sHomework) {
         return new SHomeworkDto(
                 sHomework.getShid(),
+                sHomework.getThomework().getId(),
+                sHomework.getThomework().getCourse().getCName(),
                 sHomework.getListener().getStudent().getId(),
                 sHomework.getListener().getStudent().getName(),
                 sHomework.getTitle(),
