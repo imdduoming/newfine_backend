@@ -14,6 +14,7 @@ import com.example.nf.newfine_backend.test.repository.StudentTestResultsReposito
 import com.example.nf.newfine_backend.test.repository.TestRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.velocity.exception.MathException;
 import org.springframework.stereotype.Service;
 
 
@@ -38,11 +39,17 @@ public class TestService {
 
         String code = "";
         if(course.getSubject()=="과학"){
-            code=ScienceDetailCode.generateScienceSubjectCode(course.getSubjectType());
+//            code=ScienceDetailCode.generateScienceSubjectCode(course.getSubjectType());
+            code+="S";
+            ScienceDetailCode sc= ScienceDetailCode.valueOf(course.getSubjectType());
+            System.out.println("ScienceDetailCode:             "+sc);
+            code+=sc;
         } else if(course.getSubject()=="수학"){
 //            code= MathDetailCode.generateMathSubjectCode(SubjectCode.수학, course.getSubjectType());
-            code= MathDetailCode.generateMathSubjectCode(course.getSubjectType());
-            System.out.println("테스트:             "+code);
+//            code= MathDetailCode.generateMathSubjectCode(course.getSubjectType());
+            code+="M";
+            MathDetailCode mc=MathDetailCode.valueOf(course.getSubjectType());
+            code+=mc;
         }
         System.out.println("테스트:             "+code);
         System.out.println("SubjectCode:             "+SubjectCode.과학+", "+SubjectCode.과학.subjectCode());
