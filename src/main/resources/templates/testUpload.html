@@ -9,28 +9,30 @@
     <script src="https://malsup.github.io/jquery.form.js"></script>
     <script type="text/javascript" src="js/back.js"></script>
     <script type="text/javascript">
+        var token=localStorage.getItem('accessToken');
         $(function () {
+            login_check();
             // getTokenAndRefresh();
-            $.ajaxSetup({
-                error: function (jqXHR, exception) {
-                    switch (jqXHR.status) {
-                        case 401:
-                            alert('인증 에러!!');
-                            break;
-                        case 423:
-                            alert('중복된 id!!');
-                            break;
-                    }
-                },
-                beforeSend: function (xhr) {
-                    if (localStorage.getItem('accessToken') != null) {
-                        xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('accessToken'));
-                    } else {
-                        location.href = "index.html"
-                        alert("로그인 해주세요")
-                    }
-                }
-            });
+            // $.ajaxSetup({
+            //     error: function (jqXHR, exception) {
+            //         switch (jqXHR.status) {
+            //             case 401:
+            //                 alert('인증 에러!!');
+            //                 break;
+            //             case 423:
+            //                 alert('중복된 id!!');
+            //                 break;
+            //         }
+            //     },
+            //     beforeSend: function (xhr) {
+            //         if (localStorage.getItem('accessToken') != null) {
+            //             xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('accessToken'));
+            //         } else {
+            //             location.href = "index.html"
+            //             alert("로그인 해주세요")
+            //         }
+            //     }
+            // });
             get_course();
         });
 
@@ -60,6 +62,7 @@
                         console.log("error");
                         alert("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
                     },
+                    headers: { "Authorization": `Bearer ${token}` },
                     type: "POST"
                 };
                 $("#excelUploadForm").ajaxSubmit(options);
@@ -80,6 +83,7 @@
                     console.log("error");
                     alert("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
                 },
+                headers: { "Authorization": `Bearer ${token}` },
                 type: "POST"
             };
             $("#makeTestForm").ajaxSubmit(options);
@@ -128,6 +132,7 @@
                     console.log("error");
                     alert("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
                 },
+                headers: { "Authorization": `Bearer ${token}` },
                 type: "POST"
             };
             $("#courseTestResultsFileUploadForm").ajaxSubmit(options);
@@ -175,6 +180,7 @@
                         console.log("error");
                         alert("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
                     },
+                    headers: { "Authorization": `Bearer ${token}` },
                     type: "POST"
                 };
                 $("#studentTestResultsFileUploadForm").ajaxSubmit(options);
