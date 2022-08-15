@@ -4,11 +4,11 @@ import lombok.Data;
 
 @Data
 public class CheckedItem {
-//    private Long id;
+    private Long id;
     private Long shId;
-//    private String name;
-//    private String title;
+    private String name;
+    private String title;
     private char grade;
-//    private boolean ischecked;
-
+    private boolean ischecked;
+    private boolean disabled;
 }
