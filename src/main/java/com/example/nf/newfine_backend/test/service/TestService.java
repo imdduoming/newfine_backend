@@ -38,6 +38,7 @@ public class TestService {
         Course course=courseRepository.findById(testDto.getCourse_id()).get();
 
         String code = "";
+        System.out.println((course.getSubject()=="과학"));
         if(course.getSubject()=="과학"){
 //            code=ScienceDetailCode.generateScienceSubjectCode(course.getSubjectType());
             code+="S";
