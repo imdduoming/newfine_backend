@@ -8,6 +8,7 @@ import com.example.nf.newfine_backend.member.student.exception.PhoneNumberNotFou
 import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
 import com.example.nf.newfine_backend.member.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -46,8 +47,8 @@ public class SHomeworkController {
 
     @PutMapping("/sh/merge")
     @ResponseBody
-    public String test2(@RequestBody CheckedItem[] checklist) {
-        return "성공";
+    public ResponseEntity<String> test2(@RequestBody List<CheckedItem> checklist) {
+        return ResponseEntity.ok(checklist.toString());
     }
 
     @PutMapping("/sh/point")
