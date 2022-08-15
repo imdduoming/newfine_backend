@@ -8,8 +8,11 @@
 <script>
     var idx;
     let domainURL= 'https://eb.newfine.tk';
+    var token=localStorage.getItem('accessToken');
 
     $(document).ready(function () {
+        login_check();
+
         idx = window.location.search.split("=")[1]
         document.addEventListener("message", (e) => {
             const { token , study_state } =JSON.parse(e.data);
@@ -29,6 +32,7 @@
             url: `${domainURL}/study/start`,
             contentType: "application/json",
             data: JSON.stringify(data),
+            headers: { "Authorization": `Bearer ${token}` },
             beforeSend: function (xhr){
                 xhr.setRequestHeader('Authorization', "Bearer " +token);
             },
@@ -46,6 +50,7 @@
             url: `${domainURL}/study/end`,
             contentType: "application/json",
             data: JSON.stringify(data),
+            headers: { "Authorization": `Bearer ${token}` },
             beforeSend: function (xhr){
                 xhr.setRequestHeader('Authorization', "Bearer " +token);
             },
