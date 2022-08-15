@@ -5,10 +5,11 @@
     <title>Title</title>
 </head>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script type="text/javascript" src="js/back.js"></script>
 <script>
     var idx;
     let domainURL= 'https://eb.newfine.tk';
-    var token;
+    var token=localStorage.getItem('accessToken');
     $(document).ready(function () {
         idx = window.location.search.split("=")[1]
         document.addEventListener("message", (e) => {
@@ -16,7 +17,7 @@
             console.log(token);
             add_attendance(idx,token);
         })
-
+        login_check();
     });
 
     function add_attendance(idx,token){
@@ -26,9 +27,10 @@
             url: `${domainURL}/add/attendance`,
             contentType: "application/json",
             data: JSON.stringify(data),
-            beforeSend: function (xhr){
-                xhr.setRequestHeader('Authorization', "Bearer " +token);
-            },
+            // beforeSend: function (xhr){
+            //     xhr.setRequestHeader('Authorization', "Bearer " +token);
+            // },
+            headers: { "Authorization": `Bearer ${localStorage.getItem('accessToken')}` },
             success: function (response) {
                 console.log(response)
                 requestPermission(response)
