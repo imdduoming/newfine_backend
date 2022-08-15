@@ -7,8 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -42,16 +40,10 @@ public class SHomework extends BaseTimeEntity {
     private boolean ischecked = false;
 
     @Column
-    private char grade = 'C';
+    private char grade = 'D';
 
     @Column
     private Long studentId;
-
-
-    @Column
-    @LastModifiedDate
-    @DateTimeFormat(pattern = "yyyy-MM-ddTHH:mm")
-    private LocalDateTime checkedDate;
 
 
     @Builder
@@ -62,13 +54,11 @@ public class SHomework extends BaseTimeEntity {
         this.grade = sHomeworkDto.getGrade();
         this.ischecked = sHomeworkDto.isIschecked();
         this.studentId = sHomeworkDto.getStudentId();
-        this.checkedDate = sHomeworkDto.getCheckedDate();
     }
 
     public void update(Boolean ischecked, char grade, LocalDateTime checkedDate) {
         this.ischecked = ischecked;
         this.grade = grade;
-        this.checkedDate = checkedDate;
         //this.modifiedDate = LocalDateTime.now();
     }
 }

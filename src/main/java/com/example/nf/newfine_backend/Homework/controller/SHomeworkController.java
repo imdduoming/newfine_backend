@@ -1,6 +1,5 @@
 package com.example.nf.newfine_backend.Homework.controller;
 
-import com.example.nf.newfine_backend.Homework.domain.CheckedItem;
 import com.example.nf.newfine_backend.Homework.dto.SHomeworkDto;
 import com.example.nf.newfine_backend.Homework.service.SHomeworkService;
 import com.example.nf.newfine_backend.member.student.domain.Student;
@@ -8,7 +7,6 @@ import com.example.nf.newfine_backend.member.student.exception.PhoneNumberNotFou
 import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
 import com.example.nf.newfine_backend.member.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -45,16 +43,6 @@ public class SHomeworkController {
 //        return sHomeworkService.updateSHomework(Id, sHomeworkDto);
 //    }
 
-    @PutMapping("/sh/merge")
-    @ResponseBody
-    public ResponseEntity<String> test2(@RequestBody CheckedItem[] checklist) {
-        return ResponseEntity.ok(checklist.toString());
-    }
-
-    @PutMapping("/sh/merge2")
-    public ResponseEntity<String> test3(@RequestBody CheckedItem[] checklist) {
-        return ResponseEntity.ok(checklist.toString());
-    }
 
     @PutMapping("/sh/point")
     @ResponseBody
