@@ -51,6 +51,11 @@ public class SHomeworkController {
         return ResponseEntity.ok(checklist.toString());
     }
 
+    @PutMapping("/sh/merge2")
+    public ResponseEntity<String> test3(@RequestBody CheckedItem[] checklist) {
+        return ResponseEntity.ok(checklist.toString());
+    }
+
     @PutMapping("/sh/point")
     @ResponseBody
     public String checkSHomework(@RequestBody Map<String, Object>[] checklist){
