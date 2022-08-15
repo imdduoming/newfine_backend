@@ -47,7 +47,7 @@ public class SHomeworkController {
 
     @PutMapping("/sh/merge")
     @ResponseBody
-    public ResponseEntity<String> test2(@RequestBody List<CheckedItem> checklist) {
+    public ResponseEntity<String> test2(@RequestBody CheckedItem[] checklist) {
         return ResponseEntity.ok(checklist.toString());
     }
 
