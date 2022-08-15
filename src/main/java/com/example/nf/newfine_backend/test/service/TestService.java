@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @Service
@@ -39,6 +40,8 @@ public class TestService {
 
         String code = "";
         System.out.println((course.getSubject()=="과학"));
+        System.out.println(Objects.equals(course.getSubject(), "과학"));
+        System.out.println("course.getSubject(): "+ course.getSubject());
         if(course.getSubject()=="과학"){
 //            code=ScienceDetailCode.generateScienceSubjectCode(course.getSubjectType());
             code+="S";
@@ -71,6 +74,7 @@ public class TestService {
 
         return test;
     }
+
     public List<Test> getTests(Long course_id){
         Course course=courseRepository.findById(course_id).get();
         List<Test> tests=testRepository.findTestsByCourse(course);
