@@ -61,10 +61,10 @@ public class SHomework extends BaseTimeEntity {
         this.checkedDate = sHomeworkDto.getCheckedDate();
     }
 
-    public void update(Boolean ischecked, char grade) {
-        this.ischecked = ischecked;
-        this.grade = grade;
+//    public void update(Boolean ischecked, char grade) {
+//        this.ischecked = ischecked;
+//        this.grade = grade;
         //this.modifiedDate = LocalDateTime.now();
-    }
+//    }
 }
 
