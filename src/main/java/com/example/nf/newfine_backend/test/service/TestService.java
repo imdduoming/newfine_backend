@@ -42,13 +42,13 @@ public class TestService {
         System.out.println((course.getSubject()=="과학"));
         System.out.println(Objects.equals(course.getSubject(), "과학"));
         System.out.println("course.getSubject(): "+ course.getSubject());
-        if(course.getSubject()=="과학"){
+        if(Objects.equals(course.getSubject(), "과학")){
 //            code=ScienceDetailCode.generateScienceSubjectCode(course.getSubjectType());
             code+="S";
             ScienceDetailCode sc= ScienceDetailCode.valueOf(course.getSubjectType());
             System.out.println("ScienceDetailCode:             "+sc);
             code+=sc;
-        } else if(course.getSubject()=="수학"){
+        } else if(Objects.equals(course.getSubject(), "수학")){
 //            code= MathDetailCode.generateMathSubjectCode(SubjectCode.수학, course.getSubjectType());
 //            code= MathDetailCode.generateMathSubjectCode(course.getSubjectType());
             code+="M";
