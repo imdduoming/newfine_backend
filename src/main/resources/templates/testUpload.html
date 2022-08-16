@@ -9,7 +9,7 @@
     <script src="https://malsup.github.io/jquery.form.js"></script>
     <script type="text/javascript" src="js/back.js"></script>
     <script type="text/javascript">
-        var token=localStorage.getItem('accessToken');
+        var token = localStorage.getItem('accessToken');
         $(function () {
             login_check();
             // getTokenAndRefresh();
@@ -62,7 +62,7 @@
                         console.log("error");
                         alert("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
                     },
-                    headers: { "Authorization": `Bearer ${token}` },
+                    headers: {"Authorization": `Bearer ${token}`},
                     type: "POST"
                 };
                 $("#excelUploadForm").ajaxSubmit(options);
@@ -83,7 +83,7 @@
                     console.log("error");
                     alert("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
                 },
-                headers: { "Authorization": `Bearer ${token}` },
+                headers: {"Authorization": `Bearer ${token}`},
                 type: "POST"
             };
             $("#makeTestForm").ajaxSubmit(options);
@@ -117,26 +117,26 @@
         // }
 
         function checkCourseTestResultsFile() {
-            // if (confirm("엑셀 파일을 업로드하시겠습니까?")) {
-            var options = {
-                success: function (result) {
-                    if (result.code == "1") {
-                        console.log("data 전송 성공");
-                        alert(result.msg);
-                    } else {
-                        console.log("data 전송 실패");
-                        alert(result.msg);
-                    }
-                },
-                error: function (request, status, error) {
-                    console.log("error");
-                    alert("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
-                },
-                headers: { "Authorization": `Bearer ${token}` },
-                type: "POST"
-            };
-            $("#courseTestResultsFileUploadForm").ajaxSubmit(options);
-            // }
+            if (confirm("엑셀 파일을 업로드하시겠습니까?")) {
+                var options = {
+                    success: function (result) {
+                        if (result.code == "1") {
+                            console.log("data 전송 성공");
+                            alert(result.msg);
+                        } else {
+                            console.log("data 전송 실패");
+                            alert(result.msg);
+                        }
+                    },
+                    error: function (request, status, error) {
+                        console.log("error");
+                        alert("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+                    },
+                    headers: {"Authorization": `Bearer ${token}`},
+                    type: "POST"
+                };
+                $("#courseTestResultsFileUploadForm").ajaxSubmit(options);
+            }
         }
 
         function get_course() {
@@ -180,7 +180,7 @@
                         console.log("error");
                         alert("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
                     },
-                    headers: { "Authorization": `Bearer ${token}` },
+                    headers: {"Authorization": `Bearer ${token}`},
                     type: "POST"
                 };
                 $("#studentTestResultsFileUploadForm").ajaxSubmit(options);
