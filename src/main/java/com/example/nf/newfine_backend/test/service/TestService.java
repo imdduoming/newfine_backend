@@ -43,9 +43,9 @@ public class TestService {
         System.out.println(Objects.equals(course.getSubject(), "과학"));
         System.out.println("course.getSubject(): "+ course.getSubject());
         if(Objects.equals(course.getSubject(), "과학")){
-//            code=ScienceDetailCode.generateScienceSubjectCode(course.getSubjectType());
+            System.out.println("enum 으로 하기"+ScienceDetailCode.generateScienceSubjectCode(course.getSubjectType()));
             code+="S";
-            ScienceDetailCode sc= ScienceDetailCode.valueOf(course.getSubjectType());
+            String sc= ScienceDetailCode.valueOf(course.getSubjectType()).scienceDetailCode();
             System.out.println("ScienceDetailCode:             "+sc);
             code+=sc;
         } else if(Objects.equals(course.getSubject(), "수학")){
@@ -63,14 +63,17 @@ public class TestService {
 //        System.out.println("수강생");
 //        System.out.println( listeners);
         Test test= new Test(course, testDto.getTestDate(), testDto.getTestName());
-
+        System.out.println("테스트 객체: "+ test);
+        System.out.println("테스트 객체 아이디: "+ test.getId());
+        testRepository.save(test);
+        System.out.println("테스트 객체 아이디: "+ test.getId());
         String code2 = String.format("%04d", test.getId());
         code+=code2;
 
         System.out.println("테스트:             "+code);
 
         test.setTestCode(code);
-        testRepository.save(test);
+//        testRepository.save(test);
 
         return test;
     }
