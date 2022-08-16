@@ -22,7 +22,9 @@ public class ScoreService {
             total_score+=studentTestResults1.getTotalScore();
         }
         avg = Double.valueOf(total_score) / Double.valueOf(total_num);
-        return avg;
+        double new_avg = (double)Math.round(avg*100)/100;
+
+        return new_avg;
 
     }
 
