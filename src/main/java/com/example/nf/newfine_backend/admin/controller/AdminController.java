@@ -79,12 +79,12 @@ public class AdminController {
         //        return ResponseEntity.ok(adminService.deleteStudentByAdmin(deleteRequestDto));
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity<TokenDto> login(HttpServletRequest request, SignInDto signInDto) {
+    @PostMapping("/checkLogin")
+    public String checkLogin() {
 
-        signInDto.setPhoneNumber(request.getParameter("phoneNumber"));
-        signInDto.setPassword(request.getParameter("password"));
-        return ResponseEntity.ok(authService.login(signInDto));
+        System.out.println("\n\n\n\n\n\n\n\n\n로그인???????\n\n\n\n\n\n\n\n\n");
+
+        return "로그인ing";
     }
+
 }

@@ -8,10 +8,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static javax.persistence.FetchType.EAGER;
 
@@ -42,17 +42,13 @@ public class SHomework extends BaseTimeEntity {
     private boolean ischecked = false;
 
     @Column
-    private char grade = 'C';
+    private char grade = 'D';
 
     @Column
     private Long studentId;
 
-
-    @Column
     @LastModifiedDate
-    @DateTimeFormat(pattern = "yyyy-MM-ddTHH:mm")
-    private LocalDateTime checkedDate;
-
+    private String checkedDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
     @Builder
     public SHomework(SHomeworkDto sHomeworkDto, THomework tHomework, Listener listener) {
@@ -65,11 +61,10 @@ public class SHomework extends BaseTimeEntity {
         this.checkedDate = sHomeworkDto.getCheckedDate();
     }
 
-    public void update(Boolean ischecked, char grade, LocalDateTime checkedDate) {
-        this.ischecked = ischecked;
-        this.grade = grade;
-        this.checkedDate = checkedDate;
+//    public void update(Boolean ischecked, char grade) {
+//        this.ischecked = ischecked;
+//        this.grade = grade;
         //this.modifiedDate = LocalDateTime.now();
-    }
+//    }
 }
 

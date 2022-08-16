@@ -22,6 +22,9 @@ public class BaseTimeEntity {
     @LastModifiedDate
     private String modifiedDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
+//    @LastModifiedDate
+//    private String checkedDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
     public String getCreatedDate() {
         return createdDate;
     }

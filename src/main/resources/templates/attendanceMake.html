@@ -42,9 +42,10 @@
 <script type="text/javascript">
     let subCategoryArray;
     let courseArray;
+    var token=localStorage.getItem('accessToken');
     $(document).ready(function () {
+        login_check();
         set_box();
-
     });
 
     //*********** 1depth카테고리 선택 후 2depth 생성 START ***********
@@ -85,6 +86,7 @@
             $.ajax({
                 type: "GET",
                 url: `${domainURL}/courses?type=`+type,
+                headers: { "Authorization": `Bearer ${token}` },
                 success: function (response) {
                     console.log(response)
                     courseArray = new Array();
@@ -213,6 +215,7 @@
                 url: `${domainURL}/make/attendance`,
                 contentType: "application/json",
                 data: JSON.stringify(data),
+                headers: { "Authorization": `Bearer ${token}` },
                 success: function (response) {
                     console.log(response)
                     alert('출석이 생성됐습니다!')

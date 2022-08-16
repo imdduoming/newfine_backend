@@ -43,6 +43,7 @@ public class SHomeworkController {
 //        return sHomeworkService.updateSHomework(Id, sHomeworkDto);
 //    }
 
+
     @PutMapping("/sh/point")
     @ResponseBody
     public String checkSHomework(@RequestBody Map<String, Object>[] checklist){
@@ -84,6 +85,35 @@ public class SHomeworkController {
         }
         return "성공";
     }
+
+    @PutMapping("/sh/map1")
+    @ResponseBody
+    public String maptest1(@RequestBody Map<String, Object> checklist) {
+//        for (Map<String, Object> c : checklist) {
+//            System.out.println(c.get("shId") + " : " + c.get("grade"));
+//            Long Id = Long.parseLong(String.valueOf(c.get("shId")));
+//            String grade = String.valueOf(c.get("grade"));
+//            Long Id = Long.valueOf(c.get("shId").toString());
+//            System.out.println("shId: " + Id + " : grade: " + grade);
+//            sHomeworkService.updateSHomework(Id, grade);
+//        }
+        return "성공";
+    }
+
+    @PutMapping("/sh/map2")
+    @ResponseBody
+    public String maptest2(@RequestBody Map<String, String> checklist) {
+//        for (Map<String, Object> c : checklist) {
+//            System.out.println(c.get("shId") + " : " + c.get("grade"));
+//            Long Id = Long.parseLong(String.valueOf(c.get("shId")));
+//            String grade = String.valueOf(c.get("grade"));
+//            Long Id = Long.valueOf(c.get("shId").toString());
+//            System.out.println("shId: " + Id + " : grade: " + grade);
+//            sHomeworkService.updateSHomework(Id, grade);
+//        }
+        return "성공";
+    }
+
 
     @PutMapping("/sh/ppoint")
     @ResponseBody

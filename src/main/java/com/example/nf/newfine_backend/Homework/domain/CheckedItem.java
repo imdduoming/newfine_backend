@@ -10,5 +10,5 @@ public class CheckedItem {
     private String title;
     private char grade;
     private boolean ischecked;
-
+    private boolean disabled;
 }

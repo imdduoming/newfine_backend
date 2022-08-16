@@ -9,7 +9,35 @@
     <script src="https://malsup.github.io/jquery.form.js"></script>
     <script type="text/javascript" src="js/back.js"></script>
     <script type="text/javascript">
+        $(window).bind("pageshow", function (event) {
+            if (event.originalEvent.persisted) {
+                console.log('BFCahe로부터 복원됨');
+            }
+            else {
+                console.log('새로 열린 페이지');
+            }
+        });
         $(function () {
+            $('.hide-show').show();
+            $('.hide-show span').addClass('show')
+
+            $('.hide-show span').click(function () {
+                if ($(this).hasClass('show')) {
+                    $(this).text('Hide');
+                    $('input[name="password"]').prop('type', 'text');
+                    $(this).removeClass('show');
+                } else {
+                    $(this).text('Show');
+                    $('input[name="password"]').prop('type', 'password');
+                    $(this).addClass('show');
+                }
+            });
+
+            $('form button[type="submit"]').on('click', function () {
+                $('.hide-show span').text('Show').addClass('show');
+                $('.hide-show').parent().find('input[name="password"]').attr('type', 'password');
+            });
+
             getTokenAndRefresh();
             // const accessToken = localStorage.getItem('accessToken');
             // const refreshToken = localStorage.getItem('refreshToken');
@@ -45,15 +73,6 @@
             //         },
             //     })
             // }
-        });
-
-        $(window).bind("pageshow", function (event) {
-            if (event.originalEvent.persisted) {
-                console.log('BFCahe로부터 복원됨');
-            }
-            else {
-                console.log('새로 열린 페이지');
-            }
         });
 
         // function getTokenAndRefresh() {
@@ -116,27 +135,27 @@
         //         }
         //     });
         // });
-        $(function () {
-            $('.hide-show').show();
-            $('.hide-show span').addClass('show')
-
-            $('.hide-show span').click(function () {
-                if ($(this).hasClass('show')) {
-                    $(this).text('Hide');
-                    $('input[name="password"]').prop('type', 'text');
-                    $(this).removeClass('show');
-                } else {
-                    $(this).text('Show');
-                    $('input[name="password"]').prop('type', 'password');
-                    $(this).addClass('show');
-                }
-            });
-
-            $('form button[type="submit"]').on('click', function () {
-                $('.hide-show span').text('Show').addClass('show');
-                $('.hide-show').parent().find('input[name="password"]').attr('type', 'password');
-            });
-        });
+        // $(function () {
+        //     $('.hide-show').show();
+        //     $('.hide-show span').addClass('show')
+        //
+        //     $('.hide-show span').click(function () {
+        //         if ($(this).hasClass('show')) {
+        //             $(this).text('Hide');
+        //             $('input[name="password"]').prop('type', 'text');
+        //             $(this).removeClass('show');
+        //         } else {
+        //             $(this).text('Show');
+        //             $('input[name="password"]').prop('type', 'password');
+        //             $(this).addClass('show');
+        //         }
+        //     });
+        //
+        //     $('form button[type="submit"]').on('click', function () {
+        //         $('.hide-show span').text('Show').addClass('show');
+        //         $('.hide-show').parent().find('input[name="password"]').attr('type', 'password');
+        //     });
+        // });
 
         function adminLogin() {
             if ($('#phoneNumber').val() == '') {
@@ -160,7 +179,8 @@
                     await localStorage.setItem('refreshToken', result['refreshToken']);
 
                     alert('로그인 성공!');
-                    window.location.href = '/main.html'
+                    // window.location.href = '/main.html'
+                    window.location.href = '/main'
                 },
                 error: function (request, status, error) {
                     console.log("error");
@@ -177,20 +197,30 @@
         //         $('#loginBtn').click();
         //     }
         // });
-    </script>
-    <script>
+        history.pushState(null, null, location.href);
+        window.onpopstate = function(event) {
+            history.go(1);
+        };
+
         $("#login").keypress(function(e){
             if (e.keyCode===13){
                 adminLogin();
             }
         });
     </script>
-    <script>
-        history.pushState(null, null, location.href);
-        window.onpopstate = function(event) {
-            history.go(1);
-        };
-    </script>
+<!--    <script>-->
+<!--        $("#login").keypress(function(e){-->
+<!--            if (e.keyCode===13){-->
+<!--                adminLogin();-->
+<!--            }-->
+<!--        });-->
+<!--    </script>-->
+<!--    <script>-->
+<!--        history.pushState(null, null, location.href);-->
+<!--        window.onpopstate = function(event) {-->
+<!--            history.go(1);-->
+<!--        };-->
+<!--    </script>-->
 </head>
 
 <body>
@@ -202,7 +232,7 @@
             <!--                <img src="https://unrealnavigation.com/_themes/unrealnavigation/img/unreal-navigation-logo.png?v=1474018625" alt=""></a>-->
         </div>
 
-        <form id="login" name="login" method="post" action="/admin/login">
+        <form id="login" name="login" method="post" action="/auth/adminLogin">
 
             <label for="phoneNumber">핸드폰 번호</label>
             <input id="phoneNumber" name="phoneNumber" type="text" value="" autocapitalize="off"

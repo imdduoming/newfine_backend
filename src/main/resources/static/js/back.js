@@ -57,13 +57,13 @@ let domainURL = 'https://eb.newfine.tk';
 // }
 //
 
-async function getTokenAndRefresh() {
-    const accessToken = await localStorage.getItem('accessToken');
-    const refreshToken = await localStorage.getItem('refreshToken');
+function getTokenAndRefresh() {
+    const accessToken = localStorage.getItem('accessToken');
+    const refreshToken = localStorage.getItem('refreshToken');
     console.log("되고 있냐...");
     console.log("로컬 스토리지 액세스 토큰: ", accessToken, "\n로컬 스토리지 리프레시 토큰: ", refreshToken);
 
-    if (accessToken==null || refreshToken==null){
+    if (accessToken == null || refreshToken == null) {
         console.log("로그인쭈고");
         throw new Error();
     }
@@ -71,19 +71,20 @@ async function getTokenAndRefresh() {
     let data = {"accessToken": accessToken, "refreshToken": refreshToken}
     $.ajax({
         type: "POST",
-        url: `${domainURL}/auth/refreshToken`,
+        url: `${domainURL}/auth/refreshTokenWeb`,
         data: JSON.stringify(data),
         contentType: "application/json",
-        success: async function (response) {
-            if (response) {
-                alert("완료");
-            } else {
-                alert("전송된 값 없음");
-            }
+        success: function (response) {
+            // if (response) {
+            //     alert("완료");
+            // } else {
+            //     alert("전송된 값 없음");
+            // }
             console.log(response)
-            await localStorage.setItem('accessToken', response['accessToken']);
-            await localStorage.setItem('refreshToken', response['refreshToken']);
-            window.location.href = '/main.html'
+            localStorage.setItem('accessToken', response['accessToken']);
+            localStorage.setItem('refreshToken', response['refreshToken']);
+            // window.location.href = '/main.html'
+            window.location.href = '/main'
         },
         // error: function (response) {
         //     alert(response.message);
@@ -97,4 +98,63 @@ async function getTokenAndRefresh() {
         }
     })
 }
+
+function login_check() {
+    $.ajax({
+        headers: {"Authorization": `Bearer ${localStorage.getItem('accessToken')}`},
+        type: "POST",
+        url: `${domainURL}/admin/checkLogin`,
+        data: {},
+        success: function (response) {
+            console.log(response)
+        },
+        error: function (request, status, error) {
+            console.log("error");
+            localStorage.clear();
+            alert("code : " + request.status + "\n" + "message : " + request.message + "\n" + "error : " + error);
+            window.location.href = '/'
+        }
+    })
+}
+
+// async function getTokenAndRefresh() {
+//     const accessToken = await localStorage.getItem('accessToken');
+//     const refreshToken = await localStorage.getItem('refreshToken');
+//     console.log("되고 있냐...");
+//     console.log("로컬 스토리지 액세스 토큰: ", accessToken, "\n로컬 스토리지 리프레시 토큰: ", refreshToken);
+//
+//     if (accessToken==null || refreshToken==null){
+//         console.log("로그인쭈고");
+//         throw new Error();
+//     }
+//
+//     let data = {"accessToken": accessToken, "refreshToken": refreshToken}
+//     $.ajax({
+//         type: "POST",
+//         url: `${domainURL}/auth/refreshTokenWeb`,
+//         data: JSON.stringify(data),
+//         contentType: "application/json",
+//         success: async function (response) {
+//             if (response) {
+//                 alert("완료");
+//             } else {
+//                 alert("전송된 값 없음");
+//             }
+//             console.log(response)
+//             await localStorage.setItem('accessToken', response['accessToken']);
+//             await localStorage.setItem('refreshToken', response['refreshToken']);
+//             window.location.href = '/main.html'
+//         },
+//         // error: function (response) {
+//         //     alert(response.message);
+//         //     localStorage.clear();
+//         //     window.location.href = '/index.html'
+//         // }
+//         error: function (request, status, error) {
+//             console.log("error");
+//             localStorage.clear();
+//             alert("code : " + request.status + "\n" + "message : " + request.message + "\n" + "error : " + error);
+//         }
+//     })
+// }
 

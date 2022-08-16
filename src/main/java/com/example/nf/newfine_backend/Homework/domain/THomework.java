@@ -38,9 +38,6 @@ public class THomework extends BaseTimeEntity {
 
     private int count;
 
-    //private LocalDateTime createdDate = LocalDateTime.now();
-
-    //private LocalDateTime modifiedDate;
 
 
     //== 게시글을 삭제하면 달려있는 과제 이미지파일 모두 삭제 ==//

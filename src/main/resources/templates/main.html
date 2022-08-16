@@ -10,27 +10,30 @@
     <script type="text/javascript" src="js/back.js"></script>
     <script type="text/javascript">
         $(function () {
-            // getTokenAndRefresh();
-            $.ajaxSetup({
-                error: function (jqXHR, exception) {
-                    switch (jqXHR.status) {
-                        case 401:
-                            alert('인증 에러!!');
-                            break;
-                        case 423:
-                            alert('중복된 id!!');
-                            break;
-                    }
-                },
-                beforeSend: function (xhr) {
-                    if (localStorage.getItem('accessToken') != null) {
-                        xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('accessToken'));
-                    } else {
-                        location.href = "index.html"
-                        alert("로그인 해주세요")
-                    }
-                }
-            });
+            // $.ajaxSetup({
+            //     headers: { "Authorization": `Bearer ${localStorage.getItem('accessToken')}` }
+            // });
+            login_check();
+            // $.ajaxSetup({
+            //     error: function (jqXHR, exception) {
+            //         switch (jqXHR.status) {
+            //             case 401:
+            //                 alert('인증 에러!!');
+            //                 break;
+            //             case 423:
+            //                 alert('중복된 id!!');
+            //                 break;
+            //         }
+            //     },
+            //     beforeSend: function (xhr) {
+            //         if (localStorage.getItem('accessToken') != null) {
+            //             xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('accessToken'));
+            //         } else {
+            //             location.href = "index.html"
+            //             alert("로그인 해주세요")
+            //         }
+            //     }
+            // });
         });
         async function logout() {
             const accessToken = await localStorage.getItem('accessToken');
@@ -45,7 +48,7 @@
                 success: async function (response) {
                     console.log(response)
                     await localStorage.clear();
-                    location.href = "index.html"
+                    window.location.href = "/"
                 },
                 error: function (response) {
                     alert(response.message);
@@ -63,19 +66,19 @@
 <body>
 <center><div id="main">
     <h1>관리자 페이지</h1><br>
-    <button class="w-btn-neon2" type="button" onclick="location.href='attendanceMake.html'">
+    <button class="w-btn-neon2" type="button" onclick="location.href='attendanceMake'">
         출석 QR생성
     </button>
-    <button class="w-btn-neon2" type="button" onclick="location.href='studyMake.html'">
+    <button class="w-btn-neon2" type="button" onclick="location.href='studyMake'">
         자습 QR생성
     </button>
-    <button class="w-btn-neon2" type="button" onclick="location.href='studentInfo.html'">
+    <button class="w-btn-neon2" type="button" onclick="location.href='studentInfo'">
         학생 정보 관리
     </button>
     <button class="w-btn-neon2" type="button">
         수업 정보
     </button>
-    <button class="w-btn-neon2" type="button" onclick="location.href='testUpload.html'">
+    <button class="w-btn-neon2" type="button" onclick="location.href='testUpload'">
         테스트 데이터 업로드
     </button>
     <button class="w-btn-neon2" type="button" onclick="logout()">
