@@ -27,7 +27,7 @@ public class ExcelController {
     private final TestRepository testRepository;
 
     @ResponseBody
-    @RequestMapping(value = "/admin//excelUpload.do", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/excelUpload.do", method = RequestMethod.POST)
     public Map<String, String> excelUploadAjax(MultipartHttpServletRequest request) throws Exception{
         Map<String, String> result = new HashMap<String, String>();
         MultipartFile excelFile = request.getFile("excelFile");
