@@ -112,7 +112,7 @@ function login_check() {
             console.log("code : " + request.status + "\n" + "message : " + request.message + "\n" + "error : " + error);
             // localStorage.clear();
             if (request.status==401){
-                alert("다시 로그인해주세요.");
+                alert("자동 로그인 레쭈고");    // 나중에 지우자
             } else{
                 localStorage.clear();
                 alert("error!!");
