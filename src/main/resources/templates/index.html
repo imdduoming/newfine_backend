@@ -183,8 +183,16 @@
                     window.location.href = '/main'
                 },
                 error: function (request, status, error) {
-                    console.log("error");
-                    alert("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+                    console.log("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+                    if(request.status==500){
+                        alert("회원 정보가 없습니다.");
+                        console.log(request.responseText.code)
+                        console.log(request.responseText.code=="INVALID_PASSWORD")
+                        console.log(Object.equals(request.responseText.code, "INVALID_PASSWORD"))
+                    } else if(request.status==401 && request.responseText.code=="INVALID_PASSWORD" ){
+                        alert("비밀번호가 일치하지 않습니다.");
+
+                    } else{alert("error!!");}
                 },
                 type: "POST"
             };
@@ -197,16 +205,23 @@
         //         $('#loginBtn').click();
         //     }
         // });
+
+        // 뒤로 가기 XXX
         history.pushState(null, null, location.href);
         window.onpopstate = function(event) {
             history.go(1);
         };
 
         $("#login").keypress(function(e){
-            if (e.keyCode===13){
+            if (e.keyCode==13){
                 adminLogin();
             }
         });
+        // function enterLogin() {
+        //     if(window.event.keyCode==13){
+        //         adminLofin
+        //     }
+        // }
     </script>
 <!--    <script>-->
 <!--        $("#login").keypress(function(e){-->
