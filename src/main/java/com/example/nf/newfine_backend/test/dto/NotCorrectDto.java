@@ -13,5 +13,6 @@ public class NotCorrectDto {
     private String q_num; // 문제번호
     private Double rate; // 오답률
     private Boolean isCorrect; // 나의 정오
+    private int q_rank; // 오답률 순위
 
 }

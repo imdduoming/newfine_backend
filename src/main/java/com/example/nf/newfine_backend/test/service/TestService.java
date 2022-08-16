@@ -107,6 +107,7 @@ public class TestService {
 
         // 오답문제에 대한 나의 결과 정보담기
         List<NotCorrectDto> problems = new ArrayList<>();
+        int q_rank =1;
         for (CourseTestResults courseTestResults : courseTestResultsList){
             NotCorrectDto notCorrectDto = new NotCorrectDto();
             String ans = courseTestResults.getCorrectAns(); // 문제 답
@@ -127,7 +128,10 @@ public class TestService {
             notCorrectDto.setRate(NotCorrectRate);
             notCorrectDto.setStudent_ans(student_ans);
             notCorrectDto.setRight_ans(ans);
+            notCorrectDto.setQ_rank(q_rank);
             problems.add(notCorrectDto);
+
+            q_rank+=1;
 
         }
 
