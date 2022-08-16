@@ -70,9 +70,9 @@ public class ExcelController {
 //        Test test= testService.createTest(courseId, testDate, testName);
 
         System.out.println(request.getParameter("test_code"));
-        Long testCode= Long.valueOf(request.getParameter("test_code"));
+        String testCode= String.valueOf(request.getParameter("test_code"));
 
-        Test test= testRepository.findById(testCode).orElseThrow(RuntimeException::new);
+        Test test= testRepository.findByTestCode(testCode).orElseThrow(RuntimeException::new);
 
         MultipartFile courseTestResultsFile = request.getFile("courseTestResultsFile");
 
@@ -117,9 +117,9 @@ public class ExcelController {
 //        Test test= testService.createTest(courseId, testDate, testName);
 
         System.out.println(request.getParameter("test_code"));
-        Long testCode= Long.valueOf(request.getParameter("test_code"));
+        String testCode= String.valueOf(request.getParameter("test_code"));
 
-        Test test= testRepository.findById(testCode).orElseThrow(RuntimeException::new);
+        Test test= testRepository.findByTestCode(testCode).orElseThrow(RuntimeException::new);
 
         MultipartFile studentTestResultsFile = request.getFile("studentTestResultsFile");
 
