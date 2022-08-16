@@ -70,6 +70,20 @@
         }
 
         function makeTest() {
+            if ($('#course_id').val() == '') {
+                alert("수업을 선택해주세요!");
+                return false;
+            }
+            if ($('#test_name').val() == '') {
+                alert("테스트 제목을 작성해주세요 \nex) 6월 모고 생명과학");
+                makeTestForm.test_name.focus();
+                return false;
+            }
+            if ($('#test_date').val() == '') {
+                alert("테스트 날짜를 설정해주세요.");
+                makeTestForm.test_date.focus();
+                return false;
+            }
             var options = {
                 success: function (result) {
                     console.log(result)
@@ -80,8 +94,8 @@
                     alert('테스트 정보가 입력되었습니다!')
                 },
                 error: function (request, status, error) {
-                    console.log("error");
-                    alert("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+                    console.log("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+                    alert("테스트 등록 실패");
                 },
                 headers: {"Authorization": `Bearer ${token}`},
                 type: "POST"
