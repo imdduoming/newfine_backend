@@ -4,6 +4,7 @@ import com.example.nf.newfine_backend.admin.dto.DeleteRequestByAdminDto;
 import com.example.nf.newfine_backend.admin.dto.SignUpByAdminDto;
 import com.example.nf.newfine_backend.member.exception.CustomException;
 import com.example.nf.newfine_backend.member.student.domain.Student;
+import com.example.nf.newfine_backend.member.student.dto.StudentResponseDto;
 import com.example.nf.newfine_backend.member.student.exception.PhoneNumberNotFoundException;
 import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ public class AdminService {
 
     // ****************** 관리자 페이지에서 학생 회원가입
     @Transactional
-    public String signupByAdmin(SignUpByAdminDto signUpByAdminDto) {
+    public StudentResponseDto signupByAdmin(SignUpByAdminDto signUpByAdminDto) {
         if (studentRepository.existsByPhoneNumber(signUpByAdminDto.getPhoneNumber())) {
             throw new CustomException(DUPLICATE_MEMBER);
         }
@@ -37,9 +38,8 @@ public class AdminService {
         // Redis SortedSet 에 RedisKey, Score(SortedSet 내의 Key), Value 추가
         redisTemplate.opsForZSet().add("ranking", student1.getNickname(), student1.getPoint());
 
-        return "회원 가입 완료";
-
-//        return StudentResponseDto.of(studentRepository.save(student));
+//        return "회원 가입 완료";
+        return StudentResponseDto.of(studentRepository.save(student));
     }
 
     // ****************** 관리자 페이지에서 학생 탈퇴
