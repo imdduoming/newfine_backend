@@ -79,21 +79,26 @@ public class TestService {
 
     @Transactional
     public void setkiller(Test test , ArrayList<Integer> BestkillerList , ArrayList<Integer> killerList){
+        System.out.println("킬러문항"+ BestkillerList);
+        System.out.println("준킬러문항"+killerList);
         List<CourseTestResults> testResults = courseTestResultsRepository.findAllByTest(test);
         for (CourseTestResults courseTestResults : testResults){
             int q_num = Integer.parseInt(courseTestResults.getQuestionNum());
+            System.out.println("문제번호"+q_num);
             for(int i : BestkillerList){
+                System.out.println("i"+i);
                 if (i==q_num){
                     // 킬러문항이라면
-                    courseTestResults.setType(2);
+                    courseTestResults.setType("bk");
                     courseTestResultsRepository.save(courseTestResults);
                 }
 
             }
             for (int i: killerList){
+                System.out.println("i"+i);
                 if (i==q_num){
                     // 준킬러문항이라면
-                    courseTestResults.setType(1);
+                    courseTestResults.setType("k");
                     courseTestResultsRepository.save(courseTestResults);
                 }
             }
