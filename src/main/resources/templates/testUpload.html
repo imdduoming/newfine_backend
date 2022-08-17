@@ -42,6 +42,7 @@
             if (fileFormat.indexOf("xls") > -1 || fileFormat.indexOf("xlsx") > -1) {
                 return true;
             } else {
+                alert('.xls 또는 .xlsx 파일만 입력해주세요.')
                 return false;
             }
         }
@@ -95,9 +96,11 @@
                     console.log(result)
                     alert('테스트 정보가 입력되었습니다!')
                 },
-                error: function (request, status, error) {
-                    console.log("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
-                    alert("테스트 등록 실패");
+                error: function (response) {
+                    console.log(response);
+                    var result = JSON.parse(response.responseText);
+                    console.log(result)
+                    alert(result.message);
                 },
                 headers: {"Authorization": `Bearer ${token}`},
                 type: "POST"
@@ -133,6 +136,7 @@
         // }
 
         function checkCourseTestResultsFile() {
+            checkFileType($('#courseTestResultsFile').val())
             if (confirm("엑셀 파일을 업로드하시겠습니까?")) {
                 var options = {
                     success: function (result) {
@@ -144,9 +148,11 @@
                             alert(result.msg);
                         }
                     },
-                    error: function (request, status, error) {
-                        console.log("error");
-                        alert("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+                    error: function (response) {
+                        console.log(response);
+                        var result = JSON.parse(response.responseText);
+                        console.log(result)
+                        alert(result.message);
                     },
                     headers: {"Authorization": `Bearer ${token}`},
                     type: "POST"
@@ -181,6 +187,7 @@
         }
 
         function checkStudentTestResultsFile() {
+            checkFileType($('#studentTestResultsFile').val())
             if (confirm("엑셀 파일을 업로드하시겠습니까?")) {
                 var options = {
                     success: function (result) {
@@ -192,9 +199,11 @@
                             alert(result.msg);
                         }
                     },
-                    error: function (request, status, error) {
-                        console.log("error");
-                        alert("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+                    error: function (response) {
+                        console.log(response);
+                        var result = JSON.parse(response.responseText);
+                        console.log(result)
+                        alert(result.message);
                     },
                     headers: {"Authorization": `Bearer ${token}`},
                     type: "POST"
