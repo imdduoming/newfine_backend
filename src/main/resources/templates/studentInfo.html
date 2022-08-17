@@ -63,6 +63,13 @@
                 return false;
             }
 
+            var reg = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@^!%*#?&])[A-Za-z\d@^!%*#?&]{8,}$/;
+            if( !reg.test($('#signUp_password').val()) ) {
+                alert("영문, 숫자, 특수문자($@^!%*#?&)를 모두 포함하여 8자 이상으로 작성해주세요.");
+                studentSignUpForm.signUp_password.focus();
+                return false;
+            }
+
             if (confirm("회원가입하시겠습니까?")) {
                 var options = {
                     success: function (result) {
@@ -74,9 +81,12 @@
                             alert(result.msg);
                         }
                     },
-                    error: function (request, status, error) {
-                        console.log("error");
-                        alert("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+                    // error: function (request, status, error) {
+                    //     console.log("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+                    //     alert("error");
+                    // },
+                    error: function(response){
+                        console.log(response)
                     },
                     headers: { "Authorization": `Bearer ${localStorage.getItem('accessToken')}` },
                     type: "POST"
