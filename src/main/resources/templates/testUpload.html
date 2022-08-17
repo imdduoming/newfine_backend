@@ -202,18 +202,19 @@
                 $("#studentTestResultsFileUploadForm").ajaxSubmit(options);
             }
         }
-        var bestkiller = [];
-        $("input[name=bestkillChk]:checked").each(function(){
-            bestkiller.push($(this).val());
-        });
 
-        var killer = [];
-        $("input[name=killChk]:checked").each(function(){
-            killer.push($(this).val());
-        });
 
 
         function set_type() {
+            var bestkiller = [];
+            $("input[name=bestkillChk]:checked").each(function(){
+                bestkiller.push($(this).val());
+            });
+
+            var killer = [];
+            $("input[name=killChk]:checked").each(function(){
+                killer.push($(this).val());
+            });
             console.log("killer : " + bestkiller);
             console.log("준 killer : " + killer);
             console.log('testcode',testcode)
