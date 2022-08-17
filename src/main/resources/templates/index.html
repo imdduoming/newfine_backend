@@ -196,6 +196,9 @@
                 // },
                 error: function (response) {
                     console.log(response);
+                    var result = JSON.parse(response.responseText);
+                    console.log(result)
+
                     // if(request.status==500){
                     //     alert("회원 정보가 없습니다.");
                     //     console.log(request.responseText.code)
