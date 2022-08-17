@@ -85,15 +85,18 @@
                         // }
                         alert(name, '학생 회원가입 성공!');
                     },
-                    error: function (request, status, error) {
-                        console.log("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+                    // error: function (request, status, error) {
+                    //     console.log("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+                    //     var result = JSON.parse(response.responseText);
+                    //     console.log(result)
+                    //     alert(result.message);
+                    // },
+                    error: function(response){
+                        console.log(response)
                         var result = JSON.parse(response.responseText);
                         console.log(result)
                         alert(result.message);
                     },
-                    // error: function(response){
-                    //     console.log(response)
-                    // },
                     headers: { "Authorization": `Bearer ${localStorage.getItem('accessToken')}` },
                     type: "POST"
                 };
@@ -115,18 +118,22 @@
             if (confirm("탈퇴하시겠습니까?")) {
                 var options = {
                     success: function (result) {
-                        if (result.code == "1") {
-                            console.log("탈퇴 완료!!");
-                            alert(result.msg);
-                        } else {
-                            console.log("탈퇴 실패!!");
-                            alert(result.msg);
-                        }
+                        // if (result.code == "1") {
+                        //     console.log("탈퇴 완료!!");
+                        //     alert(result.msg);
+                        // } else {
+                        //     console.log("탈퇴 실패!!");
+                        //     alert(result.msg);
+                        // }
+                        alert("탈퇴 완료!")
                     },
-                    error: function (request, status, error) {
-                        console.log("error");
-                        alert("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+                    error: function (response) {
+                        console.log(response);
+                        var result = JSON.parse(response.responseText);
+                        console.log(result)
+                        alert(result.message);
                     },
+
                     headers: { "Authorization": `Bearer ${localStorage.getItem('accessToken')}` },
                     type: "POST"
                 };
