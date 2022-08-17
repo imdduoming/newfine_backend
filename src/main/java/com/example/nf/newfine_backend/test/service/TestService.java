@@ -119,7 +119,7 @@ public class TestService {
             String student_ans= qNumberService.getStudentAns(studentTestResults,n); // 문제에 대한 학생의 답
             Double NotCorrectRate = 100 - courseTestResults.getCorrectAnsRate(); // 오답률
             Boolean isCorrect;
-            if (student_ans.equals(ans)){
+            if (student_ans.equals("O")){
                 // 학생이 답을 맞췄다면
                 isCorrect = true;
             }
