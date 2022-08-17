@@ -7,6 +7,7 @@ import com.example.nf.newfine_backend.member.util.SecurityUtil;
 import com.example.nf.newfine_backend.test.domain.Test;
 import com.example.nf.newfine_backend.test.dto.TestDto;
 import com.example.nf.newfine_backend.test.dto.TestResultDto;
+import com.example.nf.newfine_backend.test.repository.TestRepository;
 import com.example.nf.newfine_backend.test.service.TestService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,7 @@ public class TestController {
 
     private final TestService testService;
     private final StudentRepository studentRepository;
+    private final TestRepository testRepository;
 
     @ResponseBody
     @RequestMapping(value = "/admin/makeTestForm.do", method = RequestMethod.POST)
@@ -32,13 +34,17 @@ public class TestController {
     }
 
     // 관리자가 준킬러문항 / 킬러문항 설정하는 api
-//    @PutMapping("/admin/test/killer")
-//    public void setKiller(HttpServletRequest request, TestDto testDto) throws Exception{
-//        testDto.setTestDate(LocalDate.parse(request.getParameter("test_date")));
-//        testDto.setTestName(request.getParameter("test_name"));
-//        testDto.setCourse_id(Long.valueOf(request.getParameter("course_id")));
-//        return testService.createTest(testDto);
-//    }
+    @PutMapping("/admin/test/killer")
+    public void setKiller(@RequestParam(value="BestkillerList[]") List<String> BestKillerList,
+                          @RequestParam(value="killerList[]") List<String> KillerList,
+                          @RequestParam(value="testcode") String testcode) throws Exception{
+
+        Test test = testRepository.findByTestCode(testcode).get();
+        System.out.println("킬러문항"+ BestKillerList);
+        System.out.println("준킬러문항"+KillerList);
+        System.out.println("테스트코드"+testcode);
+
+    }
 
     // 수업별로 테스트 불러오는 api
     @GetMapping("/test/courses")
