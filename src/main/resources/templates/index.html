@@ -196,15 +196,19 @@
                 // },
                 error: function (response) {
                     console.log(response);
-                    // if(request.status==500){
-                    //     alert("회원 정보가 없습니다.");
-                    //     console.log(request.responseText.code)
-                    //     console.log(request.responseText.code=="INVALID_PASSWORD")
-                    //     // console.log(Object.equals(request.responseText.code, "INVALID_PASSWORD"))
-                    // } else if(request.status==401 && request.responseText.code=="INVALID_PASSWORD" ){
-                    //     alert("비밀번호가 일치하지 않습니다.");
-                    //
-                    // } else{alert("error!!");}
+                    var result = JSON.parse(response.responseText);
+                    console.log(result)
+                    console.log(result.error=="INVALID_PASSWORD")
+                    console.log()
+
+                    if(response.status==500){
+                        alert("회원 정보가 없습니다.");
+                        // console.log(request.responseText.code)
+                        // console.log(request.responseText.code=="INVALID_PASSWORD")
+                        // console.log(Object.equals(request.responseText.code, "INVALID_PASSWORD"))
+                    } else if(response.status==401 && result.code=="INVALID_PASSWORD" ){
+                        alert(result.message);
+                    } else{alert("error!!");}
                 },
                 type: "POST"
             };
