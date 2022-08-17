@@ -39,35 +39,39 @@ public class TestService {
         Course course=courseRepository.findById(testDto.getCourse_id()).get();
 
         String code = "";
-        System.out.println((course.getSubject()=="과학"));
-        System.out.println(Objects.equals(course.getSubject(), "과학"));
-        System.out.println("course.getSubject(): "+ course.getSubject());
+//        System.out.println((course.getSubject()=="과학"));
+//        System.out.println(Objects.equals(course.getSubject(), "과학"));
+//        System.out.println("course.getSubject(): "+ course.getSubject());
         if(Objects.equals(course.getSubject(), "과학")){
-//            code=ScienceDetailCode.generateScienceSubjectCode(course.getSubjectType());
-            code+="S";
-            ScienceDetailCode sc= ScienceDetailCode.valueOf(course.getSubjectType());
-            System.out.println("ScienceDetailCode:             "+sc);
-            code+=sc;
+//            System.out.println("enum 으로 하기"+ScienceDetailCode.generateScienceSubjectCode(course.getSubjectType()));
+//            code+="S";
+            code=ScienceDetailCode.generateScienceSubjectCode(course.getSubjectType());
+//            String sc= ScienceDetailCode.valueOf(course.getSubjectType()).scienceDetailCode();
+//            System.out.println("ScienceDetailCode:             "+sc);
+//            code+=sc;
         } else if(Objects.equals(course.getSubject(), "수학")){
 //            code= MathDetailCode.generateMathSubjectCode(SubjectCode.수학, course.getSubjectType());
-//            code= MathDetailCode.generateMathSubjectCode(course.getSubjectType());
-            code+="M";
-            MathDetailCode mc=MathDetailCode.valueOf(course.getSubjectType());
-            code+=mc;
+            code= MathDetailCode.generateMathSubjectCode(course.getSubjectType());
+//            code+="M";
+//            MathDetailCode mc=MathDetailCode.valueOf(course.getSubjectType());
+//            code+=mc;
         }
         System.out.println("테스트:             "+code);
-        System.out.println("SubjectCode:             "+SubjectCode.과학+", "+SubjectCode.과학.subjectCode());
+//        System.out.println("SubjectCode:             "+SubjectCode.과학+", "+SubjectCode.과학.subjectCode());
 
 //        List<Listener> listeners = courseService.getListeners(course_id);
 //        List <StudentAttendance> studentAttendances = new ArrayList<>();
 //        System.out.println("수강생");
 //        System.out.println( listeners);
         Test test= new Test(course, testDto.getTestDate(), testDto.getTestName());
+//        System.out.println("테스트 객체: "+ test);
+//        System.out.println("테스트 객체 아이디: "+ test.getId());
+        testRepository.save(test);
+//        System.out.println("테스트 객체 아이디: "+ test.getId());
+        code+= String.format("%04d", test.getId());
+//        code+=code2;
 
-        String code2 = String.format("%04d", test.getId());
-        code+=code2;
-
-        System.out.println("테스트:             "+code);
+        System.out.println("최종 테스트 코드 :             "+code);
 
         test.setTestCode(code);
         testRepository.save(test);

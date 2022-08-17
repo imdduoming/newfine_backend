@@ -92,9 +92,9 @@ function getTokenAndRefresh() {
         //     window.location.href = '/index.html'
         // }
         error: function (request, status, error) {
-            console.log("error");
+            console.log("code : " + request.status + "\n" + "message : " + request.message + "\n" + "error : " + error);
             localStorage.clear();
-            alert("code : " + request.status + "\n" + "message : " + request.message + "\n" + "error : " + error);
+            alert("다시 로그인해주세요.");
         }
     })
 }
@@ -109,9 +109,14 @@ function login_check() {
             console.log(response)
         },
         error: function (request, status, error) {
-            console.log("error");
-            localStorage.clear();
-            alert("code : " + request.status + "\n" + "message : " + request.message + "\n" + "error : " + error);
+            console.log("code : " + request.status + "\n" + "message : " + request.message + "\n" + "error : " + error);
+            // localStorage.clear();
+            if (request.status==401){
+                alert("자동 로그인 레쭈고");    // 나중에 지우자
+            } else{
+                localStorage.clear();
+                alert("error!!");
+            }
             window.location.href = '/'
         }
     })
