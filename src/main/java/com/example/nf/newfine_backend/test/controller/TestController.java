@@ -44,6 +44,7 @@ public class TestController {
         System.out.println("킬러문항"+ BestKillerList);
         System.out.println("준킬러문항"+KillerList);
         System.out.println("테스트코드"+testcode);
+        testService.setkiller(test,BestKillerList,KillerList);
 
     }
 

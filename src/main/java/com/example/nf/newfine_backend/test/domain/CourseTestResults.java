@@ -31,7 +31,7 @@ public class CourseTestResults {
     private String points;
 
     @Column
-    private String type;
+    private int type;
 
     @Column
     private double correctAnsRate;
@@ -71,7 +71,7 @@ public class CourseTestResults {
     private Test test;
 
     @Builder
-    public CourseTestResults(Test test, String subject, String questionNum, String correctAns, String points, String type, double correctAnsRate, int choose1, int choose2, int choose3, int choose4, int choose5, double proportion1, double proportion2, double proportion3, double proportion4, double proportion5) {
+    public CourseTestResults(Test test, String subject, String questionNum, String correctAns, String points, int type, double correctAnsRate, int choose1, int choose2, int choose3, int choose4, int choose5, double proportion1, double proportion2, double proportion3, double proportion4, double proportion5) {
         this.test=test;
         this.subject = subject;
         this.questionNum = questionNum;
