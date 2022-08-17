@@ -198,6 +198,7 @@
                     console.log(response);
                     var result = JSON.parse(response.responseText);
                     console.log(result)
+                    console.log(result.error)
 
                     if(response.status==500){
                         alert("회원 정보가 없습니다.");
@@ -205,7 +206,7 @@
                         // console.log(request.responseText.code=="INVALID_PASSWORD")
                         // console.log(Object.equals(request.responseText.code, "INVALID_PASSWORD"))
                     } else if(response.status==401 && result.error=="INVALID_PASSWORD" ){
-                        alert("비밀번호가 일치하지 않습니다.");
+                        alert(result.message);
                     } else{alert("error!!");}
                 },
                 type: "POST"
