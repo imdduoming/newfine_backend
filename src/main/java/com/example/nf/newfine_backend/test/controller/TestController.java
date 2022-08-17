@@ -31,6 +31,15 @@ public class TestController {
         return testService.createTest(testDto);
     }
 
+    // 관리자가 준킬러문항 / 킬러문항 설정하는 api
+//    @PutMapping("/admin/test/killer")
+//    public void setKiller(HttpServletRequest request, TestDto testDto) throws Exception{
+//        testDto.setTestDate(LocalDate.parse(request.getParameter("test_date")));
+//        testDto.setTestName(request.getParameter("test_name"));
+//        testDto.setCourse_id(Long.valueOf(request.getParameter("course_id")));
+//        return testService.createTest(testDto);
+//    }
+
     // 수업별로 테스트 불러오는 api
     @GetMapping("/test/courses")
     public List<Test> getTests(@RequestParam Integer id){
@@ -52,6 +61,8 @@ public class TestController {
         Long test_id = Long.valueOf(id);
         return testService.getTestResults(student,test_id);
     }
+
+
 
 
 
