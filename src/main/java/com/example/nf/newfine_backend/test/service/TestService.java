@@ -1,5 +1,6 @@
 package com.example.nf.newfine_backend.test.service;
 
+import com.amazonaws.services.iotdeviceadvisor.model.TestResult;
 import com.example.nf.newfine_backend.course.Course;
 import com.example.nf.newfine_backend.course.CourseRepository;
 import com.example.nf.newfine_backend.course.Listener;
@@ -16,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.velocity.exception.MathException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.ArrayList;
@@ -59,10 +61,6 @@ public class TestService {
         System.out.println("테스트:             "+code);
 //        System.out.println("SubjectCode:             "+SubjectCode.과학+", "+SubjectCode.과학.subjectCode());
 
-//        List<Listener> listeners = courseService.getListeners(course_id);
-//        List <StudentAttendance> studentAttendances = new ArrayList<>();
-//        System.out.println("수강생");
-//        System.out.println( listeners);
         Test test= new Test(course, testDto.getTestDate(), testDto.getTestName());
 //        System.out.println("테스트 객체: "+ test);
 //        System.out.println("테스트 객체 아이디: "+ test.getId());
@@ -78,6 +76,31 @@ public class TestService {
 
         return test;
     }
+
+    @Transactional
+    public void setkiller(Test test , ArrayList<Integer> BestkillerList , ArrayList<Integer> killerList){
+        List<CourseTestResults> testResults = courseTestResultsRepository.findAllByTest(test);
+        for (CourseTestResults courseTestResults : testResults){
+            int q_num = Integer.parseInt(courseTestResults.getQuestionNum());
+            for(int i : BestkillerList){
+                if (i==q_num){
+                    // 킬러문항이라면
+                    courseTestResults.setType(2);
+                    courseTestResultsRepository.save(courseTestResults);
+                }
+
+            }
+            for (int i: killerList){
+                if (i==q_num){
+                    // 준킬러문항이라면
+                    courseTestResults.setType(1);
+                    courseTestResultsRepository.save(courseTestResults);
+                }
+            }
+        }
+
+    }
+
 
     public List<Test> getTests(Long course_id){
         Course course=courseRepository.findById(course_id).get();

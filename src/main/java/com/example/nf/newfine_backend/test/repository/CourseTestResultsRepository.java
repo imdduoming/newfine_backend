@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface CourseTestResultsRepository extends JpaRepository<CourseTestResults, Long> {
     List<CourseTestResults> findTop5ByTestOrderByCorrectAnsRate(Test test); // 역순
+    List<CourseTestResults> findAllByTest(Test test);
 }
