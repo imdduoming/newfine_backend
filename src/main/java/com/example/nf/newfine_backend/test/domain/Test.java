@@ -35,6 +35,7 @@ public class Test {
     @Column
     private String testName;
 
+
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST})
     @JsonManagedReference
