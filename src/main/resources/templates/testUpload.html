@@ -69,7 +69,7 @@
                 $("#excelUploadForm").ajaxSubmit(options);
             }
         }
-
+        let testcode;
         function makeTest() {
             if ($('#course_id').val() == '') {
                 alert("수업을 선택해주세요!");
@@ -91,6 +91,7 @@
                     $('#response_test_id').attr('value', result['testCode']);
                     $('#test_code').attr('value', result['testCode']);
                     $('#test_code1').attr('value', result['testCode']);
+                    testcode = result['testCode']
                     console.log(result)
                     alert('테스트 정보가 입력되었습니다!')
                 },
@@ -201,6 +202,48 @@
                 $("#studentTestResultsFileUploadForm").ajaxSubmit(options);
             }
         }
+        var bestkiller = [];
+        $("input[name=bestkillChk]:checked").each(function(){
+            bestkiller.push($(this).val());
+        });
+
+        var killer = [];
+        $("input[name=killChk]:checked").each(function(){
+            killer.push($(this).val());
+        });
+
+
+        function set_type() {
+            console.log("killer : " + bestkiller);
+            console.log("준 killer : " + killer);
+            console.log('testcode',testcode)
+            // $.ajax({
+            //     type: "PUT",
+            //     url: `${domainURL}/courses?type=`+type,
+            //     headers: { "Authorization": `Bearer ${token}` },
+            //     success: function (response) {
+            //         console.log(response)
+            //         courseArray = new Array();
+            //         for (let i =0 ;i < response.length ; i++){// obj 길이 만큼 반복
+            //             course = new Object();
+            //             course.type_category_id = selectValue;
+            //             course.course_id = response[i]['id'];
+            //             course.course_name = response[i]['cname'];
+            //
+            //             //Sub 카테고리 셋팅 (DB에서 값을 가져와 셋팅 하세요.)
+            //             courseArray.push(course);
+            //         }
+            //         console.log(courseArray);
+            //         for(var i=0;i<courseArray.length;i++){
+            //             if(selectValue == courseArray[i].type_category_id){
+            //                 subCategorySelectBox.append("<option value='"+courseArray[i].course_id+"'>"+courseArray[i].course_name+"</option>");
+            //
+            //             }
+            //         }
+            //     }
+            //
+            // });
+        }
     </script>
 
 
@@ -264,4 +307,37 @@
         <button type="button" onclick="checkStudentTestResultsFile()"><span>저장</span></button>
     </div>
 </form>
+
+
+<br>----------------------------------------------------------------------------<br>
+<h4>킬러문항</h4>
+1<input type='checkbox' name='bestkillChk' value='1' class='chkselect'>
+
+2<input type='checkbox' name='bestkillChk' value='2' class='chkselect'>
+
+3<input type='checkbox' name='bestkillChk' value='3' class='chkselect'>
+
+4<input type='checkbox' name='bestkillChk' value='4' class='chkselect'>
+5<input type='checkbox' name='bestkillChk' value='5' class='chkselect'>
+6<input type='checkbox' name='bestkillChk' value='6' class='chkselect'>
+7<input type='checkbox' name='bestkillChk' value='7' class='chkselect'>
+8<input type='checkbox' name='bestkillChk' value='8' class='chkselect'>
+9<input type='checkbox' name='bestkillChk' value='9' class='chkselect'>
+10<input type='checkbox' name='bestkillChk' value='10' class='chkselect'>
+
+<h4>준킬러문항</h4>
+1<input type='checkbox' name='killChk' value='1' class='chkselect'>
+2<input type='checkbox' name='killChk' value='2' class='chkselect'>
+3<input type='checkbox' name='killChk' value='3' class='chkselect'>
+4<input type='checkbox' name='killChk' value='4' class='chkselect'>
+5<input type='checkbox' name='killChk' value='5' class='chkselect'>
+6<input type='checkbox' name='killChk' value='6' class='chkselect'>
+7<input type='checkbox' name='killChk' value='7' class='chkselect'>
+8<input type='checkbox' name='killChk' value='8' class='chkselect'>
+9<input type='checkbox' name='killChk' value='9' class='chkselect'>
+10<input type='checkbox' name='killChk' value='10' class='chkselect'>
+
+<br>
+<br>
+<button type="button" id="set_type" onclick="set_type()">킬러 / 준킬러 문항 설정</button>
 </body>
