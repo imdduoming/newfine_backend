@@ -199,12 +199,12 @@
                     var result = JSON.parse(response.responseText);
                     console.log(result)
 
-                    if(request.status==500){
+                    if(response.status==500){
                         alert("회원 정보가 없습니다.");
                         // console.log(request.responseText.code)
                         // console.log(request.responseText.code=="INVALID_PASSWORD")
                         // console.log(Object.equals(request.responseText.code, "INVALID_PASSWORD"))
-                    } else if(request.status==401 && result.error=="INVALID_PASSWORD" ){
+                    } else if(response.status==401 && result.error=="INVALID_PASSWORD" ){
                         alert("비밀번호가 일치하지 않습니다.");
 
                     } else{alert("error!!");}
