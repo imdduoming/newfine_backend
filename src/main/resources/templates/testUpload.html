@@ -218,32 +218,39 @@
             console.log("killer : " + bestkiller);
             console.log("준 killer : " + killer);
             console.log('testcode',testcode)
-            // $.ajax({
-            //     type: "PUT",
-            //     url: `${domainURL}/courses?type=`+type,
-            //     headers: { "Authorization": `Bearer ${token}` },
-            //     success: function (response) {
-            //         console.log(response)
-            //         courseArray = new Array();
-            //         for (let i =0 ;i < response.length ; i++){// obj 길이 만큼 반복
-            //             course = new Object();
-            //             course.type_category_id = selectValue;
-            //             course.course_id = response[i]['id'];
-            //             course.course_name = response[i]['cname'];
-            //
-            //             //Sub 카테고리 셋팅 (DB에서 값을 가져와 셋팅 하세요.)
-            //             courseArray.push(course);
-            //         }
-            //         console.log(courseArray);
-            //         for(var i=0;i<courseArray.length;i++){
-            //             if(selectValue == courseArray[i].type_category_id){
-            //                 subCategorySelectBox.append("<option value='"+courseArray[i].course_id+"'>"+courseArray[i].course_name+"</option>");
-            //
-            //             }
-            //         }
-            //     }
-            //
-            // });
+            let type_data = {
+                    "testcode"      : testcode,
+                    "BestkillerList" : bestkiller,
+                    "killerList" : killer
+                };
+
+            $.ajax({
+                type: "PUT",
+                url: `${domainURL}/admin/test/killer`,
+                headers: { "Authorization": `Bearer ${token}` },
+                data: JSON.stringify(type_data),
+                success: function (response) {
+                    console.log(response)
+                //     courseArray = new Array();
+                //     for (let i =0 ;i < response.length ; i++){// obj 길이 만큼 반복
+                //         course = new Object();
+                //         course.type_category_id = selectValue;
+                //         course.course_id = response[i]['id'];
+                //         course.course_name = response[i]['cname'];
+                //
+                //         //Sub 카테고리 셋팅 (DB에서 값을 가져와 셋팅 하세요.)
+                //         courseArray.push(course);
+                //     }
+                //     console.log(courseArray);
+                //     for(var i=0;i<courseArray.length;i++){
+                //         if(selectValue == courseArray[i].type_category_id){
+                //             subCategorySelectBox.append("<option value='"+courseArray[i].course_id+"'>"+courseArray[i].course_name+"</option>");
+                //
+                //         }
+                //     }
+                // }
+
+            });
         }
     </script>
 
