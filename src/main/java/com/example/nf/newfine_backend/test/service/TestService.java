@@ -89,7 +89,7 @@ public class TestService {
                 System.out.println("i"+i);
                 if (i==q_num){
                     // 킬러문항이라면
-                    courseTestResults.setType(2);
+                    courseTestResults.setType("bk");
                     courseTestResultsRepository.save(courseTestResults);
                 }
 
@@ -98,7 +98,7 @@ public class TestService {
                 System.out.println("i"+i);
                 if (i==q_num){
                     // 준킬러문항이라면
-                    courseTestResults.setType(1);
+                    courseTestResults.setType("k");
                     courseTestResultsRepository.save(courseTestResults);
                 }
             }
