@@ -228,7 +228,7 @@
             console.log("준 killer : " + killer);
             console.log('testcode',testcode)
             let type_data = {
-                    "testcode"      : testcode,
+                    "testcode"   : testcode,
                     "BestkillerList" : bestkiller,
                     "killerList" : killer
                 };
@@ -238,7 +238,7 @@
                 url: `${domainURL}/admin/test/killer`,
                 headers: { "Authorization": `Bearer ${token}` },
                 traditional: true,	// ajax 배열 넘기기 옵션!
-                data: JSON.stringify(type_data),
+                data: type_data,
                 success: function (response) {
                     console.log(response)
 

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -35,8 +36,8 @@ public class TestController {
 
     // 관리자가 준킬러문항 / 킬러문항 설정하는 api
     @PutMapping("/admin/test/killer")
-    public void setKiller(@RequestParam(value="BestkillerList[]") List<String> BestKillerList,
-                          @RequestParam(value="killerList[]") List<String> KillerList,
+    public void setKiller(@RequestParam(value="BestkillerList[]") ArrayList<Integer> BestKillerList,
+                          @RequestParam(value="killerList[]") ArrayList<Integer> KillerList,
                           @RequestParam(value="testcode") String testcode) throws Exception{
 
         Test test = testRepository.findByTestCode(testcode).get();
