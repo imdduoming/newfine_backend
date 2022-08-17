@@ -5,6 +5,7 @@ import com.example.nf.newfine_backend.admin.dto.SignUpByAdminDto;
 import com.example.nf.newfine_backend.member.exception.CustomException;
 import com.example.nf.newfine_backend.member.student.domain.Student;
 import com.example.nf.newfine_backend.member.student.dto.StudentResponseDto;
+import com.example.nf.newfine_backend.member.student.exception.DuplicatedNicknameException;
 import com.example.nf.newfine_backend.member.student.exception.PhoneNumberNotFoundException;
 import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,10 @@ public class AdminService {
     public StudentResponseDto signupByAdmin(SignUpByAdminDto signUpByAdminDto) {
         if (studentRepository.existsByPhoneNumber(signUpByAdminDto.getPhoneNumber())) {
             throw new CustomException(DUPLICATE_MEMBER);
+        }
+
+        if (studentRepository.existsByNickname((signUpByAdminDto.getNickname()))) {
+            throw new DuplicatedNicknameException("이미 사용 중인 닉네임입니다.");
         }
 
         Student student = signUpByAdminDto.toMember(passwordEncoder);
