@@ -38,7 +38,7 @@ public class TestController {
     @PutMapping("/admin/test/killer")
     public void setKiller(@RequestParam(value="BestkillerList[]") ArrayList<Integer> BestKillerList,
                           @RequestParam(value="killerList[]") ArrayList<Integer> KillerList,
-                          @RequestParam(value="testcode") String testcode) throws Exception{
+                          @RequestParam(value="testcode") String testcode) {
 
         Test test = testRepository.findByTestCode(testcode).get();
         System.out.println("킬러문항"+ BestKillerList);

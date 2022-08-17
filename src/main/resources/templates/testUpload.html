@@ -237,8 +237,12 @@
                 type: "PUT",
                 url: `${domainURL}/admin/test/killer`,
                 headers: { "Authorization": `Bearer ${token}` },
-                traditional: true,	// ajax 배열 넘기기 옵션!
-                data: type_data,
+                // traditional: true,	// ajax 배열 넘기기 옵션!
+                data: {
+                    testcode   : testcode,
+                    BestkillerList : bestkiller,
+                    killerList : killer
+                },
                 success: function (response) {
                     console.log(response)
 
