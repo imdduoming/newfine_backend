@@ -7,6 +7,8 @@ import com.example.nf.newfine_backend.member.dto.SignInDto;
 import com.example.nf.newfine_backend.member.dto.SignUpDto;
 import com.example.nf.newfine_backend.member.dto.TokenDto;
 import com.example.nf.newfine_backend.member.service.AuthService;
+import com.example.nf.newfine_backend.member.student.dto.DeleteRequestDto;
+import com.example.nf.newfine_backend.member.student.dto.StudentResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,9 +29,9 @@ public class AdminController {
     // ************ 관리자 페이지에서 학생 회원가입
     @ResponseBody
     @RequestMapping(value = "/studentSignUpForm.do", method = RequestMethod.POST)
-    public Map<String, String> signupByAdmin(HttpServletRequest request, SignUpByAdminDto signUpByAdminDto) {
+    public ResponseEntity<StudentResponseDto> signupByAdmin(HttpServletRequest request, SignUpByAdminDto signUpByAdminDto) {
 
-        Map<String, String> result = new HashMap<String, String>();
+//        Map<String, String> result = new HashMap<String, String>();
 
 //        signUpByAdminDto.setBranch("signUp_branch");
         signUpByAdminDto.setName(request.getParameter("signUp_name"));
@@ -37,46 +39,46 @@ public class AdminController {
         signUpByAdminDto.setPassword(request.getParameter("signUp_password"));
         signUpByAdminDto.setNickname(request.getParameter("signUp_nickname"));
 
-        try {
-            if(Objects.equals(adminService.signupByAdmin(signUpByAdminDto), "회원 가입 완료")) {
-                result.put("code", "1");
-                result.put("msg", "회원가입되었습니다!");
-            }else {
-                result.put("code", "0");
-                result.put("msg", "회원가입 실패!");
-            }
-        }catch(Exception e) {
-            e.printStackTrace();
-        }
-        return result;
-//        return ResponseEntity.ok(adminService.signupByAdmin(signUpDto));    // 상태 코드 + data(body) (ResponseEntity 에 헤더 정보, 상태 코드 담을 수 있음)
+//        try {
+//            if(Objects.equals(adminService.signupByAdmin(signUpByAdminDto), "회원 가입 완료")) {
+//                result.put("code", "1");
+//                result.put("msg", "회원가입되었습니다!");
+//            }else {
+//                result.put("code", "0");
+//                result.put("msg", "회원가입 실패!");
+//            }
+//        }catch(Exception e) {
+//            e.printStackTrace();
+//        }
+//        return result;
+        return ResponseEntity.ok(adminService.signupByAdmin(signUpByAdminDto));    // 상태 코드 + data(body) (ResponseEntity 에 헤더 정보, 상태 코드 담을 수 있음)
     }
 
     // ****************** 관리자 페이지에서 학생 탈퇴
     @ResponseBody
     @RequestMapping(value = "studentDeleteForm.do", method = RequestMethod.POST)
-    public Map<String, String> deleteStudentByAdmin(HttpServletRequest request, DeleteRequestByAdminDto deleteRequestByAdminDto) {
+    public ResponseEntity deleteStudentByAdmin(HttpServletRequest request, DeleteRequestByAdminDto deleteRequestByAdminDto) {
 
-        Map<String, String> result = new HashMap<String, String>();
+//        Map<String, String> result = new HashMap<String, String>();
 
         deleteRequestByAdminDto.setPhoneNumber(request.getParameter("delete_phoneNumber"));
         deleteRequestByAdminDto.setPassword(request.getParameter("delete_password"));
 
         // *************************** 특수분자 영어 숫자 8자 이상인지 확인하기~
 
-        try {
-            if(Objects.equals(adminService.deleteStudentByAdmin(deleteRequestByAdminDto), "탈퇴 완료")) {
-                result.put("code", "1");
-                result.put("msg", "탈퇴 완료");
-            }else {
-                result.put("code", "0");
-                result.put("msg", "탈퇴 실패");
-            }
-        }catch(Exception e) {
-            e.printStackTrace();
-        }
-        return result;
-        //        return ResponseEntity.ok(adminService.deleteStudentByAdmin(deleteRequestDto));
+//        try {
+//            if(Objects.equals(adminService.deleteStudentByAdmin(deleteRequestByAdminDto), "탈퇴 완료")) {
+//                result.put("code", "1");
+//                result.put("msg", "탈퇴 완료");
+//            }else {
+//                result.put("code", "0");
+//                result.put("msg", "탈퇴 실패");
+//            }
+//        }catch(Exception e) {
+//            e.printStackTrace();
+//        }
+//        return result;
+                return ResponseEntity.ok(adminService.deleteStudentByAdmin(deleteRequestByAdminDto));
     }
 
     @PostMapping("/checkLogin")

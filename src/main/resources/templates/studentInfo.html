@@ -72,22 +72,28 @@
 
             if (confirm("회원가입하시겠습니까?")) {
                 var options = {
-                    success: function (result) {
-                        if (result.code == "1") {
-                            console.log("회원가입 완료!!");
-                            alert(result.msg);
-                        } else {
-                            console.log("회원가입 실패!!");
-                            alert(result.msg);
-                        }
+                    success: function (response) {
+                        console.log(response);
+                        console.log(response.data.name);
+                        let name=response.data.name;
+                        // if (result.code == "1") {
+                        //     console.log("회원가입 완료!!");
+                        //     alert(result.msg);
+                        // } else {
+                        //     console.log("회원가입 실패!!");
+                        //     alert(result.msg);
+                        // }
+                        alert(name, '학생 회원가입 성공!');
                     },
-                    // error: function (request, status, error) {
-                    //     console.log("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
-                    //     alert("error");
+                    error: function (request, status, error) {
+                        console.log("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+                        var result = JSON.parse(response.responseText);
+                        console.log(result)
+                        alert(result.message);
+                    },
+                    // error: function(response){
+                    //     console.log(response)
                     // },
-                    error: function(response){
-                        console.log(response)
-                    },
                     headers: { "Authorization": `Bearer ${localStorage.getItem('accessToken')}` },
                     type: "POST"
                 };
