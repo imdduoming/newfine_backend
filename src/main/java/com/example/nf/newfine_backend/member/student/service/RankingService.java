@@ -62,9 +62,9 @@ public class RankingService {
 
         Set<ZSetOperations.TypedTuple<String>> typedTuples = stringStringZSetOperations.reverseRangeWithScores(key, 0, count);
         List<RankingResponseDto> collect = typedTuples.stream().map(RankingResponseDto::convertToRankingResponseDto).collect(Collectors.toList());
+        System.out.println("삭제 전: \n"+collect);
         for (int i=0; i<count; i++){
-            System.out.println(collect);
-            System.out.println(Objects.equals((studentRepository.findByNickname(collect.get(i).getNickname())), null));
+//            System.out.println(Objects.equals((studentRepository.findByNickname(collect.get(i).getNickname())), null));
             System.out.println(("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n닉네임: "+collect.get(i).getNickname()+"\n? "+(studentRepository.findByNickname(collect.get(i).getNickname()))==null));
             System.out.println(("닉네임: "+collect.get(i).getNickname()+"\n? "+Objects.equals(studentRepository.findByNickname(collect.get(i).getNickname()),null)));
             if (Objects.equals((studentRepository.findByNickname(collect.get(i).getNickname())), null)){
