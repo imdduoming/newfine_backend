@@ -13,6 +13,7 @@ import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -62,7 +63,7 @@ public class RankingService {
         Set<ZSetOperations.TypedTuple<String>> typedTuples = stringStringZSetOperations.reverseRangeWithScores(key, 0, count);
         List<RankingResponseDto> collect = typedTuples.stream().map(RankingResponseDto::convertToRankingResponseDto).collect(Collectors.toList());
         for (int i=0; i<count; i++){
-            if ((studentRepository.findByNickname(collect.get(i).getNickname()))==null){
+            if (Objects.equals((studentRepository.findByNickname(collect.get(i).getNickname())), null)){
                 redisTemplate.opsForZSet().remove("ranking", collect.get(i).getNickname());
             }
         }
@@ -77,9 +78,6 @@ public class RankingService {
                 return "등급 update";
             }
             System.out.println("챌린저 그룹 닉네임: "+challengerCollect.get(i).getNickname());
-            if ((studentRepository.findByNickname(challengerCollect.get(i).getNickname()))==null){
-                redisTemplate.opsForZSet().remove("ranking", challengerCollect.get(i).getNickname());
-            }
             Student student=studentRepository.findByNickname(challengerCollect.get(i).getNickname()).orElseThrow(RuntimeException::new);
             student.setTier(Tier.CHALLENGER);
             System.out.println("학생 등급:                 "+student);
@@ -157,5 +155,10 @@ public class RankingService {
 
 
         return "등급 update";
+    }
+
+    public Student getNullStudent(){
+        Student park=studentRepository.getById(1L);
+        return park;
     }
 }
