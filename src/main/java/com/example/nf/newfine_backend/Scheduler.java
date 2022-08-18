@@ -17,7 +17,7 @@ public class Scheduler {
 //        if(!env.equals("prod")) {
 //            log.info("매일 5분마다 - " + env);
 //        }
-        rankingService.updateLevel();
+        System.out.println(rankingService.updateLevel());
 
     }
 }
