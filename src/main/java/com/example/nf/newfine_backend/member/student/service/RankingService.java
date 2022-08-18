@@ -58,6 +58,15 @@ public class RankingService {
         Long count=stringStringZSetOperations.zCard(key);
         System.out.println("데이터 개수:                 "+count);
 
+
+        Set<ZSetOperations.TypedTuple<String>> typedTuples = stringStringZSetOperations.reverseRangeWithScores(key, 0, count);
+        List<RankingResponseDto> collect = typedTuples.stream().map(RankingResponseDto::convertToRankingResponseDto).collect(Collectors.toList());
+        for (int i=0; i<count; i++){
+            if ((studentRepository.findByNickname(collect.get(i).getNickname()))==null){
+                redisTemplate.opsForZSet().remove("ranking", collect.get(i).getNickname());
+            }
+        }
+
         // Tier: CHALLENGER
         Set<ZSetOperations.TypedTuple<String>> challengerTuples = stringStringZSetOperations.reverseRangeWithScores(key, 0, count);
         System.out.println("Set<ZSetOperations.TypedTuple<String>>:        "+ challengerTuples);
@@ -67,22 +76,14 @@ public class RankingService {
             if (i==count){
                 return "등급 update";
             }
-            try{
-                Student student=studentRepository.findByNickname(challengerCollect.get(i).getNickname()).orElseThrow(RuntimeException::new);
-                student.setTier(Tier.CHALLENGER);
-                System.out.println("학생 등급:                 "+student);
-                studentRepository.save(student);
-            }catch(NullPointerException e){
+            System.out.println("챌린저 그룹 닉네임: "+challengerCollect.get(i).getNickname());
+            if ((studentRepository.findByNickname(challengerCollect.get(i).getNickname()))==null){
                 redisTemplate.opsForZSet().remove("ranking", challengerCollect.get(i).getNickname());
             }
-            System.out.println("챌린저 그룹 닉네임: "+challengerCollect.get(i).getNickname());
-//            if ((studentRepository.findByNickname(challengerCollect.get(i).getNickname()))==null){
-//                redisTemplate.opsForZSet().remove("ranking", challengerCollect.get(i).getNickname());
-//            }
-//            Student student=studentRepository.findByNickname(challengerCollect.get(i).getNickname()).orElseThrow(RuntimeException::new);
-//            student.setTier(Tier.CHALLENGER);
-//            System.out.println("학생 등급:                 "+student);
-//            studentRepository.save(student);
+            Student student=studentRepository.findByNickname(challengerCollect.get(i).getNickname()).orElseThrow(RuntimeException::new);
+            student.setTier(Tier.CHALLENGER);
+            System.out.println("학생 등급:                 "+student);
+            studentRepository.save(student);
         }
         System.out.println("List<RankingResponseDto>"+challengerCollect);
         System.out.println(challengerCollect.get(0).getNickname());
@@ -91,87 +92,57 @@ public class RankingService {
             if (i==count){
                 return "등급 update";
             }
-//            Student student=studentRepository.findByNickname(challengerCollect.get(i).getNickname()).orElseThrow(RuntimeException::new);
-//            student.setTier(Tier.MASTER);
-//            System.out.println("학생 등급:                 "+student);
-//            studentRepository.save(student);
-            try{
-                Student student=studentRepository.findByNickname(challengerCollect.get(i).getNickname()).orElseThrow(RuntimeException::new);
-                student.setTier(Tier.CHALLENGER);
-                System.out.println("학생 등급:                 "+student);
-                studentRepository.save(student);
-            }catch(NullPointerException e){
-                redisTemplate.opsForZSet().remove("ranking", challengerCollect.get(i).getNickname());
-            }
+            Student student=studentRepository.findByNickname(challengerCollect.get(i).getNickname()).orElseThrow(RuntimeException::new);
+            student.setTier(Tier.MASTER);
+            System.out.println("학생 등급:                 "+student);
+            studentRepository.save(student);
+
         }
         // Tier: DIA
         for (int i=8; i<20; i++){
             if (i==count){
                 return "등급 update";
             }
-//            Student student=studentRepository.findByNickname(challengerCollect.get(i).getNickname()).orElseThrow(RuntimeException::new);
-//            student.setTier(Tier.DIA);
-//            System.out.println("학생 등급:                 "+student);
-//            studentRepository.save(student);
-            try{
-                Student student=studentRepository.findByNickname(challengerCollect.get(i).getNickname()).orElseThrow(RuntimeException::new);
-                student.setTier(Tier.CHALLENGER);
-                System.out.println("학생 등급:                 "+student);
-                studentRepository.save(student);
-            }catch(NullPointerException e){
-                redisTemplate.opsForZSet().remove("ranking", challengerCollect.get(i).getNickname());
-            }
+            Student student=studentRepository.findByNickname(challengerCollect.get(i).getNickname()).orElseThrow(RuntimeException::new);
+            student.setTier(Tier.DIA);
+            System.out.println("학생 등급:                 "+student);
+            studentRepository.save(student);
         }
         // Tier: PLATINUM
         for (int i=20; i<50; i++){
             if (i==count){
                 return "등급 update";
             }
-//            Student student=studentRepository.findByNickname(challengerCollect.get(i).getNickname()).orElseThrow(RuntimeException::new);
-//            student.setTier(Tier.PLATINUM);
-//            studentRepository.save(student);
-            try{
-                Student student=studentRepository.findByNickname(challengerCollect.get(i).getNickname()).orElseThrow(RuntimeException::new);
-                student.setTier(Tier.CHALLENGER);
-                System.out.println("학생 등급:                 "+student);
-                studentRepository.save(student);
-            }catch(NullPointerException e){
-                redisTemplate.opsForZSet().remove("ranking", challengerCollect.get(i).getNickname());
-            }
+            Student student=studentRepository.findByNickname(challengerCollect.get(i).getNickname()).orElseThrow(RuntimeException::new);
+            student.setTier(Tier.PLATINUM);
+            studentRepository.save(student);
         }
         // Tier: GOLD
         for (int i=50; i<100; i++){
             if (i==count){
                 return "등급 update";
             }
-//            Student student=studentRepository.findByNickname(challengerCollect.get(i).getNickname()).orElseThrow(RuntimeException::new);
-//            student.setTier(Tier.GOLD);
-//            studentRepository.save(student);
-            try{
-                Student student=studentRepository.findByNickname(challengerCollect.get(i).getNickname()).orElseThrow(RuntimeException::new);
-                student.setTier(Tier.CHALLENGER);
-                System.out.println("학생 등급:                 "+student);
-                studentRepository.save(student);
-            }catch(NullPointerException e){
-                redisTemplate.opsForZSet().remove("ranking", challengerCollect.get(i).getNickname());
-            }
+            Student student=studentRepository.findByNickname(challengerCollect.get(i).getNickname()).orElseThrow(RuntimeException::new);
+            student.setTier(Tier.GOLD);
+            studentRepository.save(student);
+
         }
         // Tier: NEW
         for (int i=100; i<count; i++){
             if (i==count){
                 return "등급 update";
             }
-//            Student student=studentRepository.findByNickname(challengerCollect.get(i).getNickname()).orElseThrow(RuntimeException::new);
-//            student.setTier(Tier.NEW);
-//            studentRepository.save(student);
-            try{
-                Student student=studentRepository.findByNickname(challengerCollect.get(i).getNickname()).orElseThrow(RuntimeException::new);
-                student.setTier(Tier.CHALLENGER);
-                System.out.println("학생 등급:                 "+student);
-                studentRepository.save(student);
-            }catch(NullPointerException e){
-                redisTemplate.opsForZSet().remove("ranking", challengerCollect.get(i).getNickname());
-            }
+            Student student=studentRepository.findByNickname(challengerCollect.get(i).getNickname()).orElseThrow(RuntimeException::new);
+            student.setTier(Tier.NEW);
+            studentRepository.save(student);
+//            try{
+//                Student student=studentRepository.findByNickname(challengerCollect.get(i).getNickname()).orElseThrow(RuntimeException::new);
+//                student.setTier(Tier.CHALLENGER);
+//                System.out.println("학생 등급:                 "+student);
+//                studentRepository.save(student);
+//            }catch(NullPointerException e){
+//                redisTemplate.opsForZSet().remove("ranking", challengerCollect.get(i).getNickname());
+//            }
         }
 //        // Tier: MASTER
 //        Set<ZSetOperations.TypedTuple<String>> masterTuples = stringStringZSetOperations.reverseRangeWithScores(key, 2, 7);
