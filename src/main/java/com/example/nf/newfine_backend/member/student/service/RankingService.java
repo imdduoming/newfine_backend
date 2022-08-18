@@ -66,8 +66,10 @@ public class RankingService {
             if (i==count){
                 return "등급 update";
             }
+            System.out.println("챌린저 그룹 닉네임: "+challengerCollect.get(i).getNickname());
             Student student=studentRepository.findByNickname(challengerCollect.get(i).getNickname()).orElseThrow(RuntimeException::new);
             student.setTier(Tier.CHALLENGER);
+            studentRepository.save(student);
         }
         System.out.println("List<RankingResponseDto>"+challengerCollect);
         System.out.println(challengerCollect.get(0).getNickname());
@@ -78,6 +80,7 @@ public class RankingService {
             }
             Student student=studentRepository.findByNickname(challengerCollect.get(i).getNickname()).orElseThrow(RuntimeException::new);
             student.setTier(Tier.MASTER);
+            studentRepository.save(student);
         }
         // Tier: DIA
         for (int i=8; i<20; i++){
@@ -86,6 +89,7 @@ public class RankingService {
             }
             Student student=studentRepository.findByNickname(challengerCollect.get(i).getNickname()).orElseThrow(RuntimeException::new);
             student.setTier(Tier.DIA);
+            studentRepository.save(student);
         }
         // Tier: PLATINUM
         for (int i=20; i<50; i++){
@@ -94,6 +98,7 @@ public class RankingService {
             }
             Student student=studentRepository.findByNickname(challengerCollect.get(i).getNickname()).orElseThrow(RuntimeException::new);
             student.setTier(Tier.PLATINUM);
+            studentRepository.save(student);
         }
         // Tier: GOLD
         for (int i=50; i<100; i++){
@@ -102,6 +107,7 @@ public class RankingService {
             }
             Student student=studentRepository.findByNickname(challengerCollect.get(i).getNickname()).orElseThrow(RuntimeException::new);
             student.setTier(Tier.GOLD);
+            studentRepository.save(student);
         }
         // Tier: NEW
         for (int i=100; i<count; i++){
@@ -110,6 +116,7 @@ public class RankingService {
             }
             Student student=studentRepository.findByNickname(challengerCollect.get(i).getNickname()).orElseThrow(RuntimeException::new);
             student.setTier(Tier.NEW);
+            studentRepository.save(student);
         }
 //        // Tier: MASTER
 //        Set<ZSetOperations.TypedTuple<String>> masterTuples = stringStringZSetOperations.reverseRangeWithScores(key, 2, 7);
