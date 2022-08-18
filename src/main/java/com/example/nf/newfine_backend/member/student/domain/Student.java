@@ -31,18 +31,18 @@ public class Student extends Timestamped {
     private Long id;
 
     @Column
-    @NotNull
-    @Pattern(regexp = "^(010[1|6|7|8|9|0])(\\d{3,4})(\\d{4})$")
+//    @NotNull
+//    @Pattern(regexp = "^(010[1|6|7|8|9|0])(\\d{3,4})(\\d{4})$")
     private String phoneNumber;
 
     @Column
-    @NotNull
+//    @NotNull
     private String name;
 
     @JsonIgnore
     @Column
-    @NotNull
-    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@^!%*#?&])[A-Za-z\\d@^!%*#?&]{8,}$")
+//    @NotNull
+//    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@^!%*#?&])[A-Za-z\\d@^!%*#?&]{8,}$")
     private String password;
 
     @Column
