@@ -6,8 +6,6 @@ import com.example.nf.newfine_backend.member.student.repository.StudentRepositor
 import com.example.nf.newfine_backend.member.util.SecurityUtil;
 import com.example.nf.newfine_backend.test.domain.Test;
 import com.example.nf.newfine_backend.test.dto.TestDto;
-import com.example.nf.newfine_backend.test.dto.TestResultDto;
-import com.example.nf.newfine_backend.test.dto.TypeResultDto;
 import com.example.nf.newfine_backend.test.repository.TestRepository;
 import com.example.nf.newfine_backend.test.service.TestService;
 import lombok.AllArgsConstructor;
@@ -60,6 +58,7 @@ public class TestController {
         Student student = studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
         return testService.getAllMyTests(student);
     }
+
 
 
 
