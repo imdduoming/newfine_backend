@@ -1,5 +1,6 @@
 package com.example.nf.newfine_backend.member.student.service;
 
+import com.example.nf.newfine_backend.member.student.domain.Tier;
 import com.example.nf.newfine_backend.member.student.dto.RankingResponseDto;
 import com.example.nf.newfine_backend.member.student.exception.PhoneNumberNotFoundException;
 import com.example.nf.newfine_backend.member.student.domain.Student;
@@ -53,25 +54,73 @@ public class RankingService {
         // ZSet(Sorted Set): 중복X 데이터 Collection, Score(가중치)에 따라 정렬
         ZSetOperations<String, String> stringStringZSetOperations = redisTemplate.opsForZSet();
 
+        // 데이터 개수
+        Long count=stringStringZSetOperations.zCard(key);
+
         // Tier: CHALLENGER
-        Set<ZSetOperations.TypedTuple<String>> challengerTuples = stringStringZSetOperations.reverseRangeWithScores(key, 0, 1);
+        Set<ZSetOperations.TypedTuple<String>> challengerTuples = stringStringZSetOperations.reverseRangeWithScores(key, 0, count);
         System.out.println("Set<ZSetOperations.TypedTuple<String>>:        "+ challengerTuples);
-//        for (int i=0; i<2; i++){
-//            Student student=studentRepository.findByNickname();
-//        }
         List<RankingResponseDto> challengerCollect = challengerTuples.stream().map(RankingResponseDto::convertToRankingResponseDto).collect(Collectors.toList());
+        // Tier: CHALLENGER
+        for (int i=0; i<2; i++){
+            if (i==count){
+                return "등급 update";
+            }
+            Student student=studentRepository.findByNickname(challengerCollect.get(i).getNickname()).orElseThrow(RuntimeException::new);
+            student.setTier(Tier.CHALLENGER);
+        }
         System.out.println("List<RankingResponseDto>"+challengerCollect);
         System.out.println(challengerCollect.get(0).getNickname());
         // Tier: MASTER
-        Set<ZSetOperations.TypedTuple<String>> masterTuples = stringStringZSetOperations.reverseRangeWithScores(key, 2, 7);
+        for (int i=2; i<8; i++){
+            if (i==count){
+                return "등급 update";
+            }
+            Student student=studentRepository.findByNickname(challengerCollect.get(i).getNickname()).orElseThrow(RuntimeException::new);
+            student.setTier(Tier.MASTER);
+        }
         // Tier: DIA
-        Set<ZSetOperations.TypedTuple<String>> diaTuples = stringStringZSetOperations.reverseRangeWithScores(key, 8, 19);
+        for (int i=8; i<20; i++){
+            if (i==count){
+                return "등급 update";
+            }
+            Student student=studentRepository.findByNickname(challengerCollect.get(i).getNickname()).orElseThrow(RuntimeException::new);
+            student.setTier(Tier.DIA);
+        }
         // Tier: PLATINUM
-        Set<ZSetOperations.TypedTuple<String>> platinumTuples = stringStringZSetOperations.reverseRangeWithScores(key, 20, 49);
+        for (int i=20; i<50; i++){
+            if (i==count){
+                return "등급 update";
+            }
+            Student student=studentRepository.findByNickname(challengerCollect.get(i).getNickname()).orElseThrow(RuntimeException::new);
+            student.setTier(Tier.PLATINUM);
+        }
         // Tier: GOLD
-        Set<ZSetOperations.TypedTuple<String>> goldTuples = stringStringZSetOperations.reverseRangeWithScores(key, 50, 99);
+        for (int i=50; i<100; i++){
+            if (i==count){
+                return "등급 update";
+            }
+            Student student=studentRepository.findByNickname(challengerCollect.get(i).getNickname()).orElseThrow(RuntimeException::new);
+            student.setTier(Tier.GOLD);
+        }
         // Tier: NEW
-        Set<ZSetOperations.TypedTuple<String>> newTuples = stringStringZSetOperations.reverseRangeWithScores(key, 100, stringStringZSetOperations.zCard(key));
+        for (int i=100; i<count; i++){
+            if (i==count){
+                return "등급 update";
+            }
+            Student student=studentRepository.findByNickname(challengerCollect.get(i).getNickname()).orElseThrow(RuntimeException::new);
+            student.setTier(Tier.NEW);
+        }
+//        // Tier: MASTER
+//        Set<ZSetOperations.TypedTuple<String>> masterTuples = stringStringZSetOperations.reverseRangeWithScores(key, 2, 7);
+//        // Tier: DIA
+//        Set<ZSetOperations.TypedTuple<String>> diaTuples = stringStringZSetOperations.reverseRangeWithScores(key, 8, 19);
+//        // Tier: PLATINUM
+//        Set<ZSetOperations.TypedTuple<String>> platinumTuples = stringStringZSetOperations.reverseRangeWithScores(key, 20, 49);
+//        // Tier: GOLD
+//        Set<ZSetOperations.TypedTuple<String>> goldTuples = stringStringZSetOperations.reverseRangeWithScores(key, 50, 99);
+//        // Tier: NEW
+//        Set<ZSetOperations.TypedTuple<String>> newTuples = stringStringZSetOperations.reverseRangeWithScores(key, 100, stringStringZSetOperations.zCard(key));
 
 
         return "등급 update";
