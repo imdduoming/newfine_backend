@@ -1,15 +1,13 @@
 package com.example.nf.newfine_backend.test.service;
 
+import com.example.nf.newfine_backend.course.Course;
 import com.example.nf.newfine_backend.course.CourseRepository;
 import com.example.nf.newfine_backend.course.ListenerRepository;
 import com.example.nf.newfine_backend.member.student.domain.Student;
 import com.example.nf.newfine_backend.test.domain.CourseTestResults;
 import com.example.nf.newfine_backend.test.domain.StudentTestResults;
 import com.example.nf.newfine_backend.test.domain.Test;
-import com.example.nf.newfine_backend.test.dto.KillerDto;
-import com.example.nf.newfine_backend.test.dto.NotCorrectDto;
-import com.example.nf.newfine_backend.test.dto.TestResultDto;
-import com.example.nf.newfine_backend.test.dto.TypeResultDto;
+import com.example.nf.newfine_backend.test.dto.*;
 import com.example.nf.newfine_backend.test.repository.CourseTestResultsRepository;
 import com.example.nf.newfine_backend.test.repository.StudentTestResultsRepository;
 import com.example.nf.newfine_backend.test.repository.TestRepository;
@@ -32,6 +30,34 @@ public class TestResultService {
 
     private final QuestionService questionService;
 
+    public int getRank(Test test , int myScore){
+        List<StudentTestResults> highStudents = studentTestResultsRepository.findAllByTestAndTotalScoreAfter(test,myScore);// 나보다 점수 높은 애들 가져오기
+        return highStudents.size()+1;
+    }
+
+    public List<MyAllTestDto> getAllMyTests(Student student, Long test_id){
+        String student_code= student.getTest_code();
+        List<MyAllTestDto> myAllTestDtos = new ArrayList<>();
+        // 테스트 아이디로 테스트 찾고 학생 수험번호 찾기
+        Test test = testRepository.findById(test_id).get();
+        Course course = test.getCourse();
+        List<Test> allTests = testRepository.findTestsByCourse(course);
+        int num=1;
+        for (Test test1 : allTests){
+            // 강의에 대한 모든 테스트 순회하고 테스트에 대한 학생의 답안지를 찾는다
+            MyAllTestDto myAllTestDto = new MyAllTestDto();
+            StudentTestResults studentTestResults=studentTestResultsRepository.findByTestAndStudentCode(test,student_code).get();
+            myAllTestDto.setTest_num(num);
+            myAllTestDto.setScore(studentTestResults.getTotalScore());
+            int rank = getRank(test,studentTestResults.getTotalScore() ); // 순위 구하기
+            myAllTestDto.setRank(rank);
+            myAllTestDtos.add(myAllTestDto);
+            num+=1;
+        }
+
+        return myAllTestDtos;
+
+    }
 
     public TypeResultDto getTypeResults(Student student, Long test_id){
         TypeResultDto typeResultDto = new TypeResultDto();
@@ -97,8 +123,9 @@ public class TestResultService {
         }
 
         int myScore = studentTestResults.getTotalScore();// 학생 점수
-        List<StudentTestResults> highStudents = studentTestResultsRepository.findAllByTestAndTotalScoreAfter(test,myScore);// 나보다 점수 높은 애들 가져오기
-        int rank = highStudents.size()+1;// 내 순위
+//        List<StudentTestResults> highStudents = studentTestResultsRepository.findAllByTestAndTotalScoreAfter(test,myScore);// 나보다 점수 높은 애들 가져오기
+//        int rank = highStudents.size()+1;// 내 순위
+        int rank = getRank(test, myScore);
         List<StudentTestResults> allStudents = studentTestResultsRepository.findAllByTest(test);
         int students_num = allStudents.size(); // 총 학생 명수
         Double avg = get_avg(students_num,allStudents); // 평균구하기

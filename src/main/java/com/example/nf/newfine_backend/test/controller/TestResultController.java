@@ -5,15 +5,17 @@ import com.example.nf.newfine_backend.member.student.domain.Student;
 import com.example.nf.newfine_backend.member.student.exception.PhoneNumberNotFoundException;
 import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
 import com.example.nf.newfine_backend.member.util.SecurityUtil;
+import com.example.nf.newfine_backend.test.dto.MyAllTestDto;
 import com.example.nf.newfine_backend.test.dto.TestResultDto;
 import com.example.nf.newfine_backend.test.dto.TypeResultDto;
 import com.example.nf.newfine_backend.test.repository.TestRepository;
 import com.example.nf.newfine_backend.test.service.TestResultService;
-import com.example.nf.newfine_backend.test.service.TestService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -38,6 +40,14 @@ public class TestResultController {
         Long test_id = Long.valueOf(id);
         return testResultService.getTypeResults(student,test_id);
     }
+
+    @GetMapping("/test/result/all/my")
+    public List<MyAllTestDto> getAllMyResults(@RequestParam Integer id){
+        Student student = studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
+        Long test_id = Long.valueOf(id);
+        return testResultService.getAllMyTests(student,test_id);
+    }
+
 
 
 }
