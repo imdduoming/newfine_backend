@@ -63,6 +63,10 @@ public class RankingService {
         Set<ZSetOperations.TypedTuple<String>> typedTuples = stringStringZSetOperations.reverseRangeWithScores(key, 0, count);
         List<RankingResponseDto> collect = typedTuples.stream().map(RankingResponseDto::convertToRankingResponseDto).collect(Collectors.toList());
         for (int i=0; i<count; i++){
+            System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"+collect);
+            System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n닉네임: "+studentRepository.findByNickname(collect.get(i).getNickname()));
+            System.out.println(Objects.equals((studentRepository.findByNickname(collect.get(i).getNickname())), null));
+            System.out.println(((studentRepository.findByNickname(collect.get(i).getNickname()))==null));
             if (Objects.equals((studentRepository.findByNickname(collect.get(i).getNickname())), null)){
                 redisTemplate.opsForZSet().remove("ranking", collect.get(i).getNickname());
             }
@@ -70,8 +74,8 @@ public class RankingService {
 
         // Tier: CHALLENGER
         Set<ZSetOperations.TypedTuple<String>> challengerTuples = stringStringZSetOperations.reverseRangeWithScores(key, 0, count);
-        System.out.println("Set<ZSetOperations.TypedTuple<String>>:        "+ challengerTuples);
         List<RankingResponseDto> challengerCollect = challengerTuples.stream().map(RankingResponseDto::convertToRankingResponseDto).collect(Collectors.toList());
+        System.out.println("삭제가 됐어야함.:        "+ challengerCollect);
         // Tier: CHALLENGER
         for (int i=0; i<2; i++){
             if (i==count){
