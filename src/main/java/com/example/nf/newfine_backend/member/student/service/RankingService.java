@@ -63,22 +63,25 @@ public class RankingService {
         Set<ZSetOperations.TypedTuple<String>> typedTuples = stringStringZSetOperations.reverseRangeWithScores(key, 0, count);
         List<RankingResponseDto> collect = typedTuples.stream().map(RankingResponseDto::convertToRankingResponseDto).collect(Collectors.toList());
         for (int i=0; i<count; i++){
-            System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"+collect);
-            System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n닉네임: "+studentRepository.findByNickname(collect.get(i).getNickname()));
+            System.out.println(collect);
             System.out.println(Objects.equals((studentRepository.findByNickname(collect.get(i).getNickname())), null));
-            System.out.println(((studentRepository.findByNickname(collect.get(i).getNickname()))==null));
+            System.out.println(("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n닉네임: "+collect.get(i).getNickname()+"\n? "+(studentRepository.findByNickname(collect.get(i).getNickname()))==null));
+            System.out.println(("닉네임: "+collect.get(i).getNickname()+"\n? "+Objects.equals(studentRepository.findByNickname(collect.get(i).getNickname()),null)));
             if (Objects.equals((studentRepository.findByNickname(collect.get(i).getNickname())), null)){
                 redisTemplate.opsForZSet().remove("ranking", collect.get(i).getNickname());
             }
         }
 
+        Long count1=stringStringZSetOperations.zCard(key);
+
         // Tier: CHALLENGER
         Set<ZSetOperations.TypedTuple<String>> challengerTuples = stringStringZSetOperations.reverseRangeWithScores(key, 0, count);
         List<RankingResponseDto> challengerCollect = challengerTuples.stream().map(RankingResponseDto::convertToRankingResponseDto).collect(Collectors.toList());
+        System.out.println(count1);
         System.out.println("삭제가 됐어야함.:        "+ challengerCollect);
         // Tier: CHALLENGER
         for (int i=0; i<2; i++){
-            if (i==count){
+            if (i==count1){
                 return "등급 update";
             }
             System.out.println("챌린저 그룹 닉네임: "+challengerCollect.get(i).getNickname());
@@ -91,7 +94,7 @@ public class RankingService {
         System.out.println(challengerCollect.get(0).getNickname());
         // Tier: MASTER
         for (int i=2; i<8; i++){
-            if (i==count){
+            if (i==count1){
                 return "등급 update";
             }
             Student student=studentRepository.findByNickname(challengerCollect.get(i).getNickname()).orElseThrow(RuntimeException::new);
@@ -102,7 +105,7 @@ public class RankingService {
         }
         // Tier: DIA
         for (int i=8; i<20; i++){
-            if (i==count){
+            if (i==count1){
                 return "등급 update";
             }
             Student student=studentRepository.findByNickname(challengerCollect.get(i).getNickname()).orElseThrow(RuntimeException::new);
@@ -112,7 +115,7 @@ public class RankingService {
         }
         // Tier: PLATINUM
         for (int i=20; i<50; i++){
-            if (i==count){
+            if (i==count1){
                 return "등급 update";
             }
             Student student=studentRepository.findByNickname(challengerCollect.get(i).getNickname()).orElseThrow(RuntimeException::new);
@@ -121,7 +124,7 @@ public class RankingService {
         }
         // Tier: GOLD
         for (int i=50; i<100; i++){
-            if (i==count){
+            if (i==count1){
                 return "등급 update";
             }
             Student student=studentRepository.findByNickname(challengerCollect.get(i).getNickname()).orElseThrow(RuntimeException::new);
@@ -131,7 +134,7 @@ public class RankingService {
         }
         // Tier: NEW
         for (int i=100; i<count; i++){
-            if (i==count){
+            if (i==count1){
                 return "등급 update";
             }
             Student student=studentRepository.findByNickname(challengerCollect.get(i).getNickname()).orElseThrow(RuntimeException::new);
