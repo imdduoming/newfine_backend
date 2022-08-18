@@ -1,28 +1,22 @@
 package com.example.nf.newfine_backend.test.service;
 
-import com.amazonaws.services.iotdeviceadvisor.model.TestResult;
 import com.example.nf.newfine_backend.course.Course;
 import com.example.nf.newfine_backend.course.CourseRepository;
 import com.example.nf.newfine_backend.course.Listener;
 import com.example.nf.newfine_backend.test.domain.*;
 import com.example.nf.newfine_backend.course.ListenerRepository;
 import com.example.nf.newfine_backend.member.student.domain.Student;
-import com.example.nf.newfine_backend.test.dto.NotCorrectDto;
-import com.example.nf.newfine_backend.test.dto.TestDto;
-import com.example.nf.newfine_backend.test.dto.TestResultDto;
+import com.example.nf.newfine_backend.test.dto.*;
 import com.example.nf.newfine_backend.test.repository.CourseTestResultsRepository;
 import com.example.nf.newfine_backend.test.repository.StudentTestResultsRepository;
 import com.example.nf.newfine_backend.test.repository.TestRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.velocity.exception.MathException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -36,6 +30,7 @@ public class TestService {
     private final StudentTestResultsRepository studentTestResultsRepository;
     private final QNumberService qNumberService;
     private final ScoreService scoreService;
+    private final QuestionService questionService;
 
     public Test createTest(TestDto testDto){
         Course course=courseRepository.findById(testDto.getCourse_id()).get();
@@ -126,6 +121,28 @@ public class TestService {
     }
 
 
+    public TypeResultDto getTypeResults(Student student, Long test_id){
+        TypeResultDto typeResultDto = new TypeResultDto();
+        // 테스트 아이디로 테스트 찾고 학생 수험번호 찾기
+        Test test = testRepository.findById(test_id).get();
+        String student_code= student.getTest_code();
+
+        // 킬러문항 / 준킬러문항 담기
+        List<CourseTestResults> Bkiller = courseTestResultsRepository.findAllByType("bk"); // best killer
+        List<CourseTestResults> Killer = courseTestResultsRepository.findAllByType("k"); // killer
+
+        StudentTestResults studentTestResults=studentTestResultsRepository.findByTestAndStudentCode(test,student_code).get();
+
+        // 킬러 , 준킬러 문항에 대한 나의 정오 및 분석
+        List<KillerDto> BKillers = questionService.makeKiller(Bkiller,studentTestResults);
+        List<KillerDto> Killers = questionService.makeKiller(Killer,studentTestResults);
+
+        typeResultDto.setBkillerDtos(BKillers);
+        typeResultDto.setKillerDtos(Killers);
+
+        return typeResultDto;
+
+    }
 
     public TestResultDto getTestResults(Student student, Long test_id){
         TestResultDto testResultDto = new TestResultDto();
