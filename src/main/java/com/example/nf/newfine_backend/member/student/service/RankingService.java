@@ -41,9 +41,39 @@ public class RankingService {
         }
         return MyRankDto.builder()
                 .myRank((int) (ranking+1))
-                .myLevel(student.getLevel())
+                .myTier(student.getTier())
                 .build();
 
 //        return ranking+1;
+    }
+
+    public String updateLevel() {
+        String key = "ranking";
+
+        // ZSet(Sorted Set): 중복X 데이터 Collection, Score(가중치)에 따라 정렬
+        ZSetOperations<String, String> stringStringZSetOperations = redisTemplate.opsForZSet();
+
+        // Tier: CHALLENGER
+        Set<ZSetOperations.TypedTuple<String>> challengerTuples = stringStringZSetOperations.reverseRangeWithScores(key, 0, 1);
+        System.out.println("Set<ZSetOperations.TypedTuple<String>>:        "+ challengerTuples);
+//        for (int i=0; i<2; i++){
+//            Student student=studentRepository.findByNickname();
+//        }
+        List<RankingResponseDto> challengerCollect = challengerTuples.stream().map(RankingResponseDto::convertToRankingResponseDto).collect(Collectors.toList());
+        System.out.println("List<RankingResponseDto>"+challengerCollect);
+        System.out.println(challengerCollect.get(0).getNickname());
+        // Tier: MASTER
+        Set<ZSetOperations.TypedTuple<String>> masterTuples = stringStringZSetOperations.reverseRangeWithScores(key, 2, 7);
+        // Tier: DIA
+        Set<ZSetOperations.TypedTuple<String>> diaTuples = stringStringZSetOperations.reverseRangeWithScores(key, 8, 19);
+        // Tier: PLATINUM
+        Set<ZSetOperations.TypedTuple<String>> platinumTuples = stringStringZSetOperations.reverseRangeWithScores(key, 20, 49);
+        // Tier: GOLD
+        Set<ZSetOperations.TypedTuple<String>> goldTuples = stringStringZSetOperations.reverseRangeWithScores(key, 50, 99);
+        // Tier: NEW
+        Set<ZSetOperations.TypedTuple<String>> newTuples = stringStringZSetOperations.reverseRangeWithScores(key, 100, stringStringZSetOperations.zCard(key));
+
+
+        return "등급 update";
     }
 }
