@@ -76,6 +76,10 @@ dependencies {
 //    implementation 'de.codecentric:spring-boot-admin-starter-server:2.6.2'
     //Json 처리
     implementation group: 'org.json', name: 'json', version: '20090211'
+    //푸시 알림 파이어베이스
+    implementation 'com.google.firebase:firebase-admin:7.1.1'
+    //OKClient
+    implementation("com.squareup.okhttp3:okhttp:4.9.1")
 }
 
 tasks.named('test') {
