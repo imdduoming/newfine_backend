@@ -16,6 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class QuestionService {
 
+    // 킬러 문항 담기
     public List<KillerDto> makeKiller(List<CourseTestResults> BKiller, StudentTestResults studentTestResults){
         List<KillerDto> killerDtos = new ArrayList<>();
         for (CourseTestResults courseTestResults : BKiller){
@@ -23,7 +24,8 @@ public class QuestionService {
             String ans = courseTestResults.getCorrectAns(); // 문제 답
             String n = courseTestResults.getQuestionNum(); // 문제 번호
             String student_ans= getStudentAns(studentTestResults,n); // 문제에 대한 학생의 답
-            Double NotCorrectRate = 100 - courseTestResults.getCorrectAnsRate(); // 오답률
+            Double NotCorrectR = 100 - courseTestResults.getCorrectAnsRate(); // 오답률
+            Double NotCorrectRate = (double)Math.round(NotCorrectR*100)/100;
             Boolean isCorrect;
             if (student_ans.equals("O")){
                 // 학생이 답을 맞췄다면
@@ -33,7 +35,7 @@ public class QuestionService {
                 isCorrect = false;
             }
 
-            ArrayList<String> mostChosen = mostChosen(courseTestResults,3);
+            String mostChosen = mostChosen(courseTestResults,3);
 
             killerDto.setIscorrect(isCorrect);
             killerDto.setRight_ans(ans);
@@ -51,7 +53,7 @@ public class QuestionService {
     }
 
     // 가장 많이 선택한 n개 답
-    public ArrayList<String> mostChosen (CourseTestResults courseTestResults, int n) {
+    public String mostChosen (CourseTestResults courseTestResults, int n) {
 
         Double[][] chList = new Double[5][5];
         chList[0][0] = 1.0;
@@ -71,12 +73,12 @@ public class QuestionService {
 
         Arrays.sort(chList,(o1, o2)->
                 Double.compare( o1[1],o2[1]));
-        ArrayList<String> answer = new ArrayList<>();
+        String answer="";
         for(int i=0;i<n;i++){
             Double d_ans= chList[i][0];
             int ans = d_ans.intValue();
             String s_ans = Integer.toString(ans);
-            answer.add(s_ans);
+            answer= answer.concat(s_ans);
         }
         System.out.println(answer);
         return answer;

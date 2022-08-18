@@ -15,6 +15,6 @@ public class KillerDto {
     private String student_ans ; // 나의 답
     private String q_num; // 문제번호
     private String right_ans; //문제 답
-    private ArrayList<String> most_chosen;
+    private String  most_chosen;
 
 }
