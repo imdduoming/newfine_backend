@@ -13,11 +13,9 @@ import com.example.nf.newfine_backend.member.student.service.MessageService;
 import com.example.nf.newfine_backend.member.teacher.dto.TeacherResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Objects;
 
 import static com.example.nf.newfine_backend.member.exception.ErrorCode.DUPLICATE_MEMBER;
@@ -64,6 +62,10 @@ public class AuthController {
     public ResponseEntity<TokenDto> reissue(@RequestBody TokenRequestDto tokenRequestDto) {
 //        token.replace("Bearer ", "");
 
+        System.out.println("되니..?");
+        System.out.println(tokenRequestDto.getAccessToken());
+        System.out.println(tokenRequestDto.getRefreshToken());
+
 //        TokenRequestDto tokenRequestDto=TokenRequestDto.builder()
 //                .accessToken(accessToken)
 //                .refreshToken(token)
@@ -103,5 +105,30 @@ public class AuthController {
 //            throw new RuntimeException();
 //        }
         return ResponseEntity.ok(authService.logout(tokenRequestDto));
+    }
+
+    @PostMapping("/refreshTokenWeb")
+    public TokenDto refreshToken(@RequestBody TokenRequestDto tokenRequestDto) {
+
+        System.out.println("되니..?");
+        System.out.println(tokenRequestDto.getAccessToken());
+        System.out.println(tokenRequestDto.getRefreshToken());
+
+        return authService.reissue(tokenRequestDto);
+    }
+
+//    @PostMapping("/loginCheck")
+//    public String loginCheck(HttpServletRequest request) {
+//
+//        return authService.loginCheck();
+//    }
+
+    @ResponseBody
+    @RequestMapping(value = "/adminLogin", method = RequestMethod.POST)
+    public ResponseEntity<TokenDto> login(HttpServletRequest request, SignInDto signInDto) {
+
+        signInDto.setPhoneNumber(request.getParameter("phoneNumber"));
+        signInDto.setPassword(request.getParameter("password"));
+        return ResponseEntity.ok(authService.login(signInDto));
     }
 }

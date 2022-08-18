@@ -8,6 +8,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -24,13 +26,18 @@ public class Teacher extends Timestamped {
     private Long tId;
 
     @Column
+//    @NotNull
+//    @Pattern(regexp = "^(010[1|6|7|8|9|0])(\\d{3,4})(\\d{4})$")
     private String phoneNumber;
 
 
     @Column(nullable = false)
+//    @NotNull
+//    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@^!%*#?&])[A-Za-z\\d@^!%*#?&]{8,}$")
     private String tPassword;
 
     @Column(nullable = false)
+    @NotNull
     private String tName;
 
     @Enumerated(EnumType.STRING)

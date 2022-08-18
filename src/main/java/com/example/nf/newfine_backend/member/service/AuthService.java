@@ -21,12 +21,12 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.concurrent.TimeUnit;
 
 import static com.example.nf.newfine_backend.member.exception.ErrorCode.*;
@@ -154,18 +154,26 @@ public class AuthService {
 
     @Transactional
     public TokenDto reissue(TokenRequestDto tokenRequestDto) {  // 토큰 재발급
+        System.out.println("됨?");
+        System.out.println(tokenRequestDto.getAccessToken());
+        System.out.println("리: "+ tokenRequestDto.getRefreshToken());
 
         // 1. Refresh Token 만료 여부 검증
         if (!tokenProvider.validateToken(tokenRequestDto.getRefreshToken())) {
             throw new CustomException(INVALID_REFRESH_TOKEN);
         }
+        System.out.println("됨?");
 
         // 2. Access Token 복호화 -> Member ID 가져오기
         Authentication authentication = tokenProvider.getAuthentication(tokenRequestDto.getAccessToken());
 
+        System.out.println("됨?");
+
 //        // 3. 저장소에서 Member ID 를 기반으로 Refresh Token 값 가져옴
 //        RefreshToken refreshToken = refreshTokenRepository.findByKey(authentication.getName())
 //                .orElseThrow(() -> new CustomException(REFRESH_TOKEN_NOT_FOUND));
+
+        System.out.println("리프: "+ tokenRequestDto.getRefreshToken());
 
         // 3. Redis 에서 User email 을 기반으로 저장된 Refresh Token 값을 가져옵니다.
         String refreshToken = (String)redisTemplate.opsForValue().get("RT:" + authentication.getName());
@@ -175,10 +183,15 @@ public class AuthService {
 //            return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
         }
 
+        System.out.println("리프레: "+tokenRequestDto.getRefreshToken());
+        System.out.println("레디스에서 가져온 거: "+ refreshToken);
+
         // 4. 클라이언트의 Refresh Token 일치하는지 검사
         if(!refreshToken.equals(tokenRequestDto.getRefreshToken())) {
             throw new CustomException(MISMATCH_REFRESH_TOKEN);
         }
+
+        System.out.println("됨?");
 
 //        // 4. 클라이언트의 Refresh Token 일치하는지 검사
 //        if (!refreshToken.getValue().equals(tokenRequestDto.getRefreshToken())) {
@@ -195,6 +208,10 @@ public class AuthService {
 //        // 6. 저장소 정보 업데이트 (이전의 Refresh Token 을 사용할 수 없도록)
 //        RefreshToken newRefreshToken = refreshToken.updateValue(tokenDto.getRefreshToken());
 //        refreshTokenRepository.save(newRefreshToken);
+
+        System.out.println("됨?");
+        System.out.println("새 액토: "+tokenDto.getAccessToken());
+        System.out.println("새 리토: "+tokenDto.getRefreshToken());
 
         // 토큰 발급
         return tokenDto;
@@ -223,4 +240,5 @@ public class AuthService {
 //        return response.success("로그아웃 되었습니다.");
         return responseService.getSingleResult("로그아웃 되었습니다.");
     }
+
 }

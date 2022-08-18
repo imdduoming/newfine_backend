@@ -27,7 +27,7 @@ public class ExcelController {
     private final TestRepository testRepository;
 
     @ResponseBody
-    @RequestMapping(value = "/excelUpload.do", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/excelUpload.do", method = RequestMethod.POST)
     public Map<String, String> excelUploadAjax(MultipartHttpServletRequest request) throws Exception{
         Map<String, String> result = new HashMap<String, String>();
         MultipartFile excelFile = request.getFile("excelFile");
@@ -54,7 +54,7 @@ public class ExcelController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/courseTestResultsFileUpload.do", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/courseTestResultsFileUpload.do", method = RequestMethod.POST)
     public Map<String, String> courseTestResultsFileUploadAjax(MultipartHttpServletRequest request) throws Exception{
 
         Map<String, String> result = new HashMap<String, String>();
@@ -70,9 +70,9 @@ public class ExcelController {
 //        Test test= testService.createTest(courseId, testDate, testName);
 
         System.out.println(request.getParameter("test_code"));
-        Long testCode= Long.valueOf(request.getParameter("test_code"));
+        String testCode= String.valueOf(request.getParameter("test_code"));
 
-        Test test= testRepository.findById(testCode).orElseThrow(RuntimeException::new);
+        Test test= testRepository.findByTestCode(testCode).orElseThrow(RuntimeException::new);
 
         MultipartFile courseTestResultsFile = request.getFile("courseTestResultsFile");
 
@@ -101,7 +101,7 @@ public class ExcelController {
 
 
     @ResponseBody
-    @RequestMapping(value = "/studentTestResultsFileUpload.do", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/studentTestResultsFileUpload.do", method = RequestMethod.POST)
     public Map<String, String> studentTestResultsFileUploadAjax(MultipartHttpServletRequest request) throws Exception{
 
         Map<String, String> result = new HashMap<String, String>();
@@ -117,9 +117,9 @@ public class ExcelController {
 //        Test test= testService.createTest(courseId, testDate, testName);
 
         System.out.println(request.getParameter("test_code"));
-        Long testCode= Long.valueOf(request.getParameter("test_code"));
+        String testCode= String.valueOf(request.getParameter("test_code"));
 
-        Test test= testRepository.findById(testCode).orElseThrow(RuntimeException::new);
+        Test test= testRepository.findByTestCode(testCode).orElseThrow(RuntimeException::new);
 
         MultipartFile studentTestResultsFile = request.getFile("studentTestResultsFile");
 

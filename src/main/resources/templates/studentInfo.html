@@ -7,30 +7,34 @@
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"/>
     <script type="text/javascript" src="js/jquery.min.js"></script>
     <script src="https://malsup.github.io/jquery.form.js"></script>
-<!--    <script type="text/javascript" src="js/back.js"></script>-->
+    <script type="text/javascript" src="js/back.js"></script>
     <script type="text/javascript">
         $(function () {
             // getTokenAndRefresh();
-            $.ajaxSetup({
-                error: function (jqXHR, exception) {
-                    switch (jqXHR.status) {
-                        case 401:
-                            alert('인증 에러!!');
-                            break;
-                        case 423:
-                            alert('중복된 id!!');
-                            break;
-                    }
-                },
-                beforeSend: function (xhr) {
-                    if (localStorage.getItem('accessToken') != null) {
-                        xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('accessToken'));
-                    } else {
-                        location.href = "index.html"
-                        alert("로그인 해주세요")
-                    }
-                }
-            });
+            // $.ajaxSetup({
+            //     error: function (jqXHR, exception) {
+            //         switch (jqXHR.status) {
+            //             case 401:
+            //                 alert('인증 에러!!');
+            //                 break;
+            //             case 423:
+            //                 alert('중복된 id!!');
+            //                 break;
+            //         }
+            //     },
+            //     beforeSend: function (xhr) {
+            //         if (localStorage.getItem('accessToken') != null) {
+            //             xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('accessToken'));
+            //         } else {
+            //             location.href = "index.html"
+            //             alert("로그인 해주세요")
+            //         }
+            //     }
+            // });
+            // $.ajaxSetup({
+            //     headers: { "Authorization": `Bearer ${localStorage.getItem('accessToken')}` }
+            // });
+            login_check();
         });
         function studentSignUp() {
             // if ($('#signUp_branch').val() == '') {
@@ -59,21 +63,41 @@
                 return false;
             }
 
+            var reg = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@^!%*#?&])[A-Za-z\d@^!%*#?&]{8,}$/;
+            if( !reg.test($('#signUp_password').val()) ) {
+                alert("영문, 숫자, 특수문자($@^!%*#?&)를 모두 포함하여 8자 이상으로 작성해주세요.");
+                studentSignUpForm.signUp_password.focus();
+                return false;
+            }
+
             if (confirm("회원가입하시겠습니까?")) {
                 var options = {
-                    success: function (result) {
-                        if (result.code == "1") {
-                            console.log("회원가입 완료!!");
-                            alert(result.msg);
-                        } else {
-                            console.log("회원가입 실패!!");
-                            alert(result.msg);
-                        }
+                    success: function (response) {
+                        console.log(response);
+                        // console.log(response.data.name);
+                        let name=response.name;
+                        // if (result.code == "1") {
+                        //     console.log("회원가입 완료!!");
+                        //     alert(result.msg);
+                        // } else {
+                        //     console.log("회원가입 실패!!");
+                        //     alert(result.msg);
+                        // }
+                        alert(name, '학생 회원가입 성공!');
                     },
-                    error: function (request, status, error) {
-                        console.log("error");
-                        alert("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+                    // error: function (request, status, error) {
+                    //     console.log("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+                    //     var result = JSON.parse(response.responseText);
+                    //     console.log(result)
+                    //     alert(result.message);
+                    // },
+                    error: function(response){
+                        console.log(response)
+                        var result = JSON.parse(response.responseText);
+                        console.log(result)
+                        alert(result.message);
                     },
+                    headers: { "Authorization": `Bearer ${localStorage.getItem('accessToken')}` },
                     type: "POST"
                 };
                 $("#studentSignUpForm").ajaxSubmit(options);
@@ -94,18 +118,23 @@
             if (confirm("탈퇴하시겠습니까?")) {
                 var options = {
                     success: function (result) {
-                        if (result.code == "1") {
-                            console.log("탈퇴 완료!!");
-                            alert(result.msg);
-                        } else {
-                            console.log("탈퇴 실패!!");
-                            alert(result.msg);
-                        }
+                        // if (result.code == "1") {
+                        //     console.log("탈퇴 완료!!");
+                        //     alert(result.msg);
+                        // } else {
+                        //     console.log("탈퇴 실패!!");
+                        //     alert(result.msg);
+                        // }
+                        alert("탈퇴 완료!")
                     },
-                    error: function (request, status, error) {
-                        console.log("error");
-                        alert("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+                    error: function (response) {
+                        console.log(response);
+                        var result = JSON.parse(response.responseText);
+                        console.log(result)
+                        alert(result.message);
                     },
+
+                    headers: { "Authorization": `Bearer ${localStorage.getItem('accessToken')}` },
                     type: "POST"
                 };
                 $("#studentDeleteForm").ajaxSubmit(options);

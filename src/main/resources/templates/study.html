@@ -5,27 +5,53 @@
     <title>Title</title>
 </head>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script type="text/javascript" src="js/back.js"></script>
 <script>
     var idx;
     let domainURL= 'https://eb.newfine.tk';
-    var token;
+    var token=localStorage.getItem('accessToken');
+
     $(document).ready(function () {
+        login_check();
+
         idx = window.location.search.split("=")[1]
         document.addEventListener("message", (e) => {
-            token=e.data;
-            console.log(token);
-            add_attendance(idx,token);
+            const { token , study_state } =JSON.parse(e.data);
+            if(study_state=="in"){
+                start(idx,token);
+            }
+            else{
+                end(idx,token);
+            }
         })
-
     });
 
-    function add_attendance(idx,token){
-        let data = {"attendance_id":idx.toString()}
+    function start(idx,token){
+        let data = {"studyId":idx.toString()}
         $.ajax({
             type: "POST",
-            url: `${domainURL}/add/attendance`,
+            url: `${domainURL}/study/start`,
             contentType: "application/json",
             data: JSON.stringify(data),
+            headers: { "Authorization": `Bearer ${token}` },
+            beforeSend: function (xhr){
+                xhr.setRequestHeader('Authorization', "Bearer " +token);
+            },
+            success: function (response) {
+                console.log(response)
+                requestPermission(response)
+            }
+        });
+    }
+
+    function end(idx,token){
+        let data = {"studyId":idx.toString()}
+        $.ajax({
+            type: "PUT",
+            url: `${domainURL}/study/end`,
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            headers: { "Authorization": `Bearer ${token}` },
             beforeSend: function (xhr){
                 xhr.setRequestHeader('Authorization', "Bearer " +token);
             },
@@ -46,8 +72,8 @@
             alert({ message: ERROR_TYPES.notMobile });
         }
     };
-    </script>
+</script>
 <body>
-<h1>출석 되었습니다!</h1>
+<h1>자습 처리 완료 ! </h1>
 </body>
 </html>

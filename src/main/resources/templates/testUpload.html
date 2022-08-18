@@ -9,28 +9,30 @@
     <script src="https://malsup.github.io/jquery.form.js"></script>
     <script type="text/javascript" src="js/back.js"></script>
     <script type="text/javascript">
+        var token = localStorage.getItem('accessToken');
         $(function () {
+            login_check();
             // getTokenAndRefresh();
-            $.ajaxSetup({
-                error: function (jqXHR, exception) {
-                    switch (jqXHR.status) {
-                        case 401:
-                            alert('인증 에러!!');
-                            break;
-                        case 423:
-                            alert('중복된 id!!');
-                            break;
-                    }
-                },
-                beforeSend: function (xhr) {
-                    if (localStorage.getItem('accessToken') != null) {
-                        xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('accessToken'));
-                    } else {
-                        location.href = "index.html"
-                        alert("로그인 해주세요")
-                    }
-                }
-            });
+            // $.ajaxSetup({
+            //     error: function (jqXHR, exception) {
+            //         switch (jqXHR.status) {
+            //             case 401:
+            //                 alert('인증 에러!!');
+            //                 break;
+            //             case 423:
+            //                 alert('중복된 id!!');
+            //                 break;
+            //         }
+            //     },
+            //     beforeSend: function (xhr) {
+            //         if (localStorage.getItem('accessToken') != null) {
+            //             xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('accessToken'));
+            //         } else {
+            //             location.href = "index.html"
+            //             alert("로그인 해주세요")
+            //         }
+            //     }
+            // });
             get_course();
         });
 
@@ -40,11 +42,13 @@
             if (fileFormat.indexOf("xls") > -1 || fileFormat.indexOf("xlsx") > -1) {
                 return true;
             } else {
+                alert('.xls 또는 .xlsx 파일만 입력해주세요.')
                 return false;
             }
         }
 
         function check() {
+            // checkFileType()
             if (confirm("업로드 여부")) {
                 var options = {
                     success: function (result) {
@@ -60,26 +64,45 @@
                         console.log("error");
                         alert("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
                     },
+                    headers: {"Authorization": `Bearer ${token}`},
                     type: "POST"
                 };
                 $("#excelUploadForm").ajaxSubmit(options);
             }
         }
-
+        let testcode;
         function makeTest() {
+            if ($('#course_id').val() == '') {
+                alert("수업을 선택해주세요!");
+                return false;
+            }
+            if ($('#test_name').val() == '') {
+                alert("테스트 제목을 작성해주세요 \nex) 6월 모고 생명과학");
+                makeTestForm.test_name.focus();
+                return false;
+            }
+            if ($('#test_date').val() == '') {
+                alert("테스트 날짜를 설정해주세요.");
+                makeTestForm.test_date.focus();
+                return false;
+            }
             var options = {
                 success: function (result) {
                     console.log(result)
                     $('#response_test_id').attr('value', result['testCode']);
                     $('#test_code').attr('value', result['testCode']);
                     $('#test_code1').attr('value', result['testCode']);
+                    testcode = result['testCode']
                     console.log(result)
                     alert('테스트 정보가 입력되었습니다!')
                 },
-                error: function (request, status, error) {
-                    console.log("error");
-                    alert("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+                error: function (response) {
+                    console.log(response);
+                    var result = JSON.parse(response.responseText);
+                    console.log(result)
+                    alert(result.message);
                 },
+                headers: {"Authorization": `Bearer ${token}`},
                 type: "POST"
             };
             $("#makeTestForm").ajaxSubmit(options);
@@ -113,25 +136,29 @@
         // }
 
         function checkCourseTestResultsFile() {
-            // if (confirm("엑셀 파일을 업로드하시겠습니까?")) {
-            var options = {
-                success: function (result) {
-                    if (result.code == "1") {
-                        console.log("data 전송 성공");
-                        alert(result.msg);
-                    } else {
-                        console.log("data 전송 실패");
-                        alert(result.msg);
-                    }
-                },
-                error: function (request, status, error) {
-                    console.log("error");
-                    alert("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
-                },
-                type: "POST"
-            };
-            $("#courseTestResultsFileUploadForm").ajaxSubmit(options);
-            // }
+            checkFileType($('#courseTestResultsFile').val())
+            if (confirm("엑셀 파일을 업로드하시겠습니까?")) {
+                var options = {
+                    success: function (result) {
+                        if (result.code == "1") {
+                            console.log("data 전송 성공");
+                            alert(result.msg);
+                        } else {
+                            console.log("data 전송 실패");
+                            alert(result.msg);
+                        }
+                    },
+                    error: function (response) {
+                        console.log(response);
+                        var result = JSON.parse(response.responseText);
+                        console.log(result)
+                        alert(result.message);
+                    },
+                    headers: {"Authorization": `Bearer ${token}`},
+                    type: "POST"
+                };
+                $("#courseTestResultsFileUploadForm").ajaxSubmit(options);
+            }
         }
 
         function get_course() {
@@ -160,6 +187,7 @@
         }
 
         function checkStudentTestResultsFile() {
+            checkFileType($('#studentTestResultsFile').val())
             if (confirm("엑셀 파일을 업로드하시겠습니까?")) {
                 var options = {
                     success: function (result) {
@@ -171,14 +199,56 @@
                             alert(result.msg);
                         }
                     },
-                    error: function (request, status, error) {
-                        console.log("error");
-                        alert("code : " + request.status + "\n" + "message : " + request.responseText + "\n" + "error : " + error);
+                    error: function (response) {
+                        console.log(response);
+                        var result = JSON.parse(response.responseText);
+                        console.log(result)
+                        alert(result.message);
                     },
+                    headers: {"Authorization": `Bearer ${token}`},
                     type: "POST"
                 };
                 $("#studentTestResultsFileUploadForm").ajaxSubmit(options);
             }
+        }
+
+
+
+        function set_type() {
+            var bestkiller = [];
+            $("input[name=bestkillChk]:checked").each(function(){
+                bestkiller.push($(this).val());
+            });
+
+            var killer = [];
+            $("input[name=killChk]:checked").each(function(){
+                killer.push($(this).val());
+            });
+            console.log("killer : " + bestkiller);
+            console.log("준 killer : " + killer);
+            console.log('testcode',testcode)
+            let type_data = {
+                    testcode   : testcode,
+                    BestkillerList : bestkiller,
+                    killerList : killer
+                };
+
+            $.ajax({
+                type: "PUT",
+                url: `${domainURL}/admin/test/killer`,
+                headers: { "Authorization": `Bearer ${token}` },
+                // traditional: true,	// ajax 배열 넘기기 옵션!
+                data: {
+                    testcode   : testcode,
+                    BestkillerList : bestkiller,
+                    killerList : killer
+                },
+                success: function (response) {
+                    alert("킬러문항 설정이 완료되었습니다!")
+                    console.log(response)
+
+                }
+            });
         }
     </script>
 
@@ -243,4 +313,37 @@
         <button type="button" onclick="checkStudentTestResultsFile()"><span>저장</span></button>
     </div>
 </form>
+
+
+<br>----------------------------------------------------------------------------<br>
+<h4>킬러문항</h4>
+1<input type='checkbox' name='bestkillChk' value='1' class='chkselect'>
+
+2<input type='checkbox' name='bestkillChk' value='2' class='chkselect'>
+
+3<input type='checkbox' name='bestkillChk' value='3' class='chkselect'>
+
+4<input type='checkbox' name='bestkillChk' value='4' class='chkselect'>
+5<input type='checkbox' name='bestkillChk' value='5' class='chkselect'>
+6<input type='checkbox' name='bestkillChk' value='6' class='chkselect'>
+7<input type='checkbox' name='bestkillChk' value='7' class='chkselect'>
+8<input type='checkbox' name='bestkillChk' value='8' class='chkselect'>
+9<input type='checkbox' name='bestkillChk' value='9' class='chkselect'>
+10<input type='checkbox' name='bestkillChk' value='10' class='chkselect'>
+
+<h4>준킬러문항</h4>
+1<input type='checkbox' name='killChk' value='1' class='chkselect'>
+2<input type='checkbox' name='killChk' value='2' class='chkselect'>
+3<input type='checkbox' name='killChk' value='3' class='chkselect'>
+4<input type='checkbox' name='killChk' value='4' class='chkselect'>
+5<input type='checkbox' name='killChk' value='5' class='chkselect'>
+6<input type='checkbox' name='killChk' value='6' class='chkselect'>
+7<input type='checkbox' name='killChk' value='7' class='chkselect'>
+8<input type='checkbox' name='killChk' value='8' class='chkselect'>
+9<input type='checkbox' name='killChk' value='9' class='chkselect'>
+10<input type='checkbox' name='killChk' value='10' class='chkselect'>
+
+<br>
+<br>
+<button type="button" id="set_type" onclick="set_type()">킬러 / 준킬러 문항 설정</button>
 </body>

@@ -1,18 +1,18 @@
 package com.example.nf.newfine_backend.member.student.domain;
 
 import com.example.nf.newfine_backend.attendance.domain.StudentAttendance;
-import com.example.nf.newfine_backend.branch.domain.Branch;
 import com.example.nf.newfine_backend.course.Listener;
 import com.example.nf.newfine_backend.member.domain.Authority;
 import com.example.nf.newfine_backend.member.domain.Timestamped;
 import com.example.nf.newfine_backend.study.StudentStudy;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,13 +31,18 @@ public class Student extends Timestamped {
     private Long id;
 
     @Column
+//    @NotNull
+//    @Pattern(regexp = "^(010[1|6|7|8|9|0])(\\d{3,4})(\\d{4})$")
     private String phoneNumber;
 
     @Column
+//    @NotNull
     private String name;
 
     @JsonIgnore
     @Column
+//    @NotNull
+//    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@^!%*#?&])[A-Za-z\\d@^!%*#?&]{8,}$")
     private String password;
 
     @Column
@@ -53,6 +58,9 @@ public class Student extends Timestamped {
     @Enumerated(EnumType.STRING)
     private Authority authority;
 
+    @Column
+    private String test_code;
+
     @OneToMany(mappedBy="student", cascade = { CascadeType.REMOVE})
     @JsonBackReference //순환참조 방지
     private List<StudentAttendance> studentAttendancces;
@@ -67,9 +75,9 @@ public class Student extends Timestamped {
 
     @Column
     @Enumerated(EnumType.STRING)
-    private Level level=Level.NEW;
+    private Tier tier = Tier.NEW;
 
-    private LocalDateTime levelUpDate;
+//    private LocalDateTime levelUpDate;
 
 
     @Column
@@ -100,16 +108,16 @@ public class Student extends Timestamped {
 //        this.branch=branch;
     }
 
-    public boolean availableLevelUp() {
-        return Level.availableLevelUp(this.getLevel(), this.getPoint());
-    }
-
-    public Level levelUp() {
-        Level nextLevel = Level.getNextLevel(this.getPoint());
-        this.level = nextLevel;
-        this.levelUpDate = LocalDateTime.now();
-        System.out.println(level);
-        System.out.println(point);
-        return nextLevel;
-    }
+//    public boolean availableLevelUp() {
+//        return Level.availableLevelUp(this.getLevel(), this.getPoint());
+//    }
+//
+//    public Level levelUp() {
+//        Level nextLevel = Level.getNextLevel(this.getPoint());
+//        this.level = nextLevel;
+//        this.levelUpDate = LocalDateTime.now();
+//        System.out.println(level);
+//        System.out.println(point);
+//        return nextLevel;
+//    }
 }

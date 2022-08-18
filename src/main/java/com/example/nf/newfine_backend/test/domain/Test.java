@@ -20,7 +20,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Test {
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "test_id")
     private Long id;
@@ -34,6 +34,7 @@ public class Test {
 
     @Column
     private String testName;
+
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST})

@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static com.example.nf.newfine_backend.member.exception.ErrorCode.DUPLICATE_MEMBER;
 import static com.example.nf.newfine_backend.member.exception.ErrorCode.MEMBER_NOT_FOUND;
 
 @RestController
@@ -80,9 +79,9 @@ public class StudentController {
         Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
         pointService.create(student,"포인트 클릭!!!!",5);
 
-        if(student.availableLevelUp()){
-            student.levelUp();
-        }
+//        if(student.availableLevelUp()){
+//            student.levelUp();
+//        }
 
         return "성공인걸까아닌걸까^ㅠ^";
     }
