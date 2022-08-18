@@ -56,6 +56,7 @@ public class RankingService {
 
         // 데이터 개수
         Long count=stringStringZSetOperations.zCard(key);
+        System.out.println("데이터 개수:                 "+count);
 
         // Tier: CHALLENGER
         Set<ZSetOperations.TypedTuple<String>> challengerTuples = stringStringZSetOperations.reverseRangeWithScores(key, 0, count);
@@ -69,6 +70,7 @@ public class RankingService {
             System.out.println("챌린저 그룹 닉네임: "+challengerCollect.get(i).getNickname());
             Student student=studentRepository.findByNickname(challengerCollect.get(i).getNickname()).orElseThrow(RuntimeException::new);
             student.setTier(Tier.CHALLENGER);
+            System.out.println("학생 등급:                 "+student);
             studentRepository.save(student);
         }
         System.out.println("List<RankingResponseDto>"+challengerCollect);
@@ -80,6 +82,7 @@ public class RankingService {
             }
             Student student=studentRepository.findByNickname(challengerCollect.get(i).getNickname()).orElseThrow(RuntimeException::new);
             student.setTier(Tier.MASTER);
+            System.out.println("학생 등급:                 "+student);
             studentRepository.save(student);
         }
         // Tier: DIA
@@ -89,6 +92,7 @@ public class RankingService {
             }
             Student student=studentRepository.findByNickname(challengerCollect.get(i).getNickname()).orElseThrow(RuntimeException::new);
             student.setTier(Tier.DIA);
+            System.out.println("학생 등급:                 "+student);
             studentRepository.save(student);
         }
         // Tier: PLATINUM
