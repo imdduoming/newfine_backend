@@ -7,6 +7,7 @@ import com.example.nf.newfine_backend.member.util.SecurityUtil;
 import com.example.nf.newfine_backend.test.domain.Test;
 import com.example.nf.newfine_backend.test.dto.TestDto;
 import com.example.nf.newfine_backend.test.dto.TestResultDto;
+import com.example.nf.newfine_backend.test.dto.TypeResultDto;
 import com.example.nf.newfine_backend.test.repository.TestRepository;
 import com.example.nf.newfine_backend.test.service.TestService;
 import lombok.AllArgsConstructor;
@@ -41,8 +42,6 @@ public class TestController {
                           @RequestParam(value="testcode") String testcode) {
 
         Test test = testRepository.findByTestCode(testcode).get();
-
-        System.out.println("테스트코드"+testcode);
         testService.setkiller(test,BestKillerList,KillerList);
 
     }
@@ -62,14 +61,21 @@ public class TestController {
         return testService.getAllMyTests(student);
     }
 
-    @GetMapping("/test/result")
+    // 내 테스트 결과분석 / 오답룰 best 5
+    @GetMapping("/test/result/my")
     public TestResultDto getTestResults(@RequestParam Integer id){
         Student student = studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
         Long test_id = Long.valueOf(id);
         return testService.getTestResults(student,test_id);
     }
 
-
+    // 킬러 / 준킬러 문항 분석
+    @GetMapping("/test/result/type")
+    public TypeResultDto getTypeResults(@RequestParam Integer id){
+        Student student = studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
+        Long test_id = Long.valueOf(id);
+        return testService.getTypeResults(student,test_id);
+    }
 
 
 
