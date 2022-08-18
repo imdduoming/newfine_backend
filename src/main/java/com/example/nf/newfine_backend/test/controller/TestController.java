@@ -61,22 +61,6 @@ public class TestController {
         return testService.getAllMyTests(student);
     }
 
-    // 내 테스트 결과분석 / 오답룰 best 5
-    @GetMapping("/test/result/my")
-    public TestResultDto getTestResults(@RequestParam Integer id){
-        Student student = studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
-        Long test_id = Long.valueOf(id);
-        return testService.getTestResults(student,test_id);
-    }
-
-    // 킬러 / 준킬러 문항 분석
-    @GetMapping("/test/result/type")
-    public TypeResultDto getTypeResults(@RequestParam Integer id){
-        Student student = studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
-        Long test_id = Long.valueOf(id);
-        return testService.getTypeResults(student,test_id);
-    }
-
 
 
 
