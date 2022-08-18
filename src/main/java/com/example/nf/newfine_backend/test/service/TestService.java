@@ -28,8 +28,7 @@ public class TestService {
     private final ListenerRepository listenerRepository;
     private final CourseTestResultsRepository courseTestResultsRepository;
     private final StudentTestResultsRepository studentTestResultsRepository;
-    private final QNumberService qNumberService;
-    private final ScoreService scoreService;
+
     private final QuestionService questionService;
 
     public Test createTest(TestDto testDto){
@@ -161,7 +160,7 @@ public class TestService {
             NotCorrectDto notCorrectDto = new NotCorrectDto();
             String ans = courseTestResults.getCorrectAns(); // 문제 답
             String n = courseTestResults.getQuestionNum(); // 문제 번호
-            String student_ans= qNumberService.getStudentAns(studentTestResults,n); // 문제에 대한 학생의 답
+            String student_ans= questionService.getStudentAns(studentTestResults,n); // 문제에 대한 학생의 답
             Double NotCorrectRate = 100 - courseTestResults.getCorrectAnsRate(); // 오답률
             Boolean isCorrect;
             if (student_ans.equals("O")){
@@ -189,7 +188,7 @@ public class TestService {
         int rank = highStudents.size()+1;// 내 순위
         List<StudentTestResults> allStudents = studentTestResultsRepository.findAllByTest(test);
         int students_num = allStudents.size(); // 총 학생 명수
-        Double avg = scoreService.get_avg(students_num,allStudents); // 평균구하기
+        Double avg = get_avg(students_num,allStudents); // 평균구하기
 
         // 내 순위 , 점수 , 오답률 best 5
         testResultDto.setMyScore(myScore); // 학생점수
@@ -199,6 +198,19 @@ public class TestService {
         testResultDto.setAvg(avg);
 
         return testResultDto;
+
+    }
+
+    public Double get_avg(int total_num, List<StudentTestResults> allStudents){
+        int total_score=0;
+        Double avg ;
+        for (StudentTestResults studentTestResults1 : allStudents){
+            total_score+=studentTestResults1.getTotalScore();
+        }
+        avg = Double.valueOf(total_score) / Double.valueOf(total_num);
+        double new_avg = (double)Math.round(avg*100)/100;
+
+        return new_avg;
 
     }
 
