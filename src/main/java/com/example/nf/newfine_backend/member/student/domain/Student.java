@@ -75,9 +75,9 @@ public class Student extends Timestamped {
 
     @Column
     @Enumerated(EnumType.STRING)
-    private Level level=Level.NEW;
+    private Tier tier = Tier.NEW;
 
-    private LocalDateTime levelUpDate;
+//    private LocalDateTime levelUpDate;
 
 
     @Column
@@ -108,16 +108,16 @@ public class Student extends Timestamped {
 //        this.branch=branch;
     }
 
-    public boolean availableLevelUp() {
-        return Level.availableLevelUp(this.getLevel(), this.getPoint());
-    }
-
-    public Level levelUp() {
-        Level nextLevel = Level.getNextLevel(this.getPoint());
-        this.level = nextLevel;
-        this.levelUpDate = LocalDateTime.now();
-        System.out.println(level);
-        System.out.println(point);
-        return nextLevel;
-    }
+//    public boolean availableLevelUp() {
+//        return Level.availableLevelUp(this.getLevel(), this.getPoint());
+//    }
+//
+//    public Level levelUp() {
+//        Level nextLevel = Level.getNextLevel(this.getPoint());
+//        this.level = nextLevel;
+//        this.levelUpDate = LocalDateTime.now();
+//        System.out.println(level);
+//        System.out.println(point);
+//        return nextLevel;
+//    }
 }
