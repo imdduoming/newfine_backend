@@ -18,4 +18,6 @@ public class TokenDto {
     private Long accessTokenExpiresIn;
     private Long refreshTokenExpirationTime;
     private Authority authority;
+    private String deviceToken;
+    // test 위해서 잠시 추가
 }

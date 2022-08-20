@@ -4,17 +4,16 @@ import com.example.nf.newfine_backend.member.dto.SignInDto;
 import com.example.nf.newfine_backend.member.dto.SignUpDto;
 import com.example.nf.newfine_backend.member.dto.TokenDto;
 import com.example.nf.newfine_backend.member.dto.TokenRequestDto;
-import com.example.nf.newfine_backend.member.student.dto.*;
 import com.example.nf.newfine_backend.member.dto.response.SingleResult;
-import com.example.nf.newfine_backend.member.student.domain.Student;
 import com.example.nf.newfine_backend.member.exception.CustomException;
 import com.example.nf.newfine_backend.member.jwt.TokenProvider;
+import com.example.nf.newfine_backend.member.student.domain.Student;
+import com.example.nf.newfine_backend.member.student.dto.StudentResponseDto;
 import com.example.nf.newfine_backend.member.student.exception.PhoneNumberNotFoundException;
 import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
-//import com.example.nf.newfine_backend.member.repository.RefreshTokenRepository;
 import com.example.nf.newfine_backend.member.student.service.PointService;
-import com.example.nf.newfine_backend.member.teacher.dto.TeacherResponseDto;
 import com.example.nf.newfine_backend.member.teacher.domain.Teacher;
+import com.example.nf.newfine_backend.member.teacher.dto.TeacherResponseDto;
 import com.example.nf.newfine_backend.member.teacher.repository.TeacherRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -26,7 +25,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.concurrent.TimeUnit;
 
 import static com.example.nf.newfine_backend.member.exception.ErrorCode.*;
@@ -240,5 +238,12 @@ public class AuthService {
 //        return response.success("로그아웃 되었습니다.");
         return responseService.getSingleResult("로그아웃 되었습니다.");
     }
+
+    @Transactional
+    public void tokentest(SignInDto signInDto){
+        Student student = studentRepository.findByPhoneNumber(signInDto.getPhoneNumber()).orElseThrow(PhoneNumberNotFoundException::new);
+        student.setDeviceToken(signInDto.getDeviceToken());
+    }
+
 
 }

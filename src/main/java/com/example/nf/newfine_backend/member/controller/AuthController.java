@@ -6,7 +6,6 @@ import com.example.nf.newfine_backend.branch.repository.BranchStudentRepository;
 import com.example.nf.newfine_backend.member.dto.*;
 import com.example.nf.newfine_backend.member.exception.CustomException;
 import com.example.nf.newfine_backend.member.service.AuthService;
-import com.example.nf.newfine_backend.member.student.domain.Student;
 import com.example.nf.newfine_backend.member.student.dto.StudentResponseDto;
 import com.example.nf.newfine_backend.member.student.exception.PhoneNumberNotFoundException;
 import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
@@ -50,11 +49,10 @@ public class AuthController {
 
     @PostMapping("/login/test")
     public ResponseEntity<TokenDto> logintest(@RequestBody SignInDto signInDto) {
-        Student student = studentRepository.findByPhoneNumber(signInDto.getPhoneNumber()).orElseThrow(PhoneNumberNotFoundException::new);
-        student.modifyDeviceToken(signInDto.getDeviceToken());
+        authService.tokentest(signInDto);
         return ResponseEntity.ok(authService.login(signInDto));
     }
-    
+
 
 //    @PostMapping("/refreshToken")
 //    public ResponseEntity<TokenDto> reissue(@RequestHeader("Authorization") String token, @RequestBody String accessToken) {
