@@ -100,7 +100,7 @@ public class Student extends Timestamped {
 
 
     @Builder
-    public Student(String phoneNumber, String name, String password, String nickname, Authority authority, String photoURL, Integer point) {
+    public Student(String phoneNumber, String name, String password, String nickname, Authority authority, String photoURL, Integer point, String deviceToken) {
         this.phoneNumber=phoneNumber;
         this.name=name;
         this.password = password;
@@ -108,6 +108,7 @@ public class Student extends Timestamped {
         this.nickname= nickname;
         this.photoURL=photoURL;
         this.point=point;
+        this.deviceToken= deviceToken;
 //        this.branch=branch;
     }
 
