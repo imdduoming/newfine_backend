@@ -10,6 +10,8 @@ public class SignInDto {
     private String phoneNumber;
     private String password;
 
+    private String deviceToken;
+
 //    @Builder
 //    public SignInDto(String phonenumber, String password){
 //        this.phonenumber=phonenumber;
