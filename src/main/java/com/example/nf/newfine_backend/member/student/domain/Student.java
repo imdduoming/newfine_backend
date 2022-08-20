@@ -96,7 +96,8 @@ public class Student extends Timestamped {
 
     //디바이스 토큰 추가
     @Column(name = "device_token")
-    private String deviceToken = "1";
+    @ColumnDefault("1")
+    private String deviceToken;
 
 
     @Builder
