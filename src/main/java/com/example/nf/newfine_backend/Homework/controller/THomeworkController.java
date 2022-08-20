@@ -7,6 +7,7 @@ import com.example.nf.newfine_backend.member.teacher.repository.TeacherRepositor
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 
@@ -24,7 +25,7 @@ public class THomeworkController {
      * 게시글 생성
      */
     @PostMapping("/homework/post/{courseId}")
-    public Long save(@PathVariable("courseId") Long courseId, @RequestBody THomeworkDto tHomeworkDto) {
+    public Long save(@PathVariable("courseId") Long courseId, @RequestBody THomeworkDto tHomeworkDto) throws IOException {
         return tHomeworkService.save(courseId, tHomeworkDto);
     }
 
