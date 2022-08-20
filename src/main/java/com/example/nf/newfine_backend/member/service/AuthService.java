@@ -242,7 +242,10 @@ public class AuthService {
     @Transactional
     public void tokentest(SignInDto signInDto){
         Student student = studentRepository.findByPhoneNumber(signInDto.getPhoneNumber()).orElseThrow(PhoneNumberNotFoundException::new);
+        System.out.println(student);
+        System.out.println(signInDto.getDeviceToken());
         student.setDeviceToken(signInDto.getDeviceToken());
+        System.out.println(student.getDeviceToken());
     }
 
 
