@@ -62,6 +62,7 @@ public class AuthService {
 
         Student student = signUpDto.toMember(passwordEncoder);
         student.setPoint(0);
+        System.out.println(signUpDto.getDeviceToken());
         return StudentResponseDto.of(studentRepository.save(student));
     }
 
@@ -237,15 +238,6 @@ public class AuthService {
 
 //        return response.success("로그아웃 되었습니다.");
         return responseService.getSingleResult("로그아웃 되었습니다.");
-    }
-
-    @Transactional
-    public void tokentest(SignInDto signInDto){
-        Student student = studentRepository.findByPhoneNumber(signInDto.getPhoneNumber()).orElseThrow(PhoneNumberNotFoundException::new);
-        System.out.println(student);
-        System.out.println(signInDto.getDeviceToken());
-        student.setDeviceToken(signInDto.getDeviceToken());
-        System.out.println(student.getDeviceToken());
     }
 
 
