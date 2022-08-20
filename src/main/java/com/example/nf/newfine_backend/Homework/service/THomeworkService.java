@@ -1,33 +1,42 @@
 package com.example.nf.newfine_backend.Homework.service;
 
 
+import com.example.nf.newfine_backend.FCM.FCMService;
+import com.example.nf.newfine_backend.FCM.RequestDTO;
 import com.example.nf.newfine_backend.Homework.Repository.SHomeworkRepository;
 import com.example.nf.newfine_backend.Homework.Repository.THomeworkRepository;
 import com.example.nf.newfine_backend.Homework.domain.SHomework;
 import com.example.nf.newfine_backend.Homework.domain.THomework;
 import com.example.nf.newfine_backend.Homework.dto.THomeworkDto;
 import com.example.nf.newfine_backend.course.*;
+import com.example.nf.newfine_backend.member.student.domain.Student;
+import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class THomeworkService {
+public class  THomeworkService {
 
     private final THomeworkRepository tHomeworkRepository;
     private final CourseRepository courseRepository;
     private final CourseService courseService;
     private final SHomeworkRepository sHomeworkRepository;
 
+    private final StudentRepository studentRepository;
+
+    private final FCMService fcmService;
     /**
      * 게시글 생성
      */
     @Transactional
-    public Long save(Long courseId, THomeworkDto tHomeworkDto) {
+    public Long save(Long courseId, THomeworkDto tHomeworkDto) throws IOException {
         Course course=courseRepository.findById(courseId).orElseThrow(() -> new IllegalArgumentException("강의를 찾을 수 없습니다."));
 
         THomework tHomework = new THomework();
@@ -36,6 +45,20 @@ public class THomeworkService {
         tHomework.setContent(tHomeworkDto.getContent());
         tHomework.setCourse(course);
         tHomeworkRepository.save(tHomework);
+
+        RequestDTO requestDTO = new RequestDTO();
+        Optional<Student> student = studentRepository.findById(Long.valueOf(45));
+        requestDTO.setTargetToken(student.get().getDeviceToken());
+        requestDTO.setTitle("과목" + tHomework.getCourse().getCName());
+        requestDTO.setBody("새로운 과제가 등록되었습니다.");
+
+        System.out.println(requestDTO.getTargetToken() + " "
+                + requestDTO.getTitle() + " " + requestDTO.getBody());
+
+        fcmService.sendMessageTo(
+                requestDTO.getTargetToken(),
+                requestDTO.getTitle(),
+                requestDTO.getBody());
 
         // shomeworklist 자동으로 생성하는 부분
         List <Listener> listeners = courseService.getListeners(courseId);
