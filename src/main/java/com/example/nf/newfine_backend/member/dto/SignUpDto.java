@@ -16,12 +16,15 @@ public class SignUpDto {
     private String name;
     private String password;
 
+    private String deviceToken;
+
     public Student toMember(PasswordEncoder passwordEncoder) {
         return Student.builder()
                 .phoneNumber(phoneNumber)
                 .name(name)
                 .password(passwordEncoder.encode(password))
                 .authority(Authority.ROLE_USER)
+                .deviceToken(deviceToken)
                 .build();
     }
 
