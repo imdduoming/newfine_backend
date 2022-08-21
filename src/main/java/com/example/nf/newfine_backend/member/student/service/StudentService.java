@@ -13,8 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.example.nf.newfine_backend.member.exception.ErrorCode.MEMBER_NOT_FOUND;
-import static com.example.nf.newfine_backend.member.exception.ErrorCode.UNAUTHORIZED_MEMBER;
+import static com.example.nf.newfine_backend.member.exception.ErrorCode.*;
 
 @Service
 @RequiredArgsConstructor
@@ -84,7 +83,7 @@ public class StudentService {
     public String deleteStudent(DeleteRequestDto deleteRequestDto){
         Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
         if (!passwordEncoder.matches(deleteRequestDto.getPassword(), student.getPassword())) {
-            throw new RuntimeException();
+            throw new CustomException(INVALID_PASSWORD);
         }
 
         if (redisTemplate.opsForValue().get("RT:" + student.getId()) != null) {
