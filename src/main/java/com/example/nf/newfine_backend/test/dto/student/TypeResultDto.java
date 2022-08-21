@@ -1,6 +1,7 @@
-package com.example.nf.newfine_backend.test.dto;
+package com.example.nf.newfine_backend.test.dto.student;
 
 
+import com.example.nf.newfine_backend.test.dto.KillerDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

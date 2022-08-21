@@ -3,6 +3,7 @@ package com.example.nf.newfine_backend.test.service;
 import com.example.nf.newfine_backend.test.domain.CourseTestResults;
 import com.example.nf.newfine_backend.test.domain.StudentTestResults;
 import com.example.nf.newfine_backend.test.dto.KillerDto;
+import com.example.nf.newfine_backend.test.dto.teacher.TeacherKillerDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -50,6 +51,22 @@ public class QuestionService {
         return killerDtos;
 
 
+    }
+
+    public List<TeacherKillerDto> makeTeacherKiller(List<CourseTestResults> BKiller){
+        List<TeacherKillerDto> killerDtos = new ArrayList<>();
+        for (CourseTestResults courseTestResults : BKiller){
+            TeacherKillerDto killerDto = new TeacherKillerDto();
+            String ans = courseTestResults.getCorrectAns(); // 문제 답
+            String n = courseTestResults.getQuestionNum(); // 문제 번호
+            Double NotCorrectR = 100 - courseTestResults.getCorrectAnsRate(); // 오답률
+            Double NotCorrectRate = (double)Math.round(NotCorrectR*100)/100;
+            String mostChosen = mostChosen(courseTestResults,5);
+
+            killerDtos.add(killerDto);
+
+        }
+        return killerDtos;
     }
 
     // 가장 많이 선택한 n개 답
