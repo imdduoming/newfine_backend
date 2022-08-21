@@ -29,4 +29,12 @@ public class TeacherTestController {
         Long idx = Long.valueOf(id);
         return testService.getTests(idx);
     }
+//    @GetMapping("/test/result/teacher")
+//    public List<Test> getTeacherTests(@RequestParam Integer id){
+//        Teacher teacher=teacherRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
+//        Long idx = Long.valueOf(id);
+//        return testService.getTests(idx);
+//    }
+
+
 }
