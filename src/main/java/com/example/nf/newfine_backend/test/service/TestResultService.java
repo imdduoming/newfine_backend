@@ -8,6 +8,12 @@ import com.example.nf.newfine_backend.test.domain.CourseTestResults;
 import com.example.nf.newfine_backend.test.domain.StudentTestResults;
 import com.example.nf.newfine_backend.test.domain.Test;
 import com.example.nf.newfine_backend.test.dto.*;
+import com.example.nf.newfine_backend.test.dto.KillerDto;
+import com.example.nf.newfine_backend.test.dto.MyAllTestDto;
+import com.example.nf.newfine_backend.test.dto.NotCorrectDto;
+
+import com.example.nf.newfine_backend.test.dto.student.TestResultDto;
+import com.example.nf.newfine_backend.test.dto.student.TypeResultDto;
 import com.example.nf.newfine_backend.test.repository.CourseTestResultsRepository;
 import com.example.nf.newfine_backend.test.repository.StudentTestResultsRepository;
 import com.example.nf.newfine_backend.test.repository.TestRepository;

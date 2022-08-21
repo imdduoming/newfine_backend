@@ -19,4 +19,7 @@ public interface StudentTestResultsRepository extends JpaRepository<StudentTestR
     List<StudentTestResults> findAllByTestAndTotalScoreAfter(Test test , int total_score);
     // 같은 시험본애들
     List<StudentTestResults> findAllByTest(Test test);
+
+    Optional<StudentTestResults> findFirstByTestOrderByTotalScoreDesc(Test test);
+    Optional<StudentTestResults> findFirstByTestOrderByTotalScoreAsc(Test test);
 }
