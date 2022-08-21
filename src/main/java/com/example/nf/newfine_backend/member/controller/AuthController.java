@@ -81,7 +81,7 @@ public class AuthController {
     }
 
     // 전화번호 인증번호 전송
-    @PostMapping("/sendSignUpMessage")
+    @PostMapping("/sendMessage")
     public ResponseEntity<String> sendSignUpMessage(@RequestBody SignUpAuthDto signUpAuthDto) {
         int randomNumber=(int)((Math.random()* (9999 - 1000 + 1)) + 1000);  //난수 생성
 
@@ -102,17 +102,6 @@ public class AuthController {
 //        messageService.sendMessage(phoneNumberDto, String.valueOf(randomNumber));
 //        return String.valueOf(randomNumber);
         return ResponseEntity.ok(messageService.sendMessage(signUpAuthDto.getPhoneNumber(), String.valueOf(randomNumber)));
-    }
-
-    @PostMapping("/sendMessage")
-    public ResponseEntity<String> sendMessage(@RequestBody PhoneNumberDto phoneNumberDto) {
-        int randomNumber=(int)((Math.random()* (9999 - 1000 + 1)) + 1000);  //난수 생성
-
-        // 회원인지 확인
-        if (!studentRepository.existsByPhoneNumber(phoneNumberDto.getPhoneNumber())) {
-            throw new CustomException(MEMBER_NOT_FOUND);
-        }
-        return ResponseEntity.ok(messageService.sendMessage(phoneNumberDto.getPhoneNumber(), String.valueOf(randomNumber)));
     }
 
     @PostMapping("/logout")
