@@ -72,8 +72,8 @@ public class TestResultService {
         String student_code= student.getTest_code();
 
         // 킬러문항 / 준킬러문항 담기
-        List<CourseTestResults> Bkiller = courseTestResultsRepository.findAllByType("bk"); // best killer
-        List<CourseTestResults> Killer = courseTestResultsRepository.findAllByType("k"); // killer
+        List<CourseTestResults> Bkiller = courseTestResultsRepository.findAllByTestAndType(test, "bk"); // best killer
+        List<CourseTestResults> Killer = courseTestResultsRepository.findAllByTestAndType(test, "k"); // killer
 
         StudentTestResults studentTestResults=studentTestResultsRepository.findByTestAndStudentCode(test,student_code).get();
 
