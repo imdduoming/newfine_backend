@@ -34,8 +34,8 @@ public class TeacherTestService {
         Test test = testRepository.findById(test_id).get();
 
         // 킬러문항 / 준킬러문항 담기
-        List<CourseTestResults> Bkiller = courseTestResultsRepository.findAllByType("bk"); // best killer
-        List<CourseTestResults> Killer = courseTestResultsRepository.findAllByType("k"); // killer
+        List<CourseTestResults> Bkiller = courseTestResultsRepository.findAllByTestAndType(test, "bk"); // best killer
+        List<CourseTestResults> Killer = courseTestResultsRepository.findAllByTestAndType(test,"k"); // killer
 
 
         // 킬러 , 준킬러 문항 분석

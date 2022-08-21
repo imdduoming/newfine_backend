@@ -10,4 +10,5 @@ public interface CourseTestResultsRepository extends JpaRepository<CourseTestRes
     List<CourseTestResults> findTop5ByTestOrderByCorrectAnsRate(Test test); // 역순
     List<CourseTestResults> findAllByTest(Test test);
     List<CourseTestResults> findAllByType(String type);
+    List<CourseTestResults> findAllByTestAndType(Test test ,String type);
 }

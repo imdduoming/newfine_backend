@@ -63,6 +63,10 @@ public class QuestionService {
             Double NotCorrectRate = (double)Math.round(NotCorrectR*100)/100;
             String mostChosen = mostChosen(courseTestResults,5);
 
+            killerDto.setMost_chosen(mostChosen);
+            killerDto.setRate(NotCorrectRate);
+            killerDto.setQ_num(n);
+            killerDto.setRight_ans(ans);
             killerDtos.add(killerDto);
 
         }
