@@ -37,6 +37,11 @@ public class AuthController {
         return ResponseEntity.ok(authService.signup(signUpDto));    // 상태 코드 + data(body) (ResponseEntity 에 헤더 정보, 상태 코드 담을 수 있음)
     }
 
+    @PostMapping("/signuptest")
+    public ResponseEntity<StudentResponseDto> signuptest(@RequestBody SignUpDto signUpDto) {
+        return ResponseEntity.ok(authService.signup(signUpDto));    // 상태 코드 + data(body) (ResponseEntity 에 헤더 정보, 상태 코드 담을 수 있음)
+    }
+
     @PostMapping("/signupTeacher")
     public ResponseEntity<TeacherResponseDto> signupTeacher(@RequestBody SignUpDto signUpDto) {
         return ResponseEntity.ok(authService.signupTeacher(signUpDto));    // 상태 코드 + data(body) (ResponseEntity 에 헤더 정보, 상태 코드 담을 수 있음)
@@ -46,6 +51,7 @@ public class AuthController {
     public ResponseEntity<TokenDto> login(@RequestBody SignInDto signInDto) {
         return ResponseEntity.ok(authService.login(signInDto));
     }
+
 
 //    @PostMapping("/refreshToken")
 //    public ResponseEntity<TokenDto> reissue(@RequestHeader("Authorization") String token, @RequestBody String accessToken) {
@@ -76,16 +82,15 @@ public class AuthController {
     // 전화번호 인증번호 전송
     @PostMapping("/sendMessage")
     public ResponseEntity<String> sendMessage(@RequestBody SignUpAuthDto signUpAuthDto) {
-        int randomNumber=(int)((Math.random()* (9999 - 1000 + 1)) + 1000);//난수 생성
+        int randomNumber=(int)((Math.random()* (9999 - 1000 + 1)) + 1000);  //난수 생성
 
         //************************* 추후 DB 전화번호와 일치하는지 확인해야 함 ->일단 했음. ^^
-        BranchStudent bs=branchStudentRepository.findByPhoneNumber(signUpAuthDto.getPhoneNumber()).orElseThrow(PhoneNumberNotFoundException::new);
+        BranchStudent bs=branchStudentRepository.findByPhoneNumber(signUpAuthDto.getPhoneNumber()).orElseThrow(() -> new CustomException(MEMBER_NOT_FOUND));
         System.out.println(String.valueOf(bs.getBranch().getId()));
         System.out.println(signUpAuthDto.getBranch());
         if (!Objects.equals(String.valueOf(bs.getBranch().getId()), signUpAuthDto.getBranch())){
 //            throw new RuntimeException("이 분원엔 그런 학생이 없다!!");
-            throw new
-                    CustomException(MEMBER_NOT_FOUND);
+            throw new CustomException(MEMBER_NOT_FOUND);
         }
 
         // 전화번호 중복 확인
