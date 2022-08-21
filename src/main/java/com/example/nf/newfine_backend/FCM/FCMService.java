@@ -41,6 +41,8 @@ public class FCMService {
 
     // 파라미터를 FCM이 요구하는 body 형태로 만들어준다.
     private String makeMessage(String targetToken, String title, String body) throws JsonProcessingException {
+
+
         FCMToken fcmMessage = FCMToken.builder()
                 .message(FCMToken.Message.builder()
                         .token(targetToken)
@@ -64,7 +66,11 @@ public class FCMService {
                 .fromStream(new ClassPathResource(firebaseConfigPath).getInputStream())
                 .createScoped(List.of("https://www.googleapis.com/auth/cloud-platform"));
 
+        // accessToken 생성
         googleCredentials.refreshIfExpired();
+
+        // GoogleCredential의 getAccessToken으로 토큰 받아온 뒤, getTokenValue로 최종적으로 받음
+        // REST API로 FCM에 push 요청 보낼 때 Header에 설정하여 인증을 위해 사용
         return googleCredentials.getAccessToken().getTokenValue();
     }
 

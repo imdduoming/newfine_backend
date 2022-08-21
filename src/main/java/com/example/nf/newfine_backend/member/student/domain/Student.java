@@ -11,8 +11,6 @@ import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -96,8 +94,14 @@ public class Student extends Timestamped {
 //    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST})
 //    private Branch branch;
 
+    //디바이스 토큰 추가
+    @Column(name = "device_token")
+    @ColumnDefault("1")
+    private String deviceToken;
+
+
     @Builder
-    public Student(String phoneNumber, String name, String password, String nickname, Authority authority, String photoURL, Integer point) {
+    public Student(String phoneNumber, String name, String password, String nickname, Authority authority, String photoURL, Integer point, String deviceToken) {
         this.phoneNumber=phoneNumber;
         this.name=name;
         this.password = password;
@@ -105,7 +109,12 @@ public class Student extends Timestamped {
         this.nickname= nickname;
         this.photoURL=photoURL;
         this.point=point;
+        this.deviceToken= deviceToken;
 //        this.branch=branch;
+    }
+
+    public void modifyDeviceToken(String deviceToken) {
+        this.deviceToken = deviceToken;
     }
 
 //    public boolean availableLevelUp() {
