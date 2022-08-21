@@ -6,6 +6,7 @@ import com.example.nf.newfine_backend.test.dto.TeacherTestResultDto;
 import com.example.nf.newfine_backend.test.dto.teacher.TeacherKillerDto;
 import com.example.nf.newfine_backend.test.dto.teacher.TeacherNotCorrectDto;
 import com.example.nf.newfine_backend.test.dto.teacher.TeacherTypeResultDto;
+import com.example.nf.newfine_backend.test.dto.teacher.TestRankDto;
 import com.example.nf.newfine_backend.test.repository.CourseTestResultsRepository;
 import com.example.nf.newfine_backend.test.repository.StudentTestResultsRepository;
 import com.example.nf.newfine_backend.test.repository.TestRepository;
@@ -27,6 +28,25 @@ public class TeacherTestService {
     private final StudentTestResultsRepository studentTestResultsRepository;
     private final QuestionService questionService;
     private final TestResultService testResultService;
+
+    public List<TestRankDto> getTestRank (Teacher teacher, Long test_id){
+        List<TestRankDto> testRankDtos = new ArrayList<>();
+        Test test = testRepository.findById(test_id).get();
+        List<StudentTestResults> allstudents = studentTestResultsRepository.findAllByTestOrderByTotalScoreDesc(test);
+        int rank =1;
+        for (StudentTestResults studentTestResults : allstudents){
+            TestRankDto testRankDto = new TestRankDto();
+            String name = studentTestResults.getName();
+            int score = studentTestResults.getTotalScore();
+            testRankDto.setRank(rank);
+            testRankDto.setName(name);
+            testRankDto.setScore(score);
+            testRankDtos.add(testRankDto);
+            rank+=1;
+        }
+
+        return testRankDtos;
+    }
 
     public TeacherTypeResultDto getTeacherTypeResults(Teacher teacher, Long test_id){
         TeacherTypeResultDto teacherTypeResultDto = new TeacherTypeResultDto();
