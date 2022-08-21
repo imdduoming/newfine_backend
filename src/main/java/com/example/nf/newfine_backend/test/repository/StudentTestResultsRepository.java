@@ -17,6 +17,8 @@ public interface StudentTestResultsRepository extends JpaRepository<StudentTestR
 
     // 내 총점보다 높은 애들 가져오기
     List<StudentTestResults> findAllByTestAndTotalScoreAfter(Test test , int total_score);
+
+    List<StudentTestResults> findAllByTestOrderByTotalScoreDesc(Test test);
     // 같은 시험본애들
     List<StudentTestResults> findAllByTest(Test test);
 

@@ -9,6 +9,7 @@ import com.example.nf.newfine_backend.member.util.SecurityUtil;
 import com.example.nf.newfine_backend.test.domain.Test;
 import com.example.nf.newfine_backend.test.dto.TeacherTestResultDto;
 import com.example.nf.newfine_backend.test.dto.teacher.TeacherTypeResultDto;
+import com.example.nf.newfine_backend.test.dto.teacher.TestRankDto;
 import com.example.nf.newfine_backend.test.service.TeacherTestService;
 import com.example.nf.newfine_backend.test.service.TestService;
 import lombok.RequiredArgsConstructor;
@@ -47,6 +48,13 @@ public class TeacherTestController {
         Teacher teacher=teacherRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
         Long test_id = Long.valueOf(id);
         return teacherTestService.getTeacherTypeResults(teacher,test_id);
+    }
+
+    @GetMapping("/test/result/rank/teacher")
+    public List<TestRankDto> getTestRank(@RequestParam Integer id){
+        Teacher teacher=teacherRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
+        Long test_id = Long.valueOf(id);
+        return teacherTestService.getTestRank(teacher,test_id);
     }
 
 
