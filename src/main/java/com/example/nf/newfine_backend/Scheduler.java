@@ -12,7 +12,8 @@ import org.springframework.stereotype.Component;
 public class Scheduler {
     private final RankingService rankingService;
 
-    @Scheduled(cron = "0 */5 * * * *")	// 5분마다
+//    @Scheduled(cron = "0 */5 * * * *")	// 5분마다
+    @Scheduled(cron = "0 */12 * * *")	// 12시간마다
     public void updateLevel() throws Exception {
 //        if(!env.equals("prod")) {
 //            log.info("매일 5분마다 - " + env);
