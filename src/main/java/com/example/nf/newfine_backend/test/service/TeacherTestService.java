@@ -45,10 +45,13 @@ public class TeacherTestService {
             }
             else{
                 last_score = studentTestResults.getTotalScore();
-                rank=rank+count;
+                rank+=count;
                 count=1;
             }
-
+            System.out.println("이름" + studentTestResults.getName());
+            System.out.println("점수" + studentTestResults.getTotalScore());
+            System.out.println("현재순위" + rank);
+            System.out.println("count" + count);
             testRankDto.setRank(rank);
             testRankDto.setName(name);
             testRankDto.setScore(studentTestResults.getTotalScore());
