@@ -33,14 +33,24 @@ public class TeacherTestService {
         List<TestRankDto> testRankDtos = new ArrayList<>();
         Test test = testRepository.findById(test_id).get();
         List<StudentTestResults> allstudents = studentTestResultsRepository.findAllByTestOrderByTotalScoreDesc(test);
-        int rank =1;
+        int rank =0;
+        int count = 1;
+        int last_score =0;
         for (StudentTestResults studentTestResults : allstudents){
             TestRankDto testRankDto = new TestRankDto();
             String name = studentTestResults.getName();
-            int score = studentTestResults.getTotalScore();
+            if (last_score == studentTestResults.getTotalScore()){
+                // 지난 점수와 같으면
+                count+=1;
+            }
+            else{
+                rank=rank+count;
+                count=1;
+            }
+
             testRankDto.setRank(rank);
             testRankDto.setName(name);
-            testRankDto.setScore(score);
+            testRankDto.setScore(studentTestResults.getTotalScore());
             testRankDtos.add(testRankDto);
             rank+=1;
         }
