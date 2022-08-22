@@ -56,11 +56,11 @@ public class StudentController {
         return ResponseEntity.ok(studentService.deleteStudent(deleteRequestDto));
     }
 
-    @PostMapping("/newPassword")
-    public ResponseEntity updatePassword(@RequestBody PasswordUpdateDto passwordUpdateDto){
-
-        return ResponseEntity.ok(studentService.updatePassword(passwordUpdateDto));
-    }
+//    @PostMapping("/newPassword")
+//    public ResponseEntity updatePassword(@RequestBody PasswordUpdateDto passwordUpdateDto){
+//
+//        return ResponseEntity.ok(studentService.updatePassword(passwordUpdateDto));
+//    }
 
     @PostMapping("/sendMessage")
     public ResponseEntity<String> sendMessage(@RequestBody PhoneNumberDto phoneNumberDto) {

@@ -6,11 +6,13 @@ import com.example.nf.newfine_backend.branch.repository.BranchStudentRepository;
 import com.example.nf.newfine_backend.member.dto.*;
 import com.example.nf.newfine_backend.member.exception.CustomException;
 import com.example.nf.newfine_backend.member.service.AuthService;
+import com.example.nf.newfine_backend.member.student.dto.PasswordUpdateDto;
 import com.example.nf.newfine_backend.member.student.dto.PhoneNumberDto;
 import com.example.nf.newfine_backend.member.student.dto.StudentResponseDto;
 import com.example.nf.newfine_backend.member.student.exception.PhoneNumberNotFoundException;
 import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
 import com.example.nf.newfine_backend.member.student.service.MessageService;
+import com.example.nf.newfine_backend.member.student.service.StudentService;
 import com.example.nf.newfine_backend.member.teacher.dto.TeacherResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +31,7 @@ import static com.example.nf.newfine_backend.member.exception.ErrorCode.MEMBER_N
 public class AuthController {
     private final AuthService authService;
     private final MessageService messageService;
+    private final StudentService studentService;
     private final StudentRepository studentRepository;
     private final BranchStudentRepository branchStudentRepository;
     private final BranchRepository branchRepository;
@@ -147,5 +150,11 @@ public class AuthController {
         signInDto.setPhoneNumber(request.getParameter("phoneNumber"));
         signInDto.setPassword(request.getParameter("password"));
         return ResponseEntity.ok(authService.login(signInDto));
+    }
+
+    @PostMapping("/newPassword")
+    public ResponseEntity updatePassword(@RequestBody PasswordUpdateDto passwordUpdateDto){
+
+        return ResponseEntity.ok(studentService.updatePassword(passwordUpdateDto));
     }
 }
