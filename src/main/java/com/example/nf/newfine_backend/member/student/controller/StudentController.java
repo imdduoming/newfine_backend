@@ -82,7 +82,6 @@ public class StudentController {
 //        if(student.availableLevelUp()){
 //            student.levelUp();
 //        }
-
         return "성공인걸까아닌걸까^ㅠ^";
     }
 }
