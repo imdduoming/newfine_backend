@@ -6,10 +6,13 @@ import com.example.nf.newfine_backend.branch.repository.BranchStudentRepository;
 import com.example.nf.newfine_backend.member.dto.*;
 import com.example.nf.newfine_backend.member.exception.CustomException;
 import com.example.nf.newfine_backend.member.service.AuthService;
+import com.example.nf.newfine_backend.member.student.dto.PasswordUpdateDto;
+import com.example.nf.newfine_backend.member.student.dto.PhoneNumberDto;
 import com.example.nf.newfine_backend.member.student.dto.StudentResponseDto;
 import com.example.nf.newfine_backend.member.student.exception.PhoneNumberNotFoundException;
 import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
 import com.example.nf.newfine_backend.member.student.service.MessageService;
+import com.example.nf.newfine_backend.member.student.service.StudentService;
 import com.example.nf.newfine_backend.member.teacher.dto.TeacherResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +31,7 @@ import static com.example.nf.newfine_backend.member.exception.ErrorCode.MEMBER_N
 public class AuthController {
     private final AuthService authService;
     private final MessageService messageService;
+    private final StudentService studentService;
     private final StudentRepository studentRepository;
     private final BranchStudentRepository branchStudentRepository;
     private final BranchRepository branchRepository;
@@ -80,8 +84,8 @@ public class AuthController {
     }
 
     // 전화번호 인증번호 전송
-    @PostMapping("/sendMessage")
-    public ResponseEntity<String> sendMessage(@RequestBody SignUpAuthDto signUpAuthDto) {
+    @PostMapping("/sendSignUpMessage")
+    public ResponseEntity<String> sendSignUpMessage(@RequestBody SignUpAuthDto signUpAuthDto) {
         int randomNumber=(int)((Math.random()* (9999 - 1000 + 1)) + 1000);  //난수 생성
 
         //************************* 추후 DB 전화번호와 일치하는지 확인해야 함 ->일단 했음. ^^
@@ -101,6 +105,17 @@ public class AuthController {
 //        messageService.sendMessage(phoneNumberDto, String.valueOf(randomNumber));
 //        return String.valueOf(randomNumber);
         return ResponseEntity.ok(messageService.sendMessage(signUpAuthDto.getPhoneNumber(), String.valueOf(randomNumber)));
+    }
+
+    @PostMapping("/sendMessage")
+    public ResponseEntity<String> sendMessage(@RequestBody PhoneNumberDto phoneNumberDto) {
+        int randomNumber=(int)((Math.random()* (9999 - 1000 + 1)) + 1000);//난수 생성
+
+        // 가입된 회원인지 확인
+        if (!studentRepository.existsByPhoneNumber(phoneNumberDto.getPhoneNumber())) {
+            throw new CustomException(MEMBER_NOT_FOUND);
+        }
+        return ResponseEntity.ok(messageService.sendMessage(phoneNumberDto.getPhoneNumber(), String.valueOf(randomNumber)));
     }
 
     @PostMapping("/logout")
@@ -135,5 +150,11 @@ public class AuthController {
         signInDto.setPhoneNumber(request.getParameter("phoneNumber"));
         signInDto.setPassword(request.getParameter("password"));
         return ResponseEntity.ok(authService.login(signInDto));
+    }
+
+    @PostMapping("/newPassword")
+    public ResponseEntity updatePassword(@RequestBody PasswordUpdateDto passwordUpdateDto){
+
+        return ResponseEntity.ok(studentService.updatePassword(passwordUpdateDto));
     }
 }
