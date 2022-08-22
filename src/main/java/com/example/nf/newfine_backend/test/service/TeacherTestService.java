@@ -44,6 +44,7 @@ public class TeacherTestService {
                 count+=1;
             }
             else{
+                last_score = studentTestResults.getTotalScore();
                 rank=rank+count;
                 count=1;
             }
