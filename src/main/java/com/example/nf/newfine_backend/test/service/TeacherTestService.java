@@ -56,7 +56,6 @@ public class TeacherTestService {
             testRankDto.setName(name);
             testRankDto.setScore(studentTestResults.getTotalScore());
             testRankDtos.add(testRankDto);
-            rank+=1;
         }
 
         return testRankDtos;
