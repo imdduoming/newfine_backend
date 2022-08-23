@@ -8,8 +8,10 @@ import com.example.nf.newfine_backend.Homework.Repository.THomeworkRepository;
 import com.example.nf.newfine_backend.Homework.domain.SHomework;
 import com.example.nf.newfine_backend.Homework.domain.THomework;
 import com.example.nf.newfine_backend.Homework.dto.THomeworkDto;
-import com.example.nf.newfine_backend.course.*;
-import com.example.nf.newfine_backend.member.student.domain.Student;
+import com.example.nf.newfine_backend.course.Course;
+import com.example.nf.newfine_backend.course.CourseRepository;
+import com.example.nf.newfine_backend.course.CourseService;
+import com.example.nf.newfine_backend.course.Listener;
 import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -46,20 +47,6 @@ public class  THomeworkService {
         tHomework.setCourse(course);
         tHomeworkRepository.save(tHomework);
 
-        RequestDTO requestDTO = new RequestDTO();
-        Optional<Student> student = studentRepository.findById(Long.valueOf(45));
-        requestDTO.setTargetToken(student.get().getDeviceToken());
-        requestDTO.setTitle("과목" + tHomework.getCourse().getCName());
-        requestDTO.setBody("새로운 과제가 등록되었습니다.");
-
-        System.out.println(requestDTO.getTargetToken() + " "
-                + requestDTO.getTitle() + " " + requestDTO.getBody());
-
-        fcmService.sendMessageTo(
-                requestDTO.getTargetToken(),
-                requestDTO.getTitle(),
-                requestDTO.getBody());
-
         // shomeworklist 자동으로 생성하는 부분
         List <Listener> listeners = courseService.getListeners(courseId);
         List <SHomework> sHomeworks = new ArrayList<>();
@@ -81,6 +68,19 @@ public class  THomeworkService {
             sHomework.setIschecked(false);
             sHomeworkRepository.save(sHomework);
             sHomeworks.add(sHomework);
+
+            RequestDTO requestDTO = new RequestDTO();
+            requestDTO.setTargetToken(listener.getStudent().getDeviceToken());
+            requestDTO.setTitle("과목" + tHomework.getCourse().getCName());
+            requestDTO.setBody("새로운 과제가 등록되었습니다.");
+
+            System.out.println(requestDTO.getTargetToken() + " "
+                    + requestDTO.getTitle() + " " + requestDTO.getBody());
+
+            fcmService.sendMessageTo(
+                    requestDTO.getTargetToken(),
+                    requestDTO.getTitle(),
+                    requestDTO.getBody());
         }
 
         return THomeworkDto.toDto(tHomework).getId();
