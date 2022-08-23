@@ -11,5 +11,4 @@ public class RequestDTO {
     private String title;
     private String body;
     private String targetToken;
-
 }
