@@ -25,5 +25,4 @@ public class FCMController {
                 requestDTO.getBody());
         return ResponseEntity.ok().build();
     }
-
 }
