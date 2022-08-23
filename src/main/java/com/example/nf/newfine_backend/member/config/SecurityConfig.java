@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 import static com.example.nf.newfine_backend.member.domain.Authority.ROLE_ADMIN;
 
@@ -24,6 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {  // Spring Se
     private final RedisTemplate redisTemplate;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -42,6 +44,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {  // Spring Se
 //                .antMatchers("/js/**")
 //                .antMatchers("/h2-console/**", "/favicon.ico");
 //    }
+
+    
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -69,7 +73,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {  // Spring Se
                 .and()
                 .authorizeRequests()
 //                .antMatchers("/", "/**").permitAll()
-                .antMatchers("/", "/adminLogin", "/attendance", "/attendanceMake", "/main", "/studentInfo", "/study", "/studyMake", "/testUpload").permitAll()
+                .antMatchers("/", "/adminLogin", "/attendance", "/attendanceMake", "/main", "/studentInfo", "/study", "/studyMake", "/testUpload","/swagger-ui.html","/swagger/**","/swagger-ui/**","/swagger-resources/**").permitAll()
                 .antMatchers("/all/**").permitAll()
                 .antMatchers("/auth/**").permitAll()
 //                .antMatchers("/make/attendance").permitAll()
