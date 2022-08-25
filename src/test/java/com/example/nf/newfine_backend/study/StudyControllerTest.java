@@ -55,24 +55,24 @@ class StudyControllerTest {
 //                .build();
     }
 
-    @Test
-    @DisplayName("관리자 자습 생성")
-    @WithMockUser(roles = "ADMIN")
-    public void makeStudy() throws Exception {
-        Map<String,LocalDateTime> input = new HashMap<>();
-        // body에 json 형식으로 회원의 데이터를 넣기 위해서 Map을 이용한다.
-        LocalDateTime now = LocalDateTime.now();
-        input.put("startTime", now);
-        mockMvc.perform(post("/make/study") // 1
-                        .content(objectMapper.writeValueAsString(input)) //
-                        .contentType(MediaType.APPLICATION_JSON)) // 3
-                        .andExpect(status().isCreated()) // 4
-                        .andDo(document("make_study"// 5
-                        ,requestFields( // 6
-                                fieldWithPath("start_time").description("자습시작시간") // 7
-                        )
-                ));
-    }
+//    @Test
+//    @DisplayName("관리자 자습 생성")
+//    @WithMockUser(roles = "ADMIN")
+//    public void makeStudy() throws Exception {
+//        Map<String,LocalDateTime> input = new HashMap<>();
+//        // body에 json 형식으로 회원의 데이터를 넣기 위해서 Map을 이용한다.
+//        LocalDateTime now = LocalDateTime.now();
+//        input.put("startTime", now);
+//        mockMvc.perform(post("/make/study") // 1
+//                        .content(objectMapper.writeValueAsString(input)) //
+//                        .contentType(MediaType.APPLICATION_JSON)) // 3
+//                        .andExpect(status().isCreated()) // 4
+//                        .andDo(document("make_study"// 5
+//                        ,requestFields( // 6
+//                                fieldWithPath("start_time").description("자습시작시간") // 7
+//                        )
+//                ));
+//    }
 
 //    @Autowired
 //    StudentStudy studentStudy
