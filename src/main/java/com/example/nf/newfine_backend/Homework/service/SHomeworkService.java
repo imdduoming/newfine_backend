@@ -1,5 +1,7 @@
 package com.example.nf.newfine_backend.Homework.service;
 
+import com.example.nf.newfine_backend.FCM.FCMService;
+import com.example.nf.newfine_backend.FCM.RequestDTO;
 import com.example.nf.newfine_backend.Homework.Repository.SHomeworkRepository;
 import com.example.nf.newfine_backend.Homework.Repository.THomeworkRepository;
 import com.example.nf.newfine_backend.Homework.domain.SHomework;
@@ -15,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +32,8 @@ public class SHomeworkService {
     private final StudentRepository studentRepository;
 
     private final PointService pointService;
+
+    private final FCMService fcmService;
 
 
     /*
@@ -79,7 +84,7 @@ public class SHomeworkService {
     }
 
     @Transactional
-      public void updateSHomework(Long Id, String state) {
+      public void updateSHomework(Long Id, String state) throws IOException {
             System.out.println(state);
             SHomework sHomework = sHomeworkRepository.findById(Id).get();
             Long studentId = sHomework.getStudentId();
@@ -91,6 +96,18 @@ public class SHomeworkService {
             sHomework.setGrade('A');
             sHomeworkRepository.save(sHomework);
             pointService.create(student,"과제 등급: A",10);
+            RequestDTO requestDTO = new RequestDTO();
+            requestDTO.setTargetToken(student.getDeviceToken());
+            requestDTO.setTitle("과제 " + sHomework.getTitle());
+            requestDTO.setBody("과제 확인이 완료되었습니다.");
+
+            System.out.println(requestDTO.getTargetToken() + " "
+                    + requestDTO.getTitle() + " " + requestDTO.getBody());
+
+            fcmService.sendMessageTo(
+                    requestDTO.getTargetToken(),
+                    requestDTO.getTitle(),
+                    requestDTO.getBody());
         }
         else if(state.equals("B")){
             System.out.println(state);
@@ -98,6 +115,18 @@ public class SHomeworkService {
             sHomework.setGrade('B');
             sHomeworkRepository.save(sHomework);
             pointService.create(student,"과제 등급: B",5);
+            RequestDTO requestDTO = new RequestDTO();
+            requestDTO.setTargetToken(student.getDeviceToken());
+            requestDTO.setTitle("과제 " + sHomework.getTitle());
+            requestDTO.setBody("과제 확인이 완료되었습니다.");
+
+            System.out.println(requestDTO.getTargetToken() + " "
+                    + requestDTO.getTitle() + " " + requestDTO.getBody());
+
+            fcmService.sendMessageTo(
+                    requestDTO.getTargetToken(),
+                    requestDTO.getTitle(),
+                    requestDTO.getBody());
         }
         else if(state.equals("C")){
             System.out.println(state);
