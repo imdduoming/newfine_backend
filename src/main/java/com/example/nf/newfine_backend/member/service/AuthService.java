@@ -88,6 +88,7 @@ public class AuthService {
             }
         } else{
             Student student=studentRepository.findByPhoneNumber(signInDto.getPhoneNumber()).orElseThrow(()->new PhoneNumberNotFoundException("회원 정보가 없습니다.\n회원가입을 먼저 해주세요."));
+            student.modifyDeviceToken(signInDto.getDeviceToken()); //push alarm 때문에 추가
             if (!passwordEncoder.matches(signInDto.getPassword(), student.getPassword())) {
                 throw new CustomException(INVALID_PASSWORD);
             }
@@ -224,6 +225,11 @@ public class AuthService {
 
         // 2. Access Token 에서 User id 을 가져옵니다.
         Authentication authentication = tokenProvider.getAuthentication(tokenRequestDto.getAccessToken());
+
+        // push alarm 때문에 추가 (로그아웃 시 device token 초기화)
+        Student student = studentRepository.findByPhoneNumber(authentication.getName()).orElseThrow(PhoneNumberNotFoundException::new);
+        student.setDeviceToken("");
+
 
         // 3. Redis 에서 해당 User email 로 저장된 Refresh Token 이 있는지 여부를 확인 후 있을 경우 삭제합니다.
         if (redisTemplate.opsForValue().get("RT:" + authentication.getName()) != null) {

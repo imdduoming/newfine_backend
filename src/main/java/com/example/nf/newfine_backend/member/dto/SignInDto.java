@@ -10,6 +10,9 @@ public class SignInDto {
     private String phoneNumber;
     private String password;
 
+    //push alarm 때문에 추가
+    private String deviceToken;
+
 
 //    @Builder
 //    public SignInDto(String phonenumber, String password){
