@@ -20,6 +20,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @Entity
+@Table(name = "course")
 public class Course {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -79,5 +80,8 @@ public class Course {
     @JsonManagedReference
     @ManyToOne
     private Branch branch;
+
+
+
 
 }

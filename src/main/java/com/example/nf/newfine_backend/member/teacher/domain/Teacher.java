@@ -17,6 +17,7 @@ import java.util.List;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "teacher")
 public class Teacher extends Timestamped {
 
     @Id

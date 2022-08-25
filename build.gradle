@@ -2,6 +2,8 @@ plugins {
     id 'org.springframework.boot' version '2.6.7'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
+    id 'com.epages.restdocs-api-spec' version '0.16.2'
+    id "org.asciidoctor.jvm.convert" version "3.3.2"
 }
 
 group = 'com.example.nf'
@@ -82,12 +84,47 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.9.1")
     // spring swagger
 //    implementation 'io.springfox:springfox-boot-starter:3.0.0'
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+    testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.16.2'
 }
 
 tasks.named('test') {
     useJUnitPlatform()
 }
 //springboot 2.5버전이상 부터는 jar 파일 2개 생겨서 이를 방지
+
+ext {
+    snippetsDir = file('build/generated-snippets')
+}
+
+test {
+    outputs.dir snippetsDir
+}
+
+asciidoctor {
+    inputs.dir snippetsDir
+    dependsOn test
+}
+
+bootJar {
+    dependsOn asciidoctor
+    copy{
+        from file("build/asciidoc/html5/")
+        into file("src/main/resources/static/docs")
+    }
+}
+
+
 jar {
     enabled = false
+}
+openapi3 {
+    server = 'http://localhost:8080'
+    title = 'Newfine API'
+    description = 'api.newfine.tk'
+    version = '1.0.0'
+    format = 'yaml'
+    outputDirectory = "."
+    outputFileNamePrefix = "swagger"
+//    tagDescriptionsPropertiesFile = 'src/test/resources/tag-descriptions.yaml'
 }
