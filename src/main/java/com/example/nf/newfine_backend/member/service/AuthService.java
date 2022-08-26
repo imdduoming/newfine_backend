@@ -226,7 +226,7 @@ public class AuthService {
         // 2. Access Token 에서 User id 을 가져옵니다.
         Authentication authentication = tokenProvider.getAuthentication(tokenRequestDto.getAccessToken());
 
-        // push alarm 때문에 추가 (로그아웃 시 device token 초기화)
+        // push alarm 때문에 추가 (로그아웃 시 device token 초기화) 하하하
         Student student = studentRepository.findByPhoneNumber(authentication.getName()).orElseThrow(PhoneNumberNotFoundException::new);
         student.setDeviceToken("");
 
