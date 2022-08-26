@@ -95,7 +95,7 @@ public class Student extends Timestamped {
 //    private Branch branch;
 
     //디바이스 토큰 추가
-    @Column(name = "device_token")
+    @Column(name = "device_token", nullable = true)
     private String deviceToken;
 
 
