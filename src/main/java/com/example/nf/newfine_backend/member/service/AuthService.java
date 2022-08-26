@@ -229,10 +229,11 @@ public class AuthService {
         Authentication authentication = tokenProvider.getAuthentication(tokenRequestDto.getAccessToken());
 
         // push alarm 때문에 추가 (로그아웃 시 device token 초기화)
-//        Student student = studentRepository.findByPhoneNumber(authentication.getName()).orElseThrow(PhoneNumberNotFoundException::new);
-//        student.setDeviceToken("");
+        Student student = studentRepository.findByPhoneNumber(authentication.getName()).orElseThrow(PhoneNumberNotFoundException::new);
+        student.modifyDeviceToken(null);
 
         System.out.println("authentication name: "+ authentication.getName());
+        System.out.println("student deviceToken: "+ student.getDeviceToken());
 
         // 3. Redis 에서 해당 User email 로 저장된 Refresh Token 이 있는지 여부를 확인 후 있을 경우 삭제합니다.
         if (redisTemplate.opsForValue().get("RT:" + authentication.getName()) != null) {
