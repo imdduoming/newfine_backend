@@ -20,6 +20,9 @@ public class THomeworkDto {
     private String createdDate; // 생성일
     private String modifiedDate; // 수정일
 
+    private String fdeadline;
+    private String sdeadline;
+
 
     public static THomeworkDto toDto(THomework tHomework) {
         return new THomeworkDto(
@@ -28,7 +31,9 @@ public class THomeworkDto {
                 tHomework.getCourse().getTeacher().getTName(), //추가
                 tHomework.getContent(),
                 tHomework.getCreatedDate(),
-                tHomework.getModifiedDate()
+                tHomework.getModifiedDate(),
+                tHomework.getFdeadline(),
+                tHomework.getSdeadline()
         );
     }
 }

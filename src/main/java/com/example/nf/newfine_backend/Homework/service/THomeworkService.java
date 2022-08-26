@@ -144,7 +144,7 @@ public class  THomeworkService {
     public Long update(final Long Id, THomeworkDto tHomeworkDto) {
 
         THomework tHomework = tHomeworkRepository.findById(Id).orElseThrow(() -> new  IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
-        tHomework.update(tHomeworkDto.getTitle(), tHomeworkDto.getContent());
+        tHomework.update(tHomeworkDto.getTitle(), tHomeworkDto.getContent(), tHomeworkDto.getFdeadline(), tHomeworkDto.getSdeadline());
         return Id;
     }
 
