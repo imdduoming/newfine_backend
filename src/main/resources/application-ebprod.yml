@@ -9,6 +9,7 @@ spring:
     show-sql: true
     properties:
       hibernate.hbm2ddl.auto: update
+    defer-datasource-initialization: true
 
 logging.level:
   org.hibernate.SQL: debug

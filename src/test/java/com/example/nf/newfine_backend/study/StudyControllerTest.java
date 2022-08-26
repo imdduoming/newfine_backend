@@ -1,60 +1,60 @@
-package com.example.nf.newfine_backend.study;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Before;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
-import org.springframework.restdocs.RestDocumentationExtension;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
-
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
-import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.springSecurity;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
-import static org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import org.springframework.test.web.servlet.MockMvc;
-@ExtendWith(RestDocumentationExtension.class) // When using JUnit5
-@AutoConfigureMockMvc
-@SpringBootTest
-@WebAppConfiguration
-class StudyControllerTest {
-
-    @Autowired
-    private WebApplicationContext webApplicationContext;
-
-    @Autowired
-    private MockMvc mockMvc;
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    @Before
-    public void setUp() {
+//package com.example.nf.newfine_backend.study;
+//
+//import com.fasterxml.jackson.databind.ObjectMapper;
+//import org.junit.Before;
+//import org.junit.jupiter.api.BeforeEach;
+//import org.junit.jupiter.api.DisplayName;
+//import org.junit.jupiter.api.Test;
+//import org.junit.jupiter.api.extension.ExtendWith;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
+//import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+//import org.springframework.boot.test.context.SpringBootTest;
+//import org.springframework.http.MediaType;
+//import org.springframework.restdocs.RestDocumentationExtension;
+//import org.springframework.security.test.context.support.WithMockUser;
+//import org.springframework.test.context.junit.jupiter.SpringExtension;
+//import org.springframework.test.context.web.WebAppConfiguration;
+//import org.springframework.test.web.servlet.MockMvc;
+//import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+//import org.springframework.web.context.WebApplicationContext;
+//
+//import java.time.LocalDateTime;
+//import java.util.HashMap;
+//import java.util.Map;
+//
+//import static org.assertj.core.api.Assertions.assertThat;
+//import static org.junit.jupiter.api.Assertions.*;
+//import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+//import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
+//import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.springSecurity;
+//import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+//import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+//import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+//import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
+//import static org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder.*;
+//import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+//import org.springframework.test.web.servlet.MockMvc;
+//@ExtendWith(RestDocumentationExtension.class) // When using JUnit5
+//@AutoConfigureMockMvc
+//@SpringBootTest
+//@WebAppConfiguration
+//class StudyControllerTest {
+//
+//    @Autowired
+//    private WebApplicationContext webApplicationContext;
+//
+//    @Autowired
+//    private MockMvc mockMvc;
+//    @Autowired
+//    private ObjectMapper objectMapper;
+//
+//    @Before
+//    public void setUp() {
 //        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
 //                .build();
-    }
-
+//    }
+//
 //    @Test
 //    @DisplayName("관리자 자습 생성")
 //    @WithMockUser(roles = "ADMIN")
@@ -73,9 +73,7 @@ class StudyControllerTest {
 //                        )
 //                ));
 //    }
-
-//    @Autowired
-//    StudentStudy studentStudy
+//
 //    @Test
 //    @DisplayName("자습 입실")
 //    void enterStudy() {
@@ -93,4 +91,4 @@ class StudyControllerTest {
 //    @Test
 //    void getTotal() {
 //    }
-}
+//}
