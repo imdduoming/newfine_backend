@@ -229,7 +229,7 @@ public class AuthService {
         Authentication authentication = tokenProvider.getAuthentication(tokenRequestDto.getAccessToken());
 
         // push alarm 때문에 추가 (로그아웃 시 device token 초기화)
-        Student student = studentRepository.findByPhoneNumber(authentication.getName()).orElseThrow(PhoneNumberNotFoundException::new);
+        Student student = studentRepository.findById(Long.valueOf(authentication.getName())).orElseThrow(PhoneNumberNotFoundException::new);
         student.modifyDeviceToken(null);
 
         System.out.println("authentication name: "+ authentication.getName());
