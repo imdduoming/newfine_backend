@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -70,7 +69,7 @@ public class  THomeworkService {
             sHomeworkRepository.save(sHomework);
             sHomeworks.add(sHomework);
 
-            if (!Objects.equals(listener.getStudent().getDeviceToken(), "")) {
+            if (listener.getStudent().getDeviceToken()!=null) {
                 RequestDTO requestDTO = new RequestDTO();
                 requestDTO.setTargetToken(listener.getStudent().getDeviceToken());
                 requestDTO.setTitle("과목" + tHomework.getCourse().getCName());
