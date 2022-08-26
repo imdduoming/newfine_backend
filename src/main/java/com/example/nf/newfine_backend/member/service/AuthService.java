@@ -88,9 +88,9 @@ public class AuthService {
             }
         } else{
             Student student=studentRepository.findByPhoneNumber(signInDto.getPhoneNumber()).orElseThrow(()->new PhoneNumberNotFoundException("회원 정보가 없습니다.\n회원가입을 먼저 해주세요."));
-//            student.modifyDeviceToken(signInDto.getDeviceToken());
             System.out.println("deviceToken " + signInDto.getDeviceToken());
-            student.setDeviceToken(signInDto.getDeviceToken()); //push alarm 때문에 추가
+            student.modifyDeviceToken(signInDto.getDeviceToken()); //push alarm 때문에 추가
+//            student.setDeviceToken(signInDto.getDeviceToken());
             if (!passwordEncoder.matches(signInDto.getPassword(), student.getPassword())) {
                 throw new CustomException(INVALID_PASSWORD);
             }
