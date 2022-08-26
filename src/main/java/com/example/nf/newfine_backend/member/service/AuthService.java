@@ -228,13 +228,6 @@ public class AuthService {
         // 2. Access Token 에서 User id 을 가져옵니다.
         Authentication authentication = tokenProvider.getAuthentication(tokenRequestDto.getAccessToken());
 
-        // push alarm 때문에 추가 (로그아웃 시 device token 초기화)
-        Student student = studentRepository.findById(Long.valueOf(authentication.getName())).orElseThrow(PhoneNumberNotFoundException::new);
-        student.modifyDeviceToken(null);
-
-        System.out.println("authentication name: "+ authentication.getName());
-        System.out.println("student deviceToken: "+ student.getDeviceToken());
-
         // 3. Redis 에서 해당 User email 로 저장된 Refresh Token 이 있는지 여부를 확인 후 있을 경우 삭제합니다.
         if (redisTemplate.opsForValue().get("RT:" + authentication.getName()) != null) {
             // Refresh Token 삭제
@@ -245,6 +238,13 @@ public class AuthService {
         Long expiration = tokenProvider.getExpiration(tokenRequestDto.getAccessToken());
         redisTemplate.opsForValue()
                 .set(tokenRequestDto.getAccessToken(), "logout", expiration, TimeUnit.MILLISECONDS);
+
+        // push alarm 때문에 추가 (로그아웃 시 device token 초기화)
+        Student student = studentRepository.findById(Long.valueOf(authentication.getName())).orElseThrow(PhoneNumberNotFoundException::new);
+        student.setDeviceToken(null);
+
+        System.out.println("authentication name: "+ authentication.getName());
+        System.out.println("student deviceToken: "+ student.getDeviceToken());
 
 //        return response.success("로그아웃 되었습니다.");
         return responseService.getSingleResult("로그아웃 되었습니다.");
