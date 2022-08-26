@@ -90,49 +90,49 @@ public class SHomeworkService {
             Long studentId = sHomework.getStudentId();
             System.out.println(studentId);
             Student student = studentRepository.findById(studentId).orElseThrow(PhoneNumberNotFoundException::new);
-        if (state.equals("A")){
+        if (state.equals("1차")) {
             System.out.println(state);
             sHomework.setIschecked(true);
-            sHomework.setGrade('A');
+            sHomework.setDeadline("1차");
             sHomeworkRepository.save(sHomework);
-            pointService.create(student,"과제 등급: A",10);
-            RequestDTO requestDTO = new RequestDTO();
-            requestDTO.setTargetToken(student.getDeviceToken());
-            requestDTO.setTitle("과제 " + sHomework.getTitle());
-            requestDTO.setBody("과제 확인이 완료되었습니다.");
+            pointService.create(student, "과제 1차 제출", 10);
 
-            System.out.println(requestDTO.getTargetToken() + " "
-                    + requestDTO.getTitle() + " " + requestDTO.getBody());
+            if (student.getDeviceToken() != null) {
+                RequestDTO requestDTO = new RequestDTO();
+                requestDTO.setTargetToken(student.getDeviceToken());
+                requestDTO.setTitle("과제 " + sHomework.getTitle());
+                requestDTO.setBody("과제 확인이 완료되었습니다.");
 
-            fcmService.sendMessageTo(
-                    requestDTO.getTargetToken(),
-                    requestDTO.getTitle(),
-                    requestDTO.getBody());
+                System.out.println(requestDTO.getTargetToken() + " "
+                        + requestDTO.getTitle() + " " + requestDTO.getBody());
+
+                fcmService.sendMessageTo(
+                        requestDTO.getTargetToken(),
+                        requestDTO.getTitle(),
+                        requestDTO.getBody());
+            }
         }
-        else if(state.equals("B")){
+        else if(state.equals("2차")) {
             System.out.println(state);
             sHomework.setIschecked(true);
-            sHomework.setGrade('B');
+            sHomework.setDeadline("2차");
             sHomeworkRepository.save(sHomework);
-            pointService.create(student,"과제 등급: B",5);
-            RequestDTO requestDTO = new RequestDTO();
-            requestDTO.setTargetToken(student.getDeviceToken());
-            requestDTO.setTitle("과제 " + sHomework.getTitle());
-            requestDTO.setBody("과제 확인이 완료되었습니다.");
+            pointService.create(student, "과제 2차 제출", 5);
 
-            System.out.println(requestDTO.getTargetToken() + " "
-                    + requestDTO.getTitle() + " " + requestDTO.getBody());
+            if (student.getDeviceToken() != null) {
+                RequestDTO requestDTO = new RequestDTO();
+                requestDTO.setTargetToken(student.getDeviceToken());
+                requestDTO.setTitle("과제 " + sHomework.getTitle());
+                requestDTO.setBody("과제 확인이 완료되었습니다.");
 
-            fcmService.sendMessageTo(
-                    requestDTO.getTargetToken(),
-                    requestDTO.getTitle(),
-                    requestDTO.getBody());
-        }
-        else if(state.equals("C")){
-            System.out.println(state);
-            sHomework.setIschecked(true);
-            sHomework.setGrade('C');
-            sHomeworkRepository.save(sHomework);
+                System.out.println(requestDTO.getTargetToken() + " "
+                        + requestDTO.getTitle() + " " + requestDTO.getBody());
+
+                fcmService.sendMessageTo(
+                        requestDTO.getTargetToken(),
+                        requestDTO.getTitle(),
+                        requestDTO.getBody());
+            }
         }
     }
     //@Transactional public void checkSHomework(Long id) { sHomeworkRepository.checkSHomework(id); }
