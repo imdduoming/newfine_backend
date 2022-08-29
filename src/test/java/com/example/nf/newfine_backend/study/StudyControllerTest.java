@@ -25,6 +25,7 @@ import org.springframework.security.test.context.support.TestExecutionEvent;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.context.support.WithUserDetails;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -55,6 +56,7 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
 @SpringBootTest
+@ActiveProfiles("test")
 class StudyControllerTest {
 
     @Autowired
