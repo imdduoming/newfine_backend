@@ -44,6 +44,8 @@ public class  THomeworkService {
         tHomework.setTitle(tHomeworkDto.getTitle());
 
         tHomework.setContent(tHomeworkDto.getContent());
+        tHomework.setContent(tHomeworkDto.getFdeadline());
+        tHomework.setContent(tHomeworkDto.getSdeadline());
         tHomework.setCourse(course);
         tHomeworkRepository.save(tHomework);
 
