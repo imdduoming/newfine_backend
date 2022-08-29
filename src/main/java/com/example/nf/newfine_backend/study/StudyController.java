@@ -51,9 +51,11 @@ public class StudyController {
 
     // 학생 자습 퇴실 api
     @PutMapping  (value = "/study/end" )
-    public int endStudy(@RequestBody StudentStudyDto studentStudyDto, @RequestHeader HttpHeaders headers) {
+    public int endStudy(Authentication principal, @RequestBody StudentStudyDto studentStudyDto, @RequestHeader HttpHeaders headers) {
         Long study_id=Long.parseLong(studentStudyDto.getStudyId());
-        Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
+        String id = principal.getName();
+        Long s_id=Long.parseLong(id);
+        Student student = studentRepository.findById(s_id).get();
         int ans=studyService.endStudy(study_id,student);
         System.out.println(ans);
         return ans;//제대로 된 퇴실은 1
