@@ -7,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Getter
@@ -27,6 +29,12 @@ public class THomework extends BaseTimeEntity {
     @JsonManagedReference
     private Course course; // 코스 별로 여러 과제 가질 수 있음
 
+
+    @Column(name = "first_deadline")
+    private String fdeadline = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
+    @Column(name = "second_deadline")
+    private String sdeadline = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
     @Column(length = 40, nullable = false)
     private String title;
@@ -52,12 +60,16 @@ public class THomework extends BaseTimeEntity {
         this.title = tHomeworkDto.getTitle();
         this.content = tHomeworkDto.getContent();
         this.course = course;
+        this.fdeadline = tHomeworkDto.getFdeadline();
+        this.sdeadline = tHomeworkDto.getSdeadline();
         //this.count = count;
     }
 
-    public void update(String title, String content) {
+    public void update(String title, String content, String fdeadline, String sdeadline) {
         this.title = title;
         this.content = content;
+        this.fdeadline = fdeadline;
+        this.sdeadline = sdeadline;
         //this.modifiedDate = LocalDateTime.now();
     }
 }

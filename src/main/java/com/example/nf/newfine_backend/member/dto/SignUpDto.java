@@ -6,11 +6,13 @@ import com.example.nf.newfine_backend.member.teacher.domain.Teacher;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Setter
 public class SignUpDto {
     private String phoneNumber;
     private String name;

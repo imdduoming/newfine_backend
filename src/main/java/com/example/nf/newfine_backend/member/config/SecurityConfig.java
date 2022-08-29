@@ -33,17 +33,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {  // Spring Se
     }
 
 //     h2 database 테스트가 원활하도록 관련 API 들은 전부 무시
-//    @Override
-//    public void configure(WebSecurity web) {
-////        web.ignoring()
-////                .antMatchers("/h2-console/**", "/favicon.ico");
-////                .antMatchers("/h2-console/**", "/favicon.ico","/js/**","/resources/**", "/index.html");
+    @Override
+    public void configure(WebSecurity web) {
 //        web.ignoring()
-//                .antMatchers("/index.html")
-//                .antMatchers("/resources/**")
-//                .antMatchers("/js/**")
 //                .antMatchers("/h2-console/**", "/favicon.ico");
-//    }
+//                .antMatchers("/h2-console/**", "/favicon.ico","/js/**","/resources/**", "/swagger-ui.html");
+        web.ignoring()
+                .antMatchers("/index.html")
+                .antMatchers("/index.css")
+                .antMatchers("/v2/api-docs", "/swagger-resources/**"
+                        , "/swagger-ui.html", "/webjars/**", "/swagger/**"
+                        // -- Swagger UI v3 (Open API)
+                        , "/v3/api-docs/**")
+                .antMatchers("/resources/**")
+                .antMatchers("/docs/**")
+                .antMatchers("/static/js")
+                .antMatchers("/static/css")
+                .antMatchers("/templates/**")
+                .antMatchers("/js/**")
+                .antMatchers("/h2-console/**", "/favicon.ico");
+    }
 
     
 
@@ -73,7 +82,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {  // Spring Se
                 .and()
                 .authorizeRequests()
 //                .antMatchers("/", "/**").permitAll()
-                .antMatchers("/", "/adminLogin", "/attendance", "/attendanceMake", "/main", "/studentInfo", "/study", "/studyMake", "/testUpload").permitAll()
+                .antMatchers("/", "/adminLogin", "/attendance", "/attendanceMake", "/main", "/studentInfo", "/study", "/studyMake", "/testUpload","/swagger-ui/**","/swagger-ui.html","/resources/**").permitAll()
                 .antMatchers("/all/**").permitAll()
                 .antMatchers("/auth/**").permitAll()
 //                .antMatchers("/make/attendance").permitAll()
@@ -84,7 +93,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {  // Spring Se
                 .antMatchers("/h2-console/**", "/favicon.ico").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
 //                .antMatchers("/attendance", "/attendanceMake", "/main", "/studentInfo", "/study", "/studyInfo", "/testUpload").hasRole("ADMIN")
-//                .antMatchers("/index.html").permitAll()
+//                .antMatchers("/swagger-ui.html").permitAll()
 //                .antMatchers("/studyMake.html").hasAuthority("ADMIN")
 //                .antMatchers("/testUpload.html").hasRole("ADMIN")
 //                .antMatchers("/studyMake.html").hasRole("ADMIN")

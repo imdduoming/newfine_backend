@@ -9,6 +9,7 @@ import com.example.nf.newfine_backend.member.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -46,7 +47,7 @@ public class SHomeworkController {
 
     @PutMapping("/sh/point")
     @ResponseBody
-    public String checkSHomework(@RequestBody Map<String, Object>[] checklist){
+    public String checkSHomework(@RequestBody Map<String, Object>[] checklist) throws IOException {
         for (Map<String, Object> ck : checklist) {
             System.out.println(ck.get("shId") + " : " + ck.get("grade"));
             Long Id = Long.parseLong(String.valueOf(ck.get("shId")));
@@ -60,7 +61,7 @@ public class SHomeworkController {
 
     @PutMapping("/sh/point2")
     @ResponseBody
-    public String checkSHomework2(@RequestBody Map<String, String>[] checklist){
+    public String checkSHomework2(@RequestBody Map<String, String>[] checklist) throws IOException {
         for (Map<String, String> ck : checklist) {
             System.out.println(ck.get("shId") + " : " + ck.get("grade"));
             Long Id = Long.parseLong(String.valueOf(ck.get("shId")));
@@ -74,7 +75,7 @@ public class SHomeworkController {
 
     @PutMapping("/sh/test")
     @ResponseBody
-    public String test(@RequestBody List<Map<String, Object>> checklist) {
+    public String test(@RequestBody List<Map<String, Object>> checklist) throws IOException {
         for (Map<String, Object> c : checklist) {
             System.out.println(c.get("shId") + " : " + c.get("grade"));
             Long Id = Long.parseLong(String.valueOf(c.get("shId")));

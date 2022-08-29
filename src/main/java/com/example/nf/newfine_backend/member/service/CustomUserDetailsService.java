@@ -4,6 +4,7 @@ import com.example.nf.newfine_backend.member.student.domain.Student;
 import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
 import com.example.nf.newfine_backend.member.teacher.domain.Teacher;
 import com.example.nf.newfine_backend.member.teacher.repository.TeacherRepository;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -40,7 +41,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     // DB 에 User 값이 존재한다면 UserDetails 객체로 만들어서 리턴 -> 해당 UserDetails 객체를 SecurityContext 에 저장
-    private UserDetails createUserDetails(Student student) {
+    public UserDetails createUserDetails(Student student) {
         GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(student.getAuthority().toString());  // 권한 설정
 
         return new User(

@@ -89,7 +89,7 @@ function getTokenAndRefresh() {
         // error: function (response) {
         //     alert(response.message);
         //     localStorage.clear();
-        //     window.location.href = '/index.html'
+        //     window.location.href = '/swagger-ui.html'
         // }
         error: function (request, status, error) {
             console.log("code : " + request.status + "\n" + "message : " + request.message + "\n" + "error : " + error);
@@ -153,7 +153,7 @@ function login_check() {
 //         // error: function (response) {
 //         //     alert(response.message);
 //         //     localStorage.clear();
-//         //     window.location.href = '/index.html'
+//         //     window.location.href = '/swagger-ui.html'
 //         // }
 //         error: function (request, status, error) {
 //             console.log("error");

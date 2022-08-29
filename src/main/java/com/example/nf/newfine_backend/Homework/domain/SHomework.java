@@ -41,8 +41,10 @@ public class SHomework extends BaseTimeEntity {
     @Column
     private boolean ischecked = false;
 
+//    @Column
+//    private char grade = 'D';
     @Column
-    private char grade = 'D';
+    private String deadline;
 
     @Column
     private Long studentId;
@@ -55,8 +57,9 @@ public class SHomework extends BaseTimeEntity {
         this.title = sHomeworkDto.getTitle();
         this.thomework = tHomework;
         this.listener = listener;
-        this.grade = sHomeworkDto.getGrade();
+//        this.grade = sHomeworkDto.getGrade();
         this.ischecked = sHomeworkDto.isIschecked();
+        this.deadline = sHomeworkDto.getDeadline();
         this.studentId = sHomeworkDto.getStudentId();
         this.checkedDate = sHomeworkDto.getCheckedDate();
     }

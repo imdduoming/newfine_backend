@@ -4,11 +4,16 @@ import lombok.*;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 @Data
+//@Getter // push alarm 추가
+//@Builder // push alarm 추가
 @AllArgsConstructor
 @NoArgsConstructor
 public class SignInDto {
     private String phoneNumber;
     private String password;
+
+    //push alarm 때문에 추가
+    private String deviceToken;
 
 
 //    @Builder
