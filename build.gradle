@@ -89,8 +89,8 @@ dependencies {
     //OKClient
     implementation("com.squareup.okhttp3:okhttp:4.9.1")
     // spring swagger
-    implementation 'io.springfox:springfox-swagger2:2.9.2'
-    implementation 'io.springfox:springfox-swagger-ui:2.9.2'
+//    implementation 'io.springfox:springfox-swagger2:2.9.2'
+//    implementation 'io.springfox:springfox-swagger-ui:2.9.2'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
     testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.11.4'
     asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
@@ -100,22 +100,22 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 //springboot 2.5버전이상 부터는 jar 파일 2개 생겨서 이를 방지
-
-ext {
-    snippetsDir = file('build/generated-snippets')
-}
-
-test {
-    // 위에서 작성한 snippetsDir 디렉토리를 test의 output으로 구성하는 설정 -> 스니펫 조각들이 build/generated-snippets로 출력
-    outputs.dir snippetsDir
-}
-
-asciidoctor {
-    dependsOn test //test 작업 이후
-    configurations 'asciidoctorExt' // 위에서
-    inputs.dir snippetsDir
-
-}
+//
+//ext {
+//    snippetsDir = file('build/generated-snippets')
+//}
+//
+//test {
+//    // 위에서 작성한 snippetsDir 디렉토리를 test의 output으로 구성하는 설정 -> 스니펫 조각들이 build/generated-snippets로 출력
+//    outputs.dir snippetsDir
+//}
+//
+//asciidoctor {
+//    dependsOn test //test 작업 이후
+//    configurations 'asciidoctorExt' // 위에서
+//    inputs.dir snippetsDir
+//
+//}
 
 //tasks.register<Copy>("copyOasToSwagger") {
 //    delete("src/main/resources/static/swagger-ui/openapi3.yaml") // 기존 yaml 파일 삭제
@@ -124,20 +124,20 @@ asciidoctor {
 //    dependsOn("openapi3") // openapi3 task가 먼저 실행되도록 설정
 //}
 
-
-bootJar {
-    dependsOn asciidoctor
-}
-
-openapi3 {
-    server = 'https://localhost:8080'
-    title = 'Newfine API'
-    description = 'api.newfine.tk'
-    version = '0.0.1'
-    format = 'yaml'
-//    tagDescriptionsPropertiesFile = 'src/main/resources/static/docs/api-description.yaml'
-    copy{
-        from("build/api-spec/openapi3.yaml") // 복제할 yaml 파일 타겟팅
-        into("src/main/resources/static/swagger-ui/.") // 타겟 디렉토리로 파일 복제
-    }
+//
+//bootJar {
+//    dependsOn asciidoctor
+//}
+//
+//openapi3 {
+//    server = 'https://localhost:8080'
+//    title = 'Newfine API'
+//    description = 'api.newfine.tk'
+//    version = '0.0.1'
+//    format = 'yaml'
+////    tagDescriptionsPropertiesFile = 'src/main/resources/static/docs/api-description.yaml'
+//    copy{
+//        from("build/api-spec/openapi3.yaml") // 복제할 yaml 파일 타겟팅
+//        into("src/main/resources/static/swagger-ui/.") // 타겟 디렉토리로 파일 복제
+//    }
 }
