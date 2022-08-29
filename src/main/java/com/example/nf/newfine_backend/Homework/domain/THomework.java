@@ -1,5 +1,6 @@
 package com.example.nf.newfine_backend.Homework.domain;
 
+
 import com.example.nf.newfine_backend.Homework.dto.THomeworkDto;
 import com.example.nf.newfine_backend.course.Course;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -73,4 +74,3 @@ public class THomework extends BaseTimeEntity {
         //this.modifiedDate = LocalDateTime.now();
     }
 }
-

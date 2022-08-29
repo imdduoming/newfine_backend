@@ -41,7 +41,7 @@ public class SHomework extends BaseTimeEntity {
     @Column
     private boolean ischecked = false;
 
-//    @Column
+    //    @Column
 //    private char grade = 'D';
     @Column
     private String deadline;
@@ -67,7 +67,6 @@ public class SHomework extends BaseTimeEntity {
 //    public void update(Boolean ischecked, char grade) {
 //        this.ischecked = ischecked;
 //        this.grade = grade;
-        //this.modifiedDate = LocalDateTime.now();
+    //this.modifiedDate = LocalDateTime.now();
 //    }
 }
-

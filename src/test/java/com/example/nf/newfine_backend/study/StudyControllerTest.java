@@ -124,35 +124,35 @@ class StudyControllerTest {
                 ));
     }
 
-    @Test
-    @DisplayName("자습 퇴실")
-    @CustomUser(value = "01030303030")
-    void endStudy() throws Exception {
-        LocalDateTime now = LocalDateTime.now();
-        Study study = new Study(now);
-        studyRepository.save(study);
-        Map<String,String> idset = new HashMap<>();
-        // body에 json 형식으로 회원의 데이터를 넣기 위해서 Map을 이용한다.
-        idset.put("studyId", Long.toString(study.getStudy_id()));
-        String content = objectMapper.writeValueAsString(idset);
-        mockMvc.perform(RestDocumentationRequestBuilders.post("/study/start") // 1
-                        .content(content) //
-                        .contentType(MediaType.APPLICATION_JSON)) //
-                .andExpect(status().isOk()) // 4
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andDo(print())//어떤 응답과 요청을 받았는지 확인가능.
-                .andDo(MockMvcRestDocumentationWrapper.document("자습 입실"// 5,
-                        ,requestFields( // 6
-                                fieldWithPath("studyId").description("자습 id") // 7
-                        )
-                ));
-    }
-
-    @Test
-    void getMyStudy() {
-    }
-
-    @Test
-    void getTotal() {
-    }
+//    @Test
+//    @DisplayName("자습 퇴실")
+//    @CustomUser(value = "01030303030")
+//    void endStudy() throws Exception {
+//        LocalDateTime now = LocalDateTime.now();
+//        Study study = new Study(now);
+//        studyRepository.save(study);
+//        Map<String,String> idset = new HashMap<>();
+//        // body에 json 형식으로 회원의 데이터를 넣기 위해서 Map을 이용한다.
+//        idset.put("studyId", Long.toString(study.getStudy_id()));
+//        String content = objectMapper.writeValueAsString(idset);
+//        mockMvc.perform(RestDocumentationRequestBuilders.post("/study/start") // 1
+//                        .content(content) //
+//                        .contentType(MediaType.APPLICATION_JSON)) //
+//                .andExpect(status().isOk()) // 4
+//                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+//                .andDo(print())//어떤 응답과 요청을 받았는지 확인가능.
+//                .andDo(MockMvcRestDocumentationWrapper.document("자습 입실"// 5,
+//                        ,requestFields( // 6
+//                                fieldWithPath("studyId").description("자습 id") // 7
+//                        )
+//                ));
+//    }
+//
+//    @Test
+//    void getMyStudy() {
+//    }
+//
+//    @Test
+//    void getTotal() {
+//    }
 }
