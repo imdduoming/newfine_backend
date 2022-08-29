@@ -7,8 +7,6 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Getter
@@ -31,10 +29,10 @@ public class THomework extends BaseTimeEntity {
 
 
     @Column(name = "first_deadline")
-    private String fdeadline = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    private String fdeadline;
 
     @Column(name = "second_deadline")
-    private String sdeadline = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    private String sdeadline;
 
     @Column(length = 40, nullable = false)
     private String title;
