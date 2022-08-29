@@ -21,7 +21,7 @@ public class SHomeworkDto {
     private String name;
     private String title;
 
-    private char grade;
+    private String deadline;
 
     private boolean ischecked;
 
@@ -38,7 +38,7 @@ public class SHomeworkDto {
                 sHomework.getListener().getStudent().getId(),
                 sHomework.getListener().getStudent().getName(),
                 sHomework.getTitle(),
-                sHomework.getGrade(),
+                sHomework.getDeadline(),
                 sHomework.isIschecked(),
                 sHomework.getCreatedDate(),
                 sHomework.getCheckedDate()

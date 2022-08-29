@@ -53,12 +53,12 @@ public class  THomeworkService {
 
         System.out.println("수강생");
         System.out.println( listeners);
-        for(Listener listener : listeners){
+        for(Listener listener : listeners) {
             System.out.println("수강생이름");
             System.out.println(listener.getStudent().getName());
             System.out.println("thomework id");
             System.out.println(tHomework.getId());
-            SHomework sHomework=new SHomework();
+            SHomework sHomework = new SHomework();
             sHomework.setTitle(tHomeworkDto.getTitle());
             sHomework.setStudentId(listener.getStudent().getId());
             System.out.println(sHomework.getStudentId());
@@ -69,18 +69,20 @@ public class  THomeworkService {
             sHomeworkRepository.save(sHomework);
             sHomeworks.add(sHomework);
 
-            RequestDTO requestDTO = new RequestDTO();
-            requestDTO.setTargetToken(listener.getStudent().getDeviceToken());
-            requestDTO.setTitle("과목" + tHomework.getCourse().getCName());
-            requestDTO.setBody("새로운 과제가 등록되었습니다.");
+            if (listener.getStudent().getDeviceToken()!=null) {
+                RequestDTO requestDTO = new RequestDTO();
+                requestDTO.setTargetToken(listener.getStudent().getDeviceToken());
+                requestDTO.setTitle("과목" + tHomework.getCourse().getCName());
+                requestDTO.setBody("새로운 과제가 등록되었습니다.");
 
-            System.out.println(requestDTO.getTargetToken() + " "
-                    + requestDTO.getTitle() + " " + requestDTO.getBody());
+                System.out.println(requestDTO.getTargetToken() + " "
+                        + requestDTO.getTitle() + " " + requestDTO.getBody());
 
-            fcmService.sendMessageTo(
-                    requestDTO.getTargetToken(),
-                    requestDTO.getTitle(),
-                    requestDTO.getBody());
+                fcmService.sendMessageTo(
+                        requestDTO.getTargetToken(),
+                        requestDTO.getTitle(),
+                        requestDTO.getBody());
+            }
         }
 
         return THomeworkDto.toDto(tHomework).getId();
@@ -142,7 +144,7 @@ public class  THomeworkService {
     public Long update(final Long Id, THomeworkDto tHomeworkDto) {
 
         THomework tHomework = tHomeworkRepository.findById(Id).orElseThrow(() -> new  IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
-        tHomework.update(tHomeworkDto.getTitle(), tHomeworkDto.getContent());
+        tHomework.update(tHomeworkDto.getTitle(), tHomeworkDto.getContent(), tHomeworkDto.getFdeadline(), tHomeworkDto.getSdeadline());
         return Id;
     }
 

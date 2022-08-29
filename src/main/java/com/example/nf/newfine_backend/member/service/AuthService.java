@@ -88,7 +88,9 @@ public class AuthService {
             }
         } else{
             Student student=studentRepository.findByPhoneNumber(signInDto.getPhoneNumber()).orElseThrow(()->new PhoneNumberNotFoundException("회원 정보가 없습니다.\n회원가입을 먼저 해주세요."));
+            System.out.println("deviceToken " + signInDto.getDeviceToken());
             student.modifyDeviceToken(signInDto.getDeviceToken()); //push alarm 때문에 추가
+//            student.setDeviceToken(signInDto.getDeviceToken());
             if (!passwordEncoder.matches(signInDto.getPassword(), student.getPassword())) {
                 throw new CustomException(INVALID_PASSWORD);
             }
@@ -226,11 +228,6 @@ public class AuthService {
         // 2. Access Token 에서 User id 을 가져옵니다.
         Authentication authentication = tokenProvider.getAuthentication(tokenRequestDto.getAccessToken());
 
-        // push alarm 때문에 추가 (로그아웃 시 device token 초기화) 하하하
-        Student student = studentRepository.findByPhoneNumber(authentication.getName()).orElseThrow(PhoneNumberNotFoundException::new);
-        student.setDeviceToken("");
-
-
         // 3. Redis 에서 해당 User email 로 저장된 Refresh Token 이 있는지 여부를 확인 후 있을 경우 삭제합니다.
         if (redisTemplate.opsForValue().get("RT:" + authentication.getName()) != null) {
             // Refresh Token 삭제
@@ -241,6 +238,14 @@ public class AuthService {
         Long expiration = tokenProvider.getExpiration(tokenRequestDto.getAccessToken());
         redisTemplate.opsForValue()
                 .set(tokenRequestDto.getAccessToken(), "logout", expiration, TimeUnit.MILLISECONDS);
+
+        // push alarm 때문에 추가 (로그아웃 시 device token 초기화)
+        Student student = studentRepository.findById(Long.valueOf(authentication.getName())).orElseThrow(PhoneNumberNotFoundException::new);
+        student.setDeviceToken(null);
+        studentRepository.save(student);
+
+        System.out.println("authentication name: "+ authentication.getName());
+        System.out.println("student deviceToken: "+ student.getDeviceToken());
 
 //        return response.success("로그아웃 되었습니다.");
         return responseService.getSingleResult("로그아웃 되었습니다.");
