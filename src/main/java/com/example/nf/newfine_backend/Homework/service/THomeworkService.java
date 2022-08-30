@@ -42,11 +42,10 @@ public class  THomeworkService {
 
         THomework tHomework = new THomework();
         tHomework.setTitle(tHomeworkDto.getTitle());
-
         tHomework.setContent(tHomeworkDto.getContent());
         tHomework.setCourse(course);
-        tHomework.setContent(tHomeworkDto.getFdeadline());
-        tHomework.setContent(tHomeworkDto.getSdeadline());
+        tHomework.setFdeadline(tHomeworkDto.getFdeadline());
+        tHomework.setSdeadline(tHomeworkDto.getSdeadline());
         tHomeworkRepository.save(tHomework);
 
         // shomeworklist 자동으로 생성하는 부분
