@@ -49,12 +49,12 @@ public class SHomeworkController {
     @ResponseBody
     public String checkSHomework(@RequestBody Map<String, Object>[] checklist) throws IOException {
         for (Map<String, Object> ck : checklist) {
-            System.out.println(ck.get("shId") + " : " + ck.get("grade"));
+            System.out.println(ck.get("shId") + " : " + ck.get("deadline"));
             Long Id = Long.parseLong(String.valueOf(ck.get("shId")));
-            String grade = String.valueOf(ck.get("grade"));
+            String deadline = String.valueOf(ck.get("deadline"));
 //            Long Id = Long.valueOf(c.get("shId").toString());
-            System.out.println("shId: " + Id + " : grade: " + grade);
-            sHomeworkService.updateSHomework(Id, grade);
+            System.out.println("shId: " + Id + " : deadline: " + deadline);
+            sHomeworkService.updateSHomework(Id, deadline);
         }
         return "성공";
     }
