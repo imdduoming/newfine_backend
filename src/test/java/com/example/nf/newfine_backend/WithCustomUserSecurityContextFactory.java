@@ -30,7 +30,7 @@ public class WithCustomUserSecurityContextFactory implements WithSecurityContext
         String phone = customUser.value();
         SignUpDto student = new SignUpDto();
         student.setName("이제노");
-        student.setPhoneNumber("01030303030");
+        student.setPhoneNumber(phone);
         student.setPassword("123");
         // @UserDetails 가 원래 하던 일
         // Authetication 만들고 Securitycontext 에 넣어주기
