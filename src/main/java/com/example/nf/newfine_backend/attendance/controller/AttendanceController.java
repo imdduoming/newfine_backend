@@ -12,6 +12,7 @@ import com.example.nf.newfine_backend.member.student.service.MessageService;
 import com.example.nf.newfine_backend.member.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -39,9 +40,11 @@ public class AttendanceController {
 
     // 학생 출석 api
     @PostMapping(value = "/add/attendance")
-    public int addAttendance(@RequestBody StudentAttendanceDto studentAttendanceDto) {
+    public int addAttendance(Authentication principal,@RequestBody StudentAttendanceDto studentAttendanceDto) {
         Long attendance_id = Long.parseLong(studentAttendanceDto.getAttendance_id());
-        Student student = studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
+        String id = principal.getName();
+        Long s_id=Long.parseLong(id);
+        Student student = studentRepository.findById(s_id).get();
         int ans = attendanceService.addAttendance(attendance_id, student);
         System.out.println(ans);
         return ans;
