@@ -3,11 +3,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="../static/css/login.css" type="text/css">
+    <link rel="stylesheet" href="css/login.css" type="text/css">
     <title>Login</title>
-    <script type="text/javascript" src="../static/js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
     <script src="https://malsup.github.io/jquery.form.js"></script>
-    <script type="text/javascript" src="../static/js/back.js"></script>
+    <script type="text/javascript" src="js/back.js"></script>
     <script type="text/javascript">
         $(window).bind("pageshow", function (event) {
             if (event.originalEvent.persisted) {
@@ -65,7 +65,7 @@
             //         // error: function (response) {
             //         //     alert(response.message);
             //         //     localStorage.clear();
-            //         //     window.location.href = '/swagger-ui.html'
+            //         //     window.location.href = '/index.html'
             //         // }
             //         error: function (request, status, error) {
             //             console.log("error");
@@ -102,7 +102,7 @@
         //             // error: function (response) {
         //             //     alert(response.message);
         //             //     localStorage.clear();
-        //             //     window.location.href = '/swagger-ui.html'
+        //             //     window.location.href = '/index.html'
         //             // }
         //             error: function (request, status, error) {
         //                 console.log("error");
@@ -129,7 +129,7 @@
         //             if (localStorage.getItem('accessToken') != null) {
         //                 xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('accessToken'));
         //             } else {
-        //                 location.href = "swagger-ui.html"
+        //                 location.href = "index.html"
         //                 alert("로그인 해주세요")
         //             }
         //         }
@@ -214,7 +214,7 @@
             };
             $("#login").ajaxSubmit(options);
         }
-        // e.keyCode == '13'을 통해서 엔터키를 인식하여 로그인 버튼 클릭 이벤트 실행
+        // e.keyCode == '13'을 통해서 엔터키를 인식하여 로그인 버튼 클릭 이벤트 실행
         //
         // $('#pwd').on('keypress', function(e){
         //     if(e.keyCode == '13'){
@@ -239,19 +239,19 @@
             }
         }
     </script>
-<!--    <script>-->
-<!--        $("#login").keypress(function(e){-->
-<!--            if (e.keyCode===13){-->
-<!--                adminLogin();-->
-<!--            }-->
-<!--        });-->
-<!--    </script>-->
-<!--    <script>-->
-<!--        history.pushState(null, null, location.href);-->
-<!--        window.onpopstate = function(event) {-->
-<!--            history.go(1);-->
-<!--        };-->
-<!--    </script>-->
+    <!--    <script>-->
+    <!--        $("#login").keypress(function(e){-->
+    <!--            if (e.keyCode===13){-->
+    <!--                adminLogin();-->
+    <!--            }-->
+    <!--        });-->
+    <!--    </script>-->
+    <!--    <script>-->
+    <!--        history.pushState(null, null, location.href);-->
+    <!--        window.onpopstate = function(event) {-->
+    <!--            history.go(1);-->
+    <!--        };-->
+    <!--    </script>-->
 </head>
 
 <body>

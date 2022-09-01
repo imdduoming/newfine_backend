@@ -7,12 +7,7 @@ import com.example.nf.newfine_backend.member.util.SecurityUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -21,7 +16,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @Slf4j
-@EnableWebMvc
 public class StudyController {
     private final StudentRepository studentRepository;
     private final StudyService studyService;
@@ -37,12 +31,9 @@ public class StudyController {
     }
     // 학생 쟈습 enter api
     @PostMapping  (value = "/study/start" )
-    public int enterStudy(Authentication principal, @RequestBody StudentStudyDto studentStudyDto, @RequestHeader HttpHeaders headers, @AuthenticationPrincipal UserDetails userDetails) {
+    public int enterStudy(@RequestBody StudentStudyDto studentStudyDto, @RequestHeader HttpHeaders headers) {
         Long study_id=Long.parseLong(studentStudyDto.getStudyId());
-        String id = principal.getName();
-        Long s_id=Long.parseLong(id);
-        Student student = studentRepository.findById(s_id).get();
-//        Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
+        Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
         int ans=studyService.enterStudy(study_id,student);
         System.out.println(ans);
         return ans; //제대로 된 입실은 1
@@ -51,11 +42,9 @@ public class StudyController {
 
     // 학생 자습 퇴실 api
     @PutMapping  (value = "/study/end" )
-    public int endStudy(Authentication principal, @RequestBody StudentStudyDto studentStudyDto, @RequestHeader HttpHeaders headers) {
+    public int endStudy(@RequestBody StudentStudyDto studentStudyDto, @RequestHeader HttpHeaders headers) {
         Long study_id=Long.parseLong(studentStudyDto.getStudyId());
-        String id = principal.getName();
-        Long s_id=Long.parseLong(id);
-        Student student = studentRepository.findById(s_id).get();
+        Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
         int ans=studyService.endStudy(study_id,student);
         System.out.println(ans);
         return ans;//제대로 된 퇴실은 1
