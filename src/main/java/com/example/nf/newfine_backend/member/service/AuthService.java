@@ -57,6 +57,7 @@ public class AuthService {
     @Transactional
     public StudentResponseDto signup(SignUpDto signUpDto) {
         if (studentRepository.existsByPhoneNumber(signUpDto.getPhoneNumber())) {
+            System.out.println("폰번호중복");
             throw new CustomException(DUPLICATE_MEMBER);
         }
 
