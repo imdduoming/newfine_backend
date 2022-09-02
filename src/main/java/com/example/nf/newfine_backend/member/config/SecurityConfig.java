@@ -88,9 +88,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {  // Spring Se
 //                .antMatchers("/studyMake.html").hasAuthority("ADMIN")
 //                .antMatchers("/testUpload.html").hasRole("ADMIN")
 //                .antMatchers("/studyMake.html").hasRole("ADMIN")
-                .anyRequest().authenticated()   // 나머지 API 는 전부 인증 필요
+                .anyRequest().authenticated() // 나머지 API 는 전부 인증 필요
+
+
 
                 // JwtFilter 를 addFilterBefore 로 등록했던 JwtSecurityConfig 클래스를 적용
                 .and()
-                .apply(new JwtSecurityConfig(tokenProvider, redisTemplate));
+                .apply(new JwtSecurityConfig(tokenProvider, redisTemplate)).and().formLogin();
     }}
