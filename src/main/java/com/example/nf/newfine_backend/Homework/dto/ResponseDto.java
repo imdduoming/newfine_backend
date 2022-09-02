@@ -4,6 +4,8 @@ import com.example.nf.newfine_backend.Homework.domain.THomework;
 import com.example.nf.newfine_backend.course.Course;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Setter
 @Getter
 @AllArgsConstructor
@@ -17,8 +19,8 @@ public class ResponseDto {
     private Course course; // 작성자
     private int count; // 조회 수
     //private char deleteYn; // 삭제 여부
-    private String createdDate; // 생성일
-    private String modifiedDate; // 수정일
+    private LocalDateTime createdDate; // 생성일
+    private LocalDateTime modifiedDate; // 수정일
 
 
     public ResponseDto(THomework entity) {
