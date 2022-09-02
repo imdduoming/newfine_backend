@@ -44,7 +44,7 @@ public class SHomework extends BaseTimeEntity {
     //    @Column
 //    private char grade = 'D';
     @Column
-    private String deadline;
+    private String deadline = "미제출";
 
     @Column
     private Long studentId;

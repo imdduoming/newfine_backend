@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,8 +19,8 @@ public class THomeworkDto {
     private String content; // 내용
     //private int count; // 조회 수
     //private char deleteYn; // 삭제 여부
-    private String createdDate; // 생성일
-    private String modifiedDate; // 수정일
+    private LocalDateTime createdDate; // 생성일
+    private LocalDateTime modifiedDate; // 수정일
 
     private String fdeadline;
     private String sdeadline;

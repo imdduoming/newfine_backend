@@ -9,7 +9,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Getter
 @MappedSuperclass
@@ -17,19 +16,19 @@ import java.time.format.DateTimeFormatter;
 public class BaseTimeEntity {
 
     @CreatedDate
-    private String createdDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    private LocalDateTime createdDate;
 
     @LastModifiedDate
-    private String modifiedDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    private LocalDateTime modifiedDate;
 
 //    @LastModifiedDate
 //    private String checkedDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
-    public String getCreatedDate() {
+    public LocalDateTime getCreatedDate() {
         return createdDate;
     }
 
-    public String getModifiedDate() {
+    public LocalDateTime getModifiedDate() {
         return modifiedDate;
     }
 }

@@ -89,7 +89,7 @@ public class SHomeworkService {
         if (state.equals("1차")) {
             System.out.println(state);
             sHomework.setIschecked(true);
-            sHomework.setDeadline("1차");
+            sHomework.setDeadline("1차제출");
             sHomeworkRepository.save(sHomework);
             pointService.create(student, "과제 1차 제출", 10);
 
@@ -111,7 +111,7 @@ public class SHomeworkService {
         else if(state.equals("2차")) {
             System.out.println(state);
             sHomework.setIschecked(true);
-            sHomework.setDeadline("2차");
+            sHomework.setDeadline("2차제출");
             sHomeworkRepository.save(sHomework);
             pointService.create(student, "과제 2차 제출", 5);
 
