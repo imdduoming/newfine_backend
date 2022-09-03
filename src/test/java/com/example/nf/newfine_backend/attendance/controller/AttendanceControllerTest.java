@@ -1,6 +1,7 @@
 package com.example.nf.newfine_backend.attendance.controller;
 
 import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
+import com.example.nf.newfine_backend.attendance.domain.Attendance;
 import com.example.nf.newfine_backend.course.Course;
 import com.example.nf.newfine_backend.course.CourseRepository;
 import com.example.nf.newfine_backend.member.service.CustomUserDetailsService;
