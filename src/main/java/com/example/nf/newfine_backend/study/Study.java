@@ -22,7 +22,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Study {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     @Column(name = "study_id")
     private Long study_id;

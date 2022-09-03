@@ -31,7 +31,7 @@ public class StudyService {
         Long study_id=study.getStudy_id();
         String a_id=Long.toString(study_id);
         Study study1=studyRepository.findById(study_id).get();
-        String study_url="https://eb.newfine.tk/study.html?idx="+a_id;
+        String study_url="https://eb.newfine.tk/study?idx="+a_id;
         study1.setUrl(study_url);
         studyRepository.save(study1);
         return study1;
