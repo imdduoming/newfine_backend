@@ -74,7 +74,7 @@ public class AttendanceService {
                 studentAttendance.setIslate(true);
                 studentAttendance.setTime(now_time);
                 studentattendanceRepository.save(studentAttendance);
-                pointService.create(student,"지각 ㅠ_ㅠ",2);
+//                pointService.create(student,"지각 ㅠ_ㅠ",2);
             }
 
             else{
@@ -83,7 +83,7 @@ public class AttendanceService {
                 studentAttendance.setIslate(false);
                 studentAttendance.setTime(now_time);
                 studentattendanceRepository.save(studentAttendance);
-                pointService.create(student,"정상 출석하였습니다!",5);
+//                pointService.create(student,"정상 출석하였습니다!",5);
             }
             return 1;
         }
