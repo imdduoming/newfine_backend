@@ -128,3 +128,8 @@ openapi3 {
     outputFileNamePrefix = "swagger"
 //    tagDescriptionsPropertiesFile = 'src/test/resources/tag-descriptions.yaml'
 }
+
+bootRun {
+    String activeProfile = System.properties['spring.profiles.active']
+    systemProperty "spring.profiles.active", activeProfile
+}

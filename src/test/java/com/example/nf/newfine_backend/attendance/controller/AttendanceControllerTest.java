@@ -2,11 +2,18 @@ package com.example.nf.newfine_backend.attendance.controller;
 
 import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
 import com.example.nf.newfine_backend.attendance.domain.Attendance;
+import com.example.nf.newfine_backend.attendance.repository.AttendanceRepository;
+import com.example.nf.newfine_backend.attendance.service.AttendanceService;
+import com.example.nf.newfine_backend.config.CustomUser;
 import com.example.nf.newfine_backend.course.Course;
 import com.example.nf.newfine_backend.course.CourseRepository;
+import com.example.nf.newfine_backend.course.Listener;
+import com.example.nf.newfine_backend.course.ListenerRepository;
 import com.example.nf.newfine_backend.member.service.CustomUserDetailsService;
+import com.example.nf.newfine_backend.member.student.domain.Student;
 import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
 import com.example.nf.newfine_backend.study.StudyRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.jupiter.api.AfterEach;
@@ -61,6 +68,12 @@ class AttendanceControllerTest {
     private StudentRepository studentRepository;
     @Autowired
     private CourseRepository courseRepository;
+    @Autowired
+    private AttendanceRepository attendanceRepository;
+    @Autowired
+    private ListenerRepository listenerRepository;
+    @Autowired
+    private AttendanceService attendanceService;
 
     private Long id;
     @Before
@@ -74,10 +87,10 @@ class AttendanceControllerTest {
 
     }
 
-//    @AfterEach
-//    public void delete(){
-//        studentRepository.deleteAll();
-//    }
+    @AfterEach
+    public void delete(){
+        studentRepository.deleteAll();
+    }
     @Test
     @WithMockUser(roles = "ADMIN")
     void 출석생성() throws Exception {
@@ -110,7 +123,44 @@ class AttendanceControllerTest {
     }
 
     @Test
-    void addAttendance() {
+    @CustomUser("01030303030")
+    void 출석_정상출석() throws Exception {
+        Course course = new Course("내신 미적분","고등학교","수학","미적분","15:00","20:00");
+        courseRepository.save(course);
+        id= course.getId();
+
+
+        Listener listener = new Listener();
+        listener.setCourse(course);
+        Student student = studentRepository.findByPhoneNumber("01030303030").get();
+        listener.setStudent(student);
+        listenerRepository.save(listener);
+
+
+        LocalDateTime start = LocalDateTime.now();
+        LocalDateTime end = start.plusHours(1);
+
+        Attendance attendance = attendanceService.makeAttendance(id,start,end);
+
+        Long attendance_id = attendance.getAttendanceId();
+        Map<String,String> input = new HashMap<>();
+        // body에 json 형식으로 회원의 데이터를 넣기 위해서 Map을 이용한다.
+        LocalDateTime now = LocalDateTime.now();
+        input.put("attendance_id",Long.toString(attendance_id));
+        String content = objectMapper.writeValueAsString(input);
+        mockMvc.perform(RestDocumentationRequestBuilders.post("/add/attendance") // 1
+                        .content(content) //
+                        .contentType(MediaType.APPLICATION_JSON)) //
+                .andExpect(status().isOk()) // 4
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())//어떤 응답과 요청을 받았는지 확인가능.
+                .andDo(MockMvcRestDocumentationWrapper.document("관리자 출석 생성"// 5,
+                        ,requestFields( // 6
+                                fieldWithPath("attendance_id").description("출석id")
+                        )
+                ));
+
+
     }
 
     @Test
