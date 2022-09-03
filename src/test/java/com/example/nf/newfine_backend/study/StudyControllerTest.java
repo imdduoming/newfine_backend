@@ -1,7 +1,7 @@
 package com.example.nf.newfine_backend.study;//package com.example.nf.newfine_backend.study;
 
 import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
-import com.example.nf.newfine_backend.CustomUser;
+import com.example.nf.newfine_backend.config.CustomUser;
 
 import com.example.nf.newfine_backend.member.service.CustomUserDetailsService;
 import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
@@ -17,7 +17,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
-import org.junit.Before;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
