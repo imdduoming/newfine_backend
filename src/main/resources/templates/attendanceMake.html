@@ -206,23 +206,36 @@
 
         var startTime=document.getElementById('start_time').value;
         var endTime=document.getElementById('end_time').value;
+
+        startTime = startTime.substring(0,4)+startTime.substring(5,7)+startTime.substring(8,10)+startTime.substring(11,13)+startTime.substring(14,16);
+        endTime = endTime.substring(0,4)+endTime.substring(5,7)+endTime.substring(8,10)+endTime.substring(11,13)+endTime.substring(14,16);
+        startTime *= 1;
+        endTime *= 1;
         console.log(startTime)
         console.log(course);
         let data = {"course_id": course,"startTime":startTime,"endTime":endTime};
         if(course && startTime && endTime){
-            $.ajax({
-                type: "POST",
-                url: `${domainURL}/make/attendance`,
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                headers: { "Authorization": `Bearer ${token}` },
-                success: function (response) {
-                    console.log(response)
-                    alert('출석이 생성됐습니다!')
-                    $('input[name=url]').attr('value',response['url']);
-                }
+            if(startTime > endTime){
+                alert("인증시작시간이 마감시간보다 빠릅니다! 다시 설정해주세요")
+            }
+            else  if(startTime == endTime){
+                alert("인증시작시간이 마감시간이 같습니다 ! 다시 설정해주세요")
+            }
+            else {
+                $.ajax({
+                    type: "POST",
+                    url: `${domainURL}/make/attendance`,
+                    contentType: "application/json",
+                    data: JSON.stringify(data),
+                    headers: {"Authorization": `Bearer ${token}`},
+                    success: function (response) {
+                        console.log(response)
+                        alert('출석이 생성됐습니다!')
+                        $('input[name=url]').attr('value', response['url']);
+                    }
 
-            });
+                });
+            }
 
         }
         else{
