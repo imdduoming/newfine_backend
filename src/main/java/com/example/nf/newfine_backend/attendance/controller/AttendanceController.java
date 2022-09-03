@@ -40,11 +40,9 @@ public class AttendanceController {
 
     // 학생 출석 api
     @PostMapping(value = "/add/attendance")
-    public int addAttendance(Authentication principal,@RequestBody StudentAttendanceDto studentAttendanceDto) {
+    public int addAttendance(@RequestBody StudentAttendanceDto studentAttendanceDto) {
         Long attendance_id = Long.parseLong(studentAttendanceDto.getAttendance_id());
-        String id = principal.getName();
-        Long s_id=Long.parseLong(id);
-        Student student = studentRepository.findById(s_id).get();
+        Student student = studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
         int ans = attendanceService.addAttendance(attendance_id, student);
         System.out.println(ans);
         return ans;
