@@ -14,6 +14,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.firewall.DefaultHttpFirewall;
+import org.springframework.security.web.firewall.HttpFirewall;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 import static com.example.nf.newfine_backend.member.domain.Authority.ROLE_ADMIN;
@@ -43,9 +45,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {  // Spring Se
                 .antMatchers("/resources/**")
                 .antMatchers("/js/**")
                 .antMatchers("/h2-console/**", "/favicon.ico");
+        web.httpFirewall(defaultHttpFirewall());
     }
 
-
+    @Bean
+    public HttpFirewall defaultHttpFirewall(){
+        return new DefaultHttpFirewall();
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
