@@ -209,11 +209,11 @@
 
         startTime = startTime.substring(0,4)+startTime.substring(5,7)+startTime.substring(8,10)+startTime.substring(11,13)+startTime.substring(14,16);
         endTime = endTime.substring(0,4)+endTime.substring(5,7)+endTime.substring(8,10)+endTime.substring(11,13)+endTime.substring(14,16);
+        let data = {"course_id": course,"startTime":startTime,"endTime":endTime};
         startTime *= 1;
         endTime *= 1;
         console.log(startTime)
         console.log(course);
-        let data = {"course_id": course,"startTime":startTime,"endTime":endTime};
         if(course && startTime && endTime){
             if(startTime > endTime){
                 alert("인증시작시간이 마감시간보다 빠릅니다! 다시 설정해주세요")
