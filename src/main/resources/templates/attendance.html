@@ -8,8 +8,8 @@
 <script type="text/javascript" src="js/back.js"></script>
 <script>
     var idx;
-    let domainURL= 'https://eb.newfine.tk';
-    var token=localStorage.getItem('accessToken');
+
+
     $(document).ready(function () {
         idx = window.location.search.split("=")[1]
         document.addEventListener("message", (e) => {
@@ -17,7 +17,7 @@
             console.log(token);
             add_attendance(idx,token);
         })
-        login_check();
+        // login_check();
     });
 
     function add_attendance(idx,token){
