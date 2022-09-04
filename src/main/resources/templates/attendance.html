@@ -8,7 +8,7 @@
 <script type="text/javascript" src="js/back.js"></script>
 <script>
     var idx;
-
+    var token;
 
     $(document).ready(function () {
         idx = window.location.search.split("=")[1]
@@ -30,7 +30,7 @@
             // beforeSend: function (xhr){
             //     xhr.setRequestHeader('Authorization', "Bearer " +token);
             // },
-            headers: { "Authorization": `Bearer ${localStorage.getItem('accessToken')}` },
+            headers: { "Authorization": `Bearer ${token}` },
             success: function (response) {
                 console.log(response)
                 requestPermission(response)
