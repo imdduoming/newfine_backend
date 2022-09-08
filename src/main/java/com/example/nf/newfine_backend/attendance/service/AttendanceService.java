@@ -1,5 +1,6 @@
 package com.example.nf.newfine_backend.attendance.service;
 
+import com.example.nf.newfine_backend.attendance.ListComparator;
 import com.example.nf.newfine_backend.attendance.repository.AttendanceRepository;
 import com.example.nf.newfine_backend.attendance.repository.StudentAttendanceRepository;
 import com.example.nf.newfine_backend.attendance.domain.Attendance;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -103,6 +105,8 @@ public class AttendanceService {
     public List<StudentAttendance> getStudentAttendance(Long idx){
         Attendance attendance=attendanceRepository.findById(idx).get();
         List<StudentAttendance> studentAttendances=studentattendanceRepository.findStudentAttendancesByAttendance(attendance);
+
+        Collections.sort(studentAttendances, new ListComparator());
         return studentAttendances;
     }
     public List<StudentAttendance> getMyAttendance(Long idx,Student student) {
