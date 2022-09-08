@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -67,8 +68,9 @@ public class RankingService {
 //            System.out.println(Objects.equals((studentRepository.findByNickname(collect.get(i).getNickname())), null));
             System.out.println(("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n닉네임: "+collect.get(i).getNickname()+"\n? "+(studentRepository.findByNickname(collect.get(i).getNickname()))==null));
             System.out.println(("닉네임: "+collect.get(i).getNickname()+"\n? "+Objects.equals(studentRepository.findByNickname(collect.get(i).getNickname()),null)));
-            if (Objects.equals((studentRepository.findByNickname(collect.get(i).getNickname())), null)){
-                redisTemplate.opsForZSet().remove("ranking", collect.get(i).getNickname());
+            System.out.println("계뿡쳐:               "+studentRepository.findByNickname(collect.get(i).getNickname()));
+            if (Objects.equals((studentRepository.findByNickname(collect.get(i).getNickname())), Optional.empty())){
+                stringStringZSetOperations.remove("ranking", collect.get(i).getNickname());
             }
         }
 

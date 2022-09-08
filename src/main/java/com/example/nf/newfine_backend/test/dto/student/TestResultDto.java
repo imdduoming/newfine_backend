@@ -1,7 +1,8 @@
-package com.example.nf.newfine_backend.test.dto;
+package com.example.nf.newfine_backend.test.dto.student;
 
 import com.example.nf.newfine_backend.test.domain.CourseTestResults;
 import com.example.nf.newfine_backend.test.domain.StudentTestResults;
+import com.example.nf.newfine_backend.test.dto.NotCorrectDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

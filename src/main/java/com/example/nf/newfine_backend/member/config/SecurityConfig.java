@@ -14,6 +14,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.firewall.DefaultHttpFirewall;
+import org.springframework.security.web.firewall.HttpFirewall;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 import static com.example.nf.newfine_backend.member.domain.Authority.ROLE_ADMIN;
 
@@ -25,23 +28,30 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {  // Spring Se
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-//     h2 database 테스트가 원활하도록 관련 API 들은 전부 무시
-//    @Override
-//    public void configure(WebSecurity web) {
-////        web.ignoring()
-////                .antMatchers("/h2-console/**", "/favicon.ico");
-////                .antMatchers("/h2-console/**", "/favicon.ico","/js/**","/resources/**", "/index.html");
+    //     h2 database 테스트가 원활하도록 관련 API 들은 전부 무시
+    @Override
+    public void configure(WebSecurity web) {
 //        web.ignoring()
-//                .antMatchers("/index.html")
-//                .antMatchers("/resources/**")
-//                .antMatchers("/js/**")
 //                .antMatchers("/h2-console/**", "/favicon.ico");
-//    }
+//                .antMatchers("/h2-console/**", "/favicon.ico","/js/**","/resources/**", "/index.html");
+        web.ignoring()
+                .antMatchers("/index.html")
+                .antMatchers("/resources/**")
+                .antMatchers("/js/**")
+                .antMatchers("/h2-console/**", "/favicon.ico");
+        web.httpFirewall(defaultHttpFirewall());
+    }
+
+    @Bean
+    public HttpFirewall defaultHttpFirewall(){
+        return new DefaultHttpFirewall();
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -69,7 +79,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {  // Spring Se
                 .and()
                 .authorizeRequests()
 //                .antMatchers("/", "/**").permitAll()
-                .antMatchers("/", "/adminLogin", "/attendance", "/attendanceMake", "/main", "/studentInfo", "/study", "/studyMake", "/testUpload").permitAll()
+                .antMatchers("/", "/adminLogin", "/attendanceMake", "/main", "/studentInfo", "/studyMake", "/testUpload","/study","/attendance").permitAll()
                 .antMatchers("/all/**").permitAll()
                 .antMatchers("/auth/**").permitAll()
 //                .antMatchers("/make/attendance").permitAll()
@@ -77,6 +87,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {  // Spring Se
                 .antMatchers("/resources/**").permitAll()
                 .antMatchers("/js/**").permitAll()
                 .antMatchers("/css/**").permitAll()
+                .antMatchers("/branch/getBranchList").permitAll()
                 .antMatchers("/h2-console/**", "/favicon.ico").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
 //                .antMatchers("/attendance", "/attendanceMake", "/main", "/studentInfo", "/study", "/studyInfo", "/testUpload").hasRole("ADMIN")
@@ -84,10 +95,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {  // Spring Se
 //                .antMatchers("/studyMake.html").hasAuthority("ADMIN")
 //                .antMatchers("/testUpload.html").hasRole("ADMIN")
 //                .antMatchers("/studyMake.html").hasRole("ADMIN")
-                .anyRequest().authenticated()   // 나머지 API 는 전부 인증 필요
+                .anyRequest().authenticated() // 나머지 API 는 전부 인증 필요
+
+
 
                 // JwtFilter 를 addFilterBefore 로 등록했던 JwtSecurityConfig 클래스를 적용
                 .and()
-                .apply(new JwtSecurityConfig(tokenProvider, redisTemplate));
-    }
-}
+
+                .apply(new JwtSecurityConfig(tokenProvider, redisTemplate)).and().formLogin();
+    }}
+

@@ -6,8 +6,9 @@ import com.example.nf.newfine_backend.member.student.exception.PhoneNumberNotFou
 import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
 import com.example.nf.newfine_backend.member.util.SecurityUtil;
 import com.example.nf.newfine_backend.test.dto.MyAllTestDto;
-import com.example.nf.newfine_backend.test.dto.TestResultDto;
-import com.example.nf.newfine_backend.test.dto.TypeResultDto;
+
+import com.example.nf.newfine_backend.test.dto.student.TestResultDto;
+import com.example.nf.newfine_backend.test.dto.student.TypeResultDto;
 import com.example.nf.newfine_backend.test.repository.TestRepository;
 import com.example.nf.newfine_backend.test.service.TestResultService;
 import lombok.AllArgsConstructor;

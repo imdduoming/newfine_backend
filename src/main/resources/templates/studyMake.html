@@ -65,7 +65,7 @@
             headers: { "Authorization": `Bearer ${token}` },
             success: function (response) {
                 console.log(response)
-                alert('출석이 생성됐습니다! qr code 생성 버튼을 눌러주세요!')
+                alert('자습이 생성됐습니다! qr code 생성 버튼을 눌러주세요!')
                 $('input[name=url]').attr('value',response['url']);
             }
 

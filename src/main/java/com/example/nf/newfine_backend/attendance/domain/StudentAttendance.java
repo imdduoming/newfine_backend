@@ -23,7 +23,7 @@ public class StudentAttendance {
     @Column(name = "sattendance_id")
     private Long sAttendanceId;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST})
+    @ManyToOne(fetch = FetchType.EAGER)
     @JsonManagedReference
     private Attendance attendance;
 

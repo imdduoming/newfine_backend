@@ -40,15 +40,11 @@ public class SHomeworkService {
     @Transactional public SHomeworkDto createSHomework(Long ThId, SHomeworkDto sHomeworkDto, Listener listener) {
         SHomework sHomework = new SHomework();
         sHomework.setTitle(sHomeworkDto.getTitle());
-
         THomework tHomework = tHomeworkRepository.findById(ThId).orElseThrow(() -> new IllegalArgumentException("게시판을 찾을 수 없습니다."));
-
         sHomework.setListener(listener);
         sHomework.setThomework(tHomework);
         sHomeworkRepository.save(sHomework);
-
         return SHomeworkDto.toDto(sHomework);
-
     }
     */
 
@@ -84,12 +80,12 @@ public class SHomeworkService {
     }
 
     @Transactional
-      public void updateSHomework(Long Id, String state) throws IOException {
-            System.out.println(state);
-            SHomework sHomework = sHomeworkRepository.findById(Id).get();
-            Long studentId = sHomework.getStudentId();
-            System.out.println(studentId);
-            Student student = studentRepository.findById(studentId).orElseThrow(PhoneNumberNotFoundException::new);
+    public void updateSHomework(Long Id, String state) throws IOException {
+        System.out.println(state);
+        SHomework sHomework = sHomeworkRepository.findById(Id).get();
+        Long studentId = sHomework.getStudentId();
+        System.out.println(studentId);
+        Student student = studentRepository.findById(studentId).orElseThrow(PhoneNumberNotFoundException::new);
         if (state.equals("1차")) {
             System.out.println(state);
             sHomework.setIschecked(true);
@@ -152,4 +148,3 @@ public class SHomeworkService {
     }
     */
 }
-
