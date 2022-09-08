@@ -41,6 +41,9 @@ public class Course {
     @Column
     private String end_time;
 
+    @Column
+    private String days;
+
     // 수학 , 과학탐구
     @Column(nullable = false)
     private String subject;
