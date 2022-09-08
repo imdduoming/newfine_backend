@@ -19,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -49,7 +50,7 @@ public class VideoController {
 
     // 동영산 신청 api
     @PutMapping("/apply/video")
-    public StudentAttendance applyVideo(@RequestBody VideoApplyDto videoApplyDto){
+    public StudentAttendance applyVideo(@RequestBody VideoApplyDto videoApplyDto) throws IOException {
         Student student = studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
         Long id=Long.valueOf(videoApplyDto.getId());
         return videoService.applyVideo(id,student);

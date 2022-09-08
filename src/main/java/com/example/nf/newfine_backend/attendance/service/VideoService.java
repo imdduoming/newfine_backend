@@ -1,5 +1,7 @@
 package com.example.nf.newfine_backend.attendance.service;
 
+import com.example.nf.newfine_backend.FCM.FCMService;
+import com.example.nf.newfine_backend.FCM.RequestDTO;
 import com.example.nf.newfine_backend.attendance.domain.Attendance;
 import com.example.nf.newfine_backend.attendance.domain.StudentAttendance;
 import com.example.nf.newfine_backend.attendance.dto.VideoReturnDto;
@@ -9,6 +11,7 @@ import com.example.nf.newfine_backend.branch.domain.BranchStudent;
 import com.example.nf.newfine_backend.branch.repository.BranchStudentRepository;
 import com.example.nf.newfine_backend.course.*;
 import com.example.nf.newfine_backend.member.student.domain.Student;
+import com.example.nf.newfine_backend.member.student.exception.PhoneNumberNotFoundException;
 import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
 import com.example.nf.newfine_backend.member.student.service.StudentService;
 import com.example.nf.newfine_backend.member.teacher.domain.Teacher;
@@ -17,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -36,6 +40,7 @@ public class VideoService {
     private final CourseService courseService;
     private final ListenerRepository listenerRepository;
     private final BranchStudentRepository branchStudentRepository;
+    private final FCMService fcmService;
 
     public List<Attendance> getNowAttendance(Student student) {
         // 자신이 수강하고 있는 강의 찾기
@@ -68,9 +73,12 @@ public class VideoService {
     }
 
     @Transactional
-    public StudentAttendance applyVideo(Long id , Student student){
+    public StudentAttendance applyVideo(Long id , Student student) throws IOException {
         Attendance attendance = attendanceRepository.findById(id).get();
         StudentAttendance studentAttendance= studentattendanceRepository.findByStudentAndAttendance(student,attendance).get();
+        Listener listener = listenerRepository.findById(student.getId()).orElseThrow(PhoneNumberNotFoundException::new);
+        Course course = listener.getCourse();
+        Teacher teacher = course.getTeacher();
         if(attendance.getStartTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).equals(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))){
             // 출석하려는 날짜가 오늘 날짜와 같고
             LocalTime endtime = LocalTime.parse(attendance.getCourse().getEnd_time(), DateTimeFormatter.ofPattern("HH:mm"));
@@ -83,6 +91,21 @@ public class VideoService {
                 studentAttendance.setIslate(false);
                 studentAttendance.setIsvideo(true);
                 studentattendanceRepository.save(studentAttendance);
+
+                if (teacher.getDeviceToken() != null) {
+                    RequestDTO requestDTO = new RequestDTO();
+                    requestDTO.setTargetToken(student.getDeviceToken());
+                    requestDTO.setTitle(course.getCName() + " 동영상 신청");
+                    requestDTO.setBody(student.getName() + "학생이 " + course.getCName() + " 과목에 대한 동영상을 신청했습니다.");
+
+                    System.out.println(requestDTO.getTargetToken() + " "
+                            + requestDTO.getTitle() + " " + requestDTO.getBody());
+
+                    fcmService.sendMessageTo(
+                            requestDTO.getTargetToken(),
+                            requestDTO.getTitle(),
+                            requestDTO.getBody());
+                }
             }
             else{
                 studentAttendance.setAttend(false); // 결석 처리
@@ -130,11 +153,29 @@ public class VideoService {
     }
 
     @Transactional
-    public StudentAttendance editVideo(Long id){
+    public StudentAttendance editVideo(Long id) throws IOException {
+        Student student = studentRepository.findById(id).get();
+        Listener listener = listenerRepository.findById(student.getId()).orElseThrow(PhoneNumberNotFoundException::new);
+        Course course = listener.getCourse();
         StudentAttendance studentAttendance=studentattendanceRepository.findById(id).get();
         studentAttendance.setIsvideo(true);
         studentAttendance.setReceiveVideo(true);
         studentattendanceRepository.save(studentAttendance);
+
+        if (student.getDeviceToken() != null) {
+            RequestDTO requestDTO = new RequestDTO();
+            requestDTO.setTargetToken(student.getDeviceToken());
+            requestDTO.setTitle(course.getCName() + " 동영상 신청 승인됨");
+            requestDTO.setBody(course.getCName() + " 과목에 대한 동영상 신청이 승인되었습니다.");
+
+            System.out.println(requestDTO.getTargetToken() + " "
+                    + requestDTO.getTitle() + " " + requestDTO.getBody());
+
+            fcmService.sendMessageTo(
+                    requestDTO.getTargetToken(),
+                    requestDTO.getTitle(),
+                    requestDTO.getBody());
+        }
         return studentAttendance;
     }
 }
