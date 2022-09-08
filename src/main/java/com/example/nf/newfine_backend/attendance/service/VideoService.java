@@ -43,7 +43,7 @@ public class VideoService {
         List<Attendance> nowAttendances=new ArrayList<>();
         for(Listener listener : listenerList){
             // 리스너로 강의찾기
-            List<Attendance> attendances= attendanceRepository.findAttendancesByCourse(listener.getCourse());
+            List<Attendance> attendances= attendanceRepository.findAttendancesByCourseOrderByCreatedDate(listener.getCourse());
             // 강의마다 조건에 맞는 출석 넣기
             for (Attendance attendance : attendances){
 
@@ -112,7 +112,7 @@ public class VideoService {
         List<Course> courses = courseRepository.findCoursesByTeacher(teacher);
         List<VideoReturnDto> newList = new ArrayList<>();
         for (Course course : courses){
-            List<Attendance> attendances = attendanceRepository.findAttendancesByCourse(course);
+            List<Attendance> attendances = attendanceRepository.findAttendancesByCourseOrderByCreatedDate(course);
             for (Attendance attendance : attendances){
                 List<StudentAttendance> studentAttendances = studentattendanceRepository.findStudentAttendancesByAttendance(attendance);
                 for(StudentAttendance studentAttendance : studentAttendances){

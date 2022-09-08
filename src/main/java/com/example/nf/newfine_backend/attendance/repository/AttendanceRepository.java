@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface AttendanceRepository extends JpaRepository <Attendance,Long> {
 
-    List<Attendance> findAttendancesByCourse(Course course);
+    List<Attendance> findAttendancesByCourseOrderByCreatedDate(Course course);
 
 }
 
