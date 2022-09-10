@@ -37,6 +37,10 @@
         });
 
         function checkFileType(filePath) {
+            if (filePath==null){
+                alert("엑셀 파일을 입력해주세요. (.xls 또는 .xlsx)");
+                return false;
+            }
             var fileFormat = filePath.split(".");
 
             if (fileFormat.indexOf("xls") > -1 || fileFormat.indexOf("xlsx") > -1) {
@@ -136,8 +140,8 @@
         // }
 
         function checkCourseTestResultsFile() {
-            checkFileType($('#courseTestResultsFile').val())
             if (confirm("엑셀 파일을 업로드하시겠습니까?")) {
+                checkFileType($('#courseTestResultsFile').val())
                 var options = {
                     success: function (result) {
                         if (result.code == "1") {
@@ -187,8 +191,8 @@
         }
 
         function checkStudentTestResultsFile() {
-            checkFileType($('#studentTestResultsFile').val())
             if (confirm("엑셀 파일을 업로드하시겠습니까?")) {
+                checkFileType($('#studentTestResultsFile').val())
                 var options = {
                     success: function (result) {
                         if (result.code == "1") {
