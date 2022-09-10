@@ -140,8 +140,11 @@
         // }
 
         function checkCourseTestResultsFile() {
+            if(checkFileType($('#courseTestResultsFile').val())==false){
+                console.log('잘못된 파일 확장자')
+                return false;
+            }
             if (confirm("엑셀 파일을 업로드하시겠습니까?")) {
-                checkFileType($('#courseTestResultsFile').val())
                 var options = {
                     success: function (result) {
                         if (result.code == "1") {
@@ -191,8 +194,11 @@
         }
 
         function checkStudentTestResultsFile() {
+            if(checkFileType($('#studentTestResultsFile').val())==false){
+                console.log('잘못된 파일 확장자')
+                return false
+            }
             if (confirm("엑셀 파일을 업로드하시겠습니까?")) {
-                checkFileType($('#studentTestResultsFile').val())
                 var options = {
                     success: function (result) {
                         if (result.code == "1") {
