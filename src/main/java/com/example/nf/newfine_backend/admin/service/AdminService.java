@@ -51,10 +51,10 @@ public class AdminService {
     // ****************** 관리자 페이지에서 학생 탈퇴
     public String deleteStudentByAdmin(DeleteRequestByAdminDto deleteRequestByAdminDto){
 
-        if(studentRepository.findByPhoneNumber(deleteRequestByAdminDto.getPhoneNumber())==null){
-            throw new CustomException(MEMBER_NOT_FOUND);
-        }
-        Student student=studentRepository.findByPhoneNumber(deleteRequestByAdminDto.getPhoneNumber()).orElseThrow(PhoneNumberNotFoundException::new);
+//        if(studentRepository.findByPhoneNumber(deleteRequestByAdminDto.getPhoneNumber())==null){
+//            throw new CustomException(MEMBER_NOT_FOUND);
+//        }
+        Student student=studentRepository.findByPhoneNumber(deleteRequestByAdminDto.getPhoneNumber()).orElseThrow(()->new PhoneNumberNotFoundException("회원 정보가 없습니다.\n회원가입을 먼저 해주세요."));
         if (!passwordEncoder.matches(deleteRequestByAdminDto.getPassword(), student.getPassword())) {
             throw new RuntimeException("비밀번호가 틀렸습니다.");
         }
