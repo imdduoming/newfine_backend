@@ -162,13 +162,13 @@ public class VideoService {
         studentAttendance.setIsvideo(true);
         studentAttendance.setReceiveVideo(true);
         studentattendanceRepository.save(studentAttendance);
-        Course course = courseRepository.findById(studentAttendance.getAttendance().getCourse().getId()).get();
+//        Course course = courseRepository.findById(studentAttendance.getAttendance().getCourse().getId()).get();
 
         if (student.getDeviceToken() != null) {
             RequestDTO requestDTO = new RequestDTO();
             requestDTO.setTargetToken(student.getDeviceToken());
-            requestDTO.setTitle(course.getCName() + " 동영상 신청 승인됨");
-            requestDTO.setBody(course.getCName() + " 과목에 대한 동영상 신청이 승인되었습니다.");
+            requestDTO.setTitle("동영상 신청 승인됨");
+            requestDTO.setBody("동영상 신청이 승인되었습니다.");
 
             System.out.println(requestDTO.getTargetToken() + " "
                     + requestDTO.getTitle() + " " + requestDTO.getBody());
