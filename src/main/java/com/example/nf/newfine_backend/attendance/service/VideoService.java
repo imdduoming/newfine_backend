@@ -155,7 +155,7 @@ public class VideoService {
     }
 
     @Transactional
-    public StudentAttendance editVideo(Long id) throws IOException {
+    public StudentAttendance editVideo(Long id){
         Student student = studentRepository.findById(id).get();
 //        Listener listener = listenerRepository.findById(student.getId()).orElseThrow(PhoneNumberNotFoundException::new);
         StudentAttendance studentAttendance=studentattendanceRepository.findById(id).get();
@@ -164,20 +164,20 @@ public class VideoService {
         studentattendanceRepository.save(studentAttendance);
 //        Course course = courseRepository.findById(studentAttendance.getAttendance().getCourse().getId()).get();
 
-        if (student.getDeviceToken() != null) {
-            RequestDTO requestDTO = new RequestDTO();
-            requestDTO.setTargetToken(student.getDeviceToken());
-            requestDTO.setTitle("동영상 신청 승인됨");
-            requestDTO.setBody("동영상 신청이 승인되었습니다.");
-
-            System.out.println(requestDTO.getTargetToken() + " "
-                    + requestDTO.getTitle() + " " + requestDTO.getBody());
-
-            fcmService.sendMessageTo(
-                    requestDTO.getTargetToken(),
-                    requestDTO.getTitle(),
-                    requestDTO.getBody());
-        }
+//        if (student.getDeviceToken() != null) {
+//            RequestDTO requestDTO = new RequestDTO();
+//            requestDTO.setTargetToken(student.getDeviceToken());
+//            requestDTO.setTitle("동영상 신청 승인됨");
+//            requestDTO.setBody("동영상 신청이 승인되었습니다.");
+//
+//            System.out.println(requestDTO.getTargetToken() + " "
+//                    + requestDTO.getTitle() + " " + requestDTO.getBody());
+//
+//            fcmService.sendMessageTo(
+//                    requestDTO.getTargetToken(),
+//                    requestDTO.getTitle(),
+//                    requestDTO.getBody());
+//        }
         return studentAttendance;
     }
 }
