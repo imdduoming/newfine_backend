@@ -47,7 +47,7 @@ public class AttendanceService {
         Long attendance_id=attendance.getAttendanceId();
         String a_id=Long.toString(attendance_id);
         Attendance attendance2=attendanceRepository.findById(attendance_id).get();
-        String attendance_url="https://eb.newfine.tk/attendance.html?idx="+a_id;
+        String attendance_url="https://eb.newfine.tk/attendance?idx="+a_id;
         attendance2.setUrl(attendance_url);
         attendance2.setStudentAttendances(studentAttendances);
         attendanceRepository.save(attendance2);
@@ -74,7 +74,7 @@ public class AttendanceService {
                 studentAttendance.setIslate(true);
                 studentAttendance.setTime(now_time);
                 studentattendanceRepository.save(studentAttendance);
-                pointService.create(student,"지각 ㅠ_ㅠ",2);
+//                pointService.create(student,"지각 ㅠ_ㅠ",2);
             }
 
             else{
@@ -83,7 +83,7 @@ public class AttendanceService {
                 studentAttendance.setIslate(false);
                 studentAttendance.setTime(now_time);
                 studentattendanceRepository.save(studentAttendance);
-                pointService.create(student,"정상 출석하였습니다!",5);
+//                pointService.create(student,"정상 출석하였습니다!",5);
             }
             return 1;
         }
@@ -96,7 +96,7 @@ public class AttendanceService {
 
     public List<Attendance> getAttendances(Long idx){
         Course course=courseRepository.findById(idx).get();
-        List<Attendance> attendanceList=attendanceRepository.findAttendancesByCourse(course);
+        List<Attendance> attendanceList=attendanceRepository.findAttendancesByCourseOrderByCreatedDateDesc(course);
         return attendanceList;
     }
 
@@ -107,7 +107,7 @@ public class AttendanceService {
     }
     public List<StudentAttendance> getMyAttendance(Long idx,Student student) {
         Course course=courseRepository.findById(idx).get(); // 강의 찾기
-        List<Attendance> attendances =attendanceRepository.findAttendancesByCourse(course);
+        List<Attendance> attendances =attendanceRepository.findAttendancesByCourseOrderByCreatedDateDesc(course);
         List<StudentAttendance> studentAttendances=new ArrayList<>();
         for(Attendance attendance : attendances){
             // 출석마다 학생 출석 정보 찾기

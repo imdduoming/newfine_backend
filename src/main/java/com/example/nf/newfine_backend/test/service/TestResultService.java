@@ -8,6 +8,12 @@ import com.example.nf.newfine_backend.test.domain.CourseTestResults;
 import com.example.nf.newfine_backend.test.domain.StudentTestResults;
 import com.example.nf.newfine_backend.test.domain.Test;
 import com.example.nf.newfine_backend.test.dto.*;
+import com.example.nf.newfine_backend.test.dto.KillerDto;
+import com.example.nf.newfine_backend.test.dto.MyAllTestDto;
+import com.example.nf.newfine_backend.test.dto.NotCorrectDto;
+
+import com.example.nf.newfine_backend.test.dto.student.TestResultDto;
+import com.example.nf.newfine_backend.test.dto.student.TypeResultDto;
 import com.example.nf.newfine_backend.test.repository.CourseTestResultsRepository;
 import com.example.nf.newfine_backend.test.repository.StudentTestResultsRepository;
 import com.example.nf.newfine_backend.test.repository.TestRepository;
@@ -66,8 +72,8 @@ public class TestResultService {
         String student_code= student.getTest_code();
 
         // 킬러문항 / 준킬러문항 담기
-        List<CourseTestResults> Bkiller = courseTestResultsRepository.findAllByType("bk"); // best killer
-        List<CourseTestResults> Killer = courseTestResultsRepository.findAllByType("k"); // killer
+        List<CourseTestResults> Bkiller = courseTestResultsRepository.findAllByTestAndType(test, "bk"); // best killer
+        List<CourseTestResults> Killer = courseTestResultsRepository.findAllByTestAndType(test, "k"); // killer
 
         StudentTestResults studentTestResults=studentTestResultsRepository.findByTestAndStudentCode(test,student_code).get();
 

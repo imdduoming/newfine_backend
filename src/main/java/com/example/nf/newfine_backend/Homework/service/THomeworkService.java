@@ -108,7 +108,6 @@ public class  THomeworkService {
     }
     /*
     public List<BoardResponseDto> findAllByPageRequest(Pageable pageable) {
-
         int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1); // page는 index 처럼 0부터 시작
         pageable = PageRequest.of(page, 10);
         Page<Board> boardpage = boardRepository.findAll(pageable);

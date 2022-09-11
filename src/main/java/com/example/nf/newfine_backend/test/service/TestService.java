@@ -73,8 +73,6 @@ public class TestService {
 
     @Transactional
     public void setkiller(Test test , ArrayList<Integer> BestkillerList , ArrayList<Integer> killerList){
-        System.out.println("킬러문항"+ BestkillerList);
-        System.out.println("준킬러문항"+killerList);
         List<CourseTestResults> testResults = courseTestResultsRepository.findAllByTest(test);
         for (CourseTestResults courseTestResults : testResults){
             int q_num = Integer.parseInt(courseTestResults.getQuestionNum());

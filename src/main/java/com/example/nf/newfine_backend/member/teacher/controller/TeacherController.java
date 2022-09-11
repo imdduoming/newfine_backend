@@ -25,7 +25,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class TeacherController {
-    private final CourseService courseService;
     private final TeacherService teacherService;
     private final TeacherRepository teacherRepository;
     private final AttendanceService attendanceService;
@@ -81,6 +80,7 @@ public class TeacherController {
         Long id=Long.valueOf(videoEditDto.getId());
         return videoService.editVideo(id);
     }
+
 }
 
 

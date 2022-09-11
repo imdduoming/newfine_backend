@@ -18,13 +18,14 @@ import java.util.List;
 @Setter
 @Getter
 @Entity
+@Table(name = "study")
 @NoArgsConstructor
 public class Study {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     @Column(name = "study_id")
-    private Long studyId;
+    private Long study_id;
 
     @Column
     private String url;
@@ -35,12 +36,11 @@ public class Study {
     private List<StudentStudy> studentStudies;
 
     @Column
-    @DateTimeFormat(pattern = "yyyy-MM-ddTHH:mm")
-    private LocalDateTime startTime;
+    private LocalDateTime start_time;
 
 
     public Study (LocalDateTime startTime) {
-        this.startTime=startTime;
+        this.start_time=startTime;
 
 
     }
