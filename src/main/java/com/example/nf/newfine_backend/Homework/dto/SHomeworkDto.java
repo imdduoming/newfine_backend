@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,6 +27,8 @@ public class SHomeworkDto {
 
     private boolean ischecked;
 
+    private LocalDateTime modifiedDate;
+
 
     public static SHomeworkDto toDto(SHomework sHomework) {
         return new SHomeworkDto(
@@ -35,7 +39,8 @@ public class SHomeworkDto {
                 sHomework.getListener().getStudent().getName(),
                 sHomework.getTitle(),
                 sHomework.getDeadline(),
-                sHomework.isIschecked()
+                sHomework.isIschecked(),
+                sHomework.getModifiedDate()
         );
     }
 }
