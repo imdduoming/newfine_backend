@@ -80,7 +80,7 @@ public class VideoService {
         StudentAttendance studentAttendance= studentattendanceRepository.findByStudentAndAttendance(student,attendance).get();
 //        Listener listener = listenerRepository.findById(student.getId()).orElseThrow(PhoneNumberNotFoundException::new);
         Course course = courseRepository.findById(attendance.getCourse().getId()).get();
-        Teacher teacher = teacherRepository.findById(course.getId()).get();
+        Teacher teacher = teacherRepository.findById(course.getTeacher().getTId()).get();
         if(attendance.getStartTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).equals(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))){
             // 출석하려는 날짜가 오늘 날짜와 같고
             LocalTime endtime = LocalTime.parse(attendance.getCourse().getEnd_time(), DateTimeFormatter.ofPattern("HH:mm"));
