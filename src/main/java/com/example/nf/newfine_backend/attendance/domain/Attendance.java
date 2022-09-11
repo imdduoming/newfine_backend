@@ -3,6 +3,7 @@ package com.example.nf.newfine_backend.attendance.domain;
 import com.example.nf.newfine_backend.BaseTimeEntity;
 import com.example.nf.newfine_backend.course.Course;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,7 @@ public class Attendance extends BaseTimeEntity {
     @Column
     private String url;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JsonManagedReference
     private Course course;
