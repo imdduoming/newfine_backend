@@ -11,10 +11,10 @@ import com.example.nf.newfine_backend.branch.domain.BranchStudent;
 import com.example.nf.newfine_backend.branch.repository.BranchStudentRepository;
 import com.example.nf.newfine_backend.course.*;
 import com.example.nf.newfine_backend.member.student.domain.Student;
-import com.example.nf.newfine_backend.member.student.exception.PhoneNumberNotFoundException;
 import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
 import com.example.nf.newfine_backend.member.student.service.StudentService;
 import com.example.nf.newfine_backend.member.teacher.domain.Teacher;
+import com.example.nf.newfine_backend.member.teacher.repository.TeacherRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -41,6 +41,8 @@ public class VideoService {
     private final ListenerRepository listenerRepository;
     private final BranchStudentRepository branchStudentRepository;
     private final FCMService fcmService;
+
+    private final TeacherRepository teacherRepository;
 
     public List<Attendance> getNowAttendance(Student student) {
         // 자신이 수강하고 있는 강의 찾기
@@ -76,9 +78,9 @@ public class VideoService {
     public StudentAttendance applyVideo(Long id , Student student) throws IOException {
         Attendance attendance = attendanceRepository.findById(id).get();
         StudentAttendance studentAttendance= studentattendanceRepository.findByStudentAndAttendance(student,attendance).get();
-        Listener listener = listenerRepository.findById(student.getId()).orElseThrow(PhoneNumberNotFoundException::new);
-        Course course = listener.getCourse();
-        Teacher teacher = course.getTeacher();
+//        Listener listener = listenerRepository.findById(student.getId()).orElseThrow(PhoneNumberNotFoundException::new);
+        Course course = courseRepository.findById(attendance.getCourse().getId()).get();
+        Teacher teacher = teacherRepository.findById(course.getId()).get();
         if(attendance.getStartTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).equals(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")))){
             // 출석하려는 날짜가 오늘 날짜와 같고
             LocalTime endtime = LocalTime.parse(attendance.getCourse().getEnd_time(), DateTimeFormatter.ofPattern("HH:mm"));
@@ -155,12 +157,12 @@ public class VideoService {
     @Transactional
     public StudentAttendance editVideo(Long id) throws IOException {
         Student student = studentRepository.findById(id).get();
-        Listener listener = listenerRepository.findById(student.getId()).orElseThrow(PhoneNumberNotFoundException::new);
-        Course course = listener.getCourse();
+//        Listener listener = listenerRepository.findById(student.getId()).orElseThrow(PhoneNumberNotFoundException::new);
         StudentAttendance studentAttendance=studentattendanceRepository.findById(id).get();
         studentAttendance.setIsvideo(true);
         studentAttendance.setReceiveVideo(true);
         studentattendanceRepository.save(studentAttendance);
+        Course course = courseRepository.findById(studentAttendance.getAttendance().getCourse().getId()).get();
 
         if (student.getDeviceToken() != null) {
             RequestDTO requestDTO = new RequestDTO();
