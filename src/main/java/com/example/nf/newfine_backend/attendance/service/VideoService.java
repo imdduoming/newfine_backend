@@ -96,7 +96,7 @@ public class VideoService {
 
                 if (teacher.getDeviceToken() != null) {
                     RequestDTO requestDTO = new RequestDTO();
-                    requestDTO.setTargetToken(student.getDeviceToken());
+                    requestDTO.setTargetToken(teacher.getDeviceToken());
                     requestDTO.setTitle(course.getCName() + " 동영상 신청");
                     requestDTO.setBody(student.getName() + "학생이 " + course.getCName() + " 과목에 대한 동영상을 신청했습니다.");
 
