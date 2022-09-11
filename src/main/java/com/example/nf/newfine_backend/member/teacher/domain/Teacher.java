@@ -9,7 +9,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -57,17 +56,21 @@ public class Teacher extends Timestamped {
     @Column
     private LocalDateTime signupDate;
 
+    @Column(name = "device_token", nullable = true)
+    private String deviceToken;
+
     @PrePersist
     public void signupDate() {
         this.signupDate = LocalDateTime.now();
     }
 
     @Builder
-    public Teacher(String phoneNumber, String tName, String tPassword, Authority tAuthority) {
+    public Teacher(String phoneNumber, String tName, String tPassword, Authority tAuthority, String deviceToken) {
         this.phoneNumber=phoneNumber;
         this.tName=tName;
         this.tPassword = tPassword;
         this.tAuthority = tAuthority;
+        this.deviceToken = deviceToken;
     }
 
 }

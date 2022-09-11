@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import static com.example.nf.newfine_backend.member.exception.ErrorCode.DUPLICATE_MEMBER;
+import static com.example.nf.newfine_backend.member.exception.ErrorCode.MEMBER_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor
@@ -49,9 +50,13 @@ public class AdminService {
 
     // ****************** 관리자 페이지에서 학생 탈퇴
     public String deleteStudentByAdmin(DeleteRequestByAdminDto deleteRequestByAdminDto){
-        Student student=studentRepository.findByPhoneNumber(deleteRequestByAdminDto.getPhoneNumber()).orElseThrow(PhoneNumberNotFoundException::new);
+
+//        if(studentRepository.findByPhoneNumber(deleteRequestByAdminDto.getPhoneNumber())==null){
+//            throw new CustomException(MEMBER_NOT_FOUND);
+//        }
+        Student student=studentRepository.findByPhoneNumber(deleteRequestByAdminDto.getPhoneNumber()).orElseThrow(()->new PhoneNumberNotFoundException("회원 정보가 없습니다.\n회원가입을 먼저 해주세요."));
         if (!passwordEncoder.matches(deleteRequestByAdminDto.getPassword(), student.getPassword())) {
-            throw new RuntimeException();
+            throw new RuntimeException("비밀번호가 틀렸습니다.");
         }
 
         if (redisTemplate.opsForValue().get("RT:" + student.getId()) != null) {
