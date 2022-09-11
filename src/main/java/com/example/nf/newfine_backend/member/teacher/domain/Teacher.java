@@ -73,4 +73,8 @@ public class Teacher extends Timestamped {
         this.deviceToken = deviceToken;
     }
 
+    public void modifyDeviceToken(String deviceToken) {
+        this.deviceToken = deviceToken;
+    }
+
 }
