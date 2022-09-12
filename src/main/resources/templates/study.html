@@ -12,6 +12,17 @@
         // login_check();
 
         idx = window.location.search.split("=")[1]
+        /* ios */
+        window.addEventListener("message", (e) => {
+            const { token , study_state } =JSON.parse(e.data);
+            if(study_state=="in"){
+                start(idx,token);
+            }
+            else{
+                end(idx,token);
+            }
+        })
+        /* android */
         document.addEventListener("message", (e) => {
             const { token , study_state } =JSON.parse(e.data);
             if(study_state=="in"){
