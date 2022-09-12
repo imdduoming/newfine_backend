@@ -114,6 +114,21 @@ public class VideoService {
                 studentAttendance.setIslate(false);
                 studentAttendance.setIsvideo(true);
                 studentattendanceRepository.save(studentAttendance);
+
+                if (teacher.getDeviceToken() != null) {
+                    RequestDTO requestDTO = new RequestDTO();
+                    requestDTO.setTargetToken(teacher.getDeviceToken());
+                    requestDTO.setTitle(course.getCName() + " 동영상 신청");
+                    requestDTO.setBody(student.getName() + "학생이 " + course.getCName() + " 과목에 대한 동영상을 신청했습니다.");
+
+                    System.out.println(requestDTO.getTargetToken() + " "
+                            + requestDTO.getTitle() + " " + requestDTO.getBody());
+
+                    fcmService.sendMessageTo(
+                            requestDTO.getTargetToken(),
+                            requestDTO.getTitle(),
+                            requestDTO.getBody());
+                }
             }
         }
         else{
@@ -121,6 +136,21 @@ public class VideoService {
             studentAttendance.setIslate(false);
             studentAttendance.setIsvideo(true);
             studentattendanceRepository.save(studentAttendance);
+
+            if (teacher.getDeviceToken() != null) {
+                RequestDTO requestDTO = new RequestDTO();
+                requestDTO.setTargetToken(teacher.getDeviceToken());
+                requestDTO.setTitle(course.getCName() + " 동영상 신청");
+                requestDTO.setBody(student.getName() + "학생이 " + course.getCName() + " 과목에 대한 동영상을 신청했습니다.");
+
+                System.out.println(requestDTO.getTargetToken() + " "
+                        + requestDTO.getTitle() + " " + requestDTO.getBody());
+
+                fcmService.sendMessageTo(
+                        requestDTO.getTargetToken(),
+                        requestDTO.getTitle(),
+                        requestDTO.getBody());
+            }
 
         }
         return studentAttendance;
