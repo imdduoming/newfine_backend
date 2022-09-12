@@ -1,5 +1,6 @@
 package com.example.nf.newfine_backend.attendance.service;
 
+import com.example.nf.newfine_backend.attendance.DateComparator;
 import com.example.nf.newfine_backend.attendance.ListComparator;
 import com.example.nf.newfine_backend.attendance.repository.AttendanceRepository;
 import com.example.nf.newfine_backend.attendance.repository.StudentAttendanceRepository;
@@ -61,8 +62,6 @@ public class AttendanceService {
         // 중복 출석 방지
         Attendance attendance=attendanceRepository.findById(attedance_id).get();
         LocalDateTime now_time = LocalDateTime.now();
-        System.out.println("현재시간");
-        System.out.println(now_time);
         StudentAttendance studentAttendance= studentattendanceRepository.findByStudentAndAttendance(student,attendance).get();
         if (studentAttendance.isAttend()) {
             // 이미 같은 출석에 대해 같은 학생이 출석했다면
@@ -98,14 +97,14 @@ public class AttendanceService {
 
     public List<Attendance> getAttendances(Long idx){
         Course course=courseRepository.findById(idx).get();
-        List<Attendance> attendanceList=attendanceRepository.findAttendancesByCourseOrderByCreatedDateDesc(course);
+        List<Attendance> attendanceList=attendanceRepository.findAttendancesByCourse(course);
+        Collections.sort(attendanceList, new DateComparator());
         return attendanceList;
     }
 
     public List<StudentAttendance> getStudentAttendance(Long idx){
         Attendance attendance=attendanceRepository.findById(idx).get();
         List<StudentAttendance> studentAttendances=studentattendanceRepository.findStudentAttendancesByAttendance(attendance);
-
         Collections.sort(studentAttendances, new ListComparator());
         return studentAttendances;
     }
