@@ -98,7 +98,7 @@ public class AttendanceService {
     public List<Attendance> getAttendances(Long idx){
         Course course=courseRepository.findById(idx).get();
         List<Attendance> attendanceList=attendanceRepository.findAttendancesByCourse(course);
-        Collections.sort(attendanceList, new DateComparator());
+        Collections.sort(attendanceList, new DateComparator().reversed());
         return attendanceList;
     }
 
