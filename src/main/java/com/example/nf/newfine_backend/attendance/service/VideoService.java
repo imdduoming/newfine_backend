@@ -186,8 +186,8 @@ public class VideoService {
 
     @Transactional
     public StudentAttendance editVideo(Long id){
-        Student student = studentRepository.findById(id).get();
-        System.out.println(student.getId());
+//        Student student = studentRepository.findById(id).get();
+//        System.out.println(student.getId());
 //        Listener listener = listenerRepository.findById(student.getId()).orElseThrow(PhoneNumberNotFoundException::new);
         StudentAttendance studentAttendance=studentattendanceRepository.findById(id).get();
         System.out.println(studentAttendance.getStudent().getId());
