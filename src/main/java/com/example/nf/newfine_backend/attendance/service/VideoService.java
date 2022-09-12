@@ -114,6 +114,21 @@ public class VideoService {
                 studentAttendance.setIslate(false);
                 studentAttendance.setIsvideo(true);
                 studentattendanceRepository.save(studentAttendance);
+
+                if (teacher.getDeviceToken() != null) {
+                    RequestDTO requestDTO = new RequestDTO();
+                    requestDTO.setTargetToken(teacher.getDeviceToken());
+                    requestDTO.setTitle(course.getCName() + " 동영상 신청");
+                    requestDTO.setBody(student.getName() + "학생이 " + course.getCName() + " 과목에 대한 동영상을 신청했습니다.");
+
+                    System.out.println(requestDTO.getTargetToken() + " "
+                            + requestDTO.getTitle() + " " + requestDTO.getBody());
+
+                    fcmService.sendMessageTo(
+                            requestDTO.getTargetToken(),
+                            requestDTO.getTitle(),
+                            requestDTO.getBody());
+                }
             }
         }
         else{
@@ -121,6 +136,21 @@ public class VideoService {
             studentAttendance.setIslate(false);
             studentAttendance.setIsvideo(true);
             studentattendanceRepository.save(studentAttendance);
+
+            if (teacher.getDeviceToken() != null) {
+                RequestDTO requestDTO = new RequestDTO();
+                requestDTO.setTargetToken(teacher.getDeviceToken());
+                requestDTO.setTitle(course.getCName() + " 동영상 신청");
+                requestDTO.setBody(student.getName() + "학생이 " + course.getCName() + " 과목에 대한 동영상을 신청했습니다.");
+
+                System.out.println(requestDTO.getTargetToken() + " "
+                        + requestDTO.getTitle() + " " + requestDTO.getBody());
+
+                fcmService.sendMessageTo(
+                        requestDTO.getTargetToken(),
+                        requestDTO.getTitle(),
+                        requestDTO.getBody());
+            }
 
         }
         return studentAttendance;
@@ -156,9 +186,11 @@ public class VideoService {
 
     @Transactional
     public StudentAttendance editVideo(Long id){
-        Student student = studentRepository.findById(id).get();
+//        Student student = studentRepository.findById(id).get();
+//        System.out.println(student.getId());
 //        Listener listener = listenerRepository.findById(student.getId()).orElseThrow(PhoneNumberNotFoundException::new);
         StudentAttendance studentAttendance=studentattendanceRepository.findById(id).get();
+        System.out.println(studentAttendance.getStudent().getId());
         studentAttendance.setIsvideo(true);
         studentAttendance.setReceiveVideo(true);
         studentattendanceRepository.save(studentAttendance);

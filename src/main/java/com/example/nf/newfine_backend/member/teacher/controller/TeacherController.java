@@ -1,4 +1,5 @@
 package com.example.nf.newfine_backend.member.teacher.controller;
+
 import com.example.nf.newfine_backend.attendance.domain.Attendance;
 import com.example.nf.newfine_backend.attendance.domain.StudentAttendance;
 import com.example.nf.newfine_backend.attendance.dto.AttendanceEditDto;
@@ -7,7 +8,6 @@ import com.example.nf.newfine_backend.attendance.dto.VideoReturnDto;
 import com.example.nf.newfine_backend.attendance.service.AttendanceService;
 import com.example.nf.newfine_backend.attendance.service.VideoService;
 import com.example.nf.newfine_backend.course.Course;
-import com.example.nf.newfine_backend.course.CourseService;
 import com.example.nf.newfine_backend.member.student.exception.PhoneNumberNotFoundException;
 import com.example.nf.newfine_backend.member.teacher.domain.Teacher;
 import com.example.nf.newfine_backend.member.teacher.dto.TeacherResponseDto;
@@ -18,7 +18,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -75,7 +74,7 @@ public class TeacherController {
     }
 
     @PutMapping("/video/ok")
-    public StudentAttendance editVideo(@RequestBody VideoEditDto videoEditDto) throws IOException {
+    public StudentAttendance editVideo(@RequestBody VideoEditDto videoEditDto) {
         Teacher teacher=teacherRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
         Long id=Long.valueOf(videoEditDto.getId());
         return videoService.editVideo(id);
