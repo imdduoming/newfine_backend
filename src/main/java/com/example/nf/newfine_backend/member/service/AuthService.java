@@ -84,6 +84,7 @@ public class AuthService {
         // 비밀번호 확인 추가
         if (teacherRepository.existsByPhoneNumber(signInDto.getPhoneNumber())){
             Teacher teacher=teacherRepository.findByPhoneNumber(signInDto.getPhoneNumber()).orElseThrow(()->new PhoneNumberNotFoundException("회원 정보가 없습니다.\n회원가입을 먼저 해주세요."));
+            teacher.modifyDeviceToken(signInDto.getDeviceToken());
             if (!passwordEncoder.matches(signInDto.getPassword(), teacher.getTPassword())) {
                 throw new CustomException(INVALID_PASSWORD);
             }
@@ -244,6 +245,10 @@ public class AuthService {
         Student student = studentRepository.findById(Long.valueOf(authentication.getName())).orElseThrow(PhoneNumberNotFoundException::new);
         student.setDeviceToken(null);
         studentRepository.save(student);
+
+        Teacher teacher = teacherRepository.findById(Long.valueOf(authentication.getName())).orElseThrow(PhoneNumberNotFoundException::new);
+        teacher.setDeviceToken(null);
+        teacherRepository.save(teacher);
 
         System.out.println("authentication name: "+ authentication.getName());
         System.out.println("student deviceToken: "+ student.getDeviceToken());
