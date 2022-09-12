@@ -73,4 +73,8 @@ public class Teacher {
         this.deviceToken = deviceToken;
     }
 
+    public void modifyDeviceToken(String deviceToken) {
+        this.deviceToken = deviceToken;
+    }
+
 }

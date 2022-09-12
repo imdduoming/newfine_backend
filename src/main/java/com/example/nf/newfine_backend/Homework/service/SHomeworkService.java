@@ -96,7 +96,7 @@ public class SHomeworkService {
             if (student.getDeviceToken() != null) {
                 RequestDTO requestDTO = new RequestDTO();
                 requestDTO.setTargetToken(student.getDeviceToken());
-                requestDTO.setTitle("과제 " + sHomework.getTitle());
+                requestDTO.setTitle(sHomework.getThomework().getCourse().getCName() + " 과제 " + sHomework.getTitle());
                 requestDTO.setBody("과제 확인이 완료되었습니다.");
 
                 System.out.println(requestDTO.getTargetToken() + " "
@@ -118,7 +118,7 @@ public class SHomeworkService {
             if (student.getDeviceToken() != null) {
                 RequestDTO requestDTO = new RequestDTO();
                 requestDTO.setTargetToken(student.getDeviceToken());
-                requestDTO.setTitle("과제 " + sHomework.getTitle());
+                requestDTO.setTitle(sHomework.getThomework().getCourse().getCName()+ " 과제 " + sHomework.getTitle());
                 requestDTO.setBody("과제 확인이 완료되었습니다.");
 
                 System.out.println(requestDTO.getTargetToken() + " "
