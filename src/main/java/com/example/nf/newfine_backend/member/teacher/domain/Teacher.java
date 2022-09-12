@@ -17,7 +17,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "teacher")
-public class Teacher extends Timestamped {
+public class Teacher {
 
     @Id
     @Column(name = "teacher_id")
