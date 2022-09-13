@@ -253,7 +253,7 @@ public class AuthService {
         System.out.println("authentication name: "+ authentication.getName());
         System.out.println("authentication 정보: "+ authentication);
         System.out.println("student deviceToken: "+ student.getDeviceToken());
-        System.out.println("authentication authority: "+ authentication.getAuthorities());
+        System.out.println("authentication authority: "+ authentication.getAuthorities().toString());
 
 //        return response.success("로그아웃 되었습니다.");
         return responseService.getSingleResult("로그아웃 되었습니다.");
