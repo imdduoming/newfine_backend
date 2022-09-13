@@ -251,7 +251,7 @@ public class AuthService {
         }
 
         else{
-            Teacher teacher = teacherRepository.findById(Long.valueOf(authentication.getName())).orElseThrow(PhoneNumberNotFoundException::new);
+            Teacher teacher = teacherRepository.findById(Long.valueOf(authentication.getName())).get();
             System.out.println("authentication name: "+ authentication.getName());
             System.out.println("authentication token: "+ teacher.getDeviceToken());
             teacher.setDeviceToken(null);
