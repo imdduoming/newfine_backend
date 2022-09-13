@@ -98,7 +98,7 @@ public class VideoService {
                     RequestDTO requestDTO = new RequestDTO();
                     requestDTO.setTargetToken(teacher.getDeviceToken());
                     requestDTO.setTitle(course.getCName() + " 동영상 신청");
-                    requestDTO.setBody(student.getName() + "학생이 " + course.getCName() + " 과목에 대한 동영상을 신청했습니다.");
+                    requestDTO.setBody(student.getName() + "학생이 " + course.getCName() + " 과목 강의 동영상을 신청했습니다.");
 
                     System.out.println(requestDTO.getTargetToken() + " "
                             + requestDTO.getTitle() + " " + requestDTO.getBody());
@@ -119,7 +119,7 @@ public class VideoService {
                     RequestDTO requestDTO = new RequestDTO();
                     requestDTO.setTargetToken(teacher.getDeviceToken());
                     requestDTO.setTitle(course.getCName() + " 동영상 신청");
-                    requestDTO.setBody(student.getName() + "학생이 " + course.getCName() + " 과목에 대한 동영상을 신청했습니다.");
+                    requestDTO.setBody(student.getName() + "학생이 " + course.getCName() + " 과목 강의 동영상을 신청했습니다.");
 
                     System.out.println(requestDTO.getTargetToken() + " "
                             + requestDTO.getTitle() + " " + requestDTO.getBody());
@@ -200,8 +200,8 @@ public class VideoService {
         if (student.getDeviceToken() != null) {
             RequestDTO requestDTO = new RequestDTO();
             requestDTO.setTargetToken(student.getDeviceToken());
-            requestDTO.setTitle(course.getCName() + " 동영상 신청 승인됨");
-            requestDTO.setBody(course.getCName() + "과목 강의 동영상을 확인해보세요.");
+            requestDTO.setTitle(course.getCName() + " 동영상 신청 승인");
+            requestDTO.setBody(course.getCName() + " 과목 강의 동영상을 확인해보세요.");
 
             System.out.println(requestDTO.getTargetToken() + " "
                     + requestDTO.getTitle() + " " + requestDTO.getBody());
