@@ -242,7 +242,7 @@ public class AuthService {
                 .set(tokenRequestDto.getAccessToken(), "logout", expiration, TimeUnit.MILLISECONDS);
 
         // push alarm 때문에 추가 (로그아웃 시 device token 초기화)
-        Student student = studentRepository.findById(Long.valueOf(authentication.getName())).orElseThrow(PhoneNumberNotFoundException::new);
+        Student student = studentRepository.findById(Long.valueOf(authentication.getName())).get();
         student.setDeviceToken(null);
         studentRepository.save(student);
 
