@@ -246,16 +246,20 @@ public class AuthService {
             Student student = studentRepository.findById(Long.valueOf(authentication.getName())).get();
             System.out.println("authentication name: "+ authentication.getName());
             System.out.println("authentication token: "+ student.getDeviceToken());
-            student.setDeviceToken(null);
-            studentRepository.save(student);
+            if (student.getDeviceToken() != null) {
+                student.setDeviceToken(null);
+                studentRepository.save(student);
+            }
         }
 
         else{
             Teacher teacher = teacherRepository.findById(Long.valueOf(authentication.getName())).get();
             System.out.println("authentication name: "+ authentication.getName());
             System.out.println("authentication token: "+ teacher.getDeviceToken());
-            teacher.setDeviceToken(null);
-            teacherRepository.save(teacher);
+            if (teacher.getDeviceToken() != null){
+                teacher.setDeviceToken(null);
+                teacherRepository.save(teacher);
+            }
         }
 
 
