@@ -246,11 +246,12 @@ public class AuthService {
         student.setDeviceToken(null);
         studentRepository.save(student);
 
-        Teacher teacher = teacherRepository.findById(Long.valueOf(authentication.getName())).orElseThrow(PhoneNumberNotFoundException::new);
-        teacher.setDeviceToken(null);
-        teacherRepository.save(teacher);
+//        Teacher teacher = teacherRepository.findById(Long.valueOf(authentication.getName())).orElseThrow(PhoneNumberNotFoundException::new);
+//        teacher.setDeviceToken(null);
+//        teacherRepository.save(teacher);
 
         System.out.println("authentication name: "+ authentication.getName());
+        System.out.println("authentication 정보: "+ authentication);
         System.out.println("student deviceToken: "+ student.getDeviceToken());
 
 //        return response.success("로그아웃 되었습니다.");
