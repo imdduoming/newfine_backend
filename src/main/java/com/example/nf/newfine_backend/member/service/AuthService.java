@@ -242,7 +242,7 @@ public class AuthService {
                 .set(tokenRequestDto.getAccessToken(), "logout", expiration, TimeUnit.MILLISECONDS);
 
         // push alarm 때문에 추가 (로그아웃 시 device token 초기화)
-        if (authentication.getAuthorities().toString() == "[ROLE_USER]"){
+        if ((authentication.getAuthorities().toString()).equals("[ROLE_USER]")){
             Student student = studentRepository.findById(Long.valueOf(authentication.getName())).get();
             System.out.println("authentication name: "+ authentication.getName());
             System.out.println("authentication token: "+ student.getDeviceToken());
