@@ -20,7 +20,6 @@ newfine 학원의 동기부여 프로그램을 위한 앱으로 학생들의 출
 - 앱개발 : React Native 를 사용하여 IOS & Android 동시 개발
 
 ## 4. 주요 기능
-### 👩🏻‍🎓 학생
 <img src="https://user-images.githubusercontent.com/60255575/190112933-204d4d05-2d6e-4bd4-8c71-8ed846d79d33.jpg"  width="650" height="350"/>
 <img src="https://user-images.githubusercontent.com/60255575/190112948-34672419-0a26-497f-b5ba-755c3df1e186.jpg"  width="650" height="350"/>
 <img src="https://user-images.githubusercontent.com/60255575/190112963-7fba8cd8-e79a-45b9-bc08-489b25b9c73b.jpg"  width="650" height="350"/>
