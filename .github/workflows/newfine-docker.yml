@@ -8,6 +8,8 @@ jobs:
   deploy:
     name: Deploy newfine-backend
     runs-on: ubuntu-latest
+    env :
+      APPLICATION:  ${{ secrets.APPLICATION }}
 
     steps:
       - name: Checkout
@@ -17,6 +19,16 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
+      
+      - uses: actions/checkout@v2
+      - run: touch ./src/main/resources/application.properties
+      - run: echo "${{env.APPLICATION}}" >
+./src/main/resources/application.properties
+      - uses: actions/upload-artifact@v2
+        with:
+          name: application.yml
+          path: ./src/main/resources/application.properties
+
 
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
