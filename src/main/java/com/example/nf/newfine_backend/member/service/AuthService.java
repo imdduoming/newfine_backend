@@ -242,16 +242,26 @@ public class AuthService {
                 .set(tokenRequestDto.getAccessToken(), "logout", expiration, TimeUnit.MILLISECONDS);
 
         // push alarm 때문에 추가 (로그아웃 시 device token 초기화)
-        Student student = studentRepository.findById(Long.valueOf(authentication.getName())).orElseThrow(PhoneNumberNotFoundException::new);
-        student.setDeviceToken(null);
-        studentRepository.save(student);
+        if ((authentication.getAuthorities().toString()).equals("[ROLE_USER]")){
+            Student student = studentRepository.findById(Long.valueOf(authentication.getName())).get();
+            System.out.println("authentication name: "+ authentication.getName());
+            System.out.println("authentication token: "+ student.getDeviceToken());
+            if (student.getDeviceToken() != null) {
+                student.setDeviceToken(null);
+                studentRepository.save(student);
+            }
+        }
 
-        Teacher teacher = teacherRepository.findById(Long.valueOf(authentication.getName())).orElseThrow(PhoneNumberNotFoundException::new);
-        teacher.setDeviceToken(null);
-        teacherRepository.save(teacher);
+        else{
+            Teacher teacher = teacherRepository.findById(Long.valueOf(authentication.getName())).get();
+            System.out.println("authentication name: "+ authentication.getName());
+            System.out.println("authentication token: "+ teacher.getDeviceToken());
+            if (teacher.getDeviceToken() != null){
+                teacher.setDeviceToken(null);
+                teacherRepository.save(teacher);
+            }
+        }
 
-        System.out.println("authentication name: "+ authentication.getName());
-        System.out.println("student deviceToken: "+ student.getDeviceToken());
 
 //        return response.success("로그아웃 되었습니다.");
         return responseService.getSingleResult("로그아웃 되었습니다.");

@@ -8,6 +8,8 @@ jobs:
   deploy:
     name: Deploy newfine-backend
     runs-on: ubuntu-latest
+    env :
+      APPLICATION:  ${{ secrets.APPLICATION }}
 
     steps:
       - name: Checkout

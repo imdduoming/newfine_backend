@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -74,7 +75,7 @@ public class TeacherController {
     }
 
     @PutMapping("/video/ok")
-    public StudentAttendance editVideo(@RequestBody VideoEditDto videoEditDto) {
+    public StudentAttendance editVideo(@RequestBody VideoEditDto videoEditDto) throws IOException {
         Teacher teacher=teacherRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
         Long id=Long.valueOf(videoEditDto.getId());
         return videoService.editVideo(id);
