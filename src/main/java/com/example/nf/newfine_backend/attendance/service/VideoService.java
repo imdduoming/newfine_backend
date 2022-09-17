@@ -98,7 +98,7 @@ public class VideoService {
                     RequestDTO requestDTO = new RequestDTO();
                     requestDTO.setTargetToken(teacher.getDeviceToken());
                     requestDTO.setTitle(course.getCName() + " 동영상 신청");
-                    requestDTO.setBody(student.getName() + "학생이 " + course.getCName() + " 과목에 대한 동영상을 신청했습니다.");
+                    requestDTO.setBody(student.getName() + "학생이 " + course.getCName() + " 과목 강의 동영상을 신청했습니다.");
 
                     System.out.println(requestDTO.getTargetToken() + " "
                             + requestDTO.getTitle() + " " + requestDTO.getBody());
@@ -119,7 +119,7 @@ public class VideoService {
                     RequestDTO requestDTO = new RequestDTO();
                     requestDTO.setTargetToken(teacher.getDeviceToken());
                     requestDTO.setTitle(course.getCName() + " 동영상 신청");
-                    requestDTO.setBody(student.getName() + "학생이 " + course.getCName() + " 과목에 대한 동영상을 신청했습니다.");
+                    requestDTO.setBody(student.getName() + "학생이 " + course.getCName() + " 과목 강의 동영상을 신청했습니다.");
 
                     System.out.println(requestDTO.getTargetToken() + " "
                             + requestDTO.getTitle() + " " + requestDTO.getBody());
@@ -141,7 +141,7 @@ public class VideoService {
                 RequestDTO requestDTO = new RequestDTO();
                 requestDTO.setTargetToken(teacher.getDeviceToken());
                 requestDTO.setTitle(course.getCName() + " 동영상 신청");
-                requestDTO.setBody(student.getName() + "학생이 " + course.getCName() + " 과목에 대한 동영상을 신청했습니다.");
+                requestDTO.setBody(student.getName() + "학생이 " + course.getCName() + " 과목 강의 동영상을 신청했습니다.");
 
                 System.out.println(requestDTO.getTargetToken() + " "
                         + requestDTO.getTitle() + " " + requestDTO.getBody());
@@ -185,7 +185,7 @@ public class VideoService {
     }
 
     @Transactional
-    public StudentAttendance editVideo(Long id){
+    public StudentAttendance editVideo(Long id) throws IOException {
 //        Student student = studentRepository.findById(id).get();
 //        System.out.println(student.getId());
 //        Listener listener = listenerRepository.findById(student.getId()).orElseThrow(PhoneNumberNotFoundException::new);
@@ -194,22 +194,23 @@ public class VideoService {
         studentAttendance.setIsvideo(true);
         studentAttendance.setReceiveVideo(true);
         studentattendanceRepository.save(studentAttendance);
-//        Course course = courseRepository.findById(studentAttendance.getAttendance().getCourse().getId()).get();
+        Course course = courseRepository.findById(studentAttendance.getAttendance().getCourse().getId()).get();
+        Student student = studentRepository.findById(studentAttendance.getStudent().getId()).get();
 
-//        if (student.getDeviceToken() != null) {
-//            RequestDTO requestDTO = new RequestDTO();
-//            requestDTO.setTargetToken(student.getDeviceToken());
-//            requestDTO.setTitle("동영상 신청 승인됨");
-//            requestDTO.setBody("동영상 신청이 승인되었습니다.");
-//
-//            System.out.println(requestDTO.getTargetToken() + " "
-//                    + requestDTO.getTitle() + " " + requestDTO.getBody());
-//
-//            fcmService.sendMessageTo(
-//                    requestDTO.getTargetToken(),
-//                    requestDTO.getTitle(),
-//                    requestDTO.getBody());
-//        }
+        if (student.getDeviceToken() != null) {
+            RequestDTO requestDTO = new RequestDTO();
+            requestDTO.setTargetToken(student.getDeviceToken());
+            requestDTO.setTitle(course.getCName() + " 동영상 신청 승인");
+            requestDTO.setBody(course.getCName() + " 과목 강의 동영상을 확인해보세요.");
+
+            System.out.println(requestDTO.getTargetToken() + " "
+                    + requestDTO.getTitle() + " " + requestDTO.getBody());
+
+            fcmService.sendMessageTo(
+                    requestDTO.getTargetToken(),
+                    requestDTO.getTitle(),
+                    requestDTO.getBody());
+        }
         return studentAttendance;
     }
 }
