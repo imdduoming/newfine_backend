@@ -115,7 +115,7 @@ bootJar {
 }
 
 task copyGitSubmodule(type: Copy) {
-    from './config'
+    from './newfine_secret'
     include '*.properties'
     into './src/main/resources'
 }
