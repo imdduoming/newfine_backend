@@ -31,3 +31,5 @@ newfine 학원의 동기부여 프로그램을 위한 앱으로 학생들의 출
 
 ## 5. 배포 아키텍처
 <img src="https://user-images.githubusercontent.com/60255575/190094175-b3880897-1cda-4552-8784-be07192f4d32.png"  width="650" height="350"/>
+
+## 6. 역할
