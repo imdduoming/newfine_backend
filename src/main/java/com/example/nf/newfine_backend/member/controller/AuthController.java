@@ -86,7 +86,7 @@ public class AuthController {
     @PostMapping("/sendSignUpMessage")
     public ResponseEntity<String> sendSignUpMessage(@RequestBody SignUpAuthDto signUpAuthDto) {
 //        int randomNumber=(int)((Math.random()* (9999 - 1000 + 1)) + 1000);
-        int randomNumber= 0;
+        int randomNumber= 0000;
 
         //************************* 추후 DB 전화번호와 일치하는지 확인해야 함 ->일단 했음. ^^
         BranchStudent bs=branchStudentRepository.findByPhoneNumber(signUpAuthDto.getPhoneNumber()).orElseThrow(() -> new CustomException(MEMBER_NOT_FOUND));
@@ -110,7 +110,7 @@ public class AuthController {
     @PostMapping("/sendMessage")
     public ResponseEntity<String> sendMessage(@RequestBody PhoneNumberDto phoneNumberDto) {
 //        int randomNumber=(int)((Math.random()* (9999 - 1000 + 1)) + 1000);
-        int randomNumber = 0;
+        int randomNumber = 0000;
 
         // 가입된 회원인지 확인
         if (!studentRepository.existsByPhoneNumber(phoneNumberDto.getPhoneNumber())) {
