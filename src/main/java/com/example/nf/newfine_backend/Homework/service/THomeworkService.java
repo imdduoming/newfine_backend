@@ -73,7 +73,7 @@ public class  THomeworkService {
             if (listener.getStudent().getDeviceToken()!=null) {
                 RequestDTO requestDTO = new RequestDTO();
                 requestDTO.setTargetToken(listener.getStudent().getDeviceToken());
-                requestDTO.setTitle("과목" + tHomework.getCourse().getCName());
+                requestDTO.setTitle("과목 " + tHomework.getCourse().getCName());
                 requestDTO.setBody("새로운 과제가 등록되었습니다.");
 
                 System.out.println(requestDTO.getTargetToken() + " "
