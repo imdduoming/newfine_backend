@@ -24,7 +24,7 @@ public class Listener {
     private Course course;
 
     @JsonManagedReference
-    @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.REMOVE})
+    @ManyToOne(fetch = FetchType.EAGER)
     private Student student;
 
 //    @OneToMany(mappedBy="course", cascade = { CascadeType.PERSIST})
