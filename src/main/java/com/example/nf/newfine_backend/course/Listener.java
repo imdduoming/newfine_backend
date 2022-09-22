@@ -34,9 +34,6 @@ public class Listener {
 //    @JsonBackReference //순환참조 방지
 //    private List<StudentTestResults> studentTestResults;
 
-    @JsonBackReference //순환참조 방지
-    @OneToMany(mappedBy="listener", cascade = { CascadeType.REMOVE})
-    private List<SHomework> sHomeworks;
     @Builder
     public Listener(Course course,Student student) {
         this.course = course;
