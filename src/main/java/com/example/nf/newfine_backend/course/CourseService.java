@@ -30,7 +30,7 @@ public class CourseService {
         List<Listener> Listeners=listenerRepository.findListenersByCourse(course);
         Collections.sort(Listeners, new ListComparator());
         System.out.println(Listeners);
-       return Listeners;
+        return Listeners;
 //        return listenerRepository.findListenersByCourse(course);
 
     }

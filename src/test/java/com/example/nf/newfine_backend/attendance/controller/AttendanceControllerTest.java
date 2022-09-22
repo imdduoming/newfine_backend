@@ -32,6 +32,9 @@
 //import org.springframework.test.context.junit.jupiter.SpringExtension;
 //import org.springframework.test.web.servlet.MockMvc;
 //import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+//import org.springframework.util.LinkedMultiValueMap;
+//import org.springframework.util.MultiValueMap;
+//import org.springframework.util.StopWatch;
 //import org.springframework.web.context.WebApplicationContext;
 //import org.springframework.web.filter.CharacterEncodingFilter;
 //
@@ -195,11 +198,50 @@
 //                .andExpect(status().isOk()) // 4
 //                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
 //                .andDo(print())//어떤 응답과 요청을 받았는지 확인가능.
-//                .andDo(MockMvcRestDocumentationWrapper.document("관리자 출석 생성"// 5,
-//                        ,requestFields( // 6
-//                                fieldWithPath("attendance_id").description("출석id")
-//                        )
+//                .andDo(MockMvcRestDocumentationWrapper.document("관리자 출석 생성" ));
+//
+//
+//    }
+//
+//    @Test
+//    @CustomUser("01030303030")
+//    void 강의_출석보기() throws Exception {
+//        StopWatch stopWatch = new StopWatch();
+//        stopWatch.start();
+//        Course course = new Course("내신 미적분","고등학교","수학","미적분","15:00","20:00");
+//        courseRepository.save(course);
+//        id= course.getId();
+//
+//
+//        Listener listener = new Listener();
+//        listener.setCourse(course);
+//        Student student = studentRepository.findByPhoneNumber("01030303030").get();
+//        listener.setStudent(student);
+//        listenerRepository.save(listener);
+//
+//
+//        LocalDateTime start1 = LocalDateTime.now();
+//        LocalDateTime end1 = start1.plusSeconds(5);
+//
+//        LocalDateTime start2 = LocalDateTime.now();
+//        LocalDateTime end2 = start2.plusSeconds(10);
+//        Attendance attendance1 = attendanceService.makeAttendance(id,start1,end1);
+//        Attendance attendance2 = attendanceService.makeAttendance(id,start2,end2);
+//
+//        MultiValueMap<String, String> info = new LinkedMultiValueMap<>();
+//
+//        info.add("id", Long.toString(course.getId()));
+//        mockMvc.perform(RestDocumentationRequestBuilders.get("/attendances/my") // 1
+//                        .params(info) //
+//                        .contentType(MediaType.APPLICATION_JSON)) //
+//                .andExpect(status().isOk()) // 4
+//                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+//                .andDo(print())//어떤 응답과 요청을 받았는지 확인가능.
+//                .andDo(MockMvcRestDocumentationWrapper.document("강의 출석 보기"// 5,
 //                ));
+//        stopWatch.stop();
+//        System.out.println("소요시간:"+stopWatch.getTotalTimeMillis()+"ms");
+//        System.out.println(stopWatch.prettyPrint());
 //
 //
 //    }

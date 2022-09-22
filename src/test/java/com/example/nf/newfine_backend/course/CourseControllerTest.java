@@ -26,6 +26,7 @@
 //import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 //import org.springframework.util.LinkedMultiValueMap;
 //import org.springframework.util.MultiValueMap;
+//import org.springframework.util.StopWatch;
 //import org.springframework.web.context.WebApplicationContext;
 //import org.springframework.web.filter.CharacterEncodingFilter;
 //
@@ -120,6 +121,8 @@
 //    @Test
 //    @CustomUser("01030303030")
 //    void 강의수강생() throws Exception {
+//        StopWatch stopWatch = new StopWatch();
+//        stopWatch.start();
 //        String cname = "$.[?(@.cname == '%s')]";
 //        String student_name = "$..student[?(@.phoneNumber == '%s')]";
 //
@@ -142,6 +145,9 @@
 //                .andDo(print())//어떤 응답과 요청을 받았는지 확인가능.
 //                .andDo(MockMvcRestDocumentationWrapper.document("강의수강생"// 5,
 //                ));
+//        stopWatch.stop();
+//        System.out.println("소요시간:"+stopWatch.getTotalTimeMillis()+"ms");
+//        System.out.println(stopWatch.prettyPrint());
 //
 //    }
 //
@@ -171,4 +177,4 @@
 //                ));
 //
 //    }
-//}
+// }
