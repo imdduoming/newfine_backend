@@ -31,7 +31,6 @@ public class SHomework extends BaseTimeEntity {
     private THomework thomework;
 
     @ManyToOne(fetch = EAGER)
-    @JoinColumn(name = "listener_id")
     @JsonManagedReference
     private Listener listener;
 
