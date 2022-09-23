@@ -23,7 +23,7 @@ public class Listener {
     private Long Id;
 
     @JsonManagedReference
-    @ManyToOne( cascade = { CascadeType.REMOVE})
+    @ManyToOne
     private Course course;
 
     @JsonManagedReference
