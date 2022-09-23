@@ -53,11 +53,11 @@ public class Course {
     private String subjectType;
 
     @JsonBackReference //순환참조 방지
-    @OneToMany(mappedBy="course", cascade = { CascadeType.ALL})
+    @OneToMany(mappedBy="course", cascade = { CascadeType.REMOVE})
     private List<Attendance> attendances;
 
     @JsonBackReference //순환참조 방지
-    @OneToMany(mappedBy="course", cascade = { CascadeType.PERSIST})
+    @OneToMany(mappedBy="course", cascade = { CascadeType.REMOVE})
     private List<Listener> listeners;
 
 
