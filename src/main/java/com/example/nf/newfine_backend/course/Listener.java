@@ -30,10 +30,10 @@ public class Listener {
     @ManyToOne(fetch = FetchType.EAGER)
     private Student student;
 
-    // 다시 listener 추가해봄
-    @OneToMany(mappedBy="listener", fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE})
-    @JsonBackReference //순환참조 방지
-    private List<SHomework> sHomeworks;
+//    // 다시 listener 추가해봄
+//    @OneToMany(mappedBy="listener", fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE})
+//    @JsonBackReference //순환참조 방지
+//    private List<SHomework> sHomeworks;
 
     @Builder
     public Listener(Course course,Student student) {

@@ -30,7 +30,7 @@ public class SHomework extends BaseTimeEntity {
     @JsonManagedReference
     private THomework thomework;
 
-    @ManyToOne(fetch = EAGER)
+    @ManyToOne(fetch = EAGER,cascade = CascadeType.REMOVE)
     @JoinColumn(name = "listener_id")
     @JsonManagedReference
     private Listener listener;
