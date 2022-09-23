@@ -23,7 +23,7 @@ public class THomework extends BaseTimeEntity {
     private Long id;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.REMOVE)
     @JoinColumn(name = "course_id")
     @JsonManagedReference
     private Course course; // 코스 별로 여러 과제 가질 수 있음
