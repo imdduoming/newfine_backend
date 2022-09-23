@@ -53,10 +53,10 @@ public class VideoService {
             List<Attendance> attendances= attendanceRepository.findAttendancesByCourseOrderByCreatedDateDesc(listener.getCourse());
             // 강의마다 조건에 맞는 출석 넣기
             for (Attendance attendance : attendances){
-
-                StudentAttendance studentAttendance = studentattendanceRepository.findByStudentAndAttendance(student,attendance).get();
-                if(studentAttendance.isAttend()==false && studentAttendance.isIsvideo()==false ){
-                    // 출석하지 않았고 비디오 신청도 하지 않았다면
+                if(studentattendanceRepository.findByStudentAndAttendance(student,attendance).isPresent()) {
+                    StudentAttendance studentAttendance = studentattendanceRepository.findByStudentAndAttendance(student, attendance).get();
+                    if (studentAttendance.isAttend() == false && studentAttendance.isIsvideo() == false) {
+                        // 출석하지 않았고 비디오 신청도 하지 않았다면
 
                         // 출석하려는 날짜가 오늘 날짜와 같고
 //                        LocalTime endtime = LocalTime.parse(listener.getCourse().getEnd_time(), DateTimeFormatter.ofPattern("HH:mm"));
@@ -67,6 +67,7 @@ public class VideoService {
                         nowAttendances.add(attendance);
 
 
+                    }
                 }
 
             }
