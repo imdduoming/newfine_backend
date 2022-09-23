@@ -114,8 +114,10 @@ public class AttendanceService {
         List<StudentAttendance> studentAttendances=new ArrayList<>();
         for(Attendance attendance : attendances){
             // 출석마다 학생 출석 정보 찾기
-            StudentAttendance studentAttendance=studentattendanceRepository.findByStudentAndAttendance(student,attendance).get();
-            studentAttendances.add(studentAttendance);
+            if (studentattendanceRepository.findByStudentAndAttendance(student,attendance).isPresent()){
+                StudentAttendance studentAttendance=studentattendanceRepository.findByStudentAndAttendance(student,attendance).get();
+                studentAttendances.add(studentAttendance);
+            }
 
         }
         System.out.println(studentAttendances);
