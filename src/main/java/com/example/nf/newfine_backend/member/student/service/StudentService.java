@@ -1,5 +1,8 @@
 package com.example.nf.newfine_backend.member.student.service;
 
+import com.example.nf.newfine_backend.Homework.Repository.SHomeworkRepository;
+import com.example.nf.newfine_backend.course.Listener;
+import com.example.nf.newfine_backend.course.ListenerRepository;
 import com.example.nf.newfine_backend.member.student.dto.*;
 import com.example.nf.newfine_backend.member.student.exception.DuplicatedNicknameException;
 import com.example.nf.newfine_backend.member.student.exception.PhoneNumberNotFoundException;
@@ -13,6 +16,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 import static com.example.nf.newfine_backend.member.exception.ErrorCode.*;
 
 @Service
@@ -23,6 +28,8 @@ public class StudentService {
     private final StudentRepository studentRepository;
     private final PasswordEncoder passwordEncoder;
     private final MessageService messageService;
+    private final ListenerRepository listenerRepository;
+    private final SHomeworkRepository sHomeworkRepository;
 
     @Transactional(readOnly = true)
     public StudentRankingDetailDto getMemberInfo(String nickname){
@@ -93,8 +100,14 @@ public class StudentService {
         redisTemplate.opsForZSet().remove("ranking", student.getNickname());
         // &*************************** 액토도.....?
 
+        // 학생관련된 shomework 지우기
+        List<Listener> listenerList= listenerRepository.findListenersByStudent(student);
+        for (Listener listener : listenerList){
+            if(sHomeworkRepository.findByListener(listener).isPresent()){
+                sHomeworkRepository.deleteAllByListener(listener);
+            }
+        }
         studentRepository.delete(student);
-
         return "탈퇴 완료";
     }
 
