@@ -87,6 +87,7 @@ public class StudentService {
         return StudentResponseDto.of(student1);
     }
 
+    @Transactional
     public String deleteStudent(DeleteRequestDto deleteRequestDto){
         Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
         if (!passwordEncoder.matches(deleteRequestDto.getPassword(), student.getPassword())) {
