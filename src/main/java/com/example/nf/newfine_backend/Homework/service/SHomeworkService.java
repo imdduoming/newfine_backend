@@ -10,7 +10,6 @@ import com.example.nf.newfine_backend.Homework.dto.SHomeworkDto;
 import com.example.nf.newfine_backend.course.Listener;
 import com.example.nf.newfine_backend.course.ListenerRepository;
 import com.example.nf.newfine_backend.member.student.domain.Student;
-import com.example.nf.newfine_backend.member.student.exception.PhoneNumberNotFoundException;
 import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
 import com.example.nf.newfine_backend.member.student.service.PointService;
 import lombok.RequiredArgsConstructor;
@@ -85,7 +84,7 @@ public class SHomeworkService {
         SHomework sHomework = sHomeworkRepository.findById(Id).get();
         Long studentId = sHomework.getStudentId();
         System.out.println(studentId);
-        Student student = studentRepository.findById(studentId).orElseThrow(PhoneNumberNotFoundException::new);
+        Student student = studentRepository.findById(studentId).get();
         if (state.equals("1차")) {
             System.out.println(state);
             sHomework.setIschecked(true);
