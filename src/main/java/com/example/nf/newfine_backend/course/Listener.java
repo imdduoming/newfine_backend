@@ -20,14 +20,13 @@ public class Listener {
     private Long Id;
 
     @JsonManagedReference
-    @ManyToOne( cascade = { CascadeType.REMOVE})
+    @ManyToOne
     private Course course;
 
     @JsonManagedReference
     @ManyToOne(fetch = FetchType.EAGER)
     private Student student;
-
-    // 다시 listener 추가해봄
+    
 //    @OneToMany(mappedBy="listener", fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE})
 //    @JsonBackReference //순환참조 방지
 //    private List<SHomework> sHomeworks;
