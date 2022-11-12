@@ -228,6 +228,34 @@
 //        Attendance attendance1 = attendanceService.makeAttendance(id,start1,end1);
 //        Attendance attendance2 = attendanceService.makeAttendance(id,start2,end2);
 //
+//        LocalDateTime start3 = LocalDateTime.now();
+//        LocalDateTime end3 = start1.plusSeconds(15);
+//
+//        LocalDateTime start4 = LocalDateTime.now();
+//        LocalDateTime end4 = start2.plusSeconds(20);
+//        LocalDateTime start5 = LocalDateTime.now();
+//        LocalDateTime end5 = start1.plusSeconds(25);
+//
+//        LocalDateTime start6 = LocalDateTime.now();
+//        LocalDateTime end6 = start2.plusSeconds(30);
+//        LocalDateTime start7 = LocalDateTime.now();
+//        LocalDateTime end7 = start1.plusSeconds(35);
+//
+//        LocalDateTime start8 = LocalDateTime.now();
+//        LocalDateTime end8 = start2.plusSeconds(40);
+//        LocalDateTime start9 = LocalDateTime.now();
+//        LocalDateTime end9 = start1.plusSeconds(45);
+//
+//        LocalDateTime start10 = LocalDateTime.now();
+//        LocalDateTime end10 = start2.plusSeconds(50);
+//        Attendance attendance3 = attendanceService.makeAttendance(id,start3,end3);
+//        Attendance attendance4 = attendanceService.makeAttendance(id,start4,end4);
+//        Attendance attendance5 = attendanceService.makeAttendance(id,start5,end5);
+//        Attendance attendance6 = attendanceService.makeAttendance(id,start6,end6);
+//        Attendance attendance7 = attendanceService.makeAttendance(id,start7,end7);
+//        Attendance attendance8 = attendanceService.makeAttendance(id,start8,end8);
+//        Attendance attendance9 = attendanceService.makeAttendance(id,start9,end9);
+//        Attendance attendance10 = attendanceService.makeAttendance(id,start10,end10);
 //        MultiValueMap<String, String> info = new LinkedMultiValueMap<>();
 //
 //        info.add("id", Long.toString(course.getId()));

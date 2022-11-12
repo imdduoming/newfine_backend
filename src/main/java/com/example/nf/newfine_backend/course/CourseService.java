@@ -29,9 +29,7 @@ public class CourseService {
         Course course=courseRepository.findById(id).get();
         List<Listener> Listeners=listenerRepository.findListenersByCourse(course);
         Collections.sort(Listeners, new ListComparator());
-        System.out.println(Listeners);
         return Listeners;
-//        return listenerRepository.findListenersByCourse(course);
 
     }
 
