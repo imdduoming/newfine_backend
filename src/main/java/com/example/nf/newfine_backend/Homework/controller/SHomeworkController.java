@@ -59,34 +59,6 @@ public class SHomeworkController {
         return "성공";
     }
 
-    @PutMapping("/sh/point2")
-    @ResponseBody
-    public String checkSHomework2(@RequestBody Map<String, String>[] checklist) throws IOException {
-        for (Map<String, String> ck : checklist) {
-            System.out.println(ck.get("shId") + " : " + ck.get("grade"));
-            Long Id = Long.parseLong(String.valueOf(ck.get("shId")));
-            String grade = String.valueOf(ck.get("grade"));
-//            Long Id = Long.valueOf(c.get("shId").toString());
-            System.out.println("shId: " + Id + " : grade: " + grade);
-            sHomeworkService.updateSHomework(Id, grade);
-        }
-        return "성공";
-    }
-
-    @PutMapping("/sh/test")
-    @ResponseBody
-    public String test(@RequestBody List<Map<String, Object>> checklist) throws IOException {
-        for (Map<String, Object> c : checklist) {
-            System.out.println(c.get("shId") + " : " + c.get("grade"));
-            Long Id = Long.parseLong(String.valueOf(c.get("shId")));
-            String grade = String.valueOf(c.get("grade"));
-//            Long Id = Long.valueOf(c.get("shId").toString());
-            System.out.println("shId: " + Id + " : grade: " + grade);
-            sHomeworkService.updateSHomework(Id, grade);
-        }
-        return "성공";
-    }
-
     @PutMapping("/sh/map1")
     @ResponseBody
     public String maptest1(@RequestBody Map<String, Object> checklist) {
