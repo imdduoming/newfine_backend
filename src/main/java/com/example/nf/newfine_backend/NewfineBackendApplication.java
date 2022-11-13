@@ -32,7 +32,7 @@ public class NewfineBackendApplication {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("https://eb.newfine.tk","http://localhost:8000")
+                registry.addMapping("/**").allowedOrigins("https://eb.newfine.shop","http://localhost:8000")
                         .allowedMethods("POST", "PUT", "GET", "DELETE")
                         .exposedHeaders(HttpHeaders.LOCATION);
             }
