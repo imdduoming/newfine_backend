@@ -1,4 +1,4 @@
-let domainURL = 'https://eb.newfine.tk';
+let domainURL = 'https://eb.newfine.shop';
 
 // function add_attendance() {
 //
