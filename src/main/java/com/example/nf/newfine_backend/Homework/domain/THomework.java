@@ -23,7 +23,7 @@ public class THomework extends BaseTimeEntity {
     private Long id;
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.REMOVE)
     @JoinColumn(name = "course_id")
     @JsonManagedReference
     private Course course; // 코스 별로 여러 과제 가질 수 있음
@@ -46,8 +46,6 @@ public class THomework extends BaseTimeEntity {
     private int count;
 
 
-
-    //== 게시글을 삭제하면 달려있는 과제 이미지파일 모두 삭제 ==//
     @JsonBackReference
     @OneToMany(mappedBy = "thomework", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @OrderBy("shid desc") // 과제 순서 정렬 (최신 꺼 순으로)

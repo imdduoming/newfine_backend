@@ -9,7 +9,6 @@ import com.example.nf.newfine_backend.member.service.AuthService;
 import com.example.nf.newfine_backend.member.student.dto.PasswordUpdateDto;
 import com.example.nf.newfine_backend.member.student.dto.PhoneNumberDto;
 import com.example.nf.newfine_backend.member.student.dto.StudentResponseDto;
-import com.example.nf.newfine_backend.member.student.exception.PhoneNumberNotFoundException;
 import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
 import com.example.nf.newfine_backend.member.student.service.MessageService;
 import com.example.nf.newfine_backend.member.student.service.StudentService;
@@ -86,7 +85,8 @@ public class AuthController {
     // 전화번호 인증번호 전송
     @PostMapping("/sendSignUpMessage")
     public ResponseEntity<String> sendSignUpMessage(@RequestBody SignUpAuthDto signUpAuthDto) {
-        int randomNumber=(int)((Math.random()* (9999 - 1000 + 1)) + 1000);  //난수 생성
+//        int randomNumber=(int)((Math.random()* (9999 - 1000 + 1)) + 1000);
+        int randomNumber= 0000;
 
         //************************* 추후 DB 전화번호와 일치하는지 확인해야 함 ->일단 했음. ^^
         BranchStudent bs=branchStudentRepository.findByPhoneNumber(signUpAuthDto.getPhoneNumber()).orElseThrow(() -> new CustomException(MEMBER_NOT_FOUND));
@@ -109,7 +109,8 @@ public class AuthController {
 
     @PostMapping("/sendMessage")
     public ResponseEntity<String> sendMessage(@RequestBody PhoneNumberDto phoneNumberDto) {
-        int randomNumber=(int)((Math.random()* (9999 - 1000 + 1)) + 1000);//난수 생성
+//        int randomNumber=(int)((Math.random()* (9999 - 1000 + 1)) + 1000);
+        int randomNumber = 0000;
 
         // 가입된 회원인지 확인
         if (!studentRepository.existsByPhoneNumber(phoneNumberDto.getPhoneNumber())) {

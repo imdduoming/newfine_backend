@@ -20,16 +20,17 @@ public class Listener {
     private Long Id;
 
     @JsonManagedReference
-    @ManyToOne( cascade = { CascadeType.REMOVE})
+    @ManyToOne
     private Course course;
 
     @JsonManagedReference
-    @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.REMOVE})
+    @ManyToOne(fetch = FetchType.EAGER)
     private Student student;
-
-//    @OneToMany(mappedBy="course", cascade = { CascadeType.PERSIST})
+    
+//    @OneToMany(mappedBy="listener", fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE})
 //    @JsonBackReference //순환참조 방지
-//    private List<StudentTestResults> studentTestResults;
+//    private List<SHomework> sHomeworks;
+
     @Builder
     public Listener(Course course,Student student) {
         this.course = course;

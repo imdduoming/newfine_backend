@@ -110,12 +110,16 @@ public class AttendanceService {
     }
     public List<StudentAttendance> getMyAttendance(Long idx,Student student) {
         Course course=courseRepository.findById(idx).get(); // 강의 찾기
-        List<Attendance> attendances =attendanceRepository.findAttendancesByCourseOrderByCreatedDateDesc(course);
+//        List<Attendance> attendances =attendanceRepository.findAttendancesByCourseOrderByCreatedDateDesc(course);
+        List<Attendance> attendances =attendanceRepository.findAttendancesByCourse(course);
+        Collections.sort(attendances,new DateComparator());
         List<StudentAttendance> studentAttendances=new ArrayList<>();
         for(Attendance attendance : attendances){
             // 출석마다 학생 출석 정보 찾기
-            StudentAttendance studentAttendance=studentattendanceRepository.findByStudentAndAttendance(student,attendance).get();
-            studentAttendances.add(studentAttendance);
+            if (studentattendanceRepository.findByStudentAndAttendance(student,attendance).isPresent()){
+                StudentAttendance studentAttendance=studentattendanceRepository.findByStudentAndAttendance(student,attendance).get();
+                studentAttendances.add(studentAttendance);
+            }
 
         }
         System.out.println(studentAttendances);

@@ -91,6 +91,12 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+processResources.dependsOn('copyGitSubmodule')
+task copyGitSubmodule(type: Copy) {
+    from 'newfine_secret/application.properties'
+    into 'src/main/resources'
+}
 //springboot 2.5버전이상 부터는 jar 파일 2개 생겨서 이를 방지
 
 ext {
