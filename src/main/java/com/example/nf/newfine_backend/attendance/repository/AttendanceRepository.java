@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface AttendanceRepository extends JpaRepository <Attendance,Long> {
 
+    List<Attendance> findAttendancesByCourseOrderByCreatedDateDesc(Course course);
     List<Attendance> findAttendancesByCourse(Course course);
+
 }
 

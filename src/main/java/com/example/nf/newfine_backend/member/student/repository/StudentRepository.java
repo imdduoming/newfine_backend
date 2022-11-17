@@ -14,9 +14,11 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     boolean existsByPhoneNumber(String phoneNumber);    // 중복 가입 방지용
 
     Optional<Student> findByNickname(String nickname);
+
     boolean existsByNickname(String nickname);
 
     List<Student> findStudentsByListeners(Course course);
 
 
+    //Optional<Student> findByListener(Listener listener);
 }

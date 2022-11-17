@@ -20,6 +20,11 @@ public class CourseController {
         return courseService.getAllCourses();
     }
 
+    // 과목 유형별 수업 가져오기
+    @GetMapping("/courses")
+    public List<Course> getTypeCourses(@RequestParam String type){
+        return courseService.getTypeCourses(type);
+    }
     // 수업의 학생들 불러오기
     @GetMapping("/listeners")
     public List<Listener> getListeners(@RequestParam Integer id){
@@ -31,8 +36,8 @@ public class CourseController {
     @GetMapping("/student/courses")
     public List<Listener> getStudentCourses(){
         Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
-        return courseService.getStudentCourses(student);
-
+        List<Listener> listeners= courseService.getStudentCourses(student);
+        return listeners;
     }
 
 

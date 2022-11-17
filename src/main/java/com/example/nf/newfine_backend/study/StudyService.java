@@ -1,14 +1,8 @@
 package com.example.nf.newfine_backend.study;
 
-import com.amazonaws.services.rds.model.SNSTopicArnNotFoundException;
-import com.example.nf.newfine_backend.attendance.repository.AttendanceRepository;
-import com.example.nf.newfine_backend.attendance.repository.StudentAttendanceRepository;
-import com.example.nf.newfine_backend.attendance.domain.Attendance;
-import com.example.nf.newfine_backend.attendance.domain.StudentAttendance;
-import com.example.nf.newfine_backend.course.CourseRepository;
 import com.example.nf.newfine_backend.member.student.domain.Student;
-import com.example.nf.newfine_backend.course.Course;
 import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
+import com.example.nf.newfine_backend.member.student.service.PointService;
 import com.example.nf.newfine_backend.member.student.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,14 +23,15 @@ public class StudyService {
     private final StudentService studentService;
     private final StudyRepository studyRepository;
     private final StudentStudyRepository studentStudyRepository;
+    private final PointService pointService;
 
-    public Study makeStudy(LocalDateTime start, LocalDateTime end){
-        Study study= new Study(start,end);
+    public Study makeStudy(LocalDateTime start){
+        Study study= new Study(start);
         studyRepository.save(study);
-        Long study_id=study.getStudyId();
+        Long study_id=study.getStudy_id();
         String a_id=Long.toString(study_id);
         Study study1=studyRepository.findById(study_id).get();
-        String study_url="https://eb.newfine.tk/study.html?idx="+a_id;
+        String study_url="https://eb.newfine.tk/study?idx="+a_id;
         study1.setUrl(study_url);
         studyRepository.save(study1);
         return study1;
@@ -78,10 +73,11 @@ public class StudyService {
             // 입장한 경우 , 제대로된 퇴실
             StudentStudy studentStudy=studentStudyRepository.findByStudentAndStudy(student,study).get();
             studentStudy.setEndTime(now_time); // 퇴실시간
-            long total = ChronoUnit.HOURS.between(studentStudy.getStartTime(),now_time);
+            long total = ChronoUnit.MINUTES.between(studentStudy.getStartTime(),now_time);
             studentStudy.setTotal(total);
             studentStudy.setOut(true); //나갔다고 표시
             studentStudyRepository.save(studentStudy);
+            pointService.create(student,"자습완료!",5);
             return 1; // 제대로 퇴실
         }
         else {
@@ -90,25 +86,20 @@ public class StudyService {
         }
     }
 
+    public List<StudentStudy> getMyStudy(Student student){
+        List<StudentStudy> studentStudies = studentStudyRepository.findStudentStudiesByStudent(student);
+        return studentStudies;
+    }
+    public long totalMyStudy(List<StudentStudy> studentStudies) {
+        long minutes=0;
+        for(StudentStudy studentStudy : studentStudies){ // 내 자습 for 문으로 돌림
+            if (studentStudy.isOut()){
+                // 퇴실 처리가 완료된 자습
+                 minutes +=  studentStudy.getTotal();
+            }        }
+        return minutes;
+    }
 
-//    public List<Attendance> getAllAttendances() {
-//        return attendanceRepository.findAll();
-//    }
-//
-//    public List<Attendance> getAttendances(Long idx){
-//        Course course=courseRepository.findById(idx).get();
-//        List<Attendance> attendanceList=attendanceRepository.findAttendancesByCourse(course);
-//        return attendanceList;
-//    }
-//
-//    public List<StudentAttendance> getStudentAttendance(Long idx){
-//        Attendance attendance=attendanceRepository.findById(idx).get();
-//        List<StudentAttendance> studentAttendances=studentattendanceRepository.findStudentAttendancesByAttendance(attendance);
-//        return studentAttendances;
-//    }
-//    public List<Attendance> getMyAttendances(String phone_number) {
-//        return attendanceRepository.findByStudentPhone(phone_number);
-//    }
 
 
 

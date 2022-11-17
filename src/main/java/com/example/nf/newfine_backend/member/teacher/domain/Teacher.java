@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -15,7 +16,8 @@ import java.util.List;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Teacher extends Timestamped {
+@Table(name = "teacher")
+public class Teacher {
 
     @Id
     @Column(name = "teacher_id")
@@ -24,13 +26,18 @@ public class Teacher extends Timestamped {
     private Long tId;
 
     @Column
+//    @NotNull
+//    @Pattern(regexp = "^(010[1|6|7|8|9|0])(\\d{3,4})(\\d{4})$")
     private String phoneNumber;
 
 
     @Column(nullable = false)
+//    @NotNull
+//    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@^!%*#?&])[A-Za-z\\d@^!%*#?&]{8,}$")
     private String tPassword;
 
     @Column(nullable = false)
+    @NotNull
     private String tName;
 
     @Enumerated(EnumType.STRING)
@@ -40,6 +47,7 @@ public class Teacher extends Timestamped {
     @OneToMany(mappedBy="teacher")
     private List<Course> courses;
 
+
 //    @JsonIgnore
 //    @OneToMany(mappedBy="teacher", cascade = { CascadeType.PERSIST})
 //    private List<THomework> tHomeworks;
@@ -48,17 +56,25 @@ public class Teacher extends Timestamped {
     @Column
     private LocalDateTime signupDate;
 
+    @Column(name = "device_token", nullable = true)
+    private String deviceToken;
+
     @PrePersist
     public void signupDate() {
         this.signupDate = LocalDateTime.now();
     }
 
     @Builder
-    public Teacher(String phoneNumber, String tName, String tPassword, Authority tAuthority) {
+    public Teacher(String phoneNumber, String tName, String tPassword, Authority tAuthority, String deviceToken) {
         this.phoneNumber=phoneNumber;
         this.tName=tName;
         this.tPassword = tPassword;
         this.tAuthority = tAuthority;
+        this.deviceToken = deviceToken;
+    }
+
+    public void modifyDeviceToken(String deviceToken) {
+        this.deviceToken = deviceToken;
     }
 
 }

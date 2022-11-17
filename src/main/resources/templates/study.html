@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script type="text/javascript" src="js/back.js"></script>
+<script>
+    var idx;
+    $(document).ready(function () {
+        // login_check();
+
+        idx = window.location.search.split("=")[1]
+        /* ios */
+        window.addEventListener("message", (e) => {
+            const { token , study_state } =JSON.parse(e.data);
+            if(study_state=="in"){
+                start(idx,token);
+            }
+            else{
+                end(idx,token);
+            }
+        })
+        /* android */
+        document.addEventListener("message", (e) => {
+            const { token , study_state } =JSON.parse(e.data);
+            if(study_state=="in"){
+                start(idx,token);
+            }
+            else{
+                end(idx,token);
+            }
+        })
+    });
+
+    function start(idx,token){
+        let data = {"studyId":idx.toString()}
+        $.ajax({
+            type: "POST",
+            url: `${domainURL}/study/start`,
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            headers: { "Authorization": `Bearer ${token}` },
+            beforeSend: function (xhr){
+                xhr.setRequestHeader('Authorization', "Bearer " +token);
+            },
+            success: function (response) {
+                console.log(response)
+                requestPermission(response)
+            }
+        });
+    }
+
+    function end(idx,token){
+        let data = {"studyId":idx.toString()}
+        $.ajax({
+            type: "PUT",
+            url: `${domainURL}/study/end`,
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            headers: { "Authorization": `Bearer ${token}` },
+            beforeSend: function (xhr){
+                xhr.setRequestHeader('Authorization', "Bearer " +token);
+            },
+            success: function (response) {
+                console.log(response)
+                requestPermission(response)
+            }
+        });
+    }
+    function requestPermission  (response) {
+        if (window.ReactNativeWebView) {
+            // 모바일이라면 모바일의 카메라 권한을 물어보는 액션을 전달합니다.
+            window.ReactNativeWebView.postMessage(
+                JSON.stringify( {data:response} )
+            );
+        } else {
+            // 모바일이 아니라면 모바일 아님을 alert로 띄웁니다.
+            alert({ message: ERROR_TYPES.notMobile });
+        }
+    };
+</script>
+<body>
+<h1>study 완료 </h1>
+</body>
+</html>

@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -21,9 +22,15 @@ public class CourseService {
         return courseRepository.findAll();
     }
 
+    public List<Course> getTypeCourses(String type) {
+        return courseRepository.findCoursesBySubjectType(type);
+    }
     public List<Listener> getListeners(Long id){
         Course course=courseRepository.findById(id).get();
-        return listenerRepository.findListenersByCourse(course);
+        List<Listener> Listeners=listenerRepository.findListenersByCourse(course);
+        Collections.sort(Listeners, new ListComparator());
+        return Listeners;
+
     }
 
     public List<Listener> getStudentCourses(Student student){

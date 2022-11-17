@@ -1,11 +1,12 @@
 package com.example.nf.newfine_backend.member.student.service;
 
-import com.example.nf.newfine_backend.member.student.dto.StudentResponseDto;
+import com.example.nf.newfine_backend.Homework.Repository.SHomeworkRepository;
+import com.example.nf.newfine_backend.course.Listener;
+import com.example.nf.newfine_backend.course.ListenerRepository;
+import com.example.nf.newfine_backend.member.student.dto.*;
 import com.example.nf.newfine_backend.member.student.exception.DuplicatedNicknameException;
 import com.example.nf.newfine_backend.member.student.exception.PhoneNumberNotFoundException;
 import com.example.nf.newfine_backend.member.student.domain.Student;
-import com.example.nf.newfine_backend.member.student.dto.DeleteRequestDto;
-import com.example.nf.newfine_backend.member.student.dto.NicknameRequestDto;
 import com.example.nf.newfine_backend.member.exception.CustomException;
 import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
 import com.example.nf.newfine_backend.member.util.SecurityUtil;
@@ -15,8 +16,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.example.nf.newfine_backend.member.exception.ErrorCode.MEMBER_NOT_FOUND;
-import static com.example.nf.newfine_backend.member.exception.ErrorCode.UNAUTHORIZED_MEMBER;
+import java.util.List;
+
+import static com.example.nf.newfine_backend.member.exception.ErrorCode.*;
 
 @Service
 @RequiredArgsConstructor
@@ -26,14 +28,18 @@ public class StudentService {
     private final StudentRepository studentRepository;
     private final PasswordEncoder passwordEncoder;
     private final MessageService messageService;
+    private final ListenerRepository listenerRepository;
+    private final SHomeworkRepository sHomeworkRepository;
 
     @Transactional(readOnly = true)
-    public StudentResponseDto getMemberInfo(String phoneNumber){
-        return studentRepository.findByPhoneNumber(phoneNumber)
-                .map(StudentResponseDto::of)
+    public StudentRankingDetailDto getMemberInfo(String nickname){
+        return studentRepository.findByNickname(nickname)
+                .map(StudentRankingDetailDto::of)
                 .orElseThrow(() -> new CustomException(MEMBER_NOT_FOUND));
-//                .orElseThrow(() -> new RuntimeException("유저 정보가 없습니다."));
+
+//
     }
+
 
     // 현재 SecurityContext 에 있는 유저 정보 가져오기
     // SecurityContext 는 전역
@@ -81,34 +87,41 @@ public class StudentService {
         return StudentResponseDto.of(student1);
     }
 
+    @Transactional
     public String deleteStudent(DeleteRequestDto deleteRequestDto){
         Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
         if (!passwordEncoder.matches(deleteRequestDto.getPassword(), student.getPassword())) {
-            throw new RuntimeException();
+            throw new CustomException(INVALID_PASSWORD);
         }
 
-//        if (redisTemplate.opsForValue().get("RT:" + student.getId()) != null) {
-//            // Refresh Token 삭제
-//            redisTemplate.delete("RT:" + student.getId());
-//        }
+        if (redisTemplate.opsForValue().get("RT:" + student.getId()) != null) {
+            // Refresh Token 삭제
+            redisTemplate.delete("RT:" + student.getId());
+        }
         redisTemplate.opsForZSet().remove("ranking", student.getNickname());
         // &*************************** 액토도.....?
 
+        // 학생관련된 shomework 지우기
+        List<Listener> listenerList= listenerRepository.findListenersByStudent(student);
+        for (Listener listener : listenerList){
+            if(sHomeworkRepository.findByListener(listener).isPresent()){
+                sHomeworkRepository.deleteAllByListener(listener);
+            }
+        }
         studentRepository.delete(student);
-
         return "탈퇴 완료";
     }
 
-    //// *********** 이거는 일단 추후에 하자!! (wanza)
-//    public String updatePassword(PasswordUpdateDto passwordUpdateDto){
-//
-//        // 1. 전화 인증 성공해야 비밀번호 재설정 가능.
-//
-//
-//        studentRepository.save(student);
-//
-//        return "비번 변경 완료";
-//    }
+    public String updatePassword(PasswordUpdateDto passwordUpdateDto){
+
+        System.out.println(passwordUpdateDto.getPhoneNumber());
+
+        Student student=studentRepository.findByPhoneNumber(passwordUpdateDto.getPhoneNumber()).orElseThrow(PhoneNumberNotFoundException::new);
+        student.setPassword(passwordEncoder.encode(passwordUpdateDto.getNewPassword()));
+
+        studentRepository.save(student);
+        return "비번 변경 완료";
+    }
 
 
     // 현재 SecurityContext 에 있는 유저 정보 가져오기

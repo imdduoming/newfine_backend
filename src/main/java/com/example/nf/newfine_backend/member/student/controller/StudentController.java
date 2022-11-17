@@ -1,12 +1,11 @@
 package com.example.nf.newfine_backend.member.student.controller;
 
-import com.example.nf.newfine_backend.member.student.dto.StudentResponseDto;
+import com.example.nf.newfine_backend.member.exception.CustomException;
+import com.example.nf.newfine_backend.member.student.dto.*;
 import com.example.nf.newfine_backend.member.student.exception.PhoneNumberNotFoundException;
 import com.example.nf.newfine_backend.member.student.service.PointService;
 import com.example.nf.newfine_backend.member.student.service.StudentService;
 import com.example.nf.newfine_backend.member.student.domain.Student;
-import com.example.nf.newfine_backend.member.student.dto.DeleteRequestDto;
-import com.example.nf.newfine_backend.member.student.dto.NicknameRequestDto;
 import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
 import com.example.nf.newfine_backend.member.student.service.MessageService;
 import com.example.nf.newfine_backend.member.util.SecurityUtil;
@@ -14,33 +13,27 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static com.example.nf.newfine_backend.member.exception.ErrorCode.MEMBER_NOT_FOUND;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/member")
 public class StudentController {
     private final StudentService studentService;
-    public final StudentRepository studentRepository;
-    public final PointService pointService;
-    public final MessageService messageService;
+    private final StudentRepository studentRepository;
+    private final PointService pointService;
+    private final MessageService messageService;
 
     @GetMapping("/me")
     public ResponseEntity<StudentResponseDto> getMyMemberInfo() {
         return ResponseEntity.ok(studentService.getMyInfo());
     }
 
-    @GetMapping("/{phoneNumber}")
-    public ResponseEntity<StudentResponseDto> getMemberInfo(@PathVariable String phoneNumber) {
-        return ResponseEntity.ok(studentService.getMemberInfo(phoneNumber));
+    @GetMapping("/{nickname}")
+    public ResponseEntity<StudentRankingDetailDto> getMemberInfo(@PathVariable String nickname) {
+        return ResponseEntity.ok(studentService.getMemberInfo(nickname));
     }
 
-    //    /////// ㅁㄱ
-//    @PostMapping("/myInfo")
-//    public ResponseEntity<MemberResponseDto> getMyInfo(@RequestHeader("token") String token){
-//        token.replace("Bearer ", "");
-//        return ResponseEntity.ok(authService.findMemberByToken(token));
-//    }
-//
-//
     @PostMapping("/nickname")
     public ResponseEntity<StudentResponseDto> setNickname(@RequestBody NicknameRequestDto nicknameRequestDto){
         return ResponseEntity.ok(studentService.setNickname(nicknameRequestDto));
@@ -63,11 +56,22 @@ public class StudentController {
         return ResponseEntity.ok(studentService.deleteStudent(deleteRequestDto));
     }
 
-    // ********* 추후 비번 찾기 만들기(wanza)
-//    @GetMapping("/updatePw")
-//    public ResponseEntity updatePassword(PasswordUpdateDto passwordUpdateDto){
+//    @PostMapping("/newPassword")
+//    public ResponseEntity updatePassword(@RequestBody PasswordUpdateDto passwordUpdateDto){
+//
 //        return ResponseEntity.ok(studentService.updatePassword(passwordUpdateDto));
 //    }
+
+    @PostMapping("/sendMessage")
+    public ResponseEntity<String> sendMessage(@RequestBody PhoneNumberDto phoneNumberDto) {
+        int randomNumber=(int)((Math.random()* (9999 - 1000 + 1)) + 1000);//난수 생성
+
+        // 가입된 회원인지 확인
+        if (!studentRepository.existsByPhoneNumber(phoneNumberDto.getPhoneNumber())) {
+            throw new CustomException(MEMBER_NOT_FOUND);
+        }
+        return ResponseEntity.ok(messageService.sendMessage(phoneNumberDto.getPhoneNumber(), String.valueOf(randomNumber)));
+    }
 
     @PostMapping("/point")
     public String point(){
@@ -75,10 +79,9 @@ public class StudentController {
         Student student=studentRepository.findById(SecurityUtil.getCurrentMemberId()).orElseThrow(PhoneNumberNotFoundException::new);
         pointService.create(student,"포인트 클릭!!!!",5);
 
-        if(student.availableLevelUp()){
-            student.levelUp();
-        }
-
+//        if(student.availableLevelUp()){
+//            student.levelUp();
+//        }
         return "성공인걸까아닌걸까^ㅠ^";
     }
 }

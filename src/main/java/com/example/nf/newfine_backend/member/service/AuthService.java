@@ -4,16 +4,16 @@ import com.example.nf.newfine_backend.member.dto.SignInDto;
 import com.example.nf.newfine_backend.member.dto.SignUpDto;
 import com.example.nf.newfine_backend.member.dto.TokenDto;
 import com.example.nf.newfine_backend.member.dto.TokenRequestDto;
-import com.example.nf.newfine_backend.member.student.dto.*;
 import com.example.nf.newfine_backend.member.dto.response.SingleResult;
-import com.example.nf.newfine_backend.member.student.domain.Student;
 import com.example.nf.newfine_backend.member.exception.CustomException;
 import com.example.nf.newfine_backend.member.jwt.TokenProvider;
+import com.example.nf.newfine_backend.member.student.domain.Student;
+import com.example.nf.newfine_backend.member.student.dto.StudentResponseDto;
+import com.example.nf.newfine_backend.member.student.exception.PhoneNumberNotFoundException;
 import com.example.nf.newfine_backend.member.student.repository.StudentRepository;
-import com.example.nf.newfine_backend.member.repository.RefreshTokenRepository;
 import com.example.nf.newfine_backend.member.student.service.PointService;
-import com.example.nf.newfine_backend.member.teacher.dto.TeacherResponseDto;
 import com.example.nf.newfine_backend.member.teacher.domain.Teacher;
+import com.example.nf.newfine_backend.member.teacher.dto.TeacherResponseDto;
 import com.example.nf.newfine_backend.member.teacher.repository.TeacherRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -39,7 +39,7 @@ public class AuthService {
     private final TeacherRepository teacherRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
-    private final RefreshTokenRepository refreshTokenRepository;
+//    private final RefreshTokenRepository refreshTokenRepository;
     private final PointService pointService;
     private final RedisTemplate redisTemplate;
     private final ResponseService responseService;
@@ -57,11 +57,13 @@ public class AuthService {
     @Transactional
     public StudentResponseDto signup(SignUpDto signUpDto) {
         if (studentRepository.existsByPhoneNumber(signUpDto.getPhoneNumber())) {
+            System.out.println("폰번호중복");
             throw new CustomException(DUPLICATE_MEMBER);
         }
 
         Student student = signUpDto.toMember(passwordEncoder);
         student.setPoint(0);
+        System.out.println(signUpDto.getDeviceToken());
         return StudentResponseDto.of(studentRepository.save(student));
     }
 
@@ -71,6 +73,7 @@ public class AuthService {
             throw new CustomException(DUPLICATE_MEMBER);
         }
 
+
         Teacher teacher = signUpDto.toTeacher(passwordEncoder);
         return TeacherResponseDto.of(teacherRepository.save(teacher));
     }
@@ -78,6 +81,23 @@ public class AuthService {
     // 로그인 예외처리**
     @Transactional
     public TokenDto login(SignInDto signInDto) {
+        // 비밀번호 확인 추가
+        if (teacherRepository.existsByPhoneNumber(signInDto.getPhoneNumber())){
+            Teacher teacher=teacherRepository.findByPhoneNumber(signInDto.getPhoneNumber()).orElseThrow(()->new PhoneNumberNotFoundException("회원 정보가 없습니다.\n회원가입을 먼저 해주세요."));
+            teacher.modifyDeviceToken(signInDto.getDeviceToken());
+            if (!passwordEncoder.matches(signInDto.getPassword(), teacher.getTPassword())) {
+                throw new CustomException(INVALID_PASSWORD);
+            }
+        } else{
+            Student student=studentRepository.findByPhoneNumber(signInDto.getPhoneNumber()).orElseThrow(()->new PhoneNumberNotFoundException("회원 정보가 없습니다.\n회원가입을 먼저 해주세요."));
+            System.out.println("deviceToken " + signInDto.getDeviceToken());
+            student.modifyDeviceToken(signInDto.getDeviceToken()); //push alarm 때문에 추가
+//            student.setDeviceToken(signInDto.getDeviceToken());
+            if (!passwordEncoder.matches(signInDto.getPassword(), student.getPassword())) {
+                throw new CustomException(INVALID_PASSWORD);
+            }
+        }
+
         // 1. Login ID/PW 를 기반으로 AuthenticationToken 생성 (인증 정보 객체 UsernamePasswordAuthenticationToken 생성)
         UsernamePasswordAuthenticationToken authenticationToken = signInDto.toAuthentication();
 
@@ -138,18 +158,26 @@ public class AuthService {
 
     @Transactional
     public TokenDto reissue(TokenRequestDto tokenRequestDto) {  // 토큰 재발급
+        System.out.println("됨?");
+        System.out.println(tokenRequestDto.getAccessToken());
+        System.out.println("리: "+ tokenRequestDto.getRefreshToken());
 
         // 1. Refresh Token 만료 여부 검증
         if (!tokenProvider.validateToken(tokenRequestDto.getRefreshToken())) {
             throw new CustomException(INVALID_REFRESH_TOKEN);
         }
+        System.out.println("됨?");
 
         // 2. Access Token 복호화 -> Member ID 가져오기
         Authentication authentication = tokenProvider.getAuthentication(tokenRequestDto.getAccessToken());
 
+        System.out.println("됨?");
+
 //        // 3. 저장소에서 Member ID 를 기반으로 Refresh Token 값 가져옴
 //        RefreshToken refreshToken = refreshTokenRepository.findByKey(authentication.getName())
 //                .orElseThrow(() -> new CustomException(REFRESH_TOKEN_NOT_FOUND));
+
+        System.out.println("리프: "+ tokenRequestDto.getRefreshToken());
 
         // 3. Redis 에서 User email 을 기반으로 저장된 Refresh Token 값을 가져옵니다.
         String refreshToken = (String)redisTemplate.opsForValue().get("RT:" + authentication.getName());
@@ -159,10 +187,15 @@ public class AuthService {
 //            return response.fail("잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
         }
 
+        System.out.println("리프레: "+tokenRequestDto.getRefreshToken());
+        System.out.println("레디스에서 가져온 거: "+ refreshToken);
+
         // 4. 클라이언트의 Refresh Token 일치하는지 검사
         if(!refreshToken.equals(tokenRequestDto.getRefreshToken())) {
             throw new CustomException(MISMATCH_REFRESH_TOKEN);
         }
+
+        System.out.println("됨?");
 
 //        // 4. 클라이언트의 Refresh Token 일치하는지 검사
 //        if (!refreshToken.getValue().equals(tokenRequestDto.getRefreshToken())) {
@@ -179,6 +212,10 @@ public class AuthService {
 //        // 6. 저장소 정보 업데이트 (이전의 Refresh Token 을 사용할 수 없도록)
 //        RefreshToken newRefreshToken = refreshToken.updateValue(tokenDto.getRefreshToken());
 //        refreshTokenRepository.save(newRefreshToken);
+
+        System.out.println("됨?");
+        System.out.println("새 액토: "+tokenDto.getAccessToken());
+        System.out.println("새 리토: "+tokenDto.getRefreshToken());
 
         // 토큰 발급
         return tokenDto;
@@ -204,7 +241,31 @@ public class AuthService {
         redisTemplate.opsForValue()
                 .set(tokenRequestDto.getAccessToken(), "logout", expiration, TimeUnit.MILLISECONDS);
 
+        // push alarm 때문에 추가 (로그아웃 시 device token 초기화)
+        if ((authentication.getAuthorities().toString()).equals("[ROLE_USER]")){
+            Student student = studentRepository.findById(Long.valueOf(authentication.getName())).get();
+            System.out.println("authentication name: "+ authentication.getName());
+            System.out.println("authentication token: "+ student.getDeviceToken());
+            if (student.getDeviceToken() != null) {
+                student.setDeviceToken(null);
+                studentRepository.save(student);
+            }
+        }
+
+        else{
+            Teacher teacher = teacherRepository.findById(Long.valueOf(authentication.getName())).get();
+            System.out.println("authentication name: "+ authentication.getName());
+            System.out.println("authentication token: "+ teacher.getDeviceToken());
+            if (teacher.getDeviceToken() != null){
+                teacher.setDeviceToken(null);
+                teacherRepository.save(teacher);
+            }
+        }
+
+
 //        return response.success("로그아웃 되었습니다.");
         return responseService.getSingleResult("로그아웃 되었습니다.");
     }
+
+
 }

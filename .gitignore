@@ -1,11 +1,12 @@
 HELP.md
 .gradle
+#src/test/
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
-application.properties
-
+src/main/resources/application.properties
+src/test/resources/application.properties
 ### STS ###
 .apt_generated
 .classpath
@@ -36,3 +37,4 @@ out/
 
 ### VS Code ###
 .vscode/
+#### test ###

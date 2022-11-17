@@ -9,4 +9,5 @@ public interface ListenerRepository extends JpaRepository<Listener,Long> {
 
     List<Listener> findListenersByCourse(Course course);
     List<Listener> findListenersByStudent(Student student);
+
 }

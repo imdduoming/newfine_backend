@@ -1,6 +1,8 @@
 package com.example.nf.newfine_backend.Homework.domain;
 
 import com.example.nf.newfine_backend.Homework.dto.SHomeworkDto;
+import com.example.nf.newfine_backend.course.Listener;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,7 +10,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-import static javax.persistence.FetchType.LAZY;
+import static javax.persistence.FetchType.EAGER;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,22 +23,44 @@ public class SHomework extends BaseTimeEntity {
     private Long shid;
 
     @Column(columnDefinition = "TEXT")
-    private String comment; // 댓글 내용 (내용이 없어도 됨)
+    private String title; // thomework과 동일한 제목 (내용이 없어도 됨)
 
-    @ManyToOne(fetch = LAZY)
+    @ManyToOne(fetch = EAGER)
     @JoinColumn(name = "th_id")
+    @JsonManagedReference
     private THomework thomework;
 
-    //@ManyToOne(fetch = LAZY)
-    //@JoinColumn(name = "listener_id")
-    //private Listener listener;
+    @ManyToOne(fetch = EAGER)
+    @JoinColumn(name = "listener_id")
+    @JsonManagedReference
+    private Listener listener;
+
+    @Column
+    private boolean ischecked = false;
+
+    //    @Column
+//    private char grade = 'D';
+    @Column
+    private String deadline = "미제출";
+
+    @Column
+    private Long studentId;
 
 
     @Builder
-    public SHomework(SHomeworkDto sHomeworkDto, THomework tHomework) {
+    public SHomework(SHomeworkDto sHomeworkDto, THomework tHomework, Listener listener) {
+        this.title = sHomeworkDto.getTitle();
         this.thomework = tHomework;
-        //this.listener = listener;
-        this.comment = sHomeworkDto.getComment();
-
+        this.listener = listener;
+//        this.grade = sHomeworkDto.getGrade();
+        this.ischecked = sHomeworkDto.isIschecked();
+        this.deadline = sHomeworkDto.getDeadline();
+        this.studentId = sHomeworkDto.getStudentId();
     }
+
+//    public void update(Boolean ischecked, char grade) {
+//        this.ischecked = ischecked;
+//        this.grade = grade;
+    //this.modifiedDate = LocalDateTime.now();
+//    }
 }

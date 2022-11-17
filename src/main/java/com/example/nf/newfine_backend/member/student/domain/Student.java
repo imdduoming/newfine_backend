@@ -29,13 +29,18 @@ public class Student extends Timestamped {
     private Long id;
 
     @Column
+//    @NotNull
+//    @Pattern(regexp = "^(010[1|6|7|8|9|0])(\\d{3,4})(\\d{4})$")
     private String phoneNumber;
 
     @Column
+//    @NotNull
     private String name;
 
     @JsonIgnore
     @Column
+//    @NotNull
+//    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@^!%*#?&])[A-Za-z\\d@^!%*#?&]{8,}$")
     private String password;
 
     @Column
@@ -51,6 +56,9 @@ public class Student extends Timestamped {
     @Enumerated(EnumType.STRING)
     private Authority authority;
 
+    @Column
+    private String test_code;
+
     @OneToMany(mappedBy="student", cascade = { CascadeType.REMOVE})
     @JsonBackReference //순환참조 방지
     private List<StudentAttendance> studentAttendancces;
@@ -65,9 +73,10 @@ public class Student extends Timestamped {
 
     @Column
     @Enumerated(EnumType.STRING)
-    private Level level=Level.NEW;
+    private Tier tier = Tier.NEW;
 
-    private LocalDateTime levelUpDate;
+//    private LocalDateTime levelUpDate;
+
 
     @Column
     private LocalDateTime signupDate;
@@ -81,9 +90,17 @@ public class Student extends Timestamped {
     @OneToMany(mappedBy="owner", orphanRemoval = true, cascade = CascadeType.REMOVE)  // 주체는 Point 객체
     private List<Point> pointList=new ArrayList<>();
 
+//    @JsonManagedReference
+//    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST})
+//    private Branch branch;
+
+    //디바이스 토큰 추가
+    @Column(name = "device_token", nullable = true)
+    private String deviceToken;
+
 
     @Builder
-    public Student(String phoneNumber, String name, String password, String nickname, Authority authority, String photoURL, Integer point) {
+    public Student(String phoneNumber, String name, String password, String nickname, Authority authority, String photoURL, Integer point, String deviceToken) {
         this.phoneNumber=phoneNumber;
         this.name=name;
         this.password = password;
@@ -91,17 +108,24 @@ public class Student extends Timestamped {
         this.nickname= nickname;
         this.photoURL=photoURL;
         this.point=point;
+        this.deviceToken= deviceToken;
+//        this.branch=branch;
     }
 
-    public boolean availableLevelUp() {
-        return Level.availableLevelUp(this.getLevel(), this.getPoint());
+    public void modifyDeviceToken(String deviceToken) {
+        this.deviceToken = deviceToken;
     }
 
-    public Level levelUp() {
-        Level nextLevel = Level.getNextLevel(this.getPoint());
-        this.level = nextLevel;
-        this.levelUpDate = LocalDateTime.now();
-
-        return nextLevel;
-    }
+//    public boolean availableLevelUp() {
+//        return Level.availableLevelUp(this.getLevel(), this.getPoint());
+//    }
+//
+//    public Level levelUp() {
+//        Level nextLevel = Level.getNextLevel(this.getPoint());
+//        this.level = nextLevel;
+//        this.levelUpDate = LocalDateTime.now();
+//        System.out.println(level);
+//        System.out.println(point);
+//        return nextLevel;
+//    }
 }

@@ -17,9 +17,6 @@ import static com.example.nf.newfine_backend.member.exception.ErrorCode.DUPLICAT
 @Service
 @RequiredArgsConstructor
 public class MessageService {
-    //
-
-    private final StudentRepository studentRepository;
 
     @Value("${coolsms.nf.apikey}")
     private String apiKey;
@@ -30,17 +27,12 @@ public class MessageService {
     @Value("${coolsms.nf.fromnumber}")
     private String fromNumber;
 
-    public String sendMessage(PhoneNumberDto phoneNumberDto, String randomNumber) {
-
-        // 전화번호 중복 확인
-        if (studentRepository.existsByPhoneNumber(phoneNumberDto.getPhoneNumber())) {
-            throw new CustomException(DUPLICATE_MEMBER);
-        }
+    public String sendMessage(String phoneNumber, String randomNumber) {
 
         Message coolsms = new Message(apiKey, apiSecret);
 
         HashMap<String, String> params = new HashMap<String, String>();
-        params.put("to", phoneNumberDto.getPhoneNumber());
+        params.put("to", phoneNumber);
         params.put("from", fromNumber);
         params.put("type", "SMS");
         params.put("text", "[newfine] \n인증번호 "+randomNumber+" 를 입력하세요.");

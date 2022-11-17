@@ -1,12 +1,12 @@
 package com.example.nf.newfine_backend;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.http.HttpHeaders;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -15,6 +15,7 @@ import java.util.TimeZone;
 
 @EnableCaching
 @EnableJpaAuditing // JPA Auditing 활성화
+@EnableScheduling
 @SpringBootApplication
 public class NewfineBackendApplication {
     @PostConstruct
@@ -31,7 +32,7 @@ public class NewfineBackendApplication {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("https://eb.newfine.tk","http://localhost:8000")
+                registry.addMapping("/**").allowedOrigins("https://eb.newfine.shop","http://localhost:8000")
                         .allowedMethods("POST", "PUT", "GET", "DELETE")
                         .exposedHeaders(HttpHeaders.LOCATION);
             }

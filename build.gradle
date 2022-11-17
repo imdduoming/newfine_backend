@@ -2,6 +2,8 @@ plugins {
     id 'org.springframework.boot' version '2.6.7'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
+    id 'com.epages.restdocs-api-spec' version '0.16.2'
+    id "org.asciidoctor.jvm.convert" version "3.3.2"
 }
 
 group = 'com.example.nf'
@@ -50,15 +52,90 @@ dependencies {
     // sms 전송
     implementation 'net.nurigo:javaSDK:2.2'
     // 아마존 S3
-    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.1.RELEASE'
-
-
+//    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.1.RELEASE'
+    // 엑셀 파일 처리
+    // https://mvnrepository.com/artifact/org.apache.poi/poi
+    implementation group: 'org.apache.poi', name: 'poi', version: '5.2.2'
+    // https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml
+    implementation group: 'org.apache.poi', name: 'poi-ooxml', version: '5.2.2'
+    // https://mvnrepository.com/artifact/commons-io/commons-io
+    implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
+//    // https://mvnrepository.com/artifact/org.apache.ibatis/ibatis-sqlmap
+//    implementation group: 'org.apache.ibatis', name: 'ibatis-sqlmap', version: '2.3.4.726'
+//    // https://mvnrepository.com/artifact/org.springframework/spring-orm
+//    implementation group: 'org.springframework', name: 'spring-orm', version: '5.3.18'
+//    // https://mvnrepository.com/artifact/org.apache.ibatis/ibatis-core
+//    implementation group: 'org.apache.ibatis', name: 'ibatis-core', version: '3.0'
+//    // https://mvnrepository.com/artifact/org.springframework/spring-ibatis
+//    implementation group: 'org.springframework', name: 'spring-ibatis', version: '2.0.8'
+    // https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload
+    implementation group: 'commons-fileupload', name: 'commons-fileupload', version: '1.4'
+//    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0'
+//    runtimeOnly 'mysql:mysql-connector-java:8.0.25'
+//    // https://mvnrepository.com/artifact/org.springframework/spring-dao
+//    implementation group: 'org.springframework', name: 'spring-dao', version: '2.0.8'
+//    // 관리자 (우리) spring boot admin
+//    implementation 'de.codecentric:spring-boot-admin-starter-server:2.6.2'
+    //Json 처리
+    implementation group: 'org.json', name: 'json', version: '20090211'
+    //푸시 알림 파이어베이스
+    implementation 'com.google.firebase:firebase-admin:7.1.1'
+    //OKClient
+    implementation("com.squareup.okhttp3:okhttp:4.9.1")
+    // spring swagger
+//    implementation 'io.springfox:springfox-boot-starter:3.0.0'
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+    testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.16.2'
 }
 
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+processResources.dependsOn('copyGitSubmodule')
+task copyGitSubmodule(type: Copy) {
+    from 'newfine_secret/application.properties'
+    into 'src/main/resources'
+}
 //springboot 2.5버전이상 부터는 jar 파일 2개 생겨서 이를 방지
+
+ext {
+    snippetsDir = file('build/generated-snippets')
+}
+
+test {
+    outputs.dir snippetsDir
+}
+
+asciidoctor {
+    inputs.dir snippetsDir
+    dependsOn test
+}
+
+bootJar {
+    dependsOn asciidoctor
+    copy{
+        from file("build/asciidoc/html5/")
+        into file("src/main/resources/static/docs")
+    }
+}
+
+
 jar {
     enabled = false
+}
+openapi3 {
+    server = 'http://localhost:8080'
+    title = 'Newfine API'
+    description = 'api.newfine.tk'
+    version = '1.0.0'
+    format = 'yaml'
+    outputDirectory = "."
+    outputFileNamePrefix = "swagger"
+//    tagDescriptionsPropertiesFile = 'src/test/resources/tag-descriptions.yaml'
+}
+
+bootRun {
+    String activeProfile = System.properties['spring.profiles.active']
+    systemProperty "spring.profiles.active", activeProfile
 }
